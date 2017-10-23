@@ -6,4 +6,6 @@ import { Router } from '@angular/router';
     templateUrl: './base-layout.component.html'
 })
 
-export class
+export class BaseLayoutComponent {
+    
+}

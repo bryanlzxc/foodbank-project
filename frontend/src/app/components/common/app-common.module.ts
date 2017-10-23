@@ -1,18 +1,25 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from "@angular/forms";
-import { RouterModule } from "@angular/router";
-
-import { BaseLayoutComponent } from './base-layout.component';
+import { NgModule }             from '@angular/core';
+import { CommonModule }         from '@angular/common';
+import { FormsModule }          from '@angular/forms';
+import { RouterModule }         from '@angular/router';
+import {
+    MatSidenavModule,
+    MatToolbarModule
+}                               from '@angular/material';
+import { BaseLayoutComponent }  from './layouts/base-layout/base-layout.component';
+import { TopbarComponent }      from './layouts/topbar/topbar.component';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        MatSidenavModule,
+        MatToolbarModule
     ],
     declarations: [
-        BaseLayoutComponent
+        BaseLayoutComponent,
+        TopbarComponent
     ],
     providers: [
 

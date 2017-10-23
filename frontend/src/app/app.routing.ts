@@ -14,7 +14,6 @@ export const rootRouterConfig: Routes = [
             {
                 path: 'dashboard',
                 loadChildren: './views/admin/admin.module#AdminModule',
-                data: { title: 'Dashboard', breadcrumb: 'DASHBOARD'}
             }
         ]
     }
