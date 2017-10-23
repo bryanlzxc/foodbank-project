@@ -1,14 +1,14 @@
-import { NgEgretPage } from './app.po';
+import { FrontendPage } from './app.po';
 
-describe('ng-egret App', () => {
-  let page: NgEgretPage;
+describe('frontend App', () => {
+  let page: FrontendPage;
 
   beforeEach(() => {
-    page = new NgEgretPage();
+    page = new FrontendPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!!');
   });
 });
