@@ -1,1 +1,36 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.body-margin {
+    margin: 0px;
+}
+
+.topbar.mat-toolbar {
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    background: rgba(153,202,59,1);
+    color: rgba(256,256,256,0.95);
+}
+
+.header-title {
+    padding-right: 15px;
+}
+
+.header-icon {
+    width: 35px;
+    padding-right: 20px;
+}
+
+.navigation-bar {
+    width: 15rem;
+    position: fixed;
+    background-color: rgba(102,102,102,0.8);
+}
+
+.main-window {
+    height: 100vh;
+}
+
+.navigation-item {
+    padding-left: 15px !important;
+    font-size: larger;
+    color: white;
+}

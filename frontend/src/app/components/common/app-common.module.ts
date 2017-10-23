@@ -4,10 +4,14 @@ import { FormsModule }          from '@angular/forms';
 import { RouterModule }         from '@angular/router';
 import {
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule
 }                               from '@angular/material';
 import { BaseLayoutComponent }  from './layouts/base-layout/base-layout.component';
-import { TopbarComponent }      from './layouts/topbar/topbar.component';
+import { TopbarComponent }      from './topbar/topbar.component';
+import { NavigationComponent }  from './navigation/navigation.component';
 
 @NgModule({
     imports: [
@@ -15,11 +19,15 @@ import { TopbarComponent }      from './layouts/topbar/topbar.component';
         FormsModule,
         RouterModule,
         MatSidenavModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule
     ],
     declarations: [
         BaseLayoutComponent,
-        TopbarComponent
+        TopbarComponent,
+        NavigationComponent
     ],
     providers: [
 
