@@ -9,3 +9,5 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule);
+
+import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
