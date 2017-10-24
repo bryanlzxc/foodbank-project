@@ -13,7 +13,7 @@ export const rootRouterConfig: Routes = [
         children: [
             {
                 path: 'dashboard',
-                loadChildren: './views/admin/admin.module#AdminModule',
+                loadChildren: './views/admin/admin.module#AdminModule'
             }
         ]
     }
