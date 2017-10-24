@@ -1,5 +1,9 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+*{
+     /* border: 1px solid red;  */
+}
+
 .body-margin {
     margin: 0px;
 }
@@ -39,11 +43,28 @@
 }
 
 .main-wrapper {
-    margin: 25px 30px;
-    margin-top: 90px;
+    margin: 50px 30px;
 }
 
 .dashboard-card {
     width: 100%;
     height: 100%;
+}
+
+.mat-list-text{
+    width:83% !important;
+}
+
+.mat-drawer-content{
+    margin-top:64px;
+}
+
+@media (max-width: 600px){
+    .mat-toolbar{
+        min-height:64px !important;
+    }
+
+    .mat-toolbar-row{
+        min-height:64px !important;
+    }
 }
