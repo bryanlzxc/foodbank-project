@@ -1,10 +1,12 @@
 import { Routes }                   from '@angular/router';
 import { BaseLayoutComponent }      from './components/common/layouts/base-layout/base-layout.component';
 
+const userType = 'admin';
+
 export const rootRouterConfig: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: userType,
         pathMatch: 'full'
     },
     {
@@ -12,8 +14,16 @@ export const rootRouterConfig: Routes = [
         component: BaseLayoutComponent,
         children: [
             {
-                path: 'dashboard',
+                path: 'admin',
                 loadChildren: './views/admin/admin.module#AdminModule'
+            },
+            {
+                path: 'volunteer',
+                loadChildren: './views/volunteer/volunteer.module#VolunteerModule'
+            },
+            {
+                path: 'beneficiary',
+                loadChildren: './views/beneficiary/beneficiary.module#BeneficiaryModule'
             }
         ]
     }

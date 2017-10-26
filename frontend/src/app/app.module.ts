@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { Http, HttpModule } from '@angular/http';
-import { AppComponent } from './app.component';
-import { AppCommonModule } from './components/common/app-common.module';
-import { RouterModule } from '@angular/router';
-import { rootRouterConfig } from './app.routing';
+import { BrowserModule }            from '@angular/platform-browser';
+import { BrowserAnimationsModule }  from '@angular/platform-browser/animations';
+import { NgModule }                 from '@angular/core';
+import { Http, HttpModule }         from '@angular/http';
+import { AppComponent }             from './app.component';
+import { AppCommonModule }          from './components/common/app-common.module';
+import { RouterModule }             from '@angular/router';
+import { rootRouterConfig }         from './app.routing';
 
 @NgModule({
   declarations: [

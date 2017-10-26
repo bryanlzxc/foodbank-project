@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'adm-inv',
+    selector: 'ben-inv',
     templateUrl: './inventory.component.html'
 })
 
-export class AdminInventoryComponent {
+export class BeneficiaryInventoryComponent {
 
 }

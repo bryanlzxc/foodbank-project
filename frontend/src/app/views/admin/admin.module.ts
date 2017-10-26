@@ -9,6 +9,8 @@ import {
 }                                   from '@angular/material';
 import { AdminDashboardComponent }  from './dashboard/dashboard.component';
 import { AdminInventoryComponent }  from './inventory/inventory.component';
+import { AdminAllocationComponent }  from './allocation/allocation.component';
+import { AdminPackingListComponent }  from './packing-list/packing-list.component';
 
 @NgModule({
     imports: [
@@ -20,7 +22,9 @@ import { AdminInventoryComponent }  from './inventory/inventory.component';
     ],
     declarations: [
         AdminDashboardComponent,
-        AdminInventoryComponent
+        AdminInventoryComponent,
+        AdminAllocationComponent,
+        AdminPackingListComponent
     ],
     providers: [
 
