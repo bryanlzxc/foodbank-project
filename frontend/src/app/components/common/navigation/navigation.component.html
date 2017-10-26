@@ -1,6 +1,5 @@
 <mat-nav-list>
     <mat-list-item *ngFor="let page of pages">
-        <mat-icon svgIcon="{{ page.name }}">test</mat-icon>
-        <h3 matLine class="navigation-item" > {{ page.name }} </h3>
+        <h3 class="navigation-item"><a routerLink="{{ page.route }}">{{ page.name }}</a></h3>
   </mat-list-item>
 </mat-nav-list>

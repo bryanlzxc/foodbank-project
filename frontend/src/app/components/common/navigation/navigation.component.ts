@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
+import { Component }    from '@angular/core';
+import navbarRoutes             from './../../../../config/routes';
+
+const userType = 'volunteer';
 
 @Component({
     selector: 'navigation',
@@ -10,26 +11,10 @@ import { MatIconRegistry } from '@angular/material';
 
 export class NavigationComponent {
 
-    public pages = [
-        {
-            "name": "Dashboard"
-        },
-        {
-            "name": "Inventory"
-        },
-        {
-            "name": "Allocation"
-        },
-        {
-            "name": "Packing List"
-        }
-    ]
+    public pages;
 
-    constructor (iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-        iconRegistry.addSvgIcon('Dashboard', sanitizer.bypassSecurityTrustResourceUrl('assets/images/dashboard.svg'));
-        iconRegistry.addSvgIcon('Inventory', sanitizer.bypassSecurityTrustResourceUrl('assets/images/inventory.svg'));
-        iconRegistry.addSvgIcon('Allocation', sanitizer.bypassSecurityTrustResourceUrl('assets/images/allocation.svg'));
-        iconRegistry.addSvgIcon('Packing List', sanitizer.bypassSecurityTrustResourceUrl('assets/images/packlist.svg'));
+    constructor () {
+        this.pages = navbarRoutes[userType];
     }
 
 }
