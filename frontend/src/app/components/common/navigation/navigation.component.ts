@@ -1,5 +1,5 @@
 import { Component }    from '@angular/core';
-import navbarRoutes             from './../../../../config/routes';
+import navbarRoutes     from './../../../../config/routes';
 
 const userType = 'volunteer';
 
