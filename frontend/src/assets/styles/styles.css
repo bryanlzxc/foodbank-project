@@ -28,7 +28,7 @@
 .navigation-bar {
     width: 15rem;
     position: fixed;
-    background-color: rgba(102,102,102,0.8);
+    background-color: rgba(200,200,200,0.8);
     margin-top: 64px;
 }
 
@@ -39,6 +39,10 @@
 .navigation-item {
     padding-left: 15px !important;
     color: white;
+}
+
+.router-active {
+    background: rgba(175,175,175,0.8);
 }
 
 .main-wrapper {

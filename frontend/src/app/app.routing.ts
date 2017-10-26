@@ -14,6 +14,16 @@ export const rootRouterConfig: Routes = [
         component: BaseLayoutComponent,
         children: [
             {
+                path: 'sessions',
+                loadChildren: './views/sessions/sessions.module#SessionsModule'
+            }
+        ]
+    },
+    {
+        path: '',
+        component: BaseLayoutComponent,
+        children: [
+            {
                 path: 'admin',
                 loadChildren: './views/admin/admin.module#AdminModule'
             },
@@ -26,5 +36,9 @@ export const rootRouterConfig: Routes = [
                 loadChildren: './views/beneficiary/beneficiary.module#BeneficiaryModule'
             }
         ]
+    },
+    {
+        path: '**',
+        redirectTo: '/sessions/404'
     }
 ];
