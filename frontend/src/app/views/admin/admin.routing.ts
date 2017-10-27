@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { AdminDashboardComponent } from './dashboard/dashboard.component';
 import { AdminInventoryComponent } from './inventory/inventory.component';
 import { AdminAllocationComponent } from './allocation/allocation.component';

@@ -1,5 +1,7 @@
 import { Routes }                   from '@angular/router';
 import { BaseLayoutComponent }      from './components/common/layouts/base-layout/base-layout.component';
+import { AuthLayoutComponent }      from './components/common/layouts/auth-layout/auth-layout.component';
+import { AuthService }              from './services/auth.service';
 
 const userType = 'admin';
 
@@ -11,7 +13,7 @@ export const rootRouterConfig: Routes = [
     },
     {
         path: '',
-        component: BaseLayoutComponent,
+        component: AuthLayoutComponent,
         children: [
             {
                 path: 'sessions',
@@ -22,6 +24,7 @@ export const rootRouterConfig: Routes = [
     {
         path: '',
         component: BaseLayoutComponent,
+        canActivate: [ AuthService ],
         children: [
             {
                 path: 'admin',

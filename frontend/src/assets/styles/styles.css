@@ -76,7 +76,7 @@
 
 /* General */
 .change-font{
-     font-family: Roboto; 
+     font-family: Roboto;
 }
 
 /* Volunteer Dashboard */
@@ -87,4 +87,19 @@
 
 .vol-table{
     table-layout:fixed;
+}
+
+.session-container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+}
+
+.session-progress {
+    position: relative;
+    bottom: -5px;
+    z-index: 9999;
 }
