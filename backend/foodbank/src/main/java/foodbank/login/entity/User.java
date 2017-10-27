@@ -17,6 +17,14 @@ public class User {
 	private String password;
 	private String usertype;
 	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -39,6 +47,10 @@ public class User {
 	
 	public void setUsertype(String usertype) {
 		this.usertype = usertype;
+	}
+	
+	public User() {
+		
 	}
 	
 	public User(String username, String password, String usertype) {
