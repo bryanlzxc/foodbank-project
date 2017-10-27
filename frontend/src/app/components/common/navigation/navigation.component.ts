@@ -1,7 +1,7 @@
 import { Component }    from '@angular/core';
 import navbarRoutes     from './../../../../config/routes';
 
-const userType = 'volunteer';
+const userType = 'admin';
 
 @Component({
     selector: 'navigation',

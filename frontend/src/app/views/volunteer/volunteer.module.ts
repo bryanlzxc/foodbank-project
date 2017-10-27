@@ -11,6 +11,7 @@ import { VolunteerDashboardComponent }      from './dashboard/dashboard.componen
 import { VolunteerInventoryComponent }      from './inventory/inventory.component';
 import { VolunteerPackingListComponent }    from './packing-list/packing-list.component';
 import { SearchPipe }                       from './search.pipe';
+import { VolunteerService }                 from './../../services/volunteer.services';
 
 @NgModule({
     imports: [
@@ -27,7 +28,7 @@ import { SearchPipe }                       from './search.pipe';
         SearchPipe
     ],
     providers: [
-
+        VolunteerService
     ],
     exports: [
 
