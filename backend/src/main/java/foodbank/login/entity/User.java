@@ -1,11 +1,13 @@
 package foodbank.login.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
  * Created by Lau Peng Liang, Bryan
  */
 
+@Document(collection = "foodbank-test")
 public class User {
 	
 	@Id
