@@ -1,8 +1,6 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-*{
-     /* border: 1px solid red;  */
-}
+/* Base Layout  */
 
 .body-margin {
     margin: 0px;
@@ -21,12 +19,12 @@
 }
 
 .header-icon {
-    width: 35px;
+    width: 55px;
     padding-right: 20px;
 }
 
 .navigation-bar {
-    width: 15rem;
+    width: 250px;
     position: fixed;
     background-color: rgba(200,200,200,0.8);
     margin-top: 64px;
@@ -37,7 +35,10 @@
 }
 
 .navigation-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding-left: 15px !important;
+    font-size: 20px;
     color: white;
 }
 
@@ -46,7 +47,7 @@
 }
 
 .main-wrapper {
-    margin: 50px 30px;
+    margin: 30px 30px;
 }
 
 .dashboard-card {
@@ -60,6 +61,7 @@
 
 .mat-drawer-content{
     margin-top:64px;
+    padding-bottom:64px;
 }
 
 @media (max-width: 600px){
@@ -70,4 +72,19 @@
     .mat-toolbar-row{
         min-height:64px !important;
     }
+}
+
+/* General */
+.change-font{
+     font-family: Roboto; 
+}
+
+/* Volunteer Dashboard */
+.page-title{
+    line-height:34px;
+    font-size:20px;
+}
+
+.vol-table{
+    table-layout:fixed;
 }

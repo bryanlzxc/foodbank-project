@@ -10,6 +10,7 @@ import {
 import { VolunteerDashboardComponent }      from './dashboard/dashboard.component';
 import { VolunteerInventoryComponent }      from './inventory/inventory.component';
 import { VolunteerPackingListComponent }    from './packing-list/packing-list.component';
+import { SearchPipe }                       from './search.pipe';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { VolunteerPackingListComponent }    from './packing-list/packing-list.co
     declarations: [
         VolunteerDashboardComponent,
         VolunteerInventoryComponent,
-        VolunteerPackingListComponent
+        VolunteerPackingListComponent,
+        SearchPipe
     ],
     providers: [
 
