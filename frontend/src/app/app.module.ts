@@ -7,7 +7,7 @@ import { AppComponent }             from './app.component';
 import { AppCommonModule }          from './components/common/app-common.module';
 import { RouterModule }             from '@angular/router';
 import { rootRouterConfig }         from './app.routing';
-import { TestService }              from './services/test-service.service';
+import { TestService }              from './services/test.service';
 
 @NgModule({
   declarations: [

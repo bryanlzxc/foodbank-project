@@ -1,7 +1,7 @@
 import * as env from './../environments/environment.prod';
 
 const prod_services = {
-    'test-service': 'https://httpbin.org',
+    'test-service': 'https://httpbin.org/get',
     'admin': {
         'dashboard':'',
         'allocation':'',
@@ -21,7 +21,7 @@ const prod_services = {
 };
 
 const dev_services = {
-    'test-service': '/mock/test-service.json',
+    'test-service': './../../assets/mock/test-service.json',
     'admin': {
         'dashboard':'',
         'allocation':'',
@@ -40,8 +40,6 @@ const dev_services = {
     }
 };
 
-let services;
-
-env.environment.production ? services = prod_services : services = dev_services;
+const services = env.environment.production ? prod_services : dev_services;
 
 export default services;

@@ -9,11 +9,4 @@ export class BeneficiaryService {
 
     }
 
-    public testGet () {
-        this.http.get(services.test_service).subscribe(data => {
-            console.log("Test Get");
-            console.log(data);
-        });
-    }
-
 }
