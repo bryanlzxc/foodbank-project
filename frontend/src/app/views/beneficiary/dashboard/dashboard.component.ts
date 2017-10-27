@@ -10,6 +10,7 @@ import { BeneficiaryService } from './../../../services/beneficiary.service';
 export class BeneficiaryDashboardComponent implements OnInit {
 
     public pictures;
+    // public name;
 
     constructor (private benSvc: BeneficiaryService) {
 
@@ -21,4 +22,7 @@ export class BeneficiaryDashboardComponent implements OnInit {
         });
     }
 
+    /*browseButton(name){
+    	this.name = name + "List";
+    }*/
 }

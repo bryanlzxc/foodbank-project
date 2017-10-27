@@ -3,36 +3,104 @@
 {
 	"pictureList": [
 		{
-			"name" : "Baking Needs",
-			"image" : "./../../images/beneficiary/baking.jpg"
+			"categoryList" : [
+				{
+					"name" : "Baking-Needs",
+					"image" : "/assets/images/beneficiary/browse/baking.jpg"
+				},
+				{
+					"name" : "Beverages",
+					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
+				},
+				{
+					"name" : "Canned Food",
+					"image" : "/assets/images/beneficiary/browse/canned-food.jpg"
+				},
+				{
+					"name" : "Condiments",
+					"image" : "/assets/images/beneficiary/browse/condiments.jpg"
+				},
+				{
+					"name" : "Dried Food",
+					"image" : "/assets/images/beneficiary/browse/dried-food.jpg"
+				},
+				{
+					"name" : "Preserved Food",
+					"image" : "/assets/images/beneficiary/browse//preserved-food.jpg"
+				},
+				{
+					"name" : "Snacks",
+					"image" : "/assets/images/beneficiary/browse//snacks.jpg"
+				},
+				{
+					"name" : "Staples",
+					"image" : "/assets/images/beneficiary/browse//staples.jpg"
+				}
+			]
 		},
 		{
-			"name" : "Beverages",
-			"image" : "./../../images/beneficiary/beverages.jpg"
+			"Baking-NeedsList" : [
+				{
+					"name" : "Baking Powder",
+					"image" : "/assets/images/beneficiary/browse/baking.jpg"
+				},
+				{
+					"name" : "Flour",
+					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
+				},
+				{
+					"name" : "Food Coloring",
+					"image" : "/assets/images/beneficiary/browse/canned-food.jpg"
+				},
+				{
+					"name" : "Premix Powder",
+					"image" : "/assets/images/beneficiary/browse/condiments.jpg"
+				},
+				{
+					"name" : "Vanilla Extract",
+					"image" : "/assets/images/beneficiary/browse/dried-food.jpg"
+				},
+				{
+					"name" : "Others",
+					"image" : "/assets/images/beneficiary/browse//preserved-food.jpg"
+				}
+			]
 		},
 		{
-			"name" : "Canned Food",
-			"image" : "./../../images/beneficiary/canned-food.jpg"
+			"beveragesList" : [
+				{
+					"name" : "Hot Beverages",
+					"image" : "/assets/images/beneficiary/browse/baking.jpg"
+				},
+				{
+					"name" : "Ready to Drink",
+					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
+				}
+			]
 		},
 		{
-			"name" : "Condiments",
-			"image" : "./../../images/beneficiary/condiments.jpg"
-		},
-		{
-			"name" : "Dried Food",
-			"image" : "./../../images/beneficiary/dried-food.jpg"
-		},
-		{
-			"name" : "Preserved Food",
-			"image" : "./../../images/beneficiary/preserved-food.jpg"
-		},
-		{
-			"name" : "Snacks",
-			"image" : "./../../images/beneficiary/snacks.jpg"
-		},
-		{
-			"name" : "Staples",
-			"image" : "./../../images/beneficiary/staples.jpg"
+			"flourList" : [
+				{
+					"name" : "Cake Flour",
+					"image" : "/assets/images/beneficiary/browse/baking.jpg"
+				},
+				{
+					"name" : "Corn Flour",
+					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
+				},
+				{
+					"name" : "Plain Flour",
+					"image" : "/assets/images/beneficiary/browse/canned-food.jpg"
+				},
+				{
+					"name" : "Self-Raising Flour",
+					"image" : "/assets/images/beneficiary/browse/condiments.jpg"
+				},
+				{
+					"name" : "Tapoica Flour",
+					"image" : "/assets/images/beneficiary/browse/dried-food.jpg"
+				}
+			]
 		}
 	]
 }
