@@ -10,6 +10,7 @@ import {
 import { VolunteerDashboardComponent }      from './dashboard/dashboard.component';
 import { VolunteerInventoryComponent }      from './inventory/inventory.component';
 import { VolunteerPackingListComponent }    from './packing-list/packing-list.component';
+import { VolunteerService }                 from './../../services/volunteer.services';
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import { VolunteerPackingListComponent }    from './packing-list/packing-list.co
         VolunteerPackingListComponent
     ],
     providers: [
-
+        VolunteerService
     ],
     exports: [
 

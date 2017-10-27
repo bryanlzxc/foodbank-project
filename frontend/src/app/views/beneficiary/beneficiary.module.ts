@@ -10,6 +10,7 @@ import {
 import { BeneficiaryDashboardComponent }    from './dashboard/dashboard.component';
 import { BeneficiaryInventoryComponent }    from './inventory/inventory.component';
 import { BeneficiaryRequestComponent }      from './request/request.component';
+import { BeneficiaryService }               from './../../services/beneficiary.service';
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import { BeneficiaryRequestComponent }      from './request/request.component';
         BeneficiaryRequestComponent
     ],
     providers: [
-
+        BeneficiaryService
     ],
     exports: [
 
