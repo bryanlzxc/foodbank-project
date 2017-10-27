@@ -9,16 +9,16 @@ import { BeneficiaryService } from './../../../services/beneficiary.service';
 
 export class BeneficiaryDashboardComponent implements OnInit {
 
-	public pictures;
+    public pictures;
 
-	constructor (private benSvc: BeneficiaryService) {
+    constructor (private benSvc: BeneficiaryService) {
 
-	}
+    }
 
-	ngOnInit () {
-		this.pictures = this.benSvc.getBrowseInfo();
-		console.log('Browse');
-		console.log(this.pictures);
-	}
-	
+    ngOnInit () {
+        this.benSvc.getBrowseInfo().subscribe(res => {
+            if (res) this.pictures = res;
+        });
+    }
+
 }
