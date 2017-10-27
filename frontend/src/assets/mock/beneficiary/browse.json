@@ -1,0 +1,38 @@
+
+
+{
+	"pictureList": [
+		{
+			"name" : "Baking Needs",
+			"image" : "./../../images/beneficiary/baking.jpg"
+		},
+		{
+			"name" : "Beverages",
+			"image" : "./../../images/beneficiary/beverages.jpg"
+		},
+		{
+			"name" : "Canned Food",
+			"image" : "./../../images/beneficiary/canned-food.jpg"
+		},
+		{
+			"name" : "Condiments",
+			"image" : "./../../images/beneficiary/condiments.jpg"
+		},
+		{
+			"name" : "Dried Food",
+			"image" : "./../../images/beneficiary/dried-food.jpg"
+		},
+		{
+			"name" : "Preserved Food",
+			"image" : "./../../images/beneficiary/preserved-food.jpg"
+		},
+		{
+			"name" : "Snacks",
+			"image" : "./../../images/beneficiary/snacks.jpg"
+		},
+		{
+			"name" : "Staples",
+			"image" : "./../../images/beneficiary/staples.jpg"
+		}
+	]
+}
