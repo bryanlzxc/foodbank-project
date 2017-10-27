@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SearchPipe } from '../search.pipe';
+import { SearchPipe } from './../search.pipe';
 
 @Component({
     selector: 'vol-dash',

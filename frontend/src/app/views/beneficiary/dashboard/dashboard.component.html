@@ -1,1 +1,18 @@
-<h2>BENEFICIARY DASHBOARD</h2>
+<mat-grid-list cols="4" rowHeight="100px">
+    <mat-grid-tile [colspan]="4">
+        <mat-card class="dashboard-card">
+            <mat-card-title>
+                Browse
+            </mat-card-title>
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile *ngFor="let pic of pictures?.pictureList" [colspan]="1">
+        <mat-card class="dashboard-card">
+            <mat-card-title>
+                {{ pic.name }}
+            </mat-card-title>
+        </mat-card>
+    </mat-grid-tile>
+
+</mat-grid-list>
+

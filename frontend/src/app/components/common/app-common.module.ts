@@ -10,6 +10,7 @@ import {
     MatListModule
 }                               from '@angular/material';
 import { BaseLayoutComponent }  from './layouts/base-layout/base-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { TopbarComponent }      from './topbar/topbar.component';
 import { NavigationComponent }  from './navigation/navigation.component';
 
@@ -26,6 +27,7 @@ import { NavigationComponent }  from './navigation/navigation.component';
     ],
     declarations: [
         BaseLayoutComponent,
+        AuthLayoutComponent,
         TopbarComponent,
         NavigationComponent
     ],

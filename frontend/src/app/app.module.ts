@@ -8,6 +8,7 @@ import { AppCommonModule }          from './components/common/app-common.module'
 import { RouterModule }             from '@angular/router';
 import { rootRouterConfig }         from './app.routing';
 import { TestService }              from './services/test.service';
+import { AuthService }              from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TestService }              from './services/test.service';
     RouterModule.forRoot(rootRouterConfig, { useHash: false })
   ],
   providers: [
-      TestService
+      TestService,
+      AuthService
   ],
   bootstrap: [
       AppComponent

@@ -34,7 +34,7 @@ const dev_services = {
         'packing-list':''
     },
     'beneficiary': {
-        'dashboard':'',
+        'dashboard':'./../../assets/mock/beneficiary/browse.json',
         'inventory':'',
         'request':''
     }
