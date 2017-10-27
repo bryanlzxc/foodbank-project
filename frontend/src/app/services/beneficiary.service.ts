@@ -6,14 +6,11 @@ import services from './../../config/services';
 export class BeneficiaryService {
 
     constructor (private http: HttpClient) {
-    	this.http.get(services.beneficiary.dashboard).subscribe(res => {
-    		console.log("RES", res);
-    		return res;
-    	});
+
     }
 
     getBrowseInfo () {
-
+        return this.http.get(services.beneficiary.dashboard);
     }
 
 }
