@@ -1,7 +1,10 @@
 package foodbank.login.repository;
 
+import java.util.List;
+
+//import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import foodbank.login.entity.User;
@@ -13,6 +16,10 @@ import foodbank.login.entity.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 	
-	//User findByUsername(@Param("username") String username);
-
+	User findById(String id);
+	
+	User findByUsername(String username);
+		
+	List<User> findUsersByUsertype(String usertype);
+	
 }
