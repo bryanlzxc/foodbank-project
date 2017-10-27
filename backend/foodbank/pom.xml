@@ -30,6 +30,7 @@
   		<artifactId>spring-boot-starter-data-rest</artifactId>
   		<version>1.5.8.RELEASE</version>
   	</dependency>
+<<<<<<< HEAD
   	<dependency>
   		<groupId>org.springframework</groupId>
   		<artifactId>spring-webmvc</artifactId>
@@ -38,5 +39,7 @@
   		<groupId>org.springframework.data</groupId>
   		<artifactId>spring-data-jpa</artifactId>
   	</dependency>
+=======
+>>>>>>> 89a06128dcd833b8270cdd6fd0442e3788783295
   </dependencies>
 </project>
