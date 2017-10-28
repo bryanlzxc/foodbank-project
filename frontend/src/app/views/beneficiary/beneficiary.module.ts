@@ -11,6 +11,7 @@ import { BeneficiaryDashboardComponent }    from './dashboard/dashboard.componen
 import { BeneficiaryInventoryComponent }    from './inventory/inventory.component';
 import { BeneficiaryRequestComponent }      from './request/request.component';
 import { BeneficiaryService }               from './../../services/beneficiary.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { BeneficiaryService }               from './../../services/beneficiary.s
         FormsModule,
         MatCardModule,
         MatGridListModule,
-        RouterModule.forChild(BeneficiaryRoutes)
+        RouterModule.forChild(BeneficiaryRoutes),
+        FlexLayoutModule
     ],
     declarations: [
         BeneficiaryDashboardComponent,

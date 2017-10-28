@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as _ from "lodash";
 import { BeneficiaryService } from './../../../services/beneficiary.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { BeneficiaryService } from './../../../services/beneficiary.service';
 export class BeneficiaryDashboardComponent implements OnInit {
 
     public pictures;
-    // public name;
+    public response;
 
     constructor (private benSvc: BeneficiaryService) {
 
@@ -18,11 +19,16 @@ export class BeneficiaryDashboardComponent implements OnInit {
 
     ngOnInit () {
         this.benSvc.getBrowseInfo().subscribe(res => {
-            if (res) this.pictures = res;
+        	console.log(res);
+            if (res) {
+            	this.pictures = res['categoryList'];
+            	this.response = _.cloneDeep(res);
+            }
         });
     }
 
-    /*browseButton(name){
-    	this.name = name + "List";
-    }*/
+    browseButton(name){
+    	let newCat = name + "List";
+    	this.pictures = this.response[newCat];
+    }
 }

@@ -1,106 +1,141 @@
-
-
-{
-	"pictureList": [
-		{
-			"categoryList" : [
-				{
-					"name" : "Baking-Needs",
-					"image" : "/assets/images/beneficiary/browse/baking.jpg"
-				},
-				{
-					"name" : "Beverages",
-					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
-				},
-				{
-					"name" : "Canned Food",
-					"image" : "/assets/images/beneficiary/browse/canned-food.jpg"
-				},
-				{
-					"name" : "Condiments",
-					"image" : "/assets/images/beneficiary/browse/condiments.jpg"
-				},
-				{
-					"name" : "Dried Food",
-					"image" : "/assets/images/beneficiary/browse/dried-food.jpg"
-				},
-				{
-					"name" : "Preserved Food",
-					"image" : "/assets/images/beneficiary/browse//preserved-food.jpg"
-				},
-				{
-					"name" : "Snacks",
-					"image" : "/assets/images/beneficiary/browse//snacks.jpg"
-				},
-				{
-					"name" : "Staples",
-					"image" : "/assets/images/beneficiary/browse//staples.jpg"
-				}
-			]
-		},
-		{
-			"Baking-NeedsList" : [
-				{
-					"name" : "Baking Powder",
-					"image" : "/assets/images/beneficiary/browse/baking.jpg"
-				},
-				{
-					"name" : "Flour",
-					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
-				},
-				{
-					"name" : "Food Coloring",
-					"image" : "/assets/images/beneficiary/browse/canned-food.jpg"
-				},
-				{
-					"name" : "Premix Powder",
-					"image" : "/assets/images/beneficiary/browse/condiments.jpg"
-				},
-				{
-					"name" : "Vanilla Extract",
-					"image" : "/assets/images/beneficiary/browse/dried-food.jpg"
-				},
-				{
-					"name" : "Others",
-					"image" : "/assets/images/beneficiary/browse//preserved-food.jpg"
-				}
-			]
-		},
-		{
-			"beveragesList" : [
-				{
-					"name" : "Hot Beverages",
-					"image" : "/assets/images/beneficiary/browse/baking.jpg"
-				},
-				{
-					"name" : "Ready to Drink",
-					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
-				}
-			]
-		},
-		{
-			"flourList" : [
-				{
-					"name" : "Cake Flour",
-					"image" : "/assets/images/beneficiary/browse/baking.jpg"
-				},
-				{
-					"name" : "Corn Flour",
-					"image" : "/assets/images/beneficiary/browse/beverages.jpg"
-				},
-				{
-					"name" : "Plain Flour",
-					"image" : "/assets/images/beneficiary/browse/canned-food.jpg"
-				},
-				{
-					"name" : "Self-Raising Flour",
-					"image" : "/assets/images/beneficiary/browse/condiments.jpg"
-				},
-				{
-					"name" : "Tapoica Flour",
-					"image" : "/assets/images/beneficiary/browse/dried-food.jpg"
-				}
-			]
-		}
-	]
+{  
+    "categoryList":[  
+        {  
+            "name":"Baking Needs",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/baking.jpg"
+        },
+        {  
+            "name":"Beverages",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/beverages.jpg"
+        },
+        {  
+            "name":"Canned Food",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/canned-food.jpg"
+        },
+        {  
+            "name":"Condiments",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/condiments.jpg"
+        },
+        {  
+            "name":"Dried Food",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/dried-food.jpg"
+        },
+        {  
+            "name":"Preserved Food",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/preserved-food.jpg"
+        },
+        {  
+            "name":"Snacks",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/snacks.jpg"
+        },
+        {  
+            "name":"Staples",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/staples.jpg"
+        }
+    ],
+    "Baking NeedsList":[  
+        {  
+            "name":"Baking Powder",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/baking-powder.jpg"
+        },
+        {  
+            "name":"Flour",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/flour.jpg"
+        },
+        {  
+            "name":"Food Coloring",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/food-coloring.jpg"
+        },
+        {  
+            "name":"Premix Powder",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/premix-powder.jpg"
+        },
+        {  
+            "name":"Vanilla Extract",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/vanilla-extract.jpg"
+        },
+        {  
+            "name":"Others",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/others.jpg"
+        }
+    ],
+    "BeveragesList":[  
+        {  
+            "name":"Hot Beverages",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/baking.jpg"
+        },
+        {  
+            "name":"Ready to Drink",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/beverages.jpg"
+        }
+    ],
+    "FlourList":[  
+        {  
+            "name":"Cake Flour",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+        },
+        {  
+            "name":"Corn Flour",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/corn-flour.jpg"
+        },
+        {  
+            "name":"Plain Flour",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/flour.jpg"
+        },
+        {  
+            "name":"Self-Raising Flour",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/self-raising-flour.jpg"
+        },
+        {  
+            "name":"Tapioca Flour",
+            "type":"category",
+            "image":"/assets/images/beneficiary/browse/tapioca-flour.jpg"
+        }
+    ],
+    "Plain FlourList":[  
+        {  
+            "desc":"Plain Flour (50g)",
+            "qty":"20",
+            "halal":"true",
+            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+        },
+         {  
+            "desc":"Plain Flour (150g)",
+            "qty":"5",
+            "halal":"true",
+            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+        },
+         {  
+            "desc":"Plain Flour (250g)",
+            "qty":"12",
+            "halal":"true",
+            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+        },
+         {  
+            "desc":"Plain Flour (350g)",
+            "qty":"1",
+            "halal":"true",
+            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+        }
+    ]
 }
