@@ -5,7 +5,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 export class AuthService implements CanActivate {
 
     public authToken;
-    private isAuthenticated = true; // Set this value dynamically
+    private isAuthenticated = false; // Set this value dynamically
 
     constructor(private router: Router) {
 

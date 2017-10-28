@@ -1,17 +1,25 @@
-<mat-grid-list cols="4" rowHeight="100px">
-    <mat-grid-tile [colspan]="4">
-        <mat-card class="dashboard-card">
-            <mat-card-title>
-                Browse
-            </mat-card-title>
-        </mat-card>
-    </mat-grid-tile>
-    <mat-grid-tile *ngFor="let pic of pictures?.pictureList" [colspan]="1">
-        <mat-card class="dashboard-card">
-            <mat-card-title>
-                {{ pic.name }}
-            </mat-card-title>
-        </mat-card>
-    </mat-grid-tile>
+<mat-grid-list cols="4">
+    <mat-card class="dashboard-card float">
+        <mat-card-title>
+            Browse
+        </mat-card-title>
 
+        <!-- <div *ngIf="name != null;then content else other_content"></div>
+        <ng-template #content>
+        	<div class="col-xs-12 col-sm-6 col-md-3 tile" *ngFor="let pic of pictures?.pictureList.Baking-NeedsList" style="padding-top: 15px; padding-bottom: 15px">
+		  		<div style="position:relative;">
+			  		<div class="tint" (click)="browseButton( pic.name )"><span class="picture-text"> {{ pic.name }} </span></div>
+			  		<img class="card-img-top" src="{{ pic.image }}" width="100%" height="100%">
+		  		</div>
+		  	</div>
+        </ng-template>
+        <ng-template #other_content> -->
+		  	<div class="col-xs-12 col-sm-6 col-md-3 tile" *ngFor="let pic of pictures?.pictureList[0].categoryList" style="padding-top: 15px; padding-bottom: 15px">
+		  		<div style="position:relative;">
+			  		<div class="tint" (click)="browseButton( pic.name )"><span class="picture-text"> {{ pic.name }} </span></div>
+			  		<img class="card-img-top" src="{{ pic.image }}" width="100%" height="100%">
+		  		</div>
+		  	</div>
+	  	<!-- </ng-template> -->
+  	</mat-card>
 </mat-grid-list>

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * Created by Lau Peng Liang, Bryan
  */
 
-@Document(collection = "foodbank-test")
+@Document(collection = "Users")
 public class User {
 	
 	@Id
@@ -15,6 +15,15 @@ public class User {
 	
 	private String username;
 	private String password;
+	private String usertype;
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getUsername() {
 		return username;
@@ -32,6 +41,23 @@ public class User {
 		this.password = password;
 	}
 	
+	public String getUsertype() {
+		return usertype;
+	}
+	
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+	
+	public User() {
+		
+	}
+	
+	public User(String username, String password, String usertype) {
+		this.username = username;
+		this.password = password;
+		this.usertype = usertype;
+	}
 	
 
 }
