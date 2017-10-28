@@ -1,0 +1,7 @@
+foodbank\login\repository\UserRepository.class
+foodbank\login\entity\User.class
+foodbank\admin\controller\AdminController.class
+foodbank\login\controller\LoginController.class
+foodbank\admin\entity\Admin.class
+foodbank\LoginTest.class
+foodbank\admin\repository\AdminRepository.class

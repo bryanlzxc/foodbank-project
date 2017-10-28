@@ -49,7 +49,7 @@
 			<configuration>
 				<archive>
 					<manifest>
-						<mainClass>foodbank.login.LoginTest</mainClass>
+						<mainClass>foodbank.LoginTest</mainClass>
 					</manifest>
 				</archive>
 			</configuration>
