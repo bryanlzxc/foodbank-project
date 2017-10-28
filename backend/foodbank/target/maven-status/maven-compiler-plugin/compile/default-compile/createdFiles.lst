@@ -1,7 +1,10 @@
-foodbank\login\repository\UserRepository.class
-foodbank\login\entity\User.class
-foodbank\admin\controller\AdminController.class
+foodbank\user\entity\User.class
+foodbank\MainApp$1.class
 foodbank\login\controller\LoginController.class
+foodbank\MainApp.class
+foodbank\user\controller\UserController.class
+foodbank\admin\controller\AdminController.class
+foodbank\login\entity\LoginOutcome.class
+foodbank\user\repository\UserRepository.class
 foodbank\admin\entity\Admin.class
-foodbank\LoginTest.class
 foodbank\admin\repository\AdminRepository.class

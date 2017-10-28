@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\Jaren\Desktop\bunanas-deployment-server"/>
+		<item value="C:\Users\Jaren\Desktop\bunanas\backend\foodbank"/>
+		<item value="C:\Users\Jaren\Desktop\bunanas"/>
+		<item value="C:\Users\Jaren\Desktop\bunanas\backend"/>
+		<item value="C:\Users\Jaren\Desktop\bunanas\backend\src\main\java\foodbank"/>
+	</list>
+	<section name="ResourceNavigator">
+		<item value="Aggregate for window 1509104527579" key="ResourceWorkingSetFilter.STORE_WORKING_SET"/>
+		<item value="1" key="ResourceViewer.STORE_SORT_TYPE"/>
+	</section>
+</section>

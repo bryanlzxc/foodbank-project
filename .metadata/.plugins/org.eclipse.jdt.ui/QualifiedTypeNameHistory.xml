@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
+<fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
+<fullyQualifiedTypeName name="org.springframework.web.servlet.config.annotation.WebMvcConfigurer"/>
+<fullyQualifiedTypeName name="org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter"/>
+<fullyQualifiedTypeName name="org.springframework.web.servlet.config.annotation.CorsRegistry"/>
+<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
+<fullyQualifiedTypeName name="foodbank.login.entity.LoginOutcome"/>
+<fullyQualifiedTypeName name="foodbank.user.repository.UserRepository"/>
+<fullyQualifiedTypeName name="foodbank.user.entity.User"/>
+</qualifiedTypeNameHistroy>
