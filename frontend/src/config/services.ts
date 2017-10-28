@@ -1,7 +1,8 @@
 import * as env from './../environments/environment.prod';
 
 const prod_services = {
-    'test-service': 'https://httpbin.org/get',
+    'test-service': 'http://foodbank-inventory-server.herokuapp.com/users/display-all',
+    'auth': '',
     'admin': {
         'dashboard':'',
         'allocation':'',
@@ -22,6 +23,8 @@ const prod_services = {
 
 const dev_services = {
     'test-service': './../../assets/mock/test-service.json',
+    'auth-success': './../../assets/mock/auth-success.json',
+    'auth-fail': './../../assets/mock/auth-fail.json',
     'admin': {
         'dashboard':'',
         'allocation':'',
