@@ -115,27 +115,31 @@
     "Plain FlourList":[  
         {  
             "desc":"Plain Flour (50g)",
+            "type":"product",
             "qty":"20",
             "halal":"true",
-            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+            "image":"/assets/images/beneficiary/browse/flour.jpg"
         },
          {  
             "desc":"Plain Flour (150g)",
+            "type":"product",
             "qty":"5",
             "halal":"true",
-            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+            "image":"/assets/images/beneficiary/browse/flour.jpg"
         },
          {  
             "desc":"Plain Flour (250g)",
+            "type":"product",
             "qty":"12",
             "halal":"true",
-            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+            "image":"/assets/images/beneficiary/browse/flour.jpg"
         },
          {  
             "desc":"Plain Flour (350g)",
+            "type":"product",
             "qty":"1",
             "halal":"true",
-            "image":"/assets/images/beneficiary/browse/cake-flour.jpg"
+            "image":"/assets/images/beneficiary/browse/flour.jpg"
         }
     ]
 }
