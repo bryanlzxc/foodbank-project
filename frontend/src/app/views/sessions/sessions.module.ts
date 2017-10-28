@@ -7,7 +7,11 @@ import { PageNotFoundComponent }            from './page-not-found/page-not-foun
 import { LoginComponent }                   from './login/login.component';
 import {
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule
 }                                           from '@angular/material';
 
 @NgModule({
@@ -16,6 +20,10 @@ import {
         FormsModule,
         MatCardModule,
         MatProgressBarModule,
+        MatButtonModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
         RouterModule.forChild(SessionsRoutes)
     ],
     declarations: [

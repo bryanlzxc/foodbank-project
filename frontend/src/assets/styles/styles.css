@@ -89,17 +89,64 @@
     table-layout:fixed;
 }
 
-.session-container{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    position: fixed;
-    align-items: center;
-    justify-content: center;
-}
-
+/* Login Page */
 .session-progress {
     position: relative;
     bottom: -5px;
     z-index: 9999;
+}
+
+.session-progress .mat-progress-bar-buffer {
+    background: rgb(153,202,59);
+}
+
+.page-wrap {
+    display: flex;
+    align-items: center;
+    padding: 40px 1rem;
+    height: 100%;
+}
+
+.height-100 {
+    min-height: 100vh;
+}
+
+.session-form-hold {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.session-form-hold > .mat-card {
+    margin: 0;
+}
+
+.mb-05 {
+    margin-bottom: .5rem !important;
+}
+
+.text-muted {
+    color: rgba(0, 0, 0, .54) !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.form-error-msg {
+    color: #f44336;
+    display: block;
+    padding: 5px 0;
+}
+
+.pb-1 {
+    padding-bottom: 1rem !important;
+}
+
+.mb-1 {
+    margin-bottom: 1rem !important;
 }
