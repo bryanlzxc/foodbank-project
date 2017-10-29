@@ -1,7 +1,8 @@
 import { Component }    from '@angular/core';
 import navbarRoutes     from './../../../../config/routes';
 
-const userType = 'admin';
+let session = JSON.parse(localStorage.getItem('fb-session'));
+const userType = session ? session.usertype : null;
 
 @Component({
     selector: 'navigation',
@@ -14,7 +15,7 @@ export class NavigationComponent {
     public pages;
 
     constructor () {
-        this.pages = navbarRoutes[userType];
+        if (userType) this.pages = navbarRoutes[userType];
     }
 
 }

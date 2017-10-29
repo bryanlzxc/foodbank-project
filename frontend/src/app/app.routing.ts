@@ -1,9 +1,13 @@
 import { Routes }                   from '@angular/router';
 import { BaseLayoutComponent }      from './components/common/layouts/base-layout/base-layout.component';
 import { AuthLayoutComponent }      from './components/common/layouts/auth-layout/auth-layout.component';
-import { AuthService }              from './services/auth.service';
+import { AuthGuard }                from './guards/auth.guard';
+import { AdminGuard }               from './guards/admin.guard';
+import { BeneficiaryGuard }         from './guards/beneficiary.guard';
+import { VolunteerGuard }           from './guards/volunteer.guard';
 
-const userType = 'admin';
+let session = JSON.parse(localStorage.getItem('fb-session'));
+const userType = session ? session.usertype : 'sessions';
 
 export const rootRouterConfig: Routes = [
     {
@@ -24,18 +28,21 @@ export const rootRouterConfig: Routes = [
     {
         path: '',
         component: BaseLayoutComponent,
-        canActivate: [ AuthService ],
+        canActivate: [ AuthGuard ],
         children: [
             {
                 path: 'admin',
+                canActivate: [ AdminGuard ],
                 loadChildren: './views/admin/admin.module#AdminModule'
             },
             {
                 path: 'volunteer',
+                canActivate: [ VolunteerGuard ],
                 loadChildren: './views/volunteer/volunteer.module#VolunteerModule'
             },
             {
                 path: 'beneficiary',
+                canActivate: [ BeneficiaryGuard ],
                 loadChildren: './views/beneficiary/beneficiary.module#BeneficiaryModule'
             }
         ]

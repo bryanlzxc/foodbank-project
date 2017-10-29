@@ -74,6 +74,12 @@
     }
 }
 
+.logout {
+    position: absolute !important;
+    right: 10px !important;
+    background: rgba(0,0,0,0.1) !important;
+}
+
 /* General */
 .change-font{
      font-family: Roboto;
