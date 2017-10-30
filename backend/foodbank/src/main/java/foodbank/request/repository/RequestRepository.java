@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import foodbank.request.entity.Request;
 
+@Repository
 public interface RequestRepository extends MongoRepository<Request, String>{
 
 	List<Request> findRequestsByBeneficiary(String beneficary);
