@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchPipe } from './../search.pipe';
-import { TablesService } from '../../../services/tables.service';
+import { VolunteerService } from './../../../services/volunteer.services';
 
 @Component({
     selector: 'vol-dash',
     templateUrl: './dashboard.component.html',
     styleUrls: [ './dashboard.component.css' ],
-    providers: [TablesService]
+    providers: [VolunteerService]
 })
 
 export class VolunteerDashboardComponent implements OnInit{
@@ -14,11 +14,19 @@ export class VolunteerDashboardComponent implements OnInit{
     columns = [];
     temp = [];
 
-    constructor(private service: TablesService) { }
+    data;
+
+    constructor(private vlnSvc: VolunteerService) { }
 
     ngOnInit() {
-        this.columns = this.service.getDataConf();
-        this.rows = this.temp = this.service.getAll();
+        this.vlnSvc.getVolunteerPackingList().subscribe(res => {
+          if (res) {
+            this.data = res;
+          }
+          
+          this.columns = this.data.title;
+          this.rows = this.temp = this.data.products
+        });
     }
 
     onPacked(item){
@@ -26,7 +34,9 @@ export class VolunteerDashboardComponent implements OnInit{
     }
 
     updateFilter(event) {
+      // console.log(event)
     const val = event.target.value.toLowerCase();
+    console.log(this)
     var columns = Object.keys(this.temp[0]);
     // Removes last "$$index" from "column"
     columns.splice(columns.length -1);

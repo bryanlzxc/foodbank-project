@@ -399,8 +399,13 @@ code {
 }
 .mat-card.p-0 .mat-card-content {
     margin-bottom: 0;
-    padding:  0 1.5rem 1rem;
+    padding:  0 1.5rem 1.5rem;
 }
+
+.mat-card-bottom{
+    padding-bottom:0;
+}
+
 .mat-button,
 .mat-raised-button {
     font-weight: 400 !important;
@@ -1617,6 +1622,11 @@ div.hopscotch-bubble .hopscotch-nav-button.prev:hover {
 
 .vol-table{
     table-layout:fixed;
+}
+
+/* Volunteer Manual Inventory Form */
+.manual-form{
+    width:100%;
 }
 
 /* Login Page */

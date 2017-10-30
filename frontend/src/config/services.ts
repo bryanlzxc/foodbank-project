@@ -32,8 +32,8 @@ const dev_services = {
         'packing-list':''
     },
     'volunteer': {
-        'dashboard':'',
-        'inventory':'',
+        'dashboard':'./../../assets/mock/volunteer/dashboard.json',
+        'inventory':'./../../assets/mock/volunteer/inventory.json',
         'packing-list':''
     },
     'beneficiary': {
