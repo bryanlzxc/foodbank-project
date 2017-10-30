@@ -20,7 +20,8 @@ export class AuthService {
     }
 
     public login (username: string, password: string) {
-        return this.http.get<LoginResponse>(services['auth-success'], JSON.stringify({ username: username, password: password }));
+        return this.http.get<LoginResponse>(services['auth-success']);
+        //JSON.stringify({ username: username, password: password })
     }
 
 }

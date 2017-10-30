@@ -1,42 +1,28 @@
 <div class="row">
-        <p class="col-xs-6 col-md-8 page-title">
+    <p class="col-xs-6 col-md-8 page-title">
         Dashboard
     </p> 
     <div class="col-xs-6 col-md-4 pull-right searchbar" >
-        <input type="text" [(ngModel)]="searchText" 
-            class="form-control" placeholder="Search Food Name" />
+    
     </div>
 </div>
 
-<table class="table table-bordered table-striped table-hover vol-table">
-    <thead>
-        <tr>
-            <th>Name <span class="caret"></span></th>
-            <th>Category <span class="caret"></span></th>
-            <th>Qty <span class="caret"></span></th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of itemList | search:searchText; let i = index">
-            <td>{{ item.name }}</td>
-            <td>{{ item.category }}</td>
-            <td *ngIf="!(i==selectedIndex) else showTextbox">{{ item.qty }}</td>
-            <ng-template #showTextbox>
-                <td *ngIf="(i==selectedIndex)">
-                    <input class="form-control input-sm" id="inputsm" type="text" [(ngModel)]="newQty"/>
-                </td>
-            </ng-template>
-            <td>
-                <button class="btn btn-xs btn-primary" (click)="onEditQty(i)" *ngIf="!(i==selectedIndex) else showUpdate">
-                    <span class="glyphicon glyphicon-pencil"></span> Edit
-                </button>
-                <ng-template #showUpdate>
-                    <button class="btn btn-xs btn-success" (click)="onUpdateQty(i)">
-                        <span class="glyphicon glyphicon-refresh"></span> Update
-                    </button>
-                </ng-template>
-            </td>
-        </tr>    
-    </tbody>
-</table>
+ <mat-input-container class="margin-333" style="width: 100%">
+            <input 
+        matInput 
+        placeholder="Type to filter all columns" 
+        value=""
+        (keyup)='updateFilter($event)'>
+    </mat-input-container>
+
+ <div class="mat-box-shadow margin-333">
+    <ngx-datatable class="material bg-white"
+    [columnMode]="'force'"  
+    [headerHeight]="50"
+    [footerHeight]="50" 
+    [rowHeight]="50"
+    [rows]="rows"
+    [limit]="10"
+    [columns]="columns">
+    </ngx-datatable>   
+</div>   
