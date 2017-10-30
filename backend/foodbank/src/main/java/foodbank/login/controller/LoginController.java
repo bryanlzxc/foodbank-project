@@ -11,6 +11,10 @@ import foodbank.login.entity.LoginOutcome;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
 
+/*
+ * Created by: Lau Peng Liang, Bryan
+ */
+
 @RestController
 @RequestMapping("/authenticate")
 public class LoginController {

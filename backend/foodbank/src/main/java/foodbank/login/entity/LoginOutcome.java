@@ -1,5 +1,9 @@
 package foodbank.login.entity;
 
+/*
+ * Created by: Lau Peng Liang, Bryan
+ */
+
 public class LoginOutcome {
 	
 	private boolean isLoginSuccessful;
