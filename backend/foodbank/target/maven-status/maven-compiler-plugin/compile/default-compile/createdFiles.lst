@@ -1,0 +1,6 @@
+foodbank\inventory\entity\QClassification.class
+foodbank\beneficiary\entity\QBeneficiary.class
+foodbank\admin\entity\QAdmin.class
+foodbank\user\entity\QUser.class
+foodbank\request\entity\QRequest.class
+foodbank\inventory\entity\QCategory.class

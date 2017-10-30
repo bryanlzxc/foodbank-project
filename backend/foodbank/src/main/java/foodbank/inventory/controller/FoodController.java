@@ -8,19 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
-
-import ch.qos.logback.core.filter.Filter;
-
-import com.querydsl.core.alias.Alias;
-
 import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
-import foodbank.inventory.entity.QCategory;
-import foodbank.inventory.entity.QClassification;
 import foodbank.inventory.repository.FoodRepository;
-import foodbank.user.entity.QUser;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -76,7 +67,6 @@ public class FoodController {
 	public List<FoodItem> getFoodItemsInClassification(@PathVariable("category") String category, @PathVariable("classification") String classification) {
 		
 		List<Classification> classifications = getAllClassificationsInCategory(category);
-		System.out.println("Reached here!");
 		for(Classification c : classifications) {
 			if(c.getClassification().equals(classification)) {
 				return c.getFoodItems();
