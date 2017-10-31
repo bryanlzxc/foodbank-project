@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document(collection = "Beneficiary")
-public class Beneficiary {
+public class Beneficiary implements Comparable<Beneficiary> {
 
 	@Id
 	private String id;
@@ -68,6 +68,13 @@ public class Beneficiary {
 	}
 	public void setScore(double score) {
 		this.score = score;
+	}
+	
+	@Override
+	// Natural sort according to descending order of score
+	// A higher score denotes a higher priority to receive FoodItem allocation
+	public int compareTo(Beneficiary o) {
+		return Double.compare(o.score, this.score);
 	}
 	
 	
