@@ -9,23 +9,11 @@ import org.springframework.data.annotation.Id;
 public class FoodItem {
 	
 	@Id
-	private String id;
-	
-	private static int rollingCount = 1;
-	
 	/*
 	 * description is the unique identifier which contains foodname, weight and halal status
 	 */
 	private String description;
 	private int quantity;
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
 	
 	public String getDescription() {
 		return description;
@@ -43,11 +31,13 @@ public class FoodItem {
 		this.quantity = quantity;
 	}
 	
+	public FoodItem() {
+		
+	}
+	
 	public FoodItem(String description, int quantity) {
 		this.description = description;
 		this.quantity = quantity;
-		this.id = "INV" + String.valueOf(rollingCount);
-		rollingCount++;
 	}
 
 }

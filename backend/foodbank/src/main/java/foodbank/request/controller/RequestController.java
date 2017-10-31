@@ -1,15 +1,21 @@
 package foodbank.request.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+
+import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.request.entity.QRequest;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 
@@ -32,53 +38,65 @@ public class RequestController {
 		return this.requestRepository.findAll();
 	}
 	
-	//used for beneficiary page to view their own requests
-	@GetMapping("/beneficiary={beneficiary}")
-	public List<Request> getAllRequestFromBeneficiary(@PathVariable("beneficiary") String beneficiary){
-		return this.requestRepository.findRequestsByBeneficiary(beneficiary);
+	@GetMapping("/beneficiary-name={beneficiaryName}")
+	public List<Request> getAllRequestFromBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName){
+		List<Request> beneficiaryRequests = new ArrayList<Request>();
+		List<Request> requests = this.requestRepository.findAll();
+		for(Request request : requests) {
+			if(request.getBeneficiaryName().equals(beneficiaryName)) {
+				beneficiaryRequests.add(request);
+			}
+		}
+		return beneficiaryRequests;
+	}
+	
+	@GetMapping("/beneficiary-name={beneficiaryName}/fooditem={description}")
+	public Request getRequestOfBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName, @PathVariable("description") String description) {
+		List<Request> requests = getAllRequestFromBeneficiary(beneficiaryName);
+		for(Request request : requests) {
+			if(request.getFoodItemDescription().equals(description)) {
+				return request;
+			}
+		}
+		return null;
+	}
+	
+	@GetMapping("/find-all/fooditem={description}")
+	public List<Request> getAllRequestsByDescription(@PathVariable("description") String description) {
+		QRequest qRequest = new QRequest("request");
+		BooleanExpression filter = qRequest.foodItem.description.eq(description);
+		List<Request> requests = (List<Request>) this.requestRepository.findAll(filter);
+		return requests;
+	}
+	
+	@PutMapping("/create-request")
+	public void createRequest(@RequestBody Request request) {
+		String id = request.getId();
+		String requesterName = request.getBeneficiaryName();
+		String requestedItem = request.getFoodItemDescription();
+		Request storedRequest = getRequestOfBeneficiary(requesterName, requestedItem);
+		if(storedRequest == null) {
+			this.requestRepository.save(request);
+		}
+	}
+	
+	@PostMapping("/update-request")
+	public void updateRequest(@RequestBody Request request) {
+		String id = request.getId();
+		String requesterName = request.getBeneficiaryName();
+		String requestedItem = request.getFoodItemDescription();
+		Request storedRequest = getRequestOfBeneficiary(requesterName, requestedItem);
+		if(storedRequest == null) {
+			this.requestRepository.save(request);
+		} else {
+			storedRequest = request;
+			this.requestRepository.save(storedRequest);
+		}
 	}
 	
 	@DeleteMapping("/delete-request={id}")
 	public void delete(@PathVariable("id") String id) {
 		this.requestRepository.delete(id);
 	}
-	
-	//used for beneficiary to change their qty for current window request qty
-	@PostMapping("/changeqty{id}={qty}")
-	public void changeQty(@PathVariable("id") String id, @PathVariable("qty") int qty) {
-		Request request = this.requestRepository.findById(id);
-		request.setQty(qty);
-		this.requestRepository.save(request);
-	}
-	
-	//check to see if this beneficiary has this specific request, is there is, return it
-	@GetMapping("/{beneficiary}={description}")
-	public Request getRequestOfBeneficiary(@PathVariable("beneficiary") String beneficiary, @PathVariable("description") String description) {
-		List<Request> requestsOfBeneficiary = getAllRequestFromBeneficiary(beneficiary);
-		for(Request r : requestsOfBeneficiary) {
-			if(r.getDescription().equals(description)) {
-				return r;
-			}
-		}
-		return null;	//null means no such request by this beneficiary
-		
-	}
-	
-	@GetMapping("/description={description}")
-	public List<Request> getAllRequestByDescription(@PathVariable("description")String description){
-		return this.requestRepository.findRequestsByDescription(description);
-	}
-	
-	@PostMapping("/insert-request")
-	public void insert(@RequestBody Request request) {
-		String id = request.getId();
-		Request r = getRequestOfBeneficiary(request.getBeneficiary(), request.getDescription());
-		if(r != null) {		//there is such a request by beneficiary yet
-			request.setId(r.getId());	//we want to replace witht he old id to replace
-		}
-		this.requestRepository.save(request);
-	}
-	
-	
 	
 }

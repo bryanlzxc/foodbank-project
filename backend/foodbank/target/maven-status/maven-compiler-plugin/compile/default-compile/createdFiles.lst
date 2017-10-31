@@ -1,3 +1,4 @@
+foodbank\inventory\entity\QFoodItem.class
 foodbank\inventory\entity\QClassification.class
 foodbank\beneficiary\entity\QBeneficiary.class
 foodbank\admin\entity\QAdmin.class

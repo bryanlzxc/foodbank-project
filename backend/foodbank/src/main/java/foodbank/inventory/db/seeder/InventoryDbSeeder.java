@@ -1,4 +1,4 @@
-package foodbank.util.seeder;
+package foodbank.inventory.db.seeder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import foodbank.inventory.db.util.InventoryDbUtil;
 import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
-import foodbank.util.InventoryDbUtil;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -84,7 +84,6 @@ public class InventoryDbSeeder implements CommandLineRunner {
 	
 	@Override
 	public void run(String... strings) throws Exception {
-		
 		ConcurrentHashMap<String, ConcurrentHashMap<String, ArrayList<FoodItem>>> inventoryMap = 
 				InventoryDbUtil.readFromInventoryFile(new File(InventoryDbUtil.class.getClassLoader().getResource("inventory-data.csv").getFile()));
 		List<Category> categories = InventoryDbUtil.generateCategoryList(inventoryMap);

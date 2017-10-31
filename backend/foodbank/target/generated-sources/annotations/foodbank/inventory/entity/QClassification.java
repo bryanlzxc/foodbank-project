@@ -22,9 +22,7 @@ public class QClassification extends BeanPath<Classification> {
 
     public final StringPath classification = createString("classification");
 
-    public final ListPath<FoodItem, SimplePath<FoodItem>> foodItems = this.<FoodItem, SimplePath<FoodItem>>createList("foodItems", FoodItem.class, SimplePath.class, PathInits.DIRECT2);
-
-    public final StringPath id = createString("id");
+    public final ListPath<FoodItem, QFoodItem> foodItems = this.<FoodItem, QFoodItem>createList("foodItems", FoodItem.class, QFoodItem.class, PathInits.DIRECT2);
 
     public QClassification(String variable) {
         super(Classification.class, forVariable(variable));

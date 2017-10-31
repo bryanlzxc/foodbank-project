@@ -29,6 +29,5 @@ public class LoginOutcome {
 		this.isLoginSuccessful = isLoginSuccessful;
 		this.usertype = usertype;
 	}
-	
 
 }
