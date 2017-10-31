@@ -1,5 +1,8 @@
 package foodbank.allocation.entity;
 
+/*
+ * Created by: Lim Jian Quan, Jaren
+ */
 
 public class AllocationFoodItem {
 	private String category;

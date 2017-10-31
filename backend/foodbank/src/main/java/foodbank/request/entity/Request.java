@@ -1,11 +1,18 @@
 package foodbank.request.entity;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.inventory.entity.FoodItem;
+import foodbank.util.DateParser;
+
 /*
- * Done By Shirong
+ * Done By Ng Shirong
  */
+
 @Document(collection = "Request")
 public class Request {
 	//request will be called under beneficiary, when they can see a list of current window requested food stuff
@@ -16,16 +23,15 @@ public class Request {
 	@Id
 	private String id;
 	
-	private String beneficiary;		//this may be changed in the future to contain a beneficiary object
-	private String description;		//this will include halal or non halal as well
-	private int qty;				//number of specific description this beneficiary requested
+	private Beneficiary beneficiary;
+	private FoodItem foodItem;
+	private final String requestCreationDate = DateParser.getCurrentDate(new Date());
 	
-	public Request(String id, String beneficiary, String description, int qty) {
-		this.id = id;
+	public Request(Beneficiary beneficiary, FoodItem foodItem) {
 		this.beneficiary = beneficiary;
-		this.description = description;
-		this.qty = qty;
+		this.foodItem = foodItem;
 	}
+	
 	public Request() {
 		
 	}
@@ -33,30 +39,53 @@ public class Request {
 	public String getId() {
 		return id;
 	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getBeneficiary() {
+	
+	public Beneficiary getBeneficiary() {
 		return beneficiary;
 	}
-	public void setBeneficiary(String beneficiary) {
+	
+	public void setBeneficiary(Beneficiary beneficiary) {
 		this.beneficiary = beneficiary;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getQty() {
-		return qty;
-	}
-	public void setQty(int qty) {
-		this.qty = qty;
+	
+	public String getBeneficiaryName() {
+		return this.beneficiary.getName();
 	}
 	
+	public void setBeneficiaryName(String name) {
+		this.beneficiary.setName(name);
+	}
 	
+	public FoodItem getFoodItem() {
+		return foodItem;
+	}
 	
+	public void setFoodItem(FoodItem foodItem) {
+		this.foodItem = foodItem;
+	}
 	
+	public String getFoodItemDescription() {
+		return this.foodItem.getDescription();
+	}
+	
+	public void setFoodItemDescription(String description) {
+		this.foodItem.setDescription(description);
+	}
+	
+	public int getFoodItemQuantity() {
+		return foodItem.getQuantity();
+	}
+	
+	public void setFoodItemQuantity(int quantity) {
+		this.foodItem.setQuantity(quantity);
+	}
+	
+	public String getRequestCreationDate() {
+		return requestCreationDate;
+	}
 	
 }

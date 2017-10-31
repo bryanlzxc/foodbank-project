@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,26 +18,44 @@ public class QRequest extends EntityPathBase<Request> {
 
     private static final long serialVersionUID = 870918519L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QRequest request = new QRequest("request");
 
-    public final StringPath beneficiary = createString("beneficiary");
+    public final foodbank.beneficiary.entity.QBeneficiary beneficiary;
 
-    public final StringPath description = createString("description");
+    public final StringPath beneficiaryName = createString("beneficiaryName");
+
+    public final foodbank.inventory.entity.QFoodItem foodItem;
+
+    public final StringPath foodItemDescription = createString("foodItemDescription");
+
+    public final NumberPath<Integer> foodItemQuantity = createNumber("foodItemQuantity", Integer.class);
 
     public final StringPath id = createString("id");
 
-    public final NumberPath<Integer> qty = createNumber("qty", Integer.class);
+    public final StringPath requestCreationDate = createString("requestCreationDate");
 
     public QRequest(String variable) {
-        super(Request.class, forVariable(variable));
+        this(Request.class, forVariable(variable), INITS);
     }
 
     public QRequest(Path<? extends Request> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QRequest(PathMetadata metadata) {
-        super(Request.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QRequest(PathMetadata metadata, PathInits inits) {
+        this(Request.class, metadata, inits);
+    }
+
+    public QRequest(Class<? extends Request> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.beneficiary = inits.isInitialized("beneficiary") ? new foodbank.beneficiary.entity.QBeneficiary(forProperty("beneficiary")) : null;
+        this.foodItem = inits.isInitialized("foodItem") ? new foodbank.inventory.entity.QFoodItem(forProperty("foodItem")) : null;
     }
 
 }

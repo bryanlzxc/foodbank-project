@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 foodbank\inventory\entity\Classification.class
 foodbank\user\entity\User.class
 foodbank\MainApp$1.class
@@ -5,6 +6,9 @@ foodbank\inventory\repository\FoodRepository.class
 foodbank\login\controller\LoginController.class
 foodbank\inventory\entity\FoodItem.class
 foodbank\util\InventoryDbUtil.class
+=======
+foodbank\inventory\entity\QFoodItem.class
+>>>>>>> 25cf2bc737f5dbc369e8468e8d88e9ab5083f364
 foodbank\inventory\entity\QClassification.class
 foodbank\inventory\entity\Category.class
 foodbank\beneficiary\entity\QBeneficiary.class

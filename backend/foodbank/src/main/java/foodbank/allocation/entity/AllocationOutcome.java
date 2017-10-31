@@ -6,18 +6,18 @@ package foodbank.allocation.entity;
 
 public class AllocationOutcome {
 	
-	private boolean isAllocationSuccessful;
+	private String status;
 	
-	public boolean getAllocationOutcome() {
-		return isAllocationSuccessful;
+	public String getStatus() {
+		return status;
 	}
 	
-	public void setAllocationOutcome(boolean isAllocationSuccessful) {
-		this.isAllocationSuccessful = isAllocationSuccessful;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
-	public AllocationOutcome(boolean isAllocationSuccessful) {
-		this.isAllocationSuccessful = isAllocationSuccessful;
+	public AllocationOutcome(String status) {
+		this.status = status;
 	}
 	
 

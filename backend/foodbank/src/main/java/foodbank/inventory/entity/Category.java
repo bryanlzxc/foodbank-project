@@ -48,4 +48,15 @@ public class Category {
 		this.classifications = classifications;
 	}
 	
+	public void updateFoodItem(FoodItem foodItem) {
+		for(Classification classification : classifications) {
+			List<FoodItem> foodItems = classification.getFoodItems();
+			for(FoodItem toModify : foodItems) {
+				if(toModify.getDescription().equals(foodItem.getDescription())) {
+					toModify.setQuantity(foodItem.getQuantity());
+				}
+			}
+		}
+	}
+	
 }

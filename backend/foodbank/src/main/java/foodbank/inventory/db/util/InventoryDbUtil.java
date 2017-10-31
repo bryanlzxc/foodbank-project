@@ -1,4 +1,4 @@
-package foodbank.util;
+package foodbank.inventory.db.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,13 +50,9 @@ public class InventoryDbUtil {
 								doesFoodItemExistInList = true;
 								foodItem.setQuantity(Integer.parseInt(currentLineArray[3]) + foodItem.getQuantity());
 								break;
-							} else {
-								//System.out.println("Adding this food item to the list = " + currentLineArray[2]);
-								//iterator.add(new FoodItem(currentLineArray[2], Integer.parseInt(currentLineArray[3])));
 							}
 						}
 						if(!doesFoodItemExistInList) {
-							System.out.println("Adding this food item to the list = " + currentLineArray[2] + " in this quantity = " + currentLineArray[3]);
 							foodItems.add(new FoodItem(currentLineArray[2], Integer.parseInt(currentLineArray[3])));
 						}
 					} else {

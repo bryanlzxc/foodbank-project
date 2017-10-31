@@ -2,28 +2,27 @@ package foodbank.allocation.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.allocation.entity.Allocation;
+import foodbank.allocation.entity.AllocationFoodItem;
 import foodbank.allocation.entity.AllocationOutcome;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.beneficiary.controller.BeneficiaryController;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
+import foodbank.inventory.controller.FoodController;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
-import foodbank.login.entity.LoginOutcome;
+import foodbank.request.controller.RequestController;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
-import foodbank.user.entity.User;
 
 /*
  * Created by: Lim Jian Quan, Jaren
@@ -38,6 +37,9 @@ public class AllocationController {
 	private RequestRepository requestRepository;
 	private BeneficiaryRepository beneficiaryRepository;
 	private FoodRepository foodRepository;
+	private RequestController requestController = new RequestController(requestRepository);
+	private BeneficiaryController beneficiaryController = new BeneficiaryController(beneficiaryRepository);
+	private FoodController foodController = new FoodController(foodRepository);
 	
 	public AllocationController(AllocationRepository allocationRepository) {
 		this.allocationRepository = allocationRepository;
@@ -51,10 +53,11 @@ public class AllocationController {
 	@PostMapping("/update-allocation")
 	public AllocationOutcome getAllocationOutcome() {
 		/** 
+		 * TODO
 		 * This should return me the success status of the allocation
 		 */
 		
-		return null;
+		return new AllocationOutcome("successful");
 		/*
 		Allocation storedAllocationDetails = this.allocationRepository.findByUsername(user.getUsername());
 		if(storedUserDetails != null) {
@@ -67,19 +70,61 @@ public class AllocationController {
 	}
 	
 	@PostMapping("/allocation-list")
-	public String runAllocationAlgorithm() {
+	public ArrayList<Allocation> runAllocationAlgorithm() {
 		
-		HashMap<Beneficiary, ArrayList<FoodItem>> allocatedDetail = allocateFoodItem();
+		ArrayList<Allocation> allocationList = new ArrayList<>();
 		
-		if (allocatedDetail.isEmpty()) {
-			return "Unable to allocate";
-		} else {
-			return "Allocation successful with id=<some_id>";
+		// Obtain and sort Beneficiary list
+		List<Beneficiary> bvList = beneficiaryController.getAllRequest();
+		Collections.sort(bvList);
+		
+		// Go through each bv and obtain the list of requests by them
+		for (Beneficiary bv : bvList) {
+			String name = bv.getName();
+			double score = bv.getScore();
+			ArrayList<AllocationFoodItem> afiList = new ArrayList<>();
+			List<Request> reqList = requestController.getAllRequestFromBeneficiary(name);
+			
+			// Check the request against the existing fooditems
+			for (Request req : reqList) {
+				FoodItem reqFI = req.getFoodItem();
+				int reqQty = reqFI.getQuantity();
+				
+				String reqDescription = req.getFoodItemDescription();
+				String[] itemGroup = foodController.findItemGroup(reqDescription); // [0]: category, [1]: classification
+				int currentQty = foodController.getFoodItemQuantity(reqDescription);	// some error prevention step here required
+				int alQty = 0;
+				
+				/** 
+				 * << KIV >>
+				 * Write a method to do a check for allocative efficiency
+				 * If there are 100 FoodItem
+				 * First priority bv requests 95 FoodItem, next ten priorities ask for 
+				 * Maybe some kind of weighted ratio --> their score lets them have % of the current stock they ask for  
+				 **/
+				
+				// Simple decision criteria
+				// Allocate all stock if there requested amt is proportional to its score
+				// Otherwise, give the largest possible amt afforded to its score
+				if (reqQty <= currentQty*score ) {
+					alQty = reqQty;
+				} else {
+					alQty = (int) (currentQty*score);
+				}
+				
+				// Construct the AllocatedFoodItem and add to afiList
+				afiList.add(new AllocationFoodItem(itemGroup[0], itemGroup[1], reqDescription, reqQty, alQty));
+				
+			}
+			// Create Allocation object and add to the allocationList
+			allocationList.add(new Allocation(name, afiList));
 		}
+		
+		return allocationList;
 		
 	}
 	
-	/* Main Algo for allocation */
+	/* Main Algo for allocation 
 	public HashMap<Beneficiary, ArrayList<FoodItem>> allocateFoodItem() {
 		
 		HashMap<Beneficiary, ArrayList<FoodItem>> allocationDetail = new HashMap<>();
@@ -98,7 +143,7 @@ public class AllocationController {
 				 * << KIV >>
 				 * Is there a priority for requests?? 
 				 * If so, will need a Comparable/Comparator
-				 * **/
+				 * **
 				for (Request req : reqList) {
 					// check if it exists in list
 					FoodItem fi = fiMap.get(req.getDescription());
@@ -109,7 +154,7 @@ public class AllocationController {
 					 * If there are 100 FoodItem
 					 * First priority bv requests 95 FoodItem, next ten priorities ask for 
 					 * Maybe some kind of weighted ratio --> their score lets them have % of the current stock they ask for 
-					 * **/
+					 * **
 					
 					if (fi != null) fiForBvList.add(fi);
 				}
@@ -120,9 +165,9 @@ public class AllocationController {
 		return allocationDetail;
 	}
 	
-	/* Obtain all the Beneficiary for use */
+	/* Obtain all the Beneficiary for use *
 	public List<Beneficiary> getAllBeneficiarySortedByScore() {
-		/** Find a way to implement the following **/
+		/** Find a way to implement the following **
 		// Get the beneficiaries from the database
 		// Sort by scores descending --> Collections.sort() method due to natural Comparable<Beneficiary>
 		// Return the sorted list
@@ -134,10 +179,10 @@ public class AllocationController {
 		return bvList;
 	}
 	
-	/* Obtain the Requests that a Beneficiary makes*/
+	/* Obtain the Requests that a Beneficiary makes*
 	public List<Request> getAllRequestsByBeneficiary(String beneficiaryName) {
 		
-		/** Find a way to implement the following **/
+		/** Find a way to implement the following **
 		// Search for the Requests by Beneficiary name
 		// List<Request> getAllRequestFromBeneficiary(@PathVariable("beneficiary") String beneficiary)
 		
@@ -151,10 +196,10 @@ public class AllocationController {
 		}
 	}
 	
-	/* Obtain all the FoodItem available for donation */
+	/* Obtain all the FoodItem available for donation *
 	public HashMap<String, FoodItem> getAllFoodItemsForDonation() {
 		
-		/** Find a way to implement the following **/
+		/** Find a way to implement the following **
 		// get all the fooditems from the database
 		
 		// convert into HashMap with description as key faster searching 
@@ -163,5 +208,5 @@ public class AllocationController {
 		
 		return null;
 	}
-	
+	*/
 }

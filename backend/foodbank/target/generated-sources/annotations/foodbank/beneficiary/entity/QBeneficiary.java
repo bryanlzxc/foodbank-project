@@ -25,6 +25,8 @@ public class QBeneficiary extends EntityPathBase<Beneficiary> {
 
     public final StringPath name = createString("name");
 
+    public final NumberPath<Integer> numBeneficiary = createNumber("numBeneficiary", Integer.class);
+
     public final NumberPath<Integer> numbeneficiary = createNumber("numbeneficiary", Integer.class);
 
     public final NumberPath<Double> score = createNumber("score", Double.class);

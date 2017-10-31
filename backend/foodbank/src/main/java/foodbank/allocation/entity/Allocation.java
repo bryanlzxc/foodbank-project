@@ -1,12 +1,9 @@
 package foodbank.allocation.entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import foodbank.inventory.entity.FoodItem;
 
 /*
  * Created by Lim Jian Quan, Jaren
@@ -17,6 +14,33 @@ public class Allocation {
 	@Id
 	private String id;
 	
+	private String name;
+	private ArrayList<AllocationFoodItem> list;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public ArrayList<AllocationFoodItem> getList() {
+		return list;
+	}
+	public void setList(ArrayList<AllocationFoodItem> list) {
+		this.list = list;
+	}
+	
+	public Allocation() {
+		// empty constructor required for put & post mappings
+	}
+	
+	public Allocation(String name, ArrayList<AllocationFoodItem> list) {
+		this.name = name;
+		this.list = list;
+	} 
+	
+	
+	/*
 	// BV : Description+Qty
 	private HashMap<String, ArrayList<FoodItem>> details;
 	
@@ -47,6 +71,6 @@ public class Allocation {
 	public Allocation(HashMap<String, ArrayList<FoodItem>> details) {
 		this.details = details;
 	}
-	
+	*/
 
 }

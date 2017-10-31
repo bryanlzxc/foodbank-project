@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
- * Done by Shirong
+ * Done by Ng Shirong
  */
 
 @Document(collection = "Beneficiary")
@@ -15,19 +15,19 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	
 	private String name;
 	private String sector;
-	private int numbeneficiary;
+	private int numBeneficiary;
 	private String address;
 	private double score;
 	
 	//Constructors
-	public Beneficiary(String id, String name, String sector, int numbeneficiary, String address, double score) {
-		this.id = id;
+	public Beneficiary(String name, String sector, int numBeneficiary, String address, double score) {
 		this.name = name;
 		this.sector = sector;
-		this.numbeneficiary = numbeneficiary;
+		this.numBeneficiary = numBeneficiary;
 		this.address = address;
 		this.score = score;
 	}
+	
 	public Beneficiary() {
 		
 	}
@@ -36,36 +36,47 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	public String getId() {
 		return id;
 	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getSector() {
 		return sector;
 	}
+	
 	public void setSector(String sector) {
 		this.sector = sector;
 	}
+	
 	public int getNumbeneficiary() {
-		return numbeneficiary;
+		return numBeneficiary;
 	}
-	public void setNumbeneficiary(int numbeneficiary) {
-		this.numbeneficiary = numbeneficiary;
+	
+	public void setNumbeneficiary(int numBeneficiary) {
+		this.numBeneficiary = numBeneficiary;
 	}
+	
 	public String getAddress() {
 		return address;
 	}
+	
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	
 	public double getScore() {
 		return score;
 	}
+	
 	public void setScore(double score) {
 		this.score = score;
 	}
@@ -76,8 +87,4 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	public int compareTo(Beneficiary o) {
 		return Double.compare(o.score, this.score);
 	}
-	
-	
-	
-	
 }
