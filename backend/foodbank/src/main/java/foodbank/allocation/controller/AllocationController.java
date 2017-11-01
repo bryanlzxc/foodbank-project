@@ -34,12 +34,12 @@ public class AllocationController {
 	
 	@Autowired
 	private AllocationRepository allocationRepository;
+	@Autowired
 	private RequestRepository requestRepository;
+	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
+	@Autowired
 	private FoodRepository foodRepository;
-	private RequestController requestController = new RequestController(requestRepository);
-	private BeneficiaryController beneficiaryController = new BeneficiaryController(beneficiaryRepository);
-	private FoodController foodController = new FoodController(foodRepository);
 	
 	public AllocationController(AllocationRepository allocationRepository) {
 		this.allocationRepository = allocationRepository;
@@ -55,15 +55,20 @@ public class AllocationController {
 		
 		List<Allocation> allocationList = new ArrayList<>();
 		
+		// Create the repos
+		RequestController requestController = new RequestController(requestRepository);
+		BeneficiaryController beneficiaryController = new BeneficiaryController(beneficiaryRepository);
+		FoodController foodController = new FoodController(foodRepository);
+		
 		// get all the requests, grouped by FoodItem and sorted by priority
-		HashMap<String, List<Request>> requestByFoodItemMap = groupRequestByFoodItem();
+		HashMap<String, List<Request>> requestByFoodItemMap = groupRequestByFoodItem(requestController);
 		Set<String> keySet = requestByFoodItemMap.keySet();
 		
 		// loop through the HashMap
 		/** KIV: This needs to be changed, incorrect use of data structure **/
 		for (String description : keySet) {
 			List<Request> currentRequestFoodItemList = requestByFoodItemMap.get(description);
-			int inventoryQty = getInventoryQty(description);
+			int inventoryQty = getInventoryQty(description, foodController);
 			
 			// loop through the list of Requests, start allocating
 			for (Request currentRequest : currentRequestFoodItemList) {
@@ -79,7 +84,7 @@ public class AllocationController {
 				inventoryQty -= allocatedQty;	// decrement
 				
 				// create the AllocationFoodItem object
-				String[] itemGroup = getFoodItemGroup(description);
+				String[] itemGroup = getFoodItemGroup(description, foodController);
 				AllocationFoodItem afi = new AllocationFoodItem(itemGroup[0], itemGroup[1], description, reqQty, allocatedQty);
 				
 				addIntoAllocationList(allocationList, afi, currentRequest.getBeneficiaryName());
@@ -107,7 +112,7 @@ public class AllocationController {
 	////////////////////////// Helper methods ////////////////////////////////
 	
 	/* Groups the requests based on FoodItem */
-	protected HashMap<String, List<Request>> groupRequestByFoodItem() {
+	protected HashMap<String, List<Request>> groupRequestByFoodItem(RequestController requestController) {
 		
 		// setup: HashMap to return & List of all Request objects
 		HashMap<String, List<Request>> requestByFoodItemMap = new HashMap<>();
@@ -138,12 +143,12 @@ public class AllocationController {
 	}
 	
 	/* Get the current inventory level */
-	protected int getInventoryQty(String description) {
+	protected int getInventoryQty(String description, FoodController foodController) {
 		return foodController.getFoodItemQuantity(description);
 	}
 	
 	/* Get the FoodItem group */
-	protected String[] getFoodItemGroup(String description) {
+	protected String[] getFoodItemGroup(String description, FoodController foodController) {
 		// [0]: category, [1]: classification
 		return foodController.findItemGroup(description);
 	}

@@ -1,34 +1,9 @@
-<<<<<<< HEAD
-foodbank\inventory\entity\Classification.class
-foodbank\user\entity\User.class
-foodbank\MainApp$1.class
-foodbank\inventory\repository\FoodRepository.class
-foodbank\login\controller\LoginController.class
-foodbank\inventory\entity\FoodItem.class
-foodbank\util\InventoryDbUtil.class
-=======
 foodbank\inventory\entity\QFoodItem.class
->>>>>>> 25cf2bc737f5dbc369e8468e8d88e9ab5083f364
 foodbank\inventory\entity\QClassification.class
-foodbank\inventory\entity\Category.class
 foodbank\beneficiary\entity\QBeneficiary.class
-foodbank\request\controller\RequestController.class
-foodbank\user\repository\UserRepository.class
-foodbank\admin\entity\Admin.class
-foodbank\beneficiary\entity\Beneficiary.class
-foodbank\inventory\controller\FoodController.class
 foodbank\admin\entity\QAdmin.class
-foodbank\admin\repository\AdminRepository.class
 foodbank\user\entity\QUser.class
-foodbank\util\seeder\InventoryDbSeeder.class
-foodbank\allocation\AllocationAlgorithm.class
-foodbank\MainApp.class
-foodbank\request\repository\RequestRepository.class
+foodbank\allocation\entity\QAllocationFoodItem.class
 foodbank\request\entity\QRequest.class
-foodbank\user\controller\UserController.class
-foodbank\request\entity\Request.class
-foodbank\beneficiary\controller\BeneficiaryController.class
-foodbank\beneficiary\repository\BeneficiaryRepository.class
 foodbank\inventory\entity\QCategory.class
-foodbank\admin\controller\AdminController.class
-foodbank\login\entity\LoginOutcome.class
+foodbank\allocation\entity\QAllocation.class
