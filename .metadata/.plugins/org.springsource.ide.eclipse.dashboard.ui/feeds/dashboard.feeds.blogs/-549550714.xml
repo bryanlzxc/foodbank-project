@@ -5,7 +5,296 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2017-10-31T14:42:27Z</updated>
+  <updated>2017-11-01T04:29:00Z</updated>
+  <entry>
+    <title>Spring Tips: Spring Shell</title>
+    <link rel="alternate" href="https://spring.io/blog/2017/11/01/spring-tips-spring-shell" />
+    <category term="engineering" label="Engineering" />
+    <author>
+      <name>Josh Long</name>
+    </author>
+    <id>tag:spring.io,2017-10-25:3074</id>
+    <updated>2017-11-01T04:29:00Z</updated>
+    <content type="html">&lt;p&gt;Speaker: &lt;a href="https://www.twitter.com/starbuxman"&gt;Josh Long&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Hi Spring fans! In this installment of Spring Tips we&amp;rsquo;ll look at how to use the new old framework you&amp;rsquo;ve probably never heard of, Spring Shell! Spring Shell supports the creation of interactive shell-based applications.&lt;/p&gt;
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/h6nMjjxJWjk" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Cloud Finchley.M3 Released</title>
+    <link rel="alternate" href="https://spring.io/blog/2017/10/31/spring-cloud-finchley-m3-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Spencer Gibb</name>
+    </author>
+    <id>tag:spring.io,2017-10-30:3078</id>
+    <updated>2017-10-31T17:39:00Z</updated>
+    <content type="html">&lt;p&gt;On behalf of the community, I am pleased to announce that the Milestone 3 (M3) of the &lt;a href="https://cloud.spring.io"&gt;Spring Cloud Finchley&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href="https://repo.spring.io/milestone/"&gt;Spring Milestone&lt;/a&gt; repository. You can check out the Finchley &lt;a href="https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Finchley-Release-Notes"&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;&lt;h2&gt;&lt;a href="#notable-changes-in-the-finchley-release-train" class="anchor" name="notable-changes-in-the-finchley-release-train"&gt;&lt;/a&gt;Notable Changes in the Finchley Release Train&lt;/h2&gt;
+&lt;p&gt;A common theme among many of the projects included in the Finchley release train is adding support for WebFlux, WebClient, Micrometer or other integrations within the Spring Reactive theme.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-sleuth" class="anchor" name="spring-cloud-sleuth"&gt;&lt;/a&gt;Spring Cloud Sleuth&lt;/h3&gt;
+&lt;p&gt;WebFlux and Reactor are supported again. OAuth support is not included. The &lt;code&gt;spring-cloud-sleuth-zipkin-stream&lt;/code&gt; module has been removed.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-gateway" class="anchor" name="spring-cloud-gateway"&gt;&lt;/a&gt;Spring Cloud Gateway&lt;/h3&gt;
+&lt;p&gt;A new &lt;code&gt;GatewayFilter&lt;/code&gt; interface was introduced to reduce any confusion with the existing &lt;code&gt;WebFilter&lt;/code&gt; from Spring Framework. Any custom implementations will now need to implement &lt;code&gt;GatewayFilterFactory&lt;/code&gt; rather than &lt;code&gt;WebFilterFactory&lt;/code&gt;. Also references to &lt;code&gt;WebFilterFactories&lt;/code&gt; will need to be replaced with &lt;code&gt;GatewayFilterFactories&lt;/code&gt; for the Java DSL.&lt;/p&gt;
+&lt;p&gt;The Java DSL has changed slightly as well. The &lt;code&gt;uri()&lt;/code&gt; method is now the terminating operator rather than &lt;code&gt;and()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;What used to be written as:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Bean&#xD;
+public RouteLocator wsRouteLocator() {&#xD;
+    return Routes.locator()&#xD;
+            .route(&amp;quot;testws&amp;quot;)&#xD;
+                .uri(&amp;quot;ws://localhost:&amp;quot;+this.wsPort)&#xD;
+                .predicate(alwaysTrue())&#xD;
+                .and()&#xD;
+            .build();&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;would now be written like:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint java"&gt;@Bean&#xD;
+public RouteLocator wsRouteLocator() {&#xD;
+    return Routes.locator()&#xD;
+            .route(&amp;quot;testws&amp;quot;)&#xD;
+                .predicate(alwaysTrue())&#xD;
+                .uri(&amp;quot;ws://localhost:&amp;quot;+this.wsPort)&#xD;
+            .build();&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Support for the gateway is available on &lt;a href="http://start.spring.io"&gt;http://start.spring.io&lt;/a&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-netflix" class="anchor" name="spring-cloud-netflix"&gt;&lt;/a&gt;Spring Cloud Netflix&lt;/h3&gt;
+&lt;p&gt;Some packages were refactored to modules, but this shouldn&amp;rsquo;t affect anyone using the starters.&lt;/p&gt;
+&lt;p&gt;The detailed &lt;code&gt;/routes&lt;/code&gt; actuator is now accessed via &lt;code&gt;/routes/details&lt;/code&gt; rather than &lt;code&gt;/routes?format=details&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Eureka was updated to version 1.8.4&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-contract" class="anchor" name="spring-cloud-contract"&gt;&lt;/a&gt;Spring Cloud Contract&lt;/h3&gt;
+&lt;p&gt;Support was added for Rest Assured tests with Spring RestDocs.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-bus" class="anchor" name="spring-cloud-bus"&gt;&lt;/a&gt;Spring Cloud Bus&lt;/h3&gt;
+&lt;p&gt;Bus endpoints were remapped from &lt;code&gt;/bus/*&lt;/code&gt; to &lt;code&gt;/bus-*&lt;/code&gt;. (This might change again with feedback from the community)&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Old &lt;/th&gt;
+      &lt;th&gt;New &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;/bus/env&lt;/code&gt; &lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;/bus-env&lt;/code&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;/bus/refresh&lt;/code&gt; &lt;/td&gt;
+      &lt;td&gt;&lt;code&gt;/bus-refresh&lt;/code&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;&lt;h3&gt;&lt;a href="#spring-cloud-aws" class="anchor" name="spring-cloud-aws"&gt;&lt;/a&gt;Spring Cloud Aws&lt;/h3&gt;
+&lt;p&gt;Spring Cloud AWS is not yet compatible with the Finchley release train.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-task" class="anchor" name="spring-cloud-task"&gt;&lt;/a&gt;Spring Cloud Task&lt;/h3&gt;
+&lt;p&gt;A new Task milestone will be included in the next Finchley milestone.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-vault" class="anchor" name="spring-cloud-vault"&gt;&lt;/a&gt;Spring Cloud Vault&lt;/h3&gt;
+&lt;p&gt;Added support for Vault&amp;rsquo;s database backend.&lt;/p&gt;&lt;h3&gt;&lt;a href="#spring-cloud-commons" class="anchor" name="spring-cloud-commons"&gt;&lt;/a&gt;Spring Cloud Commons&lt;/h3&gt;
+&lt;p&gt;Internals were upgrade to be compatible with Spring Boot 2. Any feedback on &lt;code&gt;RefreshScope&lt;/code&gt; or &lt;code&gt;@ConfigurationProperties&lt;/code&gt; rebinding would be appreciated.&lt;/p&gt;&lt;h3&gt;&lt;a href="#deprecated-starters-removed" class="anchor" name="deprecated-starters-removed"&gt;&lt;/a&gt;Deprecated starters removed&lt;/h3&gt;
+&lt;p&gt;A number of starters that did not follow normal Spring Cloud naming conventions were renamed in &lt;a href="https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes#renamed-starters"&gt;Edgware&lt;/a&gt;. Below is a table of the removed starters and their replacements:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Removed &lt;/th&gt;
+      &lt;th&gt;Finchley Starter &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-archaius &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-archaius &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-atlas &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-atlas &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-eureka &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-eureka-client &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-eureka-server &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-eureka-server &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-feign &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-openfeign &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-hystrix &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-hystrix &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-hystrix-dashboard &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-hystrix-dashboard &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-ribbon &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-ribbon &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-spectator &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-spectator &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-turbine &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-turbine &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-turbine-stream &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-turbine-stream &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;spring-cloud-starter-zuul &lt;/td&gt;
+      &lt;td&gt;spring-cloud-starter-netflix-zuul &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;&lt;h3&gt;&lt;a href="#deprecated-starters-removed" class="anchor" name="deprecated-starters-removed"&gt;&lt;/a&gt;Deprecated starters removed&lt;/h3&gt;
+&lt;p&gt;The following modules were updated as part of Finchley.M3:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Module &lt;/th&gt;
+      &lt;th&gt;Version &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Dependencies &lt;/td&gt;
+      &lt;td&gt;2.0.0.M4 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Sleuth &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Gateway &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Config &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Cloudfoundry &lt;/td&gt;
+      &lt;td&gt;2.0.0.M1 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Build &lt;/td&gt;
+      &lt;td&gt;2.0.0.M4 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Consul &lt;/td&gt;
+      &lt;td&gt;2.0.0.M2 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Netflix &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Security &lt;/td&gt;
+      &lt;td&gt;2.0.0.M1 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Contract &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Bus &lt;/td&gt;
+      &lt;td&gt;2.0.0.M2 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Boot Starter &lt;/td&gt;
+      &lt;td&gt;2.0.0.M5 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Aws &lt;/td&gt;
+      &lt;td&gt;2.0.0.M1 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Boot Dependencies &lt;/td&gt;
+      &lt;td&gt;2.0.0.M5 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Stream &lt;/td&gt;
+      &lt;td&gt;Elmhurst.M2 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Task &lt;/td&gt;
+      &lt;td&gt;2.0.0.M1 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Vault &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Zookeeper &lt;/td&gt;
+      &lt;td&gt;2.0.0.M2 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Boot &lt;/td&gt;
+      &lt;td&gt;2.0.0.M5 &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spring Cloud Commons &lt;/td&gt;
+      &lt;td&gt;2.0.0.M3 &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;&lt;h3&gt;&lt;a href="#feedback" class="anchor" name="feedback"&gt;&lt;/a&gt;Feedback&lt;/h3&gt;
+&lt;p&gt;As always, we welcome feedback on &lt;a href="https://github.com/spring-cloud/"&gt;GitHub&lt;/a&gt;, on &lt;a href="https://gitter.im/spring-cloud/spring-cloud"&gt;Gitter&lt;/a&gt;, on &lt;a href="http://stackoverflow.com/questions/tagged/spring-cloud"&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href="https://twitter.com/SpringCloud"&gt;Twitter&lt;/a&gt;.&lt;/p&gt;&lt;h3&gt;&lt;a href="#getting-started" class="anchor" name="getting-started"&gt;&lt;/a&gt;Getting Started&lt;/h3&gt;
+&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;&amp;lt;repositories&amp;gt;&#xD;
+    &amp;lt;repository&amp;gt;&#xD;
+        &amp;lt;id&amp;gt;spring-milestones&amp;lt;/id&amp;gt;&#xD;
+        &amp;lt;name&amp;gt;Spring Milestones&amp;lt;/name&amp;gt;&#xD;
+        &amp;lt;url&amp;gt;http://repo.spring.io/milestone&amp;lt;/url&amp;gt;&#xD;
+        &amp;lt;snapshots&amp;gt;&#xD;
+            &amp;lt;enabled&amp;gt;false&amp;lt;/enabled&amp;gt;&#xD;
+        &amp;lt;/snapshots&amp;gt;&#xD;
+    &amp;lt;/repository&amp;gt;&#xD;
+&amp;lt;/repositories&amp;gt;&#xD;
+&amp;lt;dependencyManagement&amp;gt;&#xD;
+    &amp;lt;dependencies&amp;gt;&#xD;
+        &amp;lt;dependency&amp;gt;&#xD;
+            &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+            &amp;lt;artifactId&amp;gt;spring-cloud-dependencies&amp;lt;/artifactId&amp;gt;&#xD;
+            &amp;lt;version&amp;gt;Finchley.M3&amp;lt;/version&amp;gt;&#xD;
+            &amp;lt;type&amp;gt;pom&amp;lt;/type&amp;gt;&#xD;
+            &amp;lt;scope&amp;gt;import&amp;lt;/scope&amp;gt;&#xD;
+        &amp;lt;/dependency&amp;gt;&#xD;
+    &amp;lt;/dependencies&amp;gt;&#xD;
+&amp;lt;/dependencyManagement&amp;gt;&#xD;
+&amp;lt;dependencies&amp;gt;&#xD;
+    &amp;lt;dependency&amp;gt;&#xD;
+        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+        &amp;lt;artifactId&amp;gt;spring-cloud-starter-config&amp;lt;/artifactId&amp;gt;&#xD;
+    &amp;lt;/dependency&amp;gt;&#xD;
+    &amp;lt;dependency&amp;gt;&#xD;
+        &amp;lt;groupId&amp;gt;org.springframework.cloud&amp;lt;/groupId&amp;gt;&#xD;
+        &amp;lt;artifactId&amp;gt;spring-cloud-starter-netflix-eureka-client&amp;lt;/artifactId&amp;gt;&#xD;
+    &amp;lt;/dependency&amp;gt;&#xD;
+    ...&#xD;
+&amp;lt;/dependencies&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or with Gradle:&lt;/p&gt;
+&lt;pre&gt;&lt;code class="prettyprint"&gt;buildscript {&#xD;
+    dependencies {&#xD;
+        classpath &amp;quot;io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE&amp;quot;&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+repositories {&#xD;
+    maven {&#xD;
+        url &amp;#39;http://repo.spring.io/milestone&amp;#39;&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+apply plugin: &amp;quot;io.spring.dependency-management&amp;quot;&#xD;
+&#xD;
+dependencyManagement {&#xD;
+    imports {&#xD;
+        mavenBom &amp;#39;org.springframework.cloud:spring-cloud-dependencies:Finchley.M3&amp;#39;&#xD;
+    }&#xD;
+}&#xD;
+&#xD;
+dependencies {&#xD;
+    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-config&amp;#39;&#xD;
+    compile &amp;#39;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&amp;#39;&#xD;
+    ...&#xD;
+}
+&lt;/code&gt;&lt;/pre&gt;</content>
+  </entry>
   <entry>
     <title>Spring Cloud Pipelines 1.0.0.M7 Released</title>
     <link rel="alternate" href="https://spring.io/blog/2017/10/31/spring-cloud-pipelines-1-0-0-m7-released" />
@@ -1367,49 +1656,5 @@ Spring IO Platform testing is a critical component, so we are still working on m
 &lt;p&gt;Spring Boot 1.5.8 includes &lt;a href="https://github.com/spring-projects/spring-boot/milestone/91?closed=1"&gt;over 40 fixes, improvements and dependency updates&lt;/a&gt;. Thanks to all that have contributed with issue reports and pull requests.&lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
 &lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="http://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="http://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/1.5.8.RELEASE/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Tool Suite 3.9.1 released</title>
-    <link rel="alternate" href="https://spring.io/blog/2017/10/12/spring-tool-suite-3-9-1-released" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Martin Lippert</name>
-    </author>
-    <id>tag:spring.io,2017-10-12:3064</id>
-    <updated>2017-10-12T07:30:27Z</updated>
-    <content type="html">&lt;p&gt;I am happy to announce the 3.9.1 release of the Spring Tool Suite, our Eclipse-based tooling.&lt;/p&gt;
-&lt;p&gt;Highlights from this release include:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;updated to Eclipse Oxygen.1a release (&lt;a href="https://www.eclipse.org/oxygen/noteworthy/"&gt;https://www.eclipse.org/oxygen/noteworthy/&lt;/a&gt;)&lt;/li&gt;
-  &lt;li&gt;includes support for JDK9 and JUnit 5 (&lt;a href="https://www.eclipse.org/eclipse/news/4.7.1a/"&gt;https://www.eclipse.org/eclipse/news/4.7.1a/&lt;/a&gt;)&lt;/li&gt;
-  &lt;li&gt;updated Spring Cloud CLI integration (switch to on-demand install)&lt;/li&gt;
-  &lt;li&gt;experimental boot dashboard extension to inspect beans of running boot apps&lt;/li&gt;
-  &lt;li&gt;refactoring support to convert application.properties to application.yml&lt;/li&gt;
-  &lt;li&gt;a number of important bug fixes (organize imports shortcut is back, for example)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;To download the distributions, please go visit: &lt;a href="https://spring.io/tools/sts/all"&gt;https://spring.io/tools/sts/all&lt;/a&gt;&lt;br/&gt;Detailed new and noteworthy notes can be found here: &lt;a href="http://docs.spring.io/sts/nan/v391/NewAndNoteworthy.html"&gt;STS 3.9.1 New &amp;amp; Noteworthy&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;STS 3.9.2 is scheduled to be released on top of Eclipse Oxygen.2 (4.7.2) in late December 2017.&lt;/p&gt;
-&lt;p&gt;Enjoy!&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Spring Boot 2.0.0 M5 available now</title>
-    <link rel="alternate" href="https://spring.io/blog/2017/10/12/spring-boot-2-0-0-m5-available-now" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Phil Webb</name>
-    </author>
-    <id>tag:spring.io,2017-10-12:3063</id>
-    <updated>2017-10-12T02:57:45Z</updated>
-    <content type="html">&lt;p&gt;Spring Boot 2.0.0 M5 has been released and is now available from &lt;a href="http://repo.spring.io/milestone/"&gt;our milestone repository&lt;/a&gt;. This release closes &lt;a href="https://github.com/spring-projects/spring-boot/milestone/79?closed=1"&gt;168 issues and pull requests&lt;/a&gt; and continues our progress towards 2.0 GA. Thanks to everyone that has contributed!&lt;/p&gt;
-&lt;p&gt;This milestone refines a number of items from M4, and provides a number of notable new features:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Initial support for Java 9&lt;/strong&gt; - We&amp;rsquo;ll continue to refine Java 9 support, but this release should work for basic applications. Check out &lt;a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-with-Java-9"&gt;this wiki page for more details&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;OAuth 2.0 Client support from Spring Security&lt;/strong&gt; - Spring Security is starting to ship more OAuth 2.0 features. This release of Spring Boot provides auto-configuration for Spring Security&amp;rsquo;s OAauth 2.0 client support.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;JSON-B Support&lt;/strong&gt; - We now offer support for JSON-B alongside our existing Jackson and Gson integrations. We continue to recommend Jackson as our default choice.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Session Actuator endpoint&lt;/strong&gt; - Users of Spring Session can now view and expire sessions directly from the actuator.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For a complete list of changes, and upgrade instructions, see the &lt;a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0.0-M5-Release-Notes"&gt;Spring Boot 2.0.0.M5 Release Notes&lt;/a&gt; on the WIKI. &lt;/p&gt;
-&lt;p&gt;To get started with Spring Boot 2.0 M5 and discover those new feature, you can easily bootstrap a new project on &lt;a href="https://start.spring.io"&gt;start.spring.io&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://projects.spring.io/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-boot/docs/2.0.0.M4/reference/htmlsingle"&gt;Documentation&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
