@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.allocation.entity.Allocation;
@@ -99,7 +99,11 @@ public class AllocationController {
 		
 		// Add all Allocations into the database
 		for (Allocation allocation : allocationList) {
-			this.allocationRepository.save(allocation);
+			List<Allocation> existingAllocations = getAllAllocations();
+			if (!existingAllocations.contains(allocation)) {
+				// add into database
+				this.allocationRepository.save(allocation);
+			}
 		}
 		
 		return allocationList;
@@ -108,7 +112,7 @@ public class AllocationController {
 	
 	@PostMapping("/update-allocation")
 	// you need a way to get from the body
-	public Status updateAllocation(@RequestParam("update-allocation") List<AllocationUpdate> auList) { 
+	public Status updateAllocation(@RequestBody ArrayList<AllocationUpdate> auList) { 
 		/** 
 		 * TODO
 		 * This should return me the success status of the allocation
@@ -120,24 +124,30 @@ public class AllocationController {
 		
 		// Obtain the necessary Allocations
 		List<Allocation> aList = getAllAllocations();
-		
+				
 		// Refactor this inefficient code
 		for (AllocationUpdate au : auList) {
 			String bvName = au.getName();
-			List<FoodItem> fiList = au.getFiList();
+			List<FoodItem> fiList = au.getFoodItems();
+			
 			for (Allocation a : aList) {
 				// if the bvName is the same, update the allocated qty
 				if (a.getName().equals(bvName)) {
 					List<AllocationFoodItem> afiList = a.getList();
-					
+					System.out.println("Enters line 137 ");
 					// go through the list of FoodItems that need to be updated
 					for (FoodItem fi : fiList) {
 						String description = fi.getDescription();
 						int new_allocated_qty = fi.getQuantity();	// in context
+						
+						System.out.println("Enters line 142");
 						// go through the list of AllocationFoodItems to update
 						for (AllocationFoodItem afi : afiList) {
+							System.out.println(afi.getDescription());
+							System.out.println(description);
 							if (afi.getDescription().equals(description)) {
 								afi.setAl_qty(new_allocated_qty);
+								this.allocationRepository.save(a);
 							}
 						}
 					}
@@ -146,10 +156,23 @@ public class AllocationController {
 			}
 		}
 		/** PLEASE REDO THIS IN THE FUTURE **/
+		// Add all Allocations into the database
+		/*
+		for (Allocation allocation : aList) {
+			List<Allocation> existingAllocations = getAllAllocations();
+			for (Allocation existingAllocation : existingAllocations) {
+				// if the allocation is the same, update the value
+				if (existingAllocation.equals(allocation)) {
+					
+				}
+			}
+		}
+
 		// update the Allocations into the database
 		for (Allocation allocation : aList) {
 			this.allocationRepository.save(allocation);
-		}
+		} 
+		*/
 
 		return new Status(updateStatus);
 	}

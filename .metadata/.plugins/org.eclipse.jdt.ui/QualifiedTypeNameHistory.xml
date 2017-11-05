@@ -17,4 +17,5 @@
 <fullyQualifiedTypeName name="foodbank.allocation.entity.AllocationUpdate"/>
 <fullyQualifiedTypeName name="foodbank.util.Status"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

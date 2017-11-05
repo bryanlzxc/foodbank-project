@@ -1,6 +1,6 @@
 package foodbank.allocation.entity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import foodbank.inventory.entity.FoodItem;
 
@@ -8,11 +8,15 @@ public class AllocationUpdate {
 	
 	// Represents the beneficiary's name
 	public String name;
-	public List<FoodItem> fiList;
+	public ArrayList<FoodItem> foodItems;
 	
-	public AllocationUpdate(String name, List<FoodItem> fiList) {
+	public AllocationUpdate() {
+		
+	}
+	public AllocationUpdate(String name, ArrayList<FoodItem> foodItems) {
 		this.name = name;
-		this.fiList = fiList;
+		this.foodItems = foodItems;
+		
 	}
 	public String getName() {
 		return name;
@@ -20,11 +24,11 @@ public class AllocationUpdate {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<FoodItem> getFiList() {
-		return fiList;
+	public ArrayList<FoodItem> getFoodItems() {
+		return foodItems;
 	}
-	public void setFiList(List<FoodItem> fiList) {
-		this.fiList = fiList;
+	public void setFoodItems(ArrayList<FoodItem> foodItems) {
+		this.foodItems = foodItems;
 	}
 	
 	

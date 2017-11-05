@@ -54,10 +54,25 @@ public class RequestController {
 		return this.requestRepository.findAll();
 	}
 	
-	@GetMapping("/beneficiary-name={beneficiaryName}")
-	public List<Request> getAllRequestFromBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName){
+//	@GetMapping("/beneficiary-name={beneficiaryName}")
+//	public List<Request> getAllRequestFromBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName){
+//		List<Request> beneficiaryRequests = new ArrayList<Request>();
+//		List<Request> requests = this.requestRepository.findAll();
+//		for(Request request : requests) {
+//			if(request.getBeneficiaryName().equals(beneficiaryName)) {
+//				beneficiaryRequests.add(request);
+//			}
+//		}
+//		return beneficiaryRequests;
+//	}
+	
+	@GetMapping("/beneficiary-name={username}")
+	public List<Request> getAllRequestFromBeneficiary(@PathVariable("username") String username){
 		List<Request> beneficiaryRequests = new ArrayList<Request>();
 		List<Request> requests = this.requestRepository.findAll();
+		UserController userController = new UserController(userRepository);
+		String beneficiaryName = userController.getByUsername(username).getName();
+		
 		for(Request request : requests) {
 			if(request.getBeneficiaryName().equals(beneficiaryName)) {
 				beneficiaryRequests.add(request);
