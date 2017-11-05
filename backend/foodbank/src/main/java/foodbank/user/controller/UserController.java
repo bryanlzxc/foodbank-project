@@ -1,6 +1,8 @@
 package foodbank.user.controller;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
+import foodbank.util.Status;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -65,17 +68,20 @@ public class UserController {
 	}
 	
 	@PostMapping("/update-user")
-	public void update(@RequestBody User user) {
+	public Status update(@RequestBody User user) {
 		User storedUser = getByUsername(user.getUsername());
 		if(storedUser != null) {
 			user.setId(storedUser.getId());
+			return new Status("success");
 		}
 		this.userRepository.save(user);
+		return new Status("success");
 	}
 	
 	@DeleteMapping("/delete-user={username}")
-	public void delete(@PathVariable("username") String username) {
+	public Status delete(@PathVariable("username") String username) {
 		this.userRepository.delete(getByUsername(username));
+		return new Status("success");
 	}
 	
 }

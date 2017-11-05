@@ -1,7 +1,10 @@
 package foodbank.inventory.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.inventory.entity.ManualForm;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.util.Status;
 
@@ -122,6 +126,50 @@ public class FoodController {
 			updateFoodItem(foodItem);
 		}
 	}
+	
+	/* This is to populate items for the manual form */
+	@GetMapping("/manual-form")
+	public ManualForm getManualForm() {
+		// Retrieve the Set of donors
+		/** TODO: Actually have a DonorRepository **/
+		Set<String> donorList = new TreeSet<>();
+		donorList.add("Royal Park Hotel");
+		donorList.add("ABC Bakery");
+		donorList.add("Tim Ho Wan");
+		
+		// Retrieve the List of Categories
+		List<Category> categoryList = getAllCategories();
+		
+		/** TODO: Actually have a way of retrieving the weights **/
+		// Create the Set of Weights(g) and Weights(l)
+		Set<String> weightGSet = new TreeSet<>();
+		weightGSet.add("50g");
+		weightGSet.add("100g");
+		weightGSet.add("150g");
+		weightGSet.add("200g");
+		weightGSet.add("250g");
+		weightGSet.add("300g");
+		weightGSet.add("350g");
+		weightGSet.add("400g");
+		weightGSet.add("450g");
+		weightGSet.add("500g");
+		
+		Set<String> weightLSet = new TreeSet<>();
+		weightLSet.add("50ml");
+		weightLSet.add("100ml");
+		weightLSet.add("150ml");
+		weightLSet.add("200ml");
+		weightLSet.add("250ml");
+		weightLSet.add("300ml");
+		weightLSet.add("350ml");
+		weightLSet.add("400ml");
+		weightLSet.add("450ml");
+		weightLSet.add("500ml");
+		
+		return new ManualForm(donorList, weightGSet, weightLSet, categoryList);
+
+	}
+	
 	
 	/*
 	 * Lazy method of retrieving classification string of food item

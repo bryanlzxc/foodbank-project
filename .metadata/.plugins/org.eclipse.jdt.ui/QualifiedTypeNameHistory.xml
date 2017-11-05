@@ -14,7 +14,7 @@
 <fullyQualifiedTypeName name="foodbank.beneficiary.controller.BeneficiaryController"/>
 <fullyQualifiedTypeName name="foodbank.beneficiary.repository.BeneficiaryRepository"/>
 <fullyQualifiedTypeName name="foodbank.inventory.entity.FoodItem"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="foodbank.allocation.entity.AllocationUpdate"/>
 <fullyQualifiedTypeName name="foodbank.util.Status"/>
+<fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

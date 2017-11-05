@@ -18,7 +18,16 @@ public class User {
 	private String usertype;
 	
 	private String name;
+	private String email;
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -63,11 +72,12 @@ public class User {
 		// empty constructor required for put & post mappings
 	}
 	
-	public User(String username, String password, String usertype, String name) {
+	public User(String username, String password, String usertype, String name, String email) {
 		this.username = username;
 		this.password = password;
 		this.usertype = usertype;
 		this.name = name;
+		this.email = email;
 	}
 	
 
