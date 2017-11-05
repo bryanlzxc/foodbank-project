@@ -54,17 +54,17 @@ public class RequestController {
 		return this.requestRepository.findAll();
 	}
 	
-//	@GetMapping("/beneficiary-name={beneficiaryName}")
-//	public List<Request> getAllRequestFromBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName){
-//		List<Request> beneficiaryRequests = new ArrayList<Request>();
-//		List<Request> requests = this.requestRepository.findAll();
-//		for(Request request : requests) {
-//			if(request.getBeneficiaryName().equals(beneficiaryName)) {
-//				beneficiaryRequests.add(request);
-//			}
-//		}
-//		return beneficiaryRequests;
-//	}
+	@GetMapping("/beneficiary-name={beneficiaryName}")
+	public List<Request> getAllRequestFromBeneficiaryName(@PathVariable("beneficiaryName") String beneficiaryName){
+		List<Request> beneficiaryRequests = new ArrayList<Request>();
+		List<Request> requests = this.requestRepository.findAll();
+		for(Request request : requests) {
+			if(request.getBeneficiaryName().equals(beneficiaryName)) {
+				beneficiaryRequests.add(request);
+			}
+		}
+		return beneficiaryRequests;
+	}
 	
 	@GetMapping("/beneficiary-name={username}")
 	public List<Request> getAllRequestFromBeneficiary(@PathVariable("username") String username){
@@ -83,7 +83,7 @@ public class RequestController {
 	
 	@GetMapping("/beneficiary-name={beneficiaryName}/fooditem={description}")
 	public Request getRequestOfBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName, @PathVariable("description") String description) {
-		List<Request> requests = getAllRequestFromBeneficiary(beneficiaryName);
+		List<Request> requests = getAllRequestFromBeneficiaryName(beneficiaryName);
 		for(Request request : requests) {
 			if(request.getFoodItemDescription().equals(description)) {
 				return request;
@@ -166,8 +166,9 @@ public class RequestController {
 	}
 	
 	@DeleteMapping("/delete-request={id}")
-	public void delete(@PathVariable("id") String id) {
+	public Status delete(@PathVariable("id") String id) {
 		this.requestRepository.delete(id);
+		return new Status("success");
 	}
 	
 }
