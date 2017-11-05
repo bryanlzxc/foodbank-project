@@ -19,9 +19,11 @@ C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\inventory
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\admin\controller\AdminController.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\user\entity\User.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\inventory\db\util\InventoryDbUtil.java
+C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\allocation\entity\AllocationUpdate.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\dashboard\entity\AdminDashboard.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\inventory\db\seeder\InventoryDbSeeder.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\beneficiary\controller\BeneficiaryController.java
+C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\util\Status.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\target\generated-sources\annotations\foodbank\admin\entity\QAdmin.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\inventory\controller\FoodController.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\inventory\entity\FoodItem.java
@@ -39,4 +41,5 @@ C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\user\repo
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\admin\repository\AdminRepository.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\allocation\entity\Allocation.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\util\DateParser.java
+C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\request\entity\Checkout.java
 C:\Users\Jaren\Desktop\bunanas\backend\foodbank\src\main\java\foodbank\request\entity\Request.java

@@ -3,6 +3,7 @@ package foodbank.inventory.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +15,14 @@ import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
+import foodbank.util.Status;
 
 /*
  * Created by: Lau Peng Liang, Bryan
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping("/food-items")
 public class FoodController {
 	
@@ -74,7 +77,7 @@ public class FoodController {
 	}
 	
 	@PostMapping("/update-quantity")
-	public void updateFoodItem(@RequestBody FoodItem foodItem) {
+	public Status updateFoodItem(@RequestBody FoodItem foodItem) {
 		String description = foodItem.getDescription();
 		String[] indexer = findItemGroup(description);
 		FoodItem itemToModify = null;
@@ -85,9 +88,32 @@ public class FoodController {
 				Category category = retrieveCategoryObject(indexer[0]);
 				category.updateFoodItem(itemToModify);
 				this.foodRepository.save(category);
+				return new Status("success");
 			}
+			return new Status("fail");
 		}
+		return new Status("fail");
 	}
+	
+	@PostMapping("/add-sub-quantity")
+	public Status addSubQuantity(@RequestBody FoodItem foodItem) {
+		String description = foodItem.getDescription();
+		String[] indexer = findItemGroup(description);
+		FoodItem itemToModify = null;
+		if(indexer != null) {
+			itemToModify = getFoodItem(indexer[0], indexer[1], description);
+			if(itemToModify != null) {
+				itemToModify.setQuantity(itemToModify.getQuantity() + foodItem.getQuantity());	//this is done so the given quantity is not the new quantity, new quantity = old quantity + given
+				Category category = retrieveCategoryObject(indexer[0]);
+				category.updateFoodItem(itemToModify);
+				this.foodRepository.save(category);
+				return new Status("success");
+			}
+			return new Status("fail");
+		}
+		return new Status("fail");
+	}
+	
 	
 	@PostMapping("/update-batch")
 	public void updateFoodItems(@RequestBody FoodItem[] foodItems) {

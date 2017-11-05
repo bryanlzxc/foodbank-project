@@ -7,28 +7,34 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.entity.AllocationFoodItem;
+import foodbank.allocation.entity.AllocationUpdate;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.beneficiary.controller.BeneficiaryController;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.inventory.controller.FoodController;
+import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.request.controller.RequestController;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.RequestingBeneficiaryComparator;
+import foodbank.util.Status;
 
 /*
  * Created by: Lim Jian Quan, Jaren
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping("/allocation")
 public class AllocationController {
 	
@@ -101,12 +107,51 @@ public class AllocationController {
 	}
 	
 	@PostMapping("/update-allocation")
-	public void updateAllocation() {
+	// you need a way to get from the body
+	public Status updateAllocation(@RequestParam("update-allocation") List<AllocationUpdate> auList) { 
 		/** 
 		 * TODO
 		 * This should return me the success status of the allocation
-		 */
+		 */ 
 		
+		/** TODO: Determine when there is a failure. If so, return "fail" **/
+		// use this to determine if there are any fails
+		String updateStatus = "success";
+		
+		// Obtain the necessary Allocations
+		List<Allocation> aList = getAllAllocations();
+		
+		// Refactor this inefficient code
+		for (AllocationUpdate au : auList) {
+			String bvName = au.getName();
+			List<FoodItem> fiList = au.getFiList();
+			for (Allocation a : aList) {
+				// if the bvName is the same, update the allocated qty
+				if (a.getName().equals(bvName)) {
+					List<AllocationFoodItem> afiList = a.getList();
+					
+					// go through the list of FoodItems that need to be updated
+					for (FoodItem fi : fiList) {
+						String description = fi.getDescription();
+						int new_allocated_qty = fi.getQuantity();	// in context
+						// go through the list of AllocationFoodItems to update
+						for (AllocationFoodItem afi : afiList) {
+							if (afi.getDescription().equals(description)) {
+								afi.setAl_qty(new_allocated_qty);
+							}
+						}
+					}
+					
+				}
+			}
+		}
+		/** PLEASE REDO THIS IN THE FUTURE **/
+		// update the Allocations into the database
+		for (Allocation allocation : aList) {
+			this.allocationRepository.save(allocation);
+		}
+
+		return new Status(updateStatus);
 	}
 	
 	////////////////////////// Helper methods ////////////////////////////////

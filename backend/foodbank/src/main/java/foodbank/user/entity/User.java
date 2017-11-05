@@ -17,6 +17,8 @@ public class User {
 	private String password;
 	private String usertype;
 	
+	private String name;
+	
 	public String getId() {
 		return id;
 	}
@@ -49,14 +51,23 @@ public class User {
 		this.usertype = usertype;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public User() {
 		// empty constructor required for put & post mappings
 	}
 	
-	public User(String username, String password, String usertype) {
+	public User(String username, String password, String usertype, String name) {
 		this.username = username;
 		this.password = password;
 		this.usertype = usertype;
+		this.name = name;
 	}
 	
 

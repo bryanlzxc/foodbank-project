@@ -1,9 +1,9 @@
 foodbank\inventory\entity\QFoodItem.class
 foodbank\inventory\entity\QClassification.class
-foodbank\beneficiary\entity\QBeneficiary.class
 foodbank\admin\entity\QAdmin.class
-foodbank\user\entity\QUser.class
 foodbank\allocation\entity\QAllocationFoodItem.class
+foodbank\beneficiary\entity\QBeneficiary.class
+foodbank\user\entity\QUser.class
 foodbank\request\entity\QRequest.class
 foodbank\inventory\entity\QCategory.class
 foodbank\allocation\entity\QAllocation.class

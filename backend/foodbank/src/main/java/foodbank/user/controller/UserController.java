@@ -2,6 +2,7 @@ package foodbank.user.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import foodbank.user.repository.UserRepository;
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UserController {
 	
@@ -46,6 +48,12 @@ public class UserController {
 	@GetMapping("/usertype={usertype}")
 	public List<User> getAllUsersFromUsertype(@PathVariable("usertype") String usertype) {
 		return this.userRepository.findUsersByUsertype(usertype);
+	}
+	
+	//used for internal call under RequestControl
+	@GetMapping("/get-name{username}")
+	public String getNameByUsername(@PathVariable String username) {
+		return getByUsername(username).getName();
 	}
 	
 	@PutMapping("/insert-user")

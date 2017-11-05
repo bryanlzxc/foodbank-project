@@ -16,6 +16,7 @@ import foodbank.user.repository.UserRepository;
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping("/authenticate")
 public class LoginController {
 

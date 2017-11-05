@@ -2,6 +2,7 @@ package foodbank.beneficiary.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import foodbank.beneficiary.repository.BeneficiaryRepository;
  * Created by: Ng Shirong
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/beneficiary")
 public class BeneficiaryController {
 

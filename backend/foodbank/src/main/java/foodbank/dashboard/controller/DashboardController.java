@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ import foodbank.request.repository.RequestRepository;
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping("/dashboard")
 public class DashboardController {
 
@@ -51,7 +53,9 @@ public class DashboardController {
     	Map<String, String> windowStatus = getWindowStatus();
     	//Generate top-k demand list of Classification and FoodItem name
     	List<Demand> topKDemandList = getTopKDemand(requestController, foodController);
+    	/**System.out.println("Line 54: topKDemandList: " + topKDemandList);**/
     	Map<String, List<Map<String, String>>> topKDemandMap = demandMapper(topKDemandList);
+    	/**System.out.println("Line 54: topKDemandMap: " + topKDemandMap);**/
     	//Retrieve top-k supply list of Classification and FoodItem name
     	List<Supply> topKSupplyList = getTopKSupply(foodController);
     	Map<String, List<Map<String, String>>> topKSupplyMap = supplyMapper(topKSupplyList);
@@ -59,6 +63,7 @@ public class DashboardController {
     	//List<Request> requests = getRequestHistory();
     	//Retrieve number of distinct beneficiary requests
     	Map<String, Integer> uniqueRequestReturn = countDistinctBeneficiaryRequests(requestController);
+    	/**System.out.println("Line 54: uniqueRequestReturn: " + topKDemandList);**/
     	AdminDashboard adminDashboard = new AdminDashboard(topKDemandMap, topKSupplyMap, windowStatus, uniqueRequestReturn);
     	return adminDashboard;
     }
@@ -84,24 +89,41 @@ public class DashboardController {
     	Demand demandRankOne = null;
     	Demand demandRankTwo = null;
     	Demand demandRankThree = null;
+    	
+    	/* This is to prevent the nulls from being passed in */
+    	int demandFirst = 0;
+    	int demandSecond = 0;
+    	int demandThird = 0;
+    	
+    	//System.out.println("Line 90: the first call to request controller ");
     	List<Request> requests = requestController.getAllRequest();
+    	//System.out.println("Line 91 requests: " + requests);
     	for(Request request : requests) {
     		int quantity = request.getFoodItemQuantity();
     		FoodItem foodItem = request.getFoodItem();
-    		if(quantity > Demand.first) {
-    			Demand.third = Demand.second;
+    		if (quantity > demandFirst) {
+    		//if(quantity > Demand.first) {
+    			//Demand.third = Demand.second;
+    			demandThird = demandSecond;
     			demandRankThree = demandRankTwo;
-    			Demand.second = Demand.first;
+    			//Demand.second = Demand.first;
+    			demandSecond = demandFirst;
     			demandRankTwo = demandRankOne;
-    			Demand.first = quantity;
+    			//Demand.first = quantity;
+    			demandFirst = quantity;
     			demandRankOne = new Demand(foodController.findClassificationOfFoodItem(foodItem), foodItem);
-    		} else if (quantity > Demand.second) {
-    			Demand.third = Demand.second;
+    		} else if (quantity > demandSecond) {
+    			//} else if (quantity > Demand.second) {
+    			//Demand.third = Demand.second;
+    			demandThird = demandSecond;
     			demandRankThree = demandRankTwo;
-    			Demand.second = quantity;
+    			//Demand.second = quantity;
+    			demandSecond = quantity;
     			demandRankTwo = new Demand(foodController.findClassificationOfFoodItem(foodItem), foodItem);
-    		} else if (quantity > Demand.third) {
-    			Demand.third = quantity;
+    		} else if (quantity > demandThird) {
+    			//} else if (quantity > Demand.third) {
+    			//Demand.third = quantity;
+    			demandThird = quantity;
     			demandRankThree = new Demand(foodController.findClassificationOfFoodItem(foodItem), foodItem);
     		}
     	}
@@ -111,8 +133,11 @@ public class DashboardController {
     private Map<String, List<Map<String, String>>> demandMapper(List<Demand> demands) {
     	List<Map<String, String>> outputArray = new ArrayList<Map<String, String>>();
     	Map<String, List<Map<String, String>>> demandMap = Collections.singletonMap("demand", outputArray);
+    	/**System.out.println("Line 114 check demandMap: " + demandMap);**/
+    	/**System.out.println("Line 118 demands: " + demands);**/
     	for(Demand demand : demands) {
     		HashMap<String, String> output = new HashMap<String, String>();
+    		/**System.out.println("Line 117 check demand: " + demand);**/
     		output.put("classification", demand.getClassification());
     		output.put("item", demand.getFoodItem().getDescription());
     		outputArray.add(output);
@@ -127,6 +152,12 @@ public class DashboardController {
     	Supply supplyRankOne = null;
     	Supply supplyRankTwo = null;
     	Supply supplyRankThree = null;
+    	
+    	/* This is to prevent the nulls from being passed in */
+    	int supplyFirst = 0;
+    	int supplySecond = 0;
+    	int supplyThird = 0;
+    	
     	List<Category> categories = foodController.getAllCategories();
     	for(Category category : categories) {
     		List<Classification> classifications = category.getClassification();
@@ -135,19 +166,26 @@ public class DashboardController {
     			List<FoodItem> foodItems = classification.getFoodItems();
     			for(FoodItem foodItem : foodItems) {
     				int quantity = foodItem.getQuantity();
-    				if(quantity > Supply.first) {
-    					Supply.third = Supply.second;
+    				if (quantity > supplyFirst) {//if(quantity > Supply.first) {
+    					//Supply.third = Supply.second;
+    					supplyThird = supplySecond;
     					supplyRankThree = supplyRankTwo;
-    					Supply.second = Supply.first;
+    					//Supply.second = Supply.first;
+    					supplySecond = supplyFirst;
     					supplyRankTwo = supplyRankOne;
-    					Supply.first = quantity;
+    					//Supply.first = quantity;
+    					supplyFirst = quantity;
     					supplyRankOne = new Supply(classificationString, foodItem);
-    				} else if (quantity > Supply.second) {
-    					Supply.third = Supply.second;
-    					Supply.second = quantity;
+    				} else if (quantity > supplySecond) {//} else if (quantity > Supply.second) {
+    					//Supply.third = Supply.second;
+    					//Supply.second = quantity;
+    					supplyThird = supplySecond;
+    					supplyRankThree = supplyRankTwo;
+    					supplySecond = quantity;
     					supplyRankTwo = new Supply(classificationString, foodItem);
-    				} else if (quantity > Supply.third) {
-    					Supply.third = quantity;
+    				} else if (quantity > supplyThird) {//} else if (quantity > Supply.third) {
+    					//Supply.third = quantity;
+    					supplyThird = quantity;
     					supplyRankThree = new Supply(classificationString, foodItem);
     				}
     			}

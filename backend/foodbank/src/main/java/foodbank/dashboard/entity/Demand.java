@@ -2,7 +2,7 @@ package foodbank.dashboard.entity;
 
 import foodbank.inventory.entity.FoodItem;
 
-public class Demand {
+public class Demand { 
 	
 	public static int first = 0;
 	public static int second = 0;
