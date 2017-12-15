@@ -1,9 +1,13 @@
-package foodbank.login.entity;
+package foodbank.backup;
 
 /*
  * Created by: Lau Peng Liang, Bryan
  */
 
+/*
+ * This class is marked for deletion.
+ * Used to be in package: foodbank.login.entity
+ */
 public class LoginOutcome {
 	
 	private boolean isLoginSuccessful;

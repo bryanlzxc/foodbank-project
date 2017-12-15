@@ -1,7 +1,12 @@
 package foodbank.beneficiary.entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import foodbank.user.entity.User;
 
 /*
  * Done by Ng Shirong
@@ -10,43 +15,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Beneficiary")
 public class Beneficiary implements Comparable<Beneficiary> {
 
-	@Id
-	private String id;
+	@DBRef
+	private User user;
 	
 	private String name;
 	private String sector;
 	private int numBeneficiary;
 	private String address;
 	private double score;
+	private long membershipNumber;
+	private long acraRegistrationNumber;
+	private String memberType;
 	
-	//Constructors
-	public Beneficiary(String name, String sector, int numBeneficiary, String address, double score) {
-		this.name = name;
+	public Beneficiary(User user, String sector, int numBeneficiary, String address, double score,
+			long membershipNumber, long acraRegistrationNumber, String memberType) {
+		super();
+		this.user = user;
+		this.name = user.getName();
 		this.sector = sector;
 		this.numBeneficiary = numBeneficiary;
 		this.address = address;
 		this.score = score;
-	}
-	
-	public Beneficiary() {
-		
-	}
-	
-	//Getters and setters
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
+		this.membershipNumber = membershipNumber;
+		this.acraRegistrationNumber = acraRegistrationNumber;
+		this.memberType = memberType;
 	}
 	
 	public String getSector() {
@@ -57,11 +49,11 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		this.sector = sector;
 	}
 	
-	public int getNumbeneficiary() {
+	public int getNumBeneficiary() {
 		return numBeneficiary;
 	}
 	
-	public void setNumbeneficiary(int numBeneficiary) {
+	public void setNumBeneficiary(int numBeneficiary) {
 		this.numBeneficiary = numBeneficiary;
 	}
 	
@@ -81,10 +73,43 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		this.score = score;
 	}
 	
+	public long getMembershipNumber() {
+		return membershipNumber;
+	}
+
+	public void setMembershipNumber(long membershipNumber) {
+		this.membershipNumber = membershipNumber;
+	}
+
+	public long getAcraRegistrationNumber() {
+		return acraRegistrationNumber;
+	}
+
+	public void setAcraRegistrationNumber(long acraRegistrationNumber) {
+		this.acraRegistrationNumber = acraRegistrationNumber;
+	}
+
+	public String getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	// Natural sort according to descending order of score
 	// A higher score denotes a higher priority to receive FoodItem allocation
 	public int compareTo(Beneficiary o) {
 		return Double.compare(o.score, this.score);
 	}
+	
 }

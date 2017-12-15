@@ -9,7 +9,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.entity.AllocationFoodItem;
 import foodbank.allocation.entity.AllocationUpdate;
 import foodbank.allocation.repository.AllocationRepository;
+import foodbank.allocation.service.AllocationService;
 import foodbank.beneficiary.controller.BeneficiaryController;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.inventory.controller.FoodController;
@@ -26,18 +29,48 @@ import foodbank.inventory.repository.FoodRepository;
 import foodbank.request.controller.RequestController;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
+import foodbank.response.dto.ResponseDTO;
+import foodbank.util.MessageConstants;
 import foodbank.util.RequestingBeneficiaryComparator;
 import foodbank.util.Status;
 
-/*
- * Created by: Lim Jian Quan, Jaren
- */
+
+ /*
+  * Created by: Lim Jian Quan, Jaren
+  */
+ 
 
 @RestController
 @CrossOrigin
 @RequestMapping("/allocation")
 public class AllocationController {
 	
+	@Autowired
+	private AllocationService allocationService;
+	
+	@GetMapping("/display-all")
+	public List<Allocation> retrieveAllocations() {
+		return allocationService.retrieveAllAllocations();
+	}
+	
+	@GetMapping("/display-allocations/beneficiary={beneficiary}")
+	public List<FoodItem> retrieveFoodItemsAllocatedToBeneficiary(@PathVariable("beneficiary") String beneficiary) {
+		return allocationService.retrieveAllocationByBeneficiary(beneficiary);
+	}
+	
+	@PutMapping("/generate-allocations")
+	public ResponseDTO generateAllocations() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_GENERATE_SUCCESS);
+		try {
+			allocationService.generateAllocationList();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	/*
 	@Autowired
 	private AllocationRepository allocationRepository;
 	@Autowired
@@ -71,7 +104,7 @@ public class AllocationController {
 		Set<String> keySet = requestByFoodItemMap.keySet();
 		
 		// loop through the HashMap
-		/** KIV: This needs to be changed, incorrect use of data structure **/
+		*//** KIV: This needs to be changed, incorrect use of data structure **//*
 		for (String description : keySet) {
 			List<Request> currentRequestFoodItemList = requestByFoodItemMap.get(description);
 			int inventoryQty = getInventoryQty(description, foodController);
@@ -113,12 +146,12 @@ public class AllocationController {
 	@PostMapping("/update-allocation")
 	// you need a way to get from the body
 	public Status updateAllocation(@RequestBody ArrayList<AllocationUpdate> auList) { 
-		/** 
+		*//** 
 		 * TODO
 		 * This should return me the success status of the allocation
-		 */ 
+		 *//* 
 		
-		/** TODO: Determine when there is a failure. If so, return "fail" **/
+		*//** TODO: Determine when there is a failure. If so, return "fail" **//*
 		// use this to determine if there are any fails
 		String updateStatus = "success";
 		
@@ -155,9 +188,9 @@ public class AllocationController {
 				}
 			}
 		}
-		/** PLEASE REDO THIS IN THE FUTURE **/
+		*//** PLEASE REDO THIS IN THE FUTURE **//*
 		// Add all Allocations into the database
-		/*
+		
 		for (Allocation allocation : aList) {
 			List<Allocation> existingAllocations = getAllAllocations();
 			for (Allocation existingAllocation : existingAllocations) {
@@ -172,14 +205,14 @@ public class AllocationController {
 		for (Allocation allocation : aList) {
 			this.allocationRepository.save(allocation);
 		} 
-		*/
+		
 
 		return new Status(updateStatus);
 	}
 	
 	////////////////////////// Helper methods ////////////////////////////////
 	
-	/* Groups the requests based on FoodItem */
+	 Groups the requests based on FoodItem 
 	protected HashMap<String, List<Request>> groupRequestByFoodItem(RequestController requestController) {
 		
 		// setup: HashMap to return & List of all Request objects
@@ -210,18 +243,18 @@ public class AllocationController {
 		return requestByFoodItemMap;
 	}
 	
-	/* Get the current inventory level */
+	 Get the current inventory level 
 	protected int getInventoryQty(String description, FoodController foodController) {
 		return foodController.getFoodItemQuantity(description);
 	}
 	
-	/* Get the FoodItem group */
+	 Get the FoodItem group 
 	protected String[] getFoodItemGroup(String description, FoodController foodController) {
 		// [0]: category, [1]: classification
 		return foodController.findItemGroup(description);
 	}
 	
-	/* Add the AllocationFoodItem into the AllocationList */
+	 Add the AllocationFoodItem into the AllocationList 
 	protected void addIntoAllocationList(List<Allocation> allocationList, AllocationFoodItem afi, String bvName) {
 		boolean hasToCreateAllocation = true;
 		for (Allocation a : allocationList) {
@@ -236,6 +269,6 @@ public class AllocationController {
 			afiList.add(afi);
 			allocationList.add(new Allocation(bvName, afiList));
 		}
-	}
+	}*/
 	
 }

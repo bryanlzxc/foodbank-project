@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.inventory.entity.FoodItem;
+
 /*
  * Created by Lim Jian Quan, Jaren
  */
@@ -16,41 +19,38 @@ public class Allocation {
 	
 	// name: Beneficiary name
 	// list: List of allocated foodItem with requested qty and allocated qty
-	private String name;
-	private List<AllocationFoodItem> list;
+	private Beneficiary beneficiary;
+	private List<FoodItem> allocatedItems;
 	
-	public String getName() {
-		return name;
+	public Allocation() {}
+	
+	public Allocation(Beneficiary beneficiary, List<FoodItem> allocatedItems) {
+		this.beneficiary = beneficiary;
+		this.allocatedItems = allocatedItems;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public List<AllocationFoodItem> getList() {
-		return list;
-	}
-	public void setList(List<AllocationFoodItem> list) {
-		this.list = list;
+
+	public String getId() {
+		return id;
 	}
 	
-	public void addToList(AllocationFoodItem afi) {
-		list.add(afi);
+	public void setId(String id) {
+		this.id = id;
 	}
 	
-	public Allocation() {
-		// empty constructor required for put & post mappings
+	public Beneficiary getBeneficiary() {
+		return beneficiary;
 	}
 	
-	public Allocation(String name, List<AllocationFoodItem> list) {
-		this.name = name;
-		this.list = list;
-	} 
+	public void setBeneficiary(Beneficiary beneficiary) {
+		this.beneficiary = beneficiary;
+	}
 	
-	@Override
-	/* Allocation deemed equal if the name is the same */
-	public boolean equals(Object obj) {
-		Allocation other = null;
-		if (obj instanceof Allocation) other = (Allocation) obj;
-		return this.name.equals(other.name);
+	public List<FoodItem> getAllocatedItems() {
+		return allocatedItems;
+	}
+	
+	public void setAllocatedItems(List<FoodItem> allocatedItems) {
+		this.allocatedItems = allocatedItems;
 	}
 	
 	/*

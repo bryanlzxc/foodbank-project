@@ -33,7 +33,4 @@ public class Checkout {
 		this.list = list;
 	}
 	
-	
-	
-	
 }

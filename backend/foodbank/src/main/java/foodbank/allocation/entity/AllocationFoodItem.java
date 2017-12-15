@@ -4,6 +4,9 @@ package foodbank.allocation.entity;
  * Created by: Lim Jian Quan, Jaren
  */
 
+/*
+ * This class is marked for deletion, should not be used.
+ */
 public class AllocationFoodItem {
 	private String category;
 	private String classification;

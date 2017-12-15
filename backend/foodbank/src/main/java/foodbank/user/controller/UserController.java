@@ -1,9 +1,8 @@
 package foodbank.user.controller;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.response.dto.ResponseDTO;
+import foodbank.user.dto.UserDTO;
+import foodbank.user.service.UserService;
 import foodbank.user.entity.User;
-import foodbank.user.repository.UserRepository;
-import foodbank.util.Status;
+import foodbank.util.MessageConstants;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -27,61 +28,53 @@ import foodbank.util.Status;
 @RequestMapping("/users")
 public class UserController {
 	
-	private UserRepository userRepository;
-	
-	public UserController(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	@Autowired
+	private UserService userService;
 	
 	@GetMapping("/display-all")
 	public List<User> getAllUsers() {
-		return this.userRepository.findAll();
+		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/id={id}")
-	public User getById(@PathVariable("id") String id) {
-		return this.userRepository.findById(id);
-	}
-	
-	@GetMapping("/username={username}")
-	public User getByUsername(@PathVariable("username") String username) {
-		return this.userRepository.findByUsername(username);
-	}
-	
-	@GetMapping("/usertype={usertype}")
-	public List<User> getAllUsersFromUsertype(@PathVariable("usertype") String usertype) {
-		return this.userRepository.findUsersByUsertype(usertype);
-	}
-	
-	//used for internal call under RequestControl
-	@GetMapping("/get-name{username}")
-	public String getNameByUsername(@PathVariable String username) {
-		return getByUsername(username).getName();
+	@GetMapping("/display-all/{usertype}")
+	public List<User> getAllUsersByType(@PathVariable("usertype") String usertype) {
+		return userService.getAllUsersByType(usertype);
 	}
 	
 	@PutMapping("/insert-user")
-	public void insert(@RequestBody User user) {
-		User storedUser = getByUsername(user.getUsername());
-		if (storedUser == null) {
-			this.userRepository.insert(user);
+	public ResponseDTO insertUser(@RequestBody UserDTO user) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_ADD_SUCCESS);
+		try {
+			userService.insertUser(user);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
 		}
+		return responseDTO;
 	}
 	
 	@PostMapping("/update-user")
-	public Status update(@RequestBody User user) {
-		User storedUser = getByUsername(user.getUsername());
-		if(storedUser != null) {
-			user.setId(storedUser.getId());
-			return new Status("success");
+	public ResponseDTO updateUser(@RequestBody UserDTO user) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_UPDATE_SUCCESS);
+		try {
+			userService.updateUser(user);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
 		}
-		this.userRepository.save(user);
-		return new Status("success");
+		return responseDTO;
 	}
 	
-	@DeleteMapping("/delete-user={username}")
-	public Status delete(@PathVariable("username") String username) {
-		this.userRepository.delete(getByUsername(username));
-		return new Status("success");
+	@DeleteMapping("/delete-user/{username}")
+	public ResponseDTO deleteUser(@PathVariable("username") String username) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_DELETE_SUCCESS);
+		try {
+			userService.deleteUser(username);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
 	}
 	
 }

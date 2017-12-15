@@ -11,6 +11,5 @@ import foodbank.beneficiary.entity.Beneficiary;
 public interface BeneficiaryRepository extends MongoRepository<Beneficiary, String>{
 
 	Beneficiary findByName(String beneficiary);
-
-		
+	
 }

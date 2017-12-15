@@ -2,14 +2,19 @@ package foodbank.inventory.db.seeder;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import foodbank.inventory.db.util.InventoryDbUtil;
 import foodbank.inventory.entity.Category;
+import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 
@@ -20,12 +25,9 @@ import foodbank.inventory.repository.FoodRepository;
 @Component
 public class InventoryDbSeeder implements CommandLineRunner {
 	
+	@Autowired
 	private FoodRepository foodRepository;
-	
-	public InventoryDbSeeder(FoodRepository foodRepository) {
-		this.foodRepository = foodRepository;
-	}
-	
+		
 	/*
 	@Override
 	public void run(String... strings) throws Exception {
@@ -88,10 +90,9 @@ public class InventoryDbSeeder implements CommandLineRunner {
 				InventoryDbUtil.readFromInventoryFile(new File(InventoryDbUtil.class.getClassLoader().getResource("inventory-data.csv").getFile()));
 		List<Category> categories = InventoryDbUtil.generateCategoryList(inventoryMap);
 		//Dropping entire repository to ensure no duplicates entries crash the app
-		this.foodRepository.deleteAll();
+		foodRepository.deleteAll();
 		//Bootstrapping the repository with the categories defined
-		this.foodRepository.save(categories);
-		
+		foodRepository.save(categories);
 	}
 	
 }

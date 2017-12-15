@@ -20,12 +20,17 @@ import foodbank.beneficiary.controller.BeneficiaryController;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.request.dto.BatchRequestDTO;
+import foodbank.request.dto.RequestDTO;
 import foodbank.request.entity.Checkout;
 import foodbank.request.entity.QRequest;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
+import foodbank.request.service.RequestService;
+import foodbank.response.dto.ResponseDTO;
 import foodbank.user.controller.UserController;
 import foodbank.user.repository.UserRepository;
+import foodbank.util.MessageConstants;
 import foodbank.util.Status;
 
 /*
@@ -36,7 +41,74 @@ import foodbank.util.Status;
 @CrossOrigin
 @RequestMapping("/request")
 public class RequestController {
-
+	
+	@Autowired
+	private RequestService requestService;
+	
+	@GetMapping("/display-all")
+	public List<Request> getAllRequests() {
+		return requestService.getAllRequests();
+	}
+	
+	@GetMapping("/display/beneficiary-name={beneficiary}")
+	public List<Request> getAllRequestsFromBeneficiary(@PathVariable("beneficiary") String beneficiary) {
+		return requestService.getAllRequestsByBeneficiary(beneficiary);
+	}
+	
+	@GetMapping("/display-count/unique-beneficiaries")
+	public Integer retrieveUniqueBeneficiaryCount() {
+		return requestService.countDistinctBeneficiaryRequests();
+	}
+	
+	@PutMapping("/create-request")
+	public ResponseDTO createRequest(@RequestBody RequestDTO request) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_CREATE_SUCCESS);
+		try {
+			requestService.insertRequest(request);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/update-request")
+	public ResponseDTO updateRequest(@RequestBody RequestDTO request) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_UPDATE_SUCCESS);
+		try {
+			requestService.updateRequest(request);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@DeleteMapping("/delete-request")
+	public ResponseDTO deleteRequest(@RequestBody RequestDTO request) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_DELETE_SUCCESS);
+		try {
+			requestService.deleteRequest(request);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PutMapping("/batch/create-request")
+	public ResponseDTO createRequest(@RequestBody BatchRequestDTO batchRequest) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BATCH_REQUEST_CREATE_SUCCESS);
+		try {
+			requestService.batchInsertRequest(batchRequest);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	/*
 	RequestRepository requestRepository;
 
 	@Autowired
@@ -66,6 +138,7 @@ public class RequestController {
 		return beneficiaryRequests;
 	}
 	
+	
 	@GetMapping("/beneficiary-name={username}")
 	public List<Request> getAllRequestFromBeneficiary(@PathVariable("username") String username){
 		List<Request> beneficiaryRequests = new ArrayList<Request>();
@@ -80,6 +153,7 @@ public class RequestController {
 		}
 		return beneficiaryRequests;
 	}
+	
 	
 	@GetMapping("/beneficiary-name={beneficiaryName}/fooditem={description}")
 	public Request getRequestOfBeneficiary(@PathVariable("beneficiaryName") String beneficiaryName, @PathVariable("description") String description) {
@@ -130,6 +204,7 @@ public class RequestController {
 		//return new Status("fail"); this is unreachable yet, when we are refactoring code after acceptance, we will need to catch exception
 	}
 	
+	
 	@PostMapping("/display-checkout-fooditemlist")
 	public List<FoodItem> checkoutName(@RequestBody Checkout checkout) {
 		BeneficiaryController beneficiaryController = new BeneficiaryController(beneficiaryRepository);
@@ -170,5 +245,6 @@ public class RequestController {
 		this.requestRepository.delete(id);
 		return new Status("success");
 	}
+	*/
 	
 }

@@ -1,31 +1,18 @@
 package foodbank.dashboard.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import foodbank.admin.controller.AdminController;
-import foodbank.admin.repository.AdminRepository;
-import foodbank.dashboard.entity.AdminDashboard;
-import foodbank.dashboard.entity.Demand;
-import foodbank.dashboard.entity.Supply;
-import foodbank.inventory.controller.FoodController;
+import foodbank.dashboard.service.DashboardService;
 import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
-import foodbank.inventory.repository.FoodRepository;
-import foodbank.request.controller.RequestController;
-import foodbank.request.entity.Request;
-import foodbank.request.repository.RequestRepository;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -37,14 +24,51 @@ import foodbank.request.repository.RequestRepository;
 public class DashboardController {
 
 	@Autowired
-	private AdminRepository adminRepository;
+	private DashboardService dashboardService;
 	
-	@Autowired
-	private FoodRepository foodRepository;
+	@GetMapping("/admin/demand/categories/top={position}")
+	public List<Category> retrieveTopKCategoriesInDemand(@PathVariable("position") int position) {
+		return dashboardService.retrieveTopKCategoriesInDemand(position);
+	}
 	
-	@Autowired
-	private RequestRepository requestRepository;
+	@GetMapping("/admin/supply/categories/top={position}")
+	public List<Category> retrieveTopKCategoriesInSupply(@PathVariable("position") int position) {
+		return dashboardService.retrieveTopKCategoriesInSupply(position);
+	}
 	
+	@GetMapping("/admin/demand/category={category}/classifications/top={position}")
+	public List<Classification> retrieveTopKClassificationsInDemand(@PathVariable("category") String category, @PathVariable("position") int position) {
+		return dashboardService.retrieveTopKClassificationsInDemand(category, position);
+	}
+	
+	@GetMapping("/admin/supply/category={category}/classifications/top={position}")
+	public List<Classification> retrieveTopKClassificationsInSupply(@PathVariable("category") String category, @PathVariable("position") int position) {
+		return dashboardService.retrieveTopKClassificationsInSupply(category, position);
+	}
+	
+	@GetMapping("/admin/demand/category={category}/classification={classification}/items/top={position}")
+	public List<FoodItem> retrieveTopKItemsInDemand(@PathVariable("category") String category, @PathVariable("classification") String classification, 
+			@PathVariable("position") int position) {
+		return dashboardService.retrieveTopKItemsInDemand(category, classification, position);
+	}
+	
+	@GetMapping("/admin/supply/category={category}/classification={classification}/items/top={position}")
+	public List<FoodItem> retrieveTopKItemsInSupply(@PathVariable("category") String category, @PathVariable("classification") String classification, 
+			@PathVariable("position") int position) {
+		return dashboardService.retrieveTopKItemsInSupply(category, classification, position);
+	}
+	
+	@GetMapping("/admin/demand/universal/top={position}")
+	public List<FoodItem> retrieveTopKItemsInDemandAcrossCategories(@PathVariable("position") int position) {
+		return dashboardService.retrieveTopKItemsInDemandAcrossCategories(position);
+	}
+	
+	@GetMapping("/admin/supply/universal/top={position}")
+	public List<FoodItem> retrieveTopKItemsInSupplyAcrossCategories(@PathVariable("position") int position) {
+		return dashboardService.retrieveTopKItemsInSupplyAcrossCategories(position);
+	}
+	
+	/*
     @GetMapping("/admin")
     public AdminDashboard getAdminDashboard() {
     	RequestController requestController = new RequestController(requestRepository);
@@ -53,9 +77,9 @@ public class DashboardController {
     	Map<String, String> windowStatus = getWindowStatus();
     	//Generate top-k demand list of Classification and FoodItem name
     	List<Demand> topKDemandList = getTopKDemand(requestController, foodController);
-    	/**System.out.println("Line 54: topKDemandList: " + topKDemandList);**/
+    	*//**System.out.println("Line 54: topKDemandList: " + topKDemandList);**//*
     	Map<String, List<Map<String, String>>> topKDemandMap = demandMapper(topKDemandList);
-    	/**System.out.println("Line 54: topKDemandMap: " + topKDemandMap);**/
+    	*//**System.out.println("Line 54: topKDemandMap: " + topKDemandMap);**//*
     	//Retrieve top-k supply list of Classification and FoodItem name
     	List<Supply> topKSupplyList = getTopKSupply(foodController);
     	Map<String, List<Map<String, String>>> topKSupplyMap = supplyMapper(topKSupplyList);
@@ -63,18 +87,18 @@ public class DashboardController {
     	//List<Request> requests = getRequestHistory();
     	//Retrieve number of distinct beneficiary requests
     	Map<String, Integer> uniqueRequestReturn = countDistinctBeneficiaryRequests(requestController);
-    	/**System.out.println("Line 54: uniqueRequestReturn: " + topKDemandList);**/
+    	*//**System.out.println("Line 54: uniqueRequestReturn: " + topKDemandList);**//*
     	AdminDashboard adminDashboard = new AdminDashboard(topKDemandMap, topKSupplyMap, windowStatus, uniqueRequestReturn);
     	return adminDashboard;
     }
     
-    /* Implementable at a future date
+     Implementable at a future date
     private List<Request> getRequestHistory() {
     	RequestController requestController = new RequestController(requestRepository);
     	List<Request> 
     	return null;
     }
-    */
+    
     
     private Map<String, String> getWindowStatus() {
     	AdminController adminController = new AdminController(adminRepository);
@@ -82,15 +106,15 @@ public class DashboardController {
     	return Collections.singletonMap("current-window", isWindowActive == true? "open" : "close");
     }
     
-    /*
+    
      * Code needs to be re-factored after acceptance, shell object for demand and supply?
-     */
+     
     private List<Demand> getTopKDemand(RequestController requestController, FoodController foodController) {
     	Demand demandRankOne = null;
     	Demand demandRankTwo = null;
     	Demand demandRankThree = null;
     	
-    	/* This is to prevent the nulls from being passed in */
+    	 This is to prevent the nulls from being passed in 
     	int demandFirst = 0;
     	int demandSecond = 0;
     	int demandThird = 0;
@@ -133,11 +157,11 @@ public class DashboardController {
     private Map<String, List<Map<String, String>>> demandMapper(List<Demand> demands) {
     	List<Map<String, String>> outputArray = new ArrayList<Map<String, String>>();
     	Map<String, List<Map<String, String>>> demandMap = Collections.singletonMap("demand", outputArray);
-    	/**System.out.println("Line 114 check demandMap: " + demandMap);**/
-    	/**System.out.println("Line 118 demands: " + demands);**/
+    	*//**System.out.println("Line 114 check demandMap: " + demandMap);**//*
+    	*//**System.out.println("Line 118 demands: " + demands);**//*
     	for(Demand demand : demands) {
     		HashMap<String, String> output = new HashMap<String, String>();
-    		/**System.out.println("Line 117 check demand: " + demand);**/
+    		*//**System.out.println("Line 117 check demand: " + demand);**//*
     		output.put("classification", demand.getClassification());
     		output.put("item", demand.getFoodItem().getDescription());
     		outputArray.add(output);
@@ -145,15 +169,15 @@ public class DashboardController {
     	return demandMap;
     }
     
-    /*
+    
      * Code needs to be re-factored after acceptance, shell object for demand and supply?
-     */
+     
     private List<Supply> getTopKSupply(FoodController foodController) {
     	Supply supplyRankOne = null;
     	Supply supplyRankTwo = null;
     	Supply supplyRankThree = null;
     	
-    	/* This is to prevent the nulls from being passed in */
+    	 This is to prevent the nulls from being passed in 
     	int supplyFirst = 0;
     	int supplySecond = 0;
     	int supplyThird = 0;
@@ -217,5 +241,5 @@ public class DashboardController {
     	}
     	return Collections.singletonMap("distinct-requests", beneficiaryList.size());
     }
-
+	*/
 }

@@ -3,6 +3,7 @@ package foodbank.request.entity;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import foodbank.beneficiary.entity.Beneficiary;
@@ -23,19 +24,23 @@ public class Request {
 	@Id
 	private String id;
 	
+	@DBRef
 	private Beneficiary beneficiary;
+	
+	private String category;
+	private String classification;
 	private FoodItem foodItem;
 	private final String requestCreationDate = DateParser.getCurrentDate(new Date());
 	
-	public Request(Beneficiary beneficiary, FoodItem foodItem) {
+	public Request() {}
+	
+	public Request(Beneficiary beneficiary, String category, String classification, FoodItem foodItem) {
 		this.beneficiary = beneficiary;
+		this.category = category;
+		this.classification = classification;
 		this.foodItem = foodItem;
 	}
-	
-	public Request() {
-		
-	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -52,12 +57,20 @@ public class Request {
 		this.beneficiary = beneficiary;
 	}
 	
-	public String getBeneficiaryName() {
-		return this.beneficiary.getName();
+	public String getCategory() {
+		return category;
 	}
 	
-	public void setBeneficiaryName(String name) {
-		this.beneficiary.setName(name);
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	public String getClassification() {
+		return classification;
+	}
+	
+	public void setClassification(String classification) {
+		this.classification = classification;
 	}
 	
 	public FoodItem getFoodItem() {
@@ -66,22 +79,6 @@ public class Request {
 	
 	public void setFoodItem(FoodItem foodItem) {
 		this.foodItem = foodItem;
-	}
-	
-	public String getFoodItemDescription() {
-		return this.foodItem.getDescription();
-	}
-	
-	public void setFoodItemDescription(String description) {
-		this.foodItem.setDescription(description);
-	}
-	
-	public int getFoodItemQuantity() {
-		return foodItem.getQuantity();
-	}
-	
-	public void setFoodItemQuantity(int quantity) {
-		this.foodItem.setQuantity(quantity);
 	}
 	
 	public String getRequestCreationDate() {

@@ -1,15 +1,16 @@
 package foodbank.login.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import foodbank.login.entity.LoginOutcome;
-import foodbank.user.entity.User;
-import foodbank.user.repository.UserRepository;
+import foodbank.login.dto.LoginDTO;
+import foodbank.login.dto.LoginResponseDTO;
+import foodbank.login.service.LoginService;
+import foodbank.util.MessageConstants;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -20,6 +21,23 @@ import foodbank.user.repository.UserRepository;
 @RequestMapping("/authenticate")
 public class LoginController {
 
+	@Autowired
+	private LoginService loginService;
+	
+	@PostMapping
+	public LoginResponseDTO authenticateUser(@RequestBody LoginDTO login) {
+		LoginResponseDTO loginResponseDTO = new LoginResponseDTO(LoginResponseDTO.Status.SUCCESS, MessageConstants.LOGIN_SUCCESS, null);
+		try {
+			loginService.authenticate(login);
+			loginResponseDTO.setUsertype(LoginResponseDTO.Usertype.valueOf(login.getUsertype().toUpperCase()));
+		} catch (Exception e) {
+			loginResponseDTO.setStatus(LoginResponseDTO.Status.FAIL);
+			loginResponseDTO.setMessage(e.getMessage());
+		}
+		return loginResponseDTO;
+	}
+	
+	/*
 	UserRepository userRepository;
 	
 	public LoginController(UserRepository userRepository) {
@@ -39,5 +57,7 @@ public class LoginController {
 		}
 		return new LoginOutcome(false, null);
 	}
+	
+	*/
 	
 }
