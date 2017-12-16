@@ -1,10 +1,6 @@
 package foodbank.allocation.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,28 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.allocation.entity.Allocation;
-import foodbank.allocation.entity.AllocationFoodItem;
-import foodbank.allocation.entity.AllocationUpdate;
-import foodbank.allocation.repository.AllocationRepository;
 import foodbank.allocation.service.AllocationService;
-import foodbank.beneficiary.controller.BeneficiaryController;
-import foodbank.beneficiary.repository.BeneficiaryRepository;
-import foodbank.inventory.controller.FoodController;
 import foodbank.inventory.entity.FoodItem;
-import foodbank.inventory.repository.FoodRepository;
-import foodbank.request.controller.RequestController;
-import foodbank.request.entity.Request;
-import foodbank.request.repository.RequestRepository;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
-import foodbank.util.RequestingBeneficiaryComparator;
-import foodbank.util.Status;
-
 
  /*
   * Created by: Lim Jian Quan, Jaren

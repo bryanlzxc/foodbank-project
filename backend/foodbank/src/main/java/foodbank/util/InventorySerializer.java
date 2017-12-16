@@ -43,7 +43,7 @@ public class InventorySerializer {
 				List<FoodItem> foodItems = classification.getFoodItems();
 				for(FoodItem foodItem : foodItems) {
 					String identifierKey = category.getCategory() + classification.getClassification() + foodItem.getDescription();
-					UUID serialNo = UUID.fromString(identifierKey);
+					UUID serialNo = UUID.randomUUID();
 					serials.put(identifierKey, serialNo);
 					foodItemMap.put(serialNo, foodItem);
 				}
