@@ -3,6 +3,7 @@ package foodbank.allocation.entity;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import foodbank.beneficiary.entity.Beneficiary;
@@ -17,7 +18,9 @@ public class Allocation {
 	@Id
 	private String id;
 	
+	@DBRef
 	private Beneficiary beneficiary;
+	
 	private List<FoodItem> allocatedItems;
 	
 	public Allocation() {}

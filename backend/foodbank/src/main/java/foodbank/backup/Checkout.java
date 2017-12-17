@@ -1,4 +1,4 @@
-package foodbank.request.entity;
+package foodbank.backup;
 import java.util.List;
 
 import foodbank.inventory.entity.FoodItem;

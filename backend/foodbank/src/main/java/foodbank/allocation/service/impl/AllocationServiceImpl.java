@@ -100,13 +100,15 @@ public class AllocationServiceImpl implements AllocationService {
 						allocatedQuantity = requestedQuantity;
 					}
 					inventoryQuantity -= allocatedQuantity;
-					String beneficiaryName = request.getBeneficiary().getUser().getName();
+					String beneficiaryName = currentRequest.getBeneficiary().getUser().getName();
 					Allocation allocation = allocationMap.get(beneficiaryName);
 					if(allocation != null) {
-						allocation.getAllocatedItems().add(new FoodItem(request.getFoodItem().getDescription(), allocatedQuantity));
+						allocation.getAllocatedItems().add(new FoodItem(currentRequest.getFoodItem().getDescription(), allocatedQuantity));
 						allocationMap.replace(beneficiaryName, allocation);
 					} else {
-						allocation = new Allocation(request.getBeneficiary(), Arrays.asList(new FoodItem(description, allocatedQuantity)));
+						ArrayList<FoodItem> foodItems = new ArrayList<FoodItem>();
+						foodItems.add(new FoodItem(description, allocatedQuantity));
+						allocation = new Allocation(currentRequest.getBeneficiary(), foodItems);
 						allocationMap.put(beneficiaryName, allocation);
 					}
 				}

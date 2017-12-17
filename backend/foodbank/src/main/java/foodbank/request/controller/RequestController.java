@@ -1,6 +1,5 @@
 package foodbank.request.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
-
-import foodbank.beneficiary.controller.BeneficiaryController;
-import foodbank.beneficiary.entity.Beneficiary;
-import foodbank.beneficiary.repository.BeneficiaryRepository;
-import foodbank.inventory.entity.FoodItem;
 import foodbank.request.dto.BatchRequestDTO;
 import foodbank.request.dto.RequestDTO;
-import foodbank.request.entity.Checkout;
-import foodbank.request.entity.QRequest;
 import foodbank.request.entity.Request;
-import foodbank.request.repository.RequestRepository;
 import foodbank.request.service.RequestService;
 import foodbank.response.dto.ResponseDTO;
-import foodbank.user.controller.UserController;
-import foodbank.user.repository.UserRepository;
 import foodbank.util.MessageConstants;
-import foodbank.util.Status;
 
 /*
  * Created by: Ng Shirong
