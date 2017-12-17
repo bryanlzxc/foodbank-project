@@ -1,4 +1,4 @@
-package foodbank.delivery.service.impl;
+package foodbank.packing.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
-import foodbank.delivery.dto.PackingListDTO;
-import foodbank.delivery.entity.PackingList;
-import foodbank.delivery.repository.PackingRepository;
-import foodbank.delivery.service.PackingService;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.packing.dto.PackingListDTO;
+import foodbank.packing.entity.PackingList;
+import foodbank.packing.repository.PackingRepository;
+import foodbank.packing.service.PackingService;
 
 @Service
 public class PackingServiceImpl implements PackingService {

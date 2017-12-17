@@ -1,4 +1,4 @@
-package foodbank.delivery.entity;
+package foodbank.packing.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,13 +16,15 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QPackingList extends EntityPathBase<PackingList> {
 
-    private static final long serialVersionUID = 287122850L;
+    private static final long serialVersionUID = 1512493941L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QPackingList packingList = new QPackingList("packingList");
 
     public final foodbank.allocation.entity.QAllocation allocation;
+
+    public final StringPath id = createString("id");
 
     public final ListPath<foodbank.inventory.entity.FoodItem, foodbank.inventory.entity.QFoodItem> packedItems = this.<foodbank.inventory.entity.FoodItem, foodbank.inventory.entity.QFoodItem>createList("packedItems", foodbank.inventory.entity.FoodItem.class, foodbank.inventory.entity.QFoodItem.class, PathInits.DIRECT2);
 

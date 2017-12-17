@@ -33,6 +33,7 @@ public final class MessageConstants {
 		public static final String NO_SUCH_BENEFICIARY = "The requested beneficiary does not exist.";
 		public static final String BENEFICIARY_ALREADY_EXISTS = "This beneficiary already exists.";
 		public static final String DATE_PARSE_ERROR = "There was an error when parsing the date.";
+		public static final String INACTIVE_WINDOW = "The window is currently inactive.";
 		
 	}
 	

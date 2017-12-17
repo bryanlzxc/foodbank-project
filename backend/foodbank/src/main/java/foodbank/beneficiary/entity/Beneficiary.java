@@ -14,7 +14,10 @@ import foodbank.user.entity.User;
 
 @Document(collection = "Beneficiary")
 public class Beneficiary implements Comparable<Beneficiary> {
-
+	
+	@Id
+	private String id;
+	
 	@DBRef
 	private User user;
 	

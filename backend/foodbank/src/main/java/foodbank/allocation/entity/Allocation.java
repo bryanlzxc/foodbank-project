@@ -17,8 +17,6 @@ public class Allocation {
 	@Id
 	private String id;
 	
-	// name: Beneficiary name
-	// list: List of allocated foodItem with requested qty and allocated qty
 	private Beneficiary beneficiary;
 	private List<FoodItem> allocatedItems;
 	

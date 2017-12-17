@@ -1,4 +1,4 @@
-package foodbank.delivery.dto;
+package foodbank.packing.dto;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package foodbank.dashboard.entity;
+package foodbank.backup;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,9 @@
-package foodbank.delivery.entity;
+package foodbank.packing.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +12,9 @@ import foodbank.inventory.entity.FoodItem;
 
 @Document(collection = "Packing List")
 public class PackingList {
+	
+	@Id
+	private String id;
 	
 	@DBRef
 	private Allocation allocation;

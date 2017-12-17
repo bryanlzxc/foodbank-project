@@ -1,4 +1,4 @@
-package foodbank.allocation.entity;
+package foodbank.backup;
 
 import java.util.ArrayList;
 

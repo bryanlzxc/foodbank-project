@@ -25,7 +25,7 @@ public class QAdminSettings extends EntityPathBase<AdminSettings> {
 
     public final NumberPath<Double> multiplierRate = createNumber("multiplierRate", Double.class);
 
-    public final DateTimePath<java.util.Date> windowEndDateTime = createDateTime("windowEndDateTime", java.util.Date.class);
+    public final StringPath windowEndDateTime = createString("windowEndDateTime");
 
     public final EnumPath<AdminSettings.WindowStatus> windowStatus = createEnum("windowStatus", AdminSettings.WindowStatus.class);
 

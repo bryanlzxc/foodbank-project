@@ -1,9 +1,9 @@
-package foodbank.delivery.service;
+package foodbank.packing.service;
 
 import java.util.List;
 
 import foodbank.allocation.entity.Allocation;
-import foodbank.delivery.entity.PackingList;
+import foodbank.packing.entity.PackingList;
 
 public interface PackingService {
 	

@@ -1,9 +1,13 @@
-package foodbank.dashboard.entity;
+package foodbank.backup;
 
 import foodbank.inventory.entity.FoodItem;
 
-public class Demand { 
-	
+/*
+ * Created by: Lau Peng Liang, Bryan
+ */
+
+public class Supply {
+
 	public static int first = 0;
 	public static int second = 0;
 	public static int third = 0;
@@ -11,7 +15,7 @@ public class Demand {
 	private String classification;
 	private FoodItem foodItem;
 	
-	public Demand(String classification, FoodItem foodItem) {
+	public Supply(String classification, FoodItem foodItem) {
 		this.classification = classification;
 		this.foodItem = foodItem;
 	}
@@ -31,5 +35,5 @@ public class Demand {
 	public void setFoodItem(FoodItem foodItem) {
 		this.foodItem = foodItem;
 	}
-
+	
 }

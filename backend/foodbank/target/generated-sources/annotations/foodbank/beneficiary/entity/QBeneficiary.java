@@ -26,6 +26,8 @@ public class QBeneficiary extends EntityPathBase<Beneficiary> {
 
     public final StringPath address = createString("address");
 
+    public final StringPath id = createString("id");
+
     public final NumberPath<Long> membershipNumber = createNumber("membershipNumber", Long.class);
 
     public final StringPath memberType = createString("memberType");

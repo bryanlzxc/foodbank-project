@@ -10,10 +10,10 @@ public class AdminSettingsDTO {
 	@JsonProperty("toggle")
 	private Boolean windowToggle;
 	
-	@JsonProperty("decay:.+")
+	@JsonProperty("decay")
 	private Double decayRate;
 	
-	@JsonProperty("multiplier:.+")
+	@JsonProperty("multiplier")
 	private Double multiplierRate;
 	
 	public String getClosingDate() {

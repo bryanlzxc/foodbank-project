@@ -76,7 +76,7 @@ public class BeneficiaryController {
 		return responseDTO;
 	}
 	
-	@PostMapping("/beneficiary/update-score")
+	@PostMapping("/update-score")
 	public ResponseDTO updateBeneficiaryScore(@RequestBody BeneficiaryUpdateDTO beneficiaryUpdate) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
 		try {

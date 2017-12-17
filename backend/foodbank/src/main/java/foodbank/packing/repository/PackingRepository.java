@@ -1,8 +1,8 @@
-package foodbank.delivery.repository;
+package foodbank.packing.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import foodbank.delivery.entity.PackingList;
+import foodbank.packing.entity.PackingList;
 
 public interface PackingRepository extends MongoRepository<PackingList, String> {
 	

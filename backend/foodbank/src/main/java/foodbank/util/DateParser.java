@@ -1,7 +1,5 @@
 package foodbank.util;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,6 +12,7 @@ public class DateParser {
 	/*
 	 * This code is not functional as of 31/10/2017
 	 */
+	/*
 	public static Date parseDateTime(String dateString) {
         if (dateString == null) return null;
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
@@ -30,12 +29,13 @@ public class DateParser {
             return null;
         }
     }
+    */
 	
 	/* 
 	 * Created by: Lau Peng Liang, Bryan
 	 */
 	public static String getCurrentDate(Date date) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return format.format(date);
 	}
 

@@ -5,6 +5,9 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import foodbank.util.DateParser;
+import foodbank.util.MessageConstants.ErrorMessages;
+
 @Document(collection = "Admin")
 public class AdminSettings {
 
@@ -16,7 +19,7 @@ public class AdminSettings {
 	}
 	
 	private WindowStatus windowStatus;
-	private Date windowEndDateTime;	//change this to date later
+	private Date windowEndDateTime;	
 	private double decayRate;
 	private double multiplierRate;
 	
@@ -36,8 +39,16 @@ public class AdminSettings {
 		this.windowStatus = windowStatus;
 	}
 
-	public Date getWindowEndDateTime() {
-		return windowEndDateTime;
+	public String getWindowEndDateTime() {
+		String date = null;
+		try {
+			date = DateParser.getCurrentDate(windowEndDateTime);
+		} catch (NullPointerException e) {
+			date = ErrorMessages.INACTIVE_WINDOW;
+		} catch (Exception e) {
+			date = e.getMessage();
+		}
+		return date;
 	}
 
 	public void setWindowEndDateTime(Date windowEndDateTime) {

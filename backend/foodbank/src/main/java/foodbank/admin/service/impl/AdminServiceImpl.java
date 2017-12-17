@@ -1,5 +1,7 @@
 package foodbank.admin.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,13 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public String getWindowEndDate() {
 		// TODO Auto-generated method stub
-		return adminRepository.findOne(adminId).getWindowEndDateTime().toString();
+		String windowEndDate = null;
+		try {
+			windowEndDate = adminRepository.findOne(adminId).getWindowEndDateTime();
+		} catch (NullPointerException e) {
+			windowEndDate = "The window is currently inactive.";
+		}
+		return windowEndDate;
 	}
 
 	@Override
@@ -58,7 +66,8 @@ public class AdminServiceImpl implements AdminService {
 		AdminSettings adminSettings = adminRepository.findOne(adminId);
 		Date newClosingDate = null;
 		try {
-			newClosingDate = DateParser.parseDateTime(settings.getClosingDate());
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			newClosingDate = dateFormat.parse(settings.getClosingDate());
 		} catch (Exception e) {
 			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
 		}
@@ -76,6 +85,7 @@ public class AdminServiceImpl implements AdminService {
 			currentWindowStatus = adminSettings.getWindowStatus();
 			if(currentWindowStatus == WindowStatus.ACTIVE) {
 				adminSettings.setWindowStatus(WindowStatus.INACTIVE);
+				adminSettings.setWindowEndDateTime(null);
 			} else {
 				adminSettings.setWindowStatus(WindowStatus.ACTIVE);
 			}
@@ -105,17 +115,22 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		// Call this method to perform a batch update of all settings
 		AdminSettings adminSettings = adminRepository.findOne(adminId);
-		Date newClosingDate = null;
-		try {
-			newClosingDate = DateParser.parseDateTime(settings.getClosingDate());
-		} catch (Exception e) {
-			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+		Boolean closingDateUpdateIntent = evaluateClosingDateUpdateIntent(adminSettings, settings);
+		if(closingDateUpdateIntent) {
+			Date newClosingDate = null;
+			try {
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				newClosingDate = dateFormat.parse(settings.getClosingDate());
+			} catch (Exception e) {
+				throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+			}
+			adminSettings.setWindowEndDateTime(newClosingDate);
 		}
-		adminSettings.setWindowEndDateTime(newClosingDate);
 		if(settings.getWindowToggle()) {
 			WindowStatus currentWindowStatus = adminSettings.getWindowStatus();
 			if(currentWindowStatus == WindowStatus.ACTIVE) {
 				adminSettings.setWindowStatus(WindowStatus.INACTIVE);
+				adminSettings.setWindowEndDateTime(null);
 			} else {
 				adminSettings.setWindowStatus(WindowStatus.ACTIVE);
 			}
@@ -125,6 +140,12 @@ public class AdminServiceImpl implements AdminService {
 		adminRepository.save(adminSettings);
 	}
 	
-	
+	private Boolean evaluateClosingDateUpdateIntent(AdminSettings currentSettings, AdminSettingsDTO newSettings) {
+		Boolean updateIntent = false;
+		String dbClosingDate = currentSettings.getWindowEndDateTime();
+		String newClosingDate = newSettings.getClosingDate();
+		updateIntent = dbClosingDate.equals(newClosingDate) ? false : true;
+		return updateIntent;
+	}
 
 }
