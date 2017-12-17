@@ -87,7 +87,10 @@ public class AllocationServiceImpl implements AllocationService {
 			String description = entry.getKey();
 			List<Request> requestsForFoodItem = entry.getValue();
 			Request request = requestsForFoodItem.size() > 0 ? requestsForFoodItem.get(0) : null;
-			if(request != null) {
+			FoodItem foodItemDetail = retrieveInventoryDetails(request.getCategory(), request.getClassification(), description);
+			if(request != null && foodItemDetail!= null) {
+				
+				
 				int inventoryQuantity = retrieveInventoryDetails(
 						request.getCategory(), request.getClassification(), description).getQuantity();
 				for(Request currentRequest : requestsForFoodItem) {
@@ -103,10 +106,17 @@ public class AllocationServiceImpl implements AllocationService {
 					String beneficiaryName = request.getBeneficiary().getUser().getName();
 					Allocation allocation = allocationMap.get(beneficiaryName);
 					if(allocation != null) {
-						allocation.getAllocatedItems().add(new FoodItem(request.getFoodItem().getDescription(), allocatedQuantity));
+//						List<FoodItem> fiList = allocation.getAllocatedItems();
+//						fiList.add(new FoodItem(request.getFoodItem().getDescription(), allocatedQuantity));
+						FoodItem fi = new FoodItem(request.getFoodItem().getDescription(), allocatedQuantity);
+						allocation.addFoodItem(fi);
+//						allocation.getAllocatedItems().add(new FoodItem(request.getFoodItem().getDescription(), allocatedQuantity));
 						allocationMap.replace(beneficiaryName, allocation);
 					} else {
-						allocation = new Allocation(request.getBeneficiary(), Arrays.asList(new FoodItem(description, allocatedQuantity)));
+						List<FoodItem> newFoodItemList = new ArrayList<>();
+						newFoodItemList.add(new FoodItem(description, allocatedQuantity));
+						allocation = new Allocation(request.getBeneficiary(), newFoodItemList);
+//						allocation = new Allocation(request.getBeneficiary(), Arrays.asList(new FoodItem(description, allocatedQuantity)));
 						allocationMap.put(beneficiaryName, allocation);
 					}
 				}
@@ -117,6 +127,8 @@ public class AllocationServiceImpl implements AllocationService {
 	
 	// Helper method to generate a mapping for every item and the available quantity in store
 	private FoodItem retrieveInventoryDetails(String category, String classification, String description) {
+		
+		
 		UUID uniqueId = InventorySerializer.serials.get(category+classification+description);
 		return InventorySerializer.foodItemMap.get(uniqueId);
 	}

@@ -1,5 +1,6 @@
 package foodbank.allocation.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -44,11 +45,16 @@ public class Allocation {
 	}
 	
 	public List<FoodItem> getAllocatedItems() {
+		
 		return allocatedItems;
 	}
 	
 	public void setAllocatedItems(List<FoodItem> allocatedItems) {
 		this.allocatedItems = allocatedItems;
+	}
+	
+	public void addFoodItem(FoodItem fi) {
+		this.allocatedItems.add(fi);
 	}
 	
 	/*
