@@ -17,7 +17,6 @@ import foodbank.allocation.repository.AllocationRepository;
 import foodbank.allocation.service.AllocationService;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.inventory.entity.FoodItem;
-import foodbank.inventory.repository.FoodRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.InventorySerializer;

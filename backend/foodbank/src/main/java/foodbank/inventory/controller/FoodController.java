@@ -1,10 +1,6 @@
 package foodbank.inventory.controller;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,12 +15,9 @@ import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
-import foodbank.inventory.entity.ManualForm;
-import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
-import foodbank.util.Status;
 
 /*
  * Created by: Lau Peng Liang, Bryan
