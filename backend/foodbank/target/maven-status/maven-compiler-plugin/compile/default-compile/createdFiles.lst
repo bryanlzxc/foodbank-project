@@ -1,0 +1,12 @@
+foodbank/user/entity/QUser.class
+foodbank/admin/entity/QWindowData.class
+foodbank/donor/entity/QDonor.class
+foodbank/inventory/entity/QCategory.class
+foodbank/request/entity/QRequest.class
+foodbank/packing/entity/QPackingList.class
+foodbank/inventory/entity/QFoodItem.class
+foodbank/beneficiary/entity/QBeneficiary.class
+foodbank/donor/entity/QDonation.class
+foodbank/admin/entity/QAdminSettings.class
+foodbank/allocation/entity/QAllocation.class
+foodbank/inventory/entity/QClassification.class

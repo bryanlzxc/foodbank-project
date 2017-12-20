@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,7 +55,7 @@ public class AllocationController {
 	}
 	
 	@PutMapping("/insert-allocation")
-	public ResponseDTO insertAllocation(AllocationDTO allocation) {
+	public ResponseDTO insertAllocation(@RequestBody AllocationDTO allocation) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_CREATE_SUCCESS);
 		try {
 			allocationService.createAllocation(allocation);
@@ -66,7 +67,7 @@ public class AllocationController {
 	}
 	
 	@PostMapping("/update-allocation")
-	public ResponseDTO updateAllocation(AllocationDTO allocation) {
+	public ResponseDTO updateAllocation(@RequestBody AllocationDTO allocation) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_UPDATE_SUCCESS);
 		try {
 			allocationService.updateAllocation(allocation);
