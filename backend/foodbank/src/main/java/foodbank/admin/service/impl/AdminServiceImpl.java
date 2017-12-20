@@ -122,11 +122,14 @@ public class AdminServiceImpl implements AdminService {
 			if(currentWindowStatus == WindowStatus.ACTIVE) {
 				adminSettings.setWindowStatus(WindowStatus.INACTIVE);
 				adminSettings.setWindowEndDateTime(null);
+				adminSettings.setWindowStartDateTime(null);
 			} else {
 				adminSettings.setWindowStatus(WindowStatus.ACTIVE);
 				try {
 					adminSettings.setWindowStartDateTime(new SimpleDateFormat("dd/MM/yyyy HH:mm")
 							.parse(settings.getStartingDate()));
+					adminSettings.setWindowEndDateTime(new SimpleDateFormat("dd/MM/yyyy HH:mm")
+							.parse(settings.getClosingDate()));
 				} catch (Exception e) {
 					throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
 				}
