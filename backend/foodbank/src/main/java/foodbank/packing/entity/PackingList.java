@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import foodbank.allocation.entity.Allocation;
 import foodbank.inventory.entity.FoodItem;
 
-@Document(collection = "Packing List")
+@Document(collection = "PackingList")
 public class PackingList {
 	
 	@Id

@@ -25,7 +25,7 @@ import foodbank.util.MessageConstants;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/food-items")
+@RequestMapping("/inventory")
 public class FoodController {
 	
 	@Autowired
