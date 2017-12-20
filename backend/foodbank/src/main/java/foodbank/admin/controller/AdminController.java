@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import foodbank.admin.dto.AdminSettingsDTO;
 import foodbank.admin.entity.AdminSettings;
 import foodbank.admin.entity.AdminSettings.WindowStatus;
+import foodbank.admin.entity.WindowData;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
 import foodbank.response.dto.ResponseDTO;
@@ -54,6 +55,11 @@ public class AdminController {
 	@GetMapping("/display/multiplier-rate")
 	public Map<String, Double> getMultiplierRate() {
 		return Collections.singletonMap("multiplier-rate", adminService.getMultiplierRate());
+	}
+	
+	@GetMapping("/display/side-bar")
+	public WindowData retrieveWindowData() {
+		return adminService.retrieveWindowData();
 	}
 	
 	@PostMapping("/update/window-status")

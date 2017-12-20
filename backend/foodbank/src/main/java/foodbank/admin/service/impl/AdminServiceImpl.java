@@ -3,6 +3,9 @@ package foodbank.admin.service.impl;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +13,12 @@ import org.springframework.stereotype.Service;
 import foodbank.admin.dto.AdminSettingsDTO;
 import foodbank.admin.entity.AdminSettings;
 import foodbank.admin.entity.AdminSettings.WindowStatus;
+import foodbank.admin.entity.WindowData;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
 import foodbank.exceptions.SettingsUpdateException;
+import foodbank.request.entity.Request;
+import foodbank.request.repository.RequestRepository;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants.ErrorMessages;
 
@@ -21,6 +27,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminRepository adminRepository;
+	
+	@Autowired
+	private RequestRepository requestRepository;
 	
 	private static final String adminId = "59f4a3316f9d43370468907b";
 	
@@ -37,13 +46,40 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public String getWindowStartDate() {
+		// TODO Auto-generated method stub
+		String windowStartDate = null;
+		try {
+			windowStartDate = adminRepository.findOne(adminId).getWindowStartDateTime();
+		} catch (NullPointerException e) {
+			windowStartDate = ErrorMessages.INACTIVE_WINDOW;
+		}
+		return windowStartDate;
+	}
+
+	@Override
+	public void updateWindowOpeningDate(AdminSettingsDTO settings) {
+		// TODO Auto-generated method stub
+		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		Date newStartingDate = null;
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			newStartingDate = dateFormat.parse(settings.getClosingDate());
+		} catch (Exception e) {
+			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+		}
+		adminSettings.setWindowStartDateTime(newStartingDate);
+		adminRepository.save(adminSettings);
+	}
+	
+	@Override
 	public String getWindowEndDate() {
 		// TODO Auto-generated method stub
 		String windowEndDate = null;
 		try {
 			windowEndDate = adminRepository.findOne(adminId).getWindowEndDateTime();
 		} catch (NullPointerException e) {
-			windowEndDate = "The window is currently inactive.";
+			windowEndDate = ErrorMessages.INACTIVE_WINDOW;
 		}
 		return windowEndDate;
 	}
@@ -88,6 +124,12 @@ public class AdminServiceImpl implements AdminService {
 				adminSettings.setWindowEndDateTime(null);
 			} else {
 				adminSettings.setWindowStatus(WindowStatus.ACTIVE);
+				try {
+					adminSettings.setWindowStartDateTime(new SimpleDateFormat("dd/MM/yyyy HH:mm")
+							.parse(settings.getStartingDate()));
+				} catch (Exception e) {
+					throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+				}
 			}
 		}
 		adminRepository.save(adminSettings);
@@ -146,6 +188,33 @@ public class AdminServiceImpl implements AdminService {
 		String newClosingDate = newSettings.getClosingDate();
 		updateIntent = dbClosingDate.equals(newClosingDate) ? false : true;
 		return updateIntent;
+	}
+
+	@Override
+	public WindowData retrieveWindowData() {
+		// TODO Auto-generated method stub
+		List<Request> requests = requestRepository.findAll();
+		Set<String> uniqueUsers = new TreeSet<String>();
+		for(Request request : requests) {
+			uniqueUsers.add(request.getBeneficiary().getUser().getUsername());
+		}
+		WindowData windowData = new WindowData();
+		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		windowData.setDecayRate(adminSettings.getDecayRate());
+		windowData.setMultiplierRate(adminSettings.getMultiplierRate());
+		if(adminSettings.getWindowEndDateTime() == null) {
+			windowData.setWindowEndDateTime(null);
+		} else {
+			windowData.setWindowEndDateTime(DateParser.convertToDate(adminSettings.getWindowEndDateTime()));
+		}
+		if(adminSettings.getWindowStartDateTime() == null) {
+			windowData.setWindowStartDateTime(null);
+		} else {
+			windowData.setWindowStartDateTime(DateParser.convertToDate(adminSettings.getWindowStartDateTime()));
+		}
+		windowData.setWindowStatus(adminSettings.getWindowStatus());
+		WindowData.uniqueBeneficiaryCount = Integer.valueOf(uniqueUsers.size());
+		return windowData;
 	}
 
 }

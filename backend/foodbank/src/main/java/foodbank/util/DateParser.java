@@ -3,6 +3,9 @@ package foodbank.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import foodbank.exceptions.SettingsUpdateException;
+import foodbank.util.MessageConstants.ErrorMessages;
+
 /*
  * Created by: Ng Shirong
  */
@@ -37,6 +40,17 @@ public class DateParser {
 	public static String getCurrentDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return format.format(date);
+	}
+	
+	public static Date convertToDate(String date) {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Date dateObject = null;
+		try { 
+			dateObject = format.parse(date);
+		} catch (Exception e) {
+			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+		}
+		return dateObject;
 	}
 
 }

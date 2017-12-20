@@ -22,6 +22,8 @@ public final class MessageConstants {
 	public static final String MULTIPLIER_RATE_UPDATE_SUCCESS = "Multiplier rate successfully updated.";
 	public static final String ADMIN_BATCH_UPDATE_SUCCESS = "All admin settings successfully updated.";
 	public static final String ALLOCATION_GENERATE_SUCCESS = "Allocations successfully generated.";
+	public static final String ALLOCATION_CREATE_SUCCESS = "Allocation successfully created.";
+	public static final String ALLOCATION_UPDATE_SUCCESS = "Allocation successfully updated.";
 	
 	public static class ErrorMessages {
 		
@@ -34,6 +36,7 @@ public final class MessageConstants {
 		public static final String BENEFICIARY_ALREADY_EXISTS = "This beneficiary already exists.";
 		public static final String DATE_PARSE_ERROR = "There was an error when parsing the date.";
 		public static final String INACTIVE_WINDOW = "The window is currently inactive.";
+		public static final String INVALID_ALLOCATION = "The specified allocation cannot be found.";
 		
 	}
 	

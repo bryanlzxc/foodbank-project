@@ -3,6 +3,7 @@ package foodbank.admin.service;
 import foodbank.admin.dto.AdminSettingsDTO;
 import foodbank.admin.entity.AdminSettings;
 import foodbank.admin.entity.AdminSettings.WindowStatus;
+import foodbank.admin.entity.WindowData;
 
 public interface AdminService {
 	
@@ -10,11 +11,15 @@ public interface AdminService {
 	
 	WindowStatus getWindowStatus();
 	
+	String getWindowStartDate();
+	
 	String getWindowEndDate();
 	
 	Double getDecayRate();
 	
 	Double getMultiplierRate();
+	
+	void updateWindowOpeningDate(final AdminSettingsDTO settings);
 	
 	void updateWindowClosingDate(final AdminSettingsDTO settings);
 	
@@ -25,5 +30,7 @@ public interface AdminService {
 	void updateMultiplierRate(final AdminSettingsDTO settings);
 	
 	void updateAdminSettings(final AdminSettingsDTO settings);
+	
+	WindowData retrieveWindowData();
 
 }

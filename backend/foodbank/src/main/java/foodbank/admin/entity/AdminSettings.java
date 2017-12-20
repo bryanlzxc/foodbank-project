@@ -19,6 +19,7 @@ public class AdminSettings {
 	}
 	
 	private WindowStatus windowStatus;
+	private Date windowStartDateTime;
 	private Date windowEndDateTime;	
 	private double decayRate;
 	private double multiplierRate;
@@ -37,6 +38,22 @@ public class AdminSettings {
 
 	public void setWindowStatus(WindowStatus windowStatus) {
 		this.windowStatus = windowStatus;
+	}
+	
+	public String getWindowStartDateTime() {
+		String date = null;
+		try {
+			date = DateParser.getCurrentDate(windowStartDateTime);
+		} catch (NullPointerException e) {
+			date = ErrorMessages.INACTIVE_WINDOW;
+		} catch (Exception e) {
+			date = e.getMessage();
+		}
+		return date;
+	}
+	
+	public void setWindowStartDateTime(Date windowStartDateTime) {
+		this.windowStartDateTime = windowStartDateTime;
 	}
 
 	public String getWindowEndDateTime() {

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.allocation.dto.AllocationDTO;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.service.AllocationService;
 import foodbank.inventory.entity.FoodItem;
@@ -45,6 +46,30 @@ public class AllocationController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_GENERATE_SUCCESS);
 		try {
 			allocationService.generateAllocationList();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PutMapping("/insert-allocation")
+	public ResponseDTO insertAllocation(AllocationDTO allocation) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_CREATE_SUCCESS);
+		try {
+			allocationService.createAllocation(allocation);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/update-allocation")
+	public ResponseDTO updateAllocation(AllocationDTO allocation) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_UPDATE_SUCCESS);
+		try {
+			allocationService.updateAllocation(allocation);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

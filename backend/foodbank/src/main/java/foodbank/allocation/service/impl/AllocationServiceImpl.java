@@ -12,14 +12,20 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.allocation.dto.AllocationDTO;
+import foodbank.allocation.dto.BatchAllocationDTO;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.allocation.service.AllocationService;
 import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.beneficiary.repository.BeneficiaryRepository;
+import foodbank.exceptions.InvalidAllocationException;
+import foodbank.exceptions.InvalidBeneficiaryException;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.InventorySerializer;
+import foodbank.util.MessageConstants.ErrorMessages;
 
 @Service
 public class AllocationServiceImpl implements AllocationService {
@@ -29,6 +35,9 @@ public class AllocationServiceImpl implements AllocationService {
 	
 	@Autowired
 	private RequestRepository requestRepository;
+	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
 		
 	@Override
 	public List<Allocation> retrieveAllAllocations() {
@@ -120,6 +129,44 @@ public class AllocationServiceImpl implements AllocationService {
 	private FoodItem retrieveInventoryDetails(String category, String classification, String description) {
 		UUID uniqueId = InventorySerializer.serials.get(category+classification+description);
 		return InventorySerializer.foodItemMap.get(uniqueId);
+	}
+	
+	@Override
+	public void createAllocation(AllocationDTO allocation) {
+		// TODO Auto-generated method stub
+		if(allocation.getId() == null) {
+			Beneficiary beneficiary = beneficiaryRepository.findByName(allocation.getBeneficiary());
+			if(beneficiary == null) {
+				throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
+			}
+			allocationRepository.insert(new Allocation(beneficiary, allocation.getAllocatedItems()));
+		}
+	}
+
+	@Override
+	public void updateAllocation(AllocationDTO allocation) {
+		// TODO Auto-generated method stub
+		Allocation dbAllocation = allocationRepository.findById(allocation.getId());
+		if(dbAllocation == null) {
+			throw new InvalidAllocationException(ErrorMessages.INVALID_ALLOCATION);
+		}
+		List<FoodItem> dbAllocatedItems = dbAllocation.getAllocatedItems();
+		Map<String, Integer> dbAllocationMap = new HashMap<String, Integer>();
+		for(int i = 0; i < dbAllocatedItems.size(); i++) {
+			dbAllocationMap.put(dbAllocatedItems.get(i).getDescription(), i);
+		}
+		List<FoodItem> updatedAllocatedItems = allocation.getAllocatedItems();
+		for(FoodItem foodItem : updatedAllocatedItems) {
+			dbAllocatedItems.get(dbAllocationMap.get(foodItem.getDescription())).setQuantity(foodItem.getQuantity());
+		}
+		dbAllocation.setAllocatedItems(dbAllocatedItems);
+		allocationRepository.save(dbAllocation);
+	}
+
+	@Override
+	public void batchAllocationUpdate(BatchAllocationDTO batchAllocation) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

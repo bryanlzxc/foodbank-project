@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AdminSettingsDTO {
 	
+	@JsonProperty("starting-date")
+	private String startingDate;
+	
 	@JsonProperty("closing-date")
 	private String closingDate;
 	
@@ -15,6 +18,14 @@ public class AdminSettingsDTO {
 	
 	@JsonProperty("multiplier")
 	private Double multiplierRate;
+	
+	public String getStartingDate() {
+		return startingDate;
+	}
+	
+	public void setStartingDate(String startingDate) {
+		this.startingDate = startingDate;
+	}
 	
 	public String getClosingDate() {
 		return closingDate;
