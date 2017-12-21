@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import foodbank.exceptions.InvalidBeneficiaryException;
 import foodbank.history.dto.RequestHistoryDTO;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.history.service.HistoryService;
+import foodbank.util.MessageConstants.ErrorMessages;
 
+@Service
 public class HistoryServiceImpl implements HistoryService {
 
 	@Autowired
@@ -35,6 +39,9 @@ public class HistoryServiceImpl implements HistoryService {
 	public List<Map<String, Object>> retrieveAllPastRequestsByBeneficiary(String beneficiary) {
 		// TODO Auto-generated method stub
 		List<RequestHistory> requestHistoryList = historyRepository.findByUsername(beneficiary);
+		if(requestHistoryList == null || requestHistoryList.isEmpty()) {
+			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
+		}
 		List<Map<String, Object>> pastRequestsByBeneficiary = new ArrayList<Map<String, Object>>();
 		for(RequestHistory requestHistory : requestHistoryList) {
 			Map<String, Object> foodItemMapping = new HashMap<String, Object>();
