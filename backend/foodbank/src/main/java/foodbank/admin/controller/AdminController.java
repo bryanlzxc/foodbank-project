@@ -34,9 +34,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@Autowired
-	private HistoryService historyService;
-	
 	@GetMapping("/display-all")
 	public AdminSettings getAdminSettings() {
 		return adminService.getAdminSettings();
