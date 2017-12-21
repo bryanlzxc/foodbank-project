@@ -1,5 +1,7 @@
 package foodbank.history.entity;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +18,7 @@ public class RequestHistory {
 	private Beneficiary beneficiary;
 	
 	private String username;
+	private Date requestCreationDate;
 	private String category;
 	private String classification;
 	private String description;
@@ -24,10 +27,12 @@ public class RequestHistory {
 	
 	public RequestHistory() {}
 	
-	public RequestHistory(Beneficiary beneficiary, String category, String classification, String description,
+	public RequestHistory(Beneficiary beneficiary, Date requestCreationDate, 
+			String category, String classification, String description,
 			Integer requestedQuantity, Integer allocatedQuantity) {
 		this.beneficiary = beneficiary;
 		this.username = beneficiary.getUser().getUsername();
+		this.requestCreationDate = requestCreationDate;
 		this.category = category;
 		this.classification = classification;
 		this.description = description;
@@ -49,6 +54,14 @@ public class RequestHistory {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Date getRequestCreationDate() {
+		return requestCreationDate;
+	}
+
+	public void setRequestCreationDate(Date requestCreationDate) {
+		this.requestCreationDate = requestCreationDate;
 	}
 
 	public Beneficiary getBeneficiary() {

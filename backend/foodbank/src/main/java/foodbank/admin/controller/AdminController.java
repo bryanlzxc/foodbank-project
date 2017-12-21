@@ -20,6 +20,8 @@ import foodbank.admin.entity.AdminSettings.WindowStatus;
 import foodbank.admin.entity.WindowData;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
+import foodbank.email.entity.SendEmail;
+import foodbank.history.service.HistoryService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants;
@@ -31,6 +33,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	@GetMapping("/display-all")
 	public AdminSettings getAdminSettings() {
@@ -70,6 +75,7 @@ public class AdminController {
 			if(status == WindowStatus.ACTIVE) {
 				responseDTO.setMessage(MessageConstants.WINDOW_CLOSE_SUCCESS);
 			} else {
+				adminService.insertPastRequests();
 				responseDTO.setMessage(MessageConstants.WINDOW_OPEN_SUCCESS);
 			}
 		} catch (Exception e) {
@@ -133,7 +139,7 @@ public class AdminController {
 			@PathVariable("body") String body) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.EMAIL_SEND_SUCCESS);
 		try {
-			new foodbank.email.entity.SendEmail(email, subject, body);
+			new SendEmail(email, subject, body);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

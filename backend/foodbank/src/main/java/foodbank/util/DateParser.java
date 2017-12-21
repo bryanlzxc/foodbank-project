@@ -52,5 +52,10 @@ public class DateParser {
 		}
 		return dateObject;
 	}
-
+	
+	public static String displayDayMonthYearOnly(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		return format.format(date);
+	}
+	
 }

@@ -8,11 +8,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.allocation.entity.Allocation;
+import foodbank.allocation.repository.AllocationRepository;
 import foodbank.exceptions.InvalidBeneficiaryException;
 import foodbank.history.dto.RequestHistoryDTO;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.history.service.HistoryService;
+import foodbank.request.entity.Request;
+import foodbank.request.repository.RequestRepository;
+import foodbank.util.DateParser;
 import foodbank.util.MessageConstants.ErrorMessages;
 
 @Service
@@ -20,6 +25,9 @@ public class HistoryServiceImpl implements HistoryService {
 
 	@Autowired
 	private HistoryRepository historyRepository;
+	
+	@Autowired
+	private RequestRepository requestRepository;
 	
 	@Override
 	public List<RequestHistoryDTO> retrieveAllPastRequest() {
@@ -54,5 +62,5 @@ public class HistoryServiceImpl implements HistoryService {
 		}
 		return pastRequestsByBeneficiary;
 	}
-
+	
 }

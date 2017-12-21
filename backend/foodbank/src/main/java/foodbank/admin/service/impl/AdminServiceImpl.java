@@ -2,8 +2,11 @@ package foodbank.admin.service.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -16,7 +19,11 @@ import foodbank.admin.entity.AdminSettings.WindowStatus;
 import foodbank.admin.entity.WindowData;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
+import foodbank.allocation.entity.Allocation;
+import foodbank.allocation.repository.AllocationRepository;
 import foodbank.exceptions.SettingsUpdateException;
+import foodbank.history.entity.RequestHistory;
+import foodbank.history.repository.HistoryRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.DateParser;
@@ -30,6 +37,12 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private RequestRepository requestRepository;
+	
+	@Autowired
+	private AllocationRepository allocationRepository;
+	
+	@Autowired
+	private HistoryRepository historyRepository;
 	
 	private static final String adminId = "59f4a3316f9d43370468907b";
 	
@@ -218,6 +231,30 @@ public class AdminServiceImpl implements AdminService {
 		windowData.setWindowStatus(adminSettings.getWindowStatus());
 		windowData.setUniqueBeneficiaryCount(Integer.valueOf(uniqueUsers.size()));
 		return windowData;
+	}
+
+	@Override
+	public void insertPastRequests() {
+		// TODO Auto-generated method stub
+		List<Request> requests = requestRepository.findAll();
+		List<Allocation> allocations = allocationRepository.findAll();
+		Map<String, Map<String, Integer>> requestAllocationMap = new HashMap<String, Map<String, Integer>>();
+		for(Allocation allocation : allocations) {
+			Map<String, Integer> allocationByItemsForBeneficiary = new HashMap<String, Integer>();
+			allocation.getAllocatedItems().forEach(foodItem -> allocationByItemsForBeneficiary.put(foodItem.getDescription(), foodItem.getQuantity()));
+			requestAllocationMap.put(allocation.getBeneficiary().getUser().getUsername(), allocationByItemsForBeneficiary);
+		}
+		List<RequestHistory> pastRequests = new ArrayList<RequestHistory>();
+		for(Request request : requests) {
+			Integer allocatedQuantity = null;
+			allocatedQuantity = requestAllocationMap.get(request.getBeneficiary().getUser().getUsername()).get(request.getFoodItem().getDescription());
+			RequestHistory pastRequest = new RequestHistory(request.getBeneficiary(), 
+					DateParser.convertToDate(request.getRequestCreationDate()), 
+					request.getCategory(), request.getClassification(), request.getFoodItem().getDescription(), 
+					Integer.valueOf(request.getFoodItem().getQuantity()), allocatedQuantity);
+			pastRequests.add(pastRequest);
+		}
+		pastRequests.forEach(pastRequest -> historyRepository.insert(pastRequest));
 	}
 
 }
