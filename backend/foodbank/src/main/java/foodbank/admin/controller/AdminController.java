@@ -39,22 +39,22 @@ public class AdminController {
 	
 	@GetMapping("/display/window-status")
 	public Map<String, WindowStatus> getWindowStatus() {
-		return Collections.singletonMap("window-status", adminService.getWindowStatus());
+		return Collections.singletonMap("windowStatus", adminService.getWindowStatus());
 	}
 	
 	@GetMapping("/display/closing-date")
 	public Map<String, String> getClosingDate() {
-		return Collections.singletonMap("window-closing-date", adminService.getWindowEndDate());
+		return Collections.singletonMap("windowEndDateTime", adminService.getWindowEndDate());
 	}
 	
 	@GetMapping("/display/decay-rate")
 	public Map<String, Double> getDecayRate() {
-		return Collections.singletonMap("decay-rate", adminService.getDecayRate());
+		return Collections.singletonMap("decayRate", adminService.getDecayRate());
 	}
 	
 	@GetMapping("/display/multiplier-rate")
 	public Map<String, Double> getMultiplierRate() {
-		return Collections.singletonMap("multiplier-rate", adminService.getMultiplierRate());
+		return Collections.singletonMap("multiplierRate", adminService.getMultiplierRate());
 	}
 	
 	@GetMapping("/display/side-bar")
