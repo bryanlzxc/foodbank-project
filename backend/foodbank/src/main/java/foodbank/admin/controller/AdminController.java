@@ -39,22 +39,22 @@ public class AdminController {
 	
 	@GetMapping("/display/window-status")
 	public Map<String, WindowStatus> getWindowStatus() {
-		return Collections.singletonMap("window-status", adminService.getWindowStatus());
+		return Collections.singletonMap("windowStatus", adminService.getWindowStatus());
 	}
 	
 	@GetMapping("/display/closing-date")
 	public Map<String, String> getClosingDate() {
-		return Collections.singletonMap("window-closing-date", adminService.getWindowEndDate());
+		return Collections.singletonMap("windowEndDateTime", adminService.getWindowEndDate());
 	}
 	
 	@GetMapping("/display/decay-rate")
 	public Map<String, Double> getDecayRate() {
-		return Collections.singletonMap("decay-rate", adminService.getDecayRate());
+		return Collections.singletonMap("decayRate", adminService.getDecayRate());
 	}
 	
 	@GetMapping("/display/multiplier-rate")
 	public Map<String, Double> getMultiplierRate() {
-		return Collections.singletonMap("multiplier-rate", adminService.getMultiplierRate());
+		return Collections.singletonMap("multiplierRate", adminService.getMultiplierRate());
 	}
 	
 	@GetMapping("/display/side-bar")
@@ -120,6 +120,20 @@ public class AdminController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ADMIN_BATCH_UPDATE_SUCCESS);
 		try {
 			adminService.updateAdminSettings(adminSettings);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	// Send email
+	@GetMapping("/send-email/email={email}/subject={subject}/body={body}")
+	public ResponseDTO sendEmail(@PathVariable("email") String email, @PathVariable("subject") String subject, 
+			@PathVariable("body") String body) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.EMAIL_SEND_SUCCESS);
+		try {
+			new foodbank.email.entity.SendEmail(email, subject, body);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

@@ -27,6 +27,8 @@ public class QAdminSettings extends EntityPathBase<AdminSettings> {
 
     public final StringPath windowEndDateTime = createString("windowEndDateTime");
 
+    public final StringPath windowStartDateTime = createString("windowStartDateTime");
+
     public final EnumPath<AdminSettings.WindowStatus> windowStatus = createEnum("windowStatus", AdminSettings.WindowStatus.class);
 
     public QAdminSettings(String variable) {
