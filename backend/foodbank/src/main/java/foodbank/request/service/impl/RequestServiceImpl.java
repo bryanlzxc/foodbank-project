@@ -89,6 +89,12 @@ public class RequestServiceImpl implements RequestService {
 	}
 
 	@Override
+	public void updateOverwriteRequest(RequestDTO request) {
+		// TODO Auto-generated method stub
+		insertRequest(request);
+	}
+	
+	@Override
 	public void deleteRequest(RequestDTO request) {
 		// TODO Auto-generated method stub
 		List<Request> requestsByBeneficiary = getAllRequestsByBeneficiary(request.getBeneficiary());

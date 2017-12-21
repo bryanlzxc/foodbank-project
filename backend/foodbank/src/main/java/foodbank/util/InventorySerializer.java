@@ -42,5 +42,9 @@ public class InventorySerializer {
 			}
 		}
 	}
+	
+	public static Integer retrieveQuantityOfItem(String category, String classification, String description) {
+		return InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getQuantity();
+	}
 
 }

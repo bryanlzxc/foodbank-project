@@ -59,6 +59,18 @@ public class RequestController {
 		return responseDTO;
 	}
 	
+	@PostMapping("/overwrite-request")
+	public ResponseDTO updateOverwriteRequest(@RequestBody RequestDTO request) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_UPDATE_SUCCESS);
+		try {
+			requestService.updateOverwriteRequest(request);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	@PostMapping("/update-request")
 	public ResponseDTO updateRequest(@RequestBody RequestDTO request) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_UPDATE_SUCCESS);

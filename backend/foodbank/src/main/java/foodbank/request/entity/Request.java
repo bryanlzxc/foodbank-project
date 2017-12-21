@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.util.DateParser;
+import foodbank.util.InventorySerializer;
 
 /*
  * Done By Ng Shirong
@@ -30,6 +31,7 @@ public class Request {
 	private String category;
 	private String classification;
 	private FoodItem foodItem;
+	private Integer inventoryQuantity;
 	private final String requestCreationDate = DateParser.getCurrentDate(new Date());
 	
 	public Request() {}
@@ -39,6 +41,8 @@ public class Request {
 		this.category = category;
 		this.classification = classification;
 		this.foodItem = foodItem;
+		this.inventoryQuantity = InventorySerializer.retrieveQuantityOfItem(
+				category, classification, foodItem.getDescription());
 	}
 
 	public String getId() {
@@ -83,6 +87,14 @@ public class Request {
 	
 	public String getRequestCreationDate() {
 		return requestCreationDate;
+	}
+
+	public Integer getInventoryQuantity() {
+		return inventoryQuantity;
+	}
+
+	public void setInventoryQuantity(Integer inventoryQuantity) {
+		this.inventoryQuantity = inventoryQuantity;
 	}
 	
 }
