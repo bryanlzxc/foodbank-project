@@ -40,7 +40,7 @@ public class RequestServiceImpl implements RequestService {
 		List<Request> requests = requestRepository.findAll();
 		List<Request> requestsByBeneficiary = new ArrayList<Request>();
 		for(Request request : requests) {
-			if(request.getBeneficiary().getUser().getName().equals(beneficiary)) {
+			if(request.getBeneficiary().getUser().getUsername().equals(beneficiary)) {
 				requestsByBeneficiary.add(request);
 			}
 		}
@@ -141,7 +141,7 @@ public class RequestServiceImpl implements RequestService {
 		List<Request> requests = requestRepository.findAll();
 		Set<String> uniqueBeneficiaryList = new HashSet<String>();
 		for(Request request : requests) {
-			uniqueBeneficiaryList.add(request.getBeneficiary().getUser().getName());
+			uniqueBeneficiaryList.add(request.getBeneficiary().getUser().getUsername());
 		}
 		return uniqueBeneficiaryList.size();
 	}
