@@ -34,7 +34,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public Double getBeneficiaryScore(String beneficiary) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByName(beneficiary);
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary);
 		if(dbBeneficiary == null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
@@ -44,7 +44,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public Beneficiary getBeneficiaryDetails(String beneficiary) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByName(beneficiary);
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary);
 		if(dbBeneficiary == null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
@@ -54,7 +54,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public void modifyBeneficiaryScore(BeneficiaryUpdateDTO beneficiaryUpdate) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByName(beneficiaryUpdate.getBeneficiary());
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryUpdate.getBeneficiary());
 		if(dbBeneficiary == null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
@@ -65,7 +65,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public void createBeneficiary(BeneficiaryDTO beneficiary) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByName(beneficiary.getName());
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getName());
 		if(dbBeneficiary != null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.BENEFICIARY_ALREADY_EXISTS);
 		}

@@ -63,7 +63,7 @@ public class RequestServiceImpl implements RequestService {
 			}
 		}
 		if(!foundPreviousRequest) {
-			requestRepository.save(new Request(beneficiaryRepository.findByName(request.getBeneficiary()), request.getCategory(), 
+			requestRepository.save(new Request(beneficiaryRepository.findByUsername(request.getBeneficiary()), request.getCategory(), 
 					request.getClassification(), new FoodItem(request.getDescription(), request.getQuantity())));
 		}
 	}
@@ -123,7 +123,7 @@ public class RequestServiceImpl implements RequestService {
 				description = key.equals("description") ? (String)requestMap.get(key) : description;
 				quantity = key.equals("quantity") ? (Integer)requestMap.get(key) : quantity;
 			}
-			requests.add(new Request(beneficiaryRepository.findByName(batchRequest.getBeneficiary()), category, classification, 
+			requests.add(new Request(beneficiaryRepository.findByUsername(batchRequest.getBeneficiary()), category, classification, 
 					new FoodItem(description, quantity)));
 		}
 		requests.forEach(request -> requestRepository.save(request));

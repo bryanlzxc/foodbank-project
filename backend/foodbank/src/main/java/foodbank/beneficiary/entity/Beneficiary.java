@@ -21,7 +21,7 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	@DBRef
 	private User user;
 	
-	private String name;
+	private String username;
 	private String sector;
 	private int numBeneficiary;
 	private String address;
@@ -34,7 +34,7 @@ public class Beneficiary implements Comparable<Beneficiary> {
 			long membershipNumber, long acraRegistrationNumber, String memberType) {
 		super();
 		this.user = user;
-		this.name = user.getName();
+		this.username = user.getUsername();
 		this.sector = sector;
 		this.numBeneficiary = numBeneficiary;
 		this.address = address;

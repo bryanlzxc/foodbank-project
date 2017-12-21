@@ -37,7 +37,7 @@ public class RequestController {
 		return requestService.getAllRequests();
 	}
 	
-	@GetMapping("/display/beneficiary-name={beneficiary}")
+	@GetMapping("/display/beneficiary={beneficiary}")
 	public List<Request> getAllRequestsFromBeneficiary(@PathVariable("beneficiary") String beneficiary) {
 		return requestService.getAllRequestsByBeneficiary(beneficiary);
 	}

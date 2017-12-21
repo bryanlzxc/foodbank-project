@@ -135,7 +135,7 @@ public class AllocationServiceImpl implements AllocationService {
 	public void createAllocation(AllocationDTO allocation) {
 		// TODO Auto-generated method stub
 		if(allocation.getId() == null) {
-			Beneficiary beneficiary = beneficiaryRepository.findByName(allocation.getBeneficiary());
+			Beneficiary beneficiary = beneficiaryRepository.findByUsername(allocation.getBeneficiary());
 			if(beneficiary == null) {
 				throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 			}
