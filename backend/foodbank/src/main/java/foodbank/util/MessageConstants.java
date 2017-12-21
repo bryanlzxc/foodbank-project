@@ -24,6 +24,7 @@ public final class MessageConstants {
 	public static final String ALLOCATION_GENERATE_SUCCESS = "Allocations successfully generated.";
 	public static final String ALLOCATION_CREATE_SUCCESS = "Allocation successfully created.";
 	public static final String ALLOCATION_UPDATE_SUCCESS = "Allocation successfully updated.";
+	public static final String EMAIL_SEND_SUCCESS = "Email successfully sent.";
 	
 	public static class ErrorMessages {
 		
@@ -37,6 +38,8 @@ public final class MessageConstants {
 		public static final String DATE_PARSE_ERROR = "There was an error when parsing the date.";
 		public static final String INACTIVE_WINDOW = "The window is currently inactive.";
 		public static final String INVALID_ALLOCATION = "The specified allocation cannot be found.";
+		public static final String EMAIL_AUTH_ERROR = "Sender Email cannot be authenticated.";
+		public static final String EMAIL_RECIPIENT_NOT_FOUND = "Email cannot be sent to desired Recipient.";
 		
 	}
 	

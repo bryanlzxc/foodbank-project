@@ -127,6 +127,20 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	// Send email
+	@GetMapping("/send-email/email={email}/subject={subject}/body={body}")
+	public ResponseDTO sendEmail(@PathVariable("email") String email, @PathVariable("subject") String subject, 
+			@PathVariable("body") String body) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.EMAIL_SEND_SUCCESS);
+		try {
+			new foodbank.email.entity.SendEmail(email, subject, body);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	/*
 	private AdminRepository adminRepository;
 	private static final String adminId = "59f4a3316f9d43370468907b";
