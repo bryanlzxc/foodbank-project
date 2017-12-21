@@ -30,6 +30,8 @@ public class QWindowData extends EntityPathBase<WindowData> {
     //inherited
     public final NumberPath<Double> multiplierRate = _super.multiplierRate;
 
+    public final NumberPath<Integer> uniqueBeneficiaryCount = createNumber("uniqueBeneficiaryCount", Integer.class);
+
     //inherited
     public final StringPath windowEndDateTime = _super.windowEndDateTime;
 

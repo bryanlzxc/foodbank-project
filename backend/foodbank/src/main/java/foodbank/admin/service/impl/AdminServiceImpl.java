@@ -216,7 +216,7 @@ public class AdminServiceImpl implements AdminService {
 			windowData.setWindowStartDateTime(DateParser.convertToDate(adminSettings.getWindowStartDateTime()));
 		}
 		windowData.setWindowStatus(adminSettings.getWindowStatus());
-		WindowData.uniqueBeneficiaryCount = Integer.valueOf(uniqueUsers.size());
+		windowData.setUniqueBeneficiaryCount(Integer.valueOf(uniqueUsers.size()));
 		return windowData;
 	}
 
