@@ -8,7 +8,7 @@ public class SendEmail {
 	
 	// Configure sender email address and details
 	final String senderEmailID = "analyst.egafinancials@gmail.com";
-	final String senderPassword = "BL00mb3rg_N3Wsr00m";
+	final String senderPassword = "BL00mb3rg_N3Wsr00m1";
 	final String emailSMTPserver = "smtp.gmail.com";
 	final String emailServerPort = "465";
 	String receiverEmailID = null;

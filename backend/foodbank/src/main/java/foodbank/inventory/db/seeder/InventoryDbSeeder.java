@@ -32,17 +32,20 @@ public class InventoryDbSeeder implements CommandLineRunner {
 	@Autowired
 	private FoodRepository foodRepository;
 
+	
 	@Override
 	public void run(String... arg0) throws Exception {
 		// TODO Auto-generated method stub
+		/*
 		foodRepository.deleteAll();
-		List<String[]> inventoryData = Files.lines(Paths.get(InventoryDbSeeder.class.getClassLoader().getResource("inventory-data.csv").getFile().substring(1)))
+		List<String[]> inventoryData = Files.lines(Paths.get(ClassLoader.getSystemResource("inventory-data.csv").getFile().substring(1)))
 			.skip(1)
 			.map(currentLine -> currentLine.split(","))
 			.collect(Collectors.toList());
 		List<FoodItem> foodItems = new ArrayList<FoodItem>();
 		inventoryData.forEach(line -> foodItems.add(new FoodItem(line[0], line[1], line[2], Integer.parseInt(line[3].trim()))));
 		foodRepository.insert(foodItems);
+		*/
 	}
 	
 	/*
