@@ -1,13 +1,14 @@
-package foodbank.inventory.entity;
+package foodbank.backup;
+/*package foodbank.inventory.entity;
 
 import java.util.List;
 import java.util.Set;
 
 public class ManualForm {
 
-	/** 
+	*//** 
 	 * TODO: Create the real donor objects
-	 * **/
+	 * **//*
 	// Set object used to ensure unique values stored only
 	Set<String> donorSet;
 	Set<String> weightGSet;
@@ -54,3 +55,4 @@ public class ManualForm {
 	}
 	
 }
+*/

@@ -32,8 +32,6 @@ public class QBeneficiary extends EntityPathBase<Beneficiary> {
 
     public final StringPath memberType = createString("memberType");
 
-    public final StringPath name = createString("name");
-
     public final NumberPath<Integer> numBeneficiary = createNumber("numBeneficiary", Integer.class);
 
     public final NumberPath<Double> score = createNumber("score", Double.class);
@@ -41,6 +39,8 @@ public class QBeneficiary extends EntityPathBase<Beneficiary> {
     public final StringPath sector = createString("sector");
 
     public final foodbank.user.entity.QUser user;
+
+    public final StringPath username = createString("username");
 
     public QBeneficiary(String variable) {
         this(Beneficiary.class, forVariable(variable), INITS);

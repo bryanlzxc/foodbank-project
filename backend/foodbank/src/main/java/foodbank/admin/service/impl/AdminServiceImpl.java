@@ -250,7 +250,7 @@ public class AdminServiceImpl implements AdminService {
 			allocatedQuantity = requestAllocationMap.get(request.getBeneficiary().getUser().getUsername()).get(request.getFoodItem().getDescription());
 			RequestHistory pastRequest = new RequestHistory(request.getBeneficiary(), 
 					DateParser.convertToDate(request.getRequestCreationDate()), 
-					request.getCategory(), request.getClassification(), request.getFoodItem().getDescription(), 
+					request.getFoodItem().getCategory(), request.getFoodItem().getClassification(), request.getFoodItem().getDescription(), 
 					Integer.valueOf(request.getFoodItem().getQuantity()), allocatedQuantity);
 			pastRequests.add(pastRequest);
 		}

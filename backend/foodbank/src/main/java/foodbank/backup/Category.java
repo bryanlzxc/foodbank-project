@@ -1,4 +1,5 @@
-package foodbank.inventory.entity;
+package foodbank.backup;
+/*package foodbank.inventory.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +7,9 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/*
+
  * Created by: Lau Peng Liang, Bryan
- */
+ 
 
 @Document(collection = "Items")
 public class Category {
@@ -60,3 +61,4 @@ public class Category {
 	}
 	
 }
+*/

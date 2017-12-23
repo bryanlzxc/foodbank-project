@@ -1,4 +1,4 @@
-package foodbank.dashboard.dto;
+/*package foodbank.dashboard.dto;
 
 import java.util.List;
 
@@ -26,3 +26,4 @@ public class CategoryDTO {
 	}
 
 }
+*/

@@ -11,6 +11,4 @@ public interface HistoryService {
 	
 	List<Map<String, Object>> retrieveAllPastRequestsByBeneficiary(final String beneficiary);
 	
-	void insertPastRequests();
-
 }

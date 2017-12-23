@@ -25,10 +25,7 @@ public class HistoryServiceImpl implements HistoryService {
 
 	@Autowired
 	private HistoryRepository historyRepository;
-	
-	@Autowired
-	private RequestRepository requestRepository;
-	
+		
 	@Override
 	public List<RequestHistoryDTO> retrieveAllPastRequest() {
 		// TODO Auto-generated method stub

@@ -71,18 +71,21 @@ public class AllocationServiceImpl implements AllocationService {
 	private HashMap<String, List<Request>> generateMapping(List<Request> requests) {
 		HashMap<String, List<Request>> requestsByFoodItems = new HashMap<String, List<Request>>();
 		for(Request request : requests) {
+			String category = request.getFoodItem().getCategory();
+			String classification = request.getFoodItem().getClassification();
 			String description = request.getFoodItem().getDescription();
-			List<Request> requestsContainingFoodItem = requestsByFoodItems.get(description);
+			String key = category + "," + classification + "," + description;
+			List<Request> requestsContainingFoodItem = requestsByFoodItems.get(key);
 			if(requestsContainingFoodItem != null) {
 				requestsContainingFoodItem.add(request);
 				/* Testing comparing function to avoid writing of a comparator */
 				requestsContainingFoodItem.sort(Comparator.comparing(Request::getBeneficiary, Comparator.comparingDouble(Beneficiary::getScore)));
 				Collections.reverse(requestsContainingFoodItem);
-				requestsByFoodItems.replace(description, requestsContainingFoodItem);
+				requestsByFoodItems.replace(key, requestsContainingFoodItem);
 			} else {
 				requestsContainingFoodItem = new ArrayList<Request>();
 				requestsContainingFoodItem.add(request);
-				requestsByFoodItems.put(description, requestsContainingFoodItem);
+				requestsByFoodItems.put(key, requestsContainingFoodItem);
 			}
 		}
 		return requestsByFoodItems;
@@ -92,12 +95,12 @@ public class AllocationServiceImpl implements AllocationService {
 	private HashMap<String, Allocation> generateAllocationMapping(Map<String, List<Request>> requestsByFoodItems) {
 		HashMap<String, Allocation> allocationMap = new HashMap<String, Allocation>();
 		for(Map.Entry<String, List<Request>> entry : requestsByFoodItems.entrySet()) {
-			String description = entry.getKey();
+			String key = entry.getKey();
 			List<Request> requestsForFoodItem = entry.getValue();
 			Request request = requestsForFoodItem.size() > 0 ? requestsForFoodItem.get(0) : null;
 			if(request != null) {
 				int inventoryQuantity = retrieveInventoryDetails(
-						request.getCategory(), request.getClassification(), description).getQuantity();
+						request.getFoodItem().getCategory(), request.getFoodItem().getClassification(), request.getFoodItem().getDescription()).getQuantity();
 				for(Request currentRequest : requestsForFoodItem) {
 					int allocatedQuantity = 0;
 					int requestedQuantity = currentRequest.getFoodItem().getQuantity();
@@ -111,11 +114,13 @@ public class AllocationServiceImpl implements AllocationService {
 					String beneficiaryName = currentRequest.getBeneficiary().getUser().getName();
 					Allocation allocation = allocationMap.get(beneficiaryName);
 					if(allocation != null) {
-						allocation.getAllocatedItems().add(new FoodItem(currentRequest.getFoodItem().getDescription(), allocatedQuantity));
+						allocation.getAllocatedItems().add(new FoodItem(currentRequest.getFoodItem().getCategory(), currentRequest.getFoodItem().getClassification(),
+								currentRequest.getFoodItem().getDescription(), allocatedQuantity));
 						allocationMap.replace(beneficiaryName, allocation);
 					} else {
 						ArrayList<FoodItem> foodItems = new ArrayList<FoodItem>();
-						foodItems.add(new FoodItem(description, allocatedQuantity));
+						String[] keyArray = key.split(",");
+						foodItems.add(new FoodItem(keyArray[0], keyArray[1], keyArray[2], allocatedQuantity));
 						allocation = new Allocation(currentRequest.getBeneficiary(), foodItems);
 						allocationMap.put(beneficiaryName, allocation);
 					}

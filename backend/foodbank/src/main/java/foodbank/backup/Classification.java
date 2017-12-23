@@ -1,20 +1,31 @@
-package foodbank.inventory.entity;
+package foodbank.backup;
+/*package foodbank.inventory.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-/*
+
  * Created by: Lau Peng Liang, Bryan
- */
+ 
 
 public class Classification {
 	
-	@Id 
+	@Id
+	private String id;
+	
 	private String classification;
 	
 	private List<FoodItem> foodItems;
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 	public String getClassification() {
 		return classification;
@@ -39,3 +50,4 @@ public class Classification {
 	}
 
 }
+*/

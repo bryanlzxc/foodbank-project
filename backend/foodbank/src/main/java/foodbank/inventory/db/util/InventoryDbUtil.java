@@ -1,4 +1,4 @@
-package foodbank.inventory.db.util;
+/*package foodbank.inventory.db.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,9 +15,9 @@ import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
 
-/*
+
  * Created by: Lau Peng Liang, Bryan
- */
+ 
 
 public class InventoryDbUtil {
 	
@@ -93,9 +93,9 @@ public class InventoryDbUtil {
 		return classifications;
 	}
 	
-	/*
+	
 	 * This is where we hard-code the category names for easier mapping
-	 */
+	 
 	private static ArrayList<String> generateCategoryMapping() {
 		
 		ArrayList<String> categories = new ArrayList<String>();
@@ -114,3 +114,4 @@ public class InventoryDbUtil {
 	}
 
 }
+*/

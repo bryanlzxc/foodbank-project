@@ -54,7 +54,7 @@ public class RequestServiceImpl implements RequestService {
 		List<Request> requestsByBeneficiary = getAllRequestsByBeneficiary(request.getBeneficiary());
 		boolean foundPreviousRequest = false;
 		for(Request dbRequest : requestsByBeneficiary) {
-			if(dbRequest.getCategory().equals(request.getCategory()) && dbRequest.getClassification().equals(request.getClassification())
+			if(dbRequest.getFoodItem().getCategory().equals(request.getCategory()) && dbRequest.getFoodItem().getClassification().equals(request.getClassification())
 					&& dbRequest.getFoodItem().getDescription().equals(request.getDescription())) {
 				foundPreviousRequest = true;
 				dbRequest.getFoodItem().setQuantity(request.getQuantity());
@@ -63,8 +63,8 @@ public class RequestServiceImpl implements RequestService {
 			}
 		}
 		if(!foundPreviousRequest) {
-			requestRepository.save(new Request(beneficiaryRepository.findByUsername(request.getBeneficiary()), request.getCategory(), 
-					request.getClassification(), new FoodItem(request.getDescription(), request.getQuantity())));
+			requestRepository.save(new Request(beneficiaryRepository.findByUsername(request.getBeneficiary()), 
+					new FoodItem(request.getCategory(), request.getClassification(), request.getDescription(), request.getQuantity())));
 		}
 	}
 
@@ -75,7 +75,7 @@ public class RequestServiceImpl implements RequestService {
 		List<Request> requestsByBeneficiary = getAllRequestsByBeneficiary(request.getBeneficiary());
 		boolean foundPreviousRequest = false;
 		for(Request dbRequest : requestsByBeneficiary) {
-			if(dbRequest.getCategory().equals(request.getCategory()) && dbRequest.getClassification().equals(request.getClassification())
+			if(dbRequest.getFoodItem().getCategory().equals(request.getCategory()) && dbRequest.getFoodItem().getClassification().equals(request.getClassification())
 					&& dbRequest.getFoodItem().getDescription().equals(request.getDescription())) {
 				foundPreviousRequest = true;
 				dbRequest.getFoodItem().setQuantity(request.getQuantity() + dbRequest.getFoodItem().getQuantity());
@@ -100,7 +100,7 @@ public class RequestServiceImpl implements RequestService {
 		List<Request> requestsByBeneficiary = getAllRequestsByBeneficiary(request.getBeneficiary());
 		boolean foundPreviousRequest = false;
 		for(Request dbRequest : requestsByBeneficiary) {
-			if(dbRequest.getCategory().equals(request.getCategory()) && dbRequest.getClassification().equals(request.getClassification())
+			if(dbRequest.getFoodItem().getCategory().equals(request.getCategory()) && dbRequest.getFoodItem().getClassification().equals(request.getClassification())
 					&& dbRequest.getFoodItem().getDescription().equals(request.getDescription())) {
 				foundPreviousRequest = true;
 				requestRepository.delete(dbRequest);
@@ -129,8 +129,8 @@ public class RequestServiceImpl implements RequestService {
 				description = key.equals("description") ? (String)requestMap.get(key) : description;
 				quantity = key.equals("quantity") ? (Integer)requestMap.get(key) : quantity;
 			}
-			requests.add(new Request(beneficiaryRepository.findByUsername(batchRequest.getBeneficiary()), category, classification, 
-					new FoodItem(description, quantity)));
+			requests.add(new Request(beneficiaryRepository.findByUsername(batchRequest.getBeneficiary()), 
+					new FoodItem(category, classification, description, quantity)));
 		}
 		requests.forEach(request -> requestRepository.save(request));
 	}

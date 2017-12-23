@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Component;
 
-import foodbank.inventory.entity.Category;
-import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 
@@ -28,18 +26,12 @@ public class InventorySerializer {
 	
 	@PostConstruct
 	private void initializeSerials() {
-		List<Category> categories = foodRepository.findAll();
-		for(Category category : categories) {
-			List<Classification> classifications = category.getClassification();
-			for(Classification classification : classifications) {
-				List<FoodItem> foodItems = classification.getFoodItems();
-				for(FoodItem foodItem : foodItems) {
-					String identifierKey = category.getCategory() + classification.getClassification() + foodItem.getDescription();
-					UUID serialNo = UUID.randomUUID();
-					InventorySerializer.serials.put(identifierKey, serialNo);
-					InventorySerializer.foodItemMap.put(serialNo, foodItem);
-				}
-			}
+		List<FoodItem> foodItems = foodRepository.findAll();
+		for(FoodItem foodItem : foodItems) {
+			String identifierKey = foodItem.getCategory() + foodItem.getClassification() + foodItem.getDescription();
+			UUID serialNo = UUID.randomUUID();
+			InventorySerializer.serials.put(identifierKey, serialNo);
+			InventorySerializer.foodItemMap.put(serialNo, foodItem);
 		}
 	}
 	

@@ -28,21 +28,17 @@ public class Request {
 	@DBRef
 	private Beneficiary beneficiary;
 	
-	private String category;
-	private String classification;
 	private FoodItem foodItem;
 	private Integer inventoryQuantity;
 	private final String requestCreationDate = DateParser.getCurrentDate(new Date());
 	
 	public Request() {}
 	
-	public Request(Beneficiary beneficiary, String category, String classification, FoodItem foodItem) {
+	public Request(Beneficiary beneficiary, FoodItem foodItem) {
 		this.beneficiary = beneficiary;
-		this.category = category;
-		this.classification = classification;
 		this.foodItem = foodItem;
 		this.inventoryQuantity = InventorySerializer.retrieveQuantityOfItem(
-				category, classification, foodItem.getDescription());
+				foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription());
 	}
 
 	public String getId() {
@@ -59,22 +55,6 @@ public class Request {
 	
 	public void setBeneficiary(Beneficiary beneficiary) {
 		this.beneficiary = beneficiary;
-	}
-	
-	public String getCategory() {
-		return category;
-	}
-	
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	
-	public String getClassification() {
-		return classification;
-	}
-	
-	public void setClassification(String classification) {
-		this.classification = classification;
 	}
 	
 	public FoodItem getFoodItem() {

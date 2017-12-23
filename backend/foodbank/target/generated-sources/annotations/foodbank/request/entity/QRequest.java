@@ -24,13 +24,11 @@ public class QRequest extends EntityPathBase<Request> {
 
     public final foodbank.beneficiary.entity.QBeneficiary beneficiary;
 
-    public final StringPath category = createString("category");
-
-    public final StringPath classification = createString("classification");
-
     public final foodbank.inventory.entity.QFoodItem foodItem;
 
     public final StringPath id = createString("id");
+
+    public final NumberPath<Integer> inventoryQuantity = createNumber("inventoryQuantity", Integer.class);
 
     public final StringPath requestCreationDate = createString("requestCreationDate");
 

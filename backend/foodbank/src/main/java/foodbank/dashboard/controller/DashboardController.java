@@ -1,4 +1,4 @@
-package foodbank.dashboard.controller;
+/*package foodbank.dashboard.controller;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import foodbank.inventory.entity.Category;
 import foodbank.inventory.entity.Classification;
 import foodbank.inventory.entity.FoodItem;
 
-/*
+
  * Created by: Lau Peng Liang, Bryan
- */
+ 
 
 @RestController
 @CrossOrigin
@@ -68,7 +68,7 @@ public class DashboardController {
 		return dashboardService.retrieveTopKItemsInSupplyAcrossCategories(position);
 	}
 	
-	/*
+	
     @GetMapping("/admin")
     public AdminDashboard getAdminDashboard() {
     	RequestController requestController = new RequestController(requestRepository);
@@ -241,5 +241,5 @@ public class DashboardController {
     	}
     	return Collections.singletonMap("distinct-requests", beneficiaryList.size());
     }
-	*/
-}
+	
+}*/
