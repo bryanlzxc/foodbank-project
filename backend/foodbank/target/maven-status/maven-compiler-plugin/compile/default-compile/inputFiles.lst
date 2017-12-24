@@ -66,6 +66,7 @@ C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\backup\UserController.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\util\Status.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\target\generated-sources\annotations\foodbank\admin\entity\QAdminSettings.java
+C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\allocation\entity\AllocatedFoodItems.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\target\generated-sources\annotations\foodbank\donor\entity\QDonation.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\login\controller\LoginController.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\inventory\db\util\InventoryDbUtil.java
@@ -111,4 +112,5 @@ C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\exceptions\InvalidLoginException.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\login\dto\LoginResponseDTO.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\packing\repository\PackingRepository.java
+C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\target\generated-sources\annotations\foodbank\allocation\entity\QAllocatedFoodItems.java
 C:\Users\user1\Documents\GitHub\bunanas\backend\foodbank\src\main\java\foodbank\MainApp.java

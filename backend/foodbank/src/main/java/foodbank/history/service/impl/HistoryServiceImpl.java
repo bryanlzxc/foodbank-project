@@ -1,9 +1,11 @@
 package foodbank.history.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,8 @@ public class HistoryServiceImpl implements HistoryService {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
 		List<Map<String, Object>> pastRequestsByBeneficiary = new ArrayList<Map<String, Object>>();
+		requestHistoryList.sort(Comparator.comparing(RequestHistory::getRequestCreationDate));
+		Collections.reverse(requestHistoryList);
 		for(RequestHistory requestHistory : requestHistoryList) {
 			Map<String, Object> foodItemMapping = new HashMap<String, Object>();
 			foodItemMapping.put("category", requestHistory.getCategory());
@@ -55,6 +59,7 @@ public class HistoryServiceImpl implements HistoryService {
 			foodItemMapping.put("description", requestHistory.getDescription());
 			foodItemMapping.put("requestedQuantity", requestHistory.getRequestedQuantity());
 			foodItemMapping.put("allocatedQuantity", requestHistory.getAllocatedQuantity());
+			foodItemMapping.put("requestCreationDate", DateParser.displayDayMonthYearOnly(requestHistory.getRequestCreationDate()));
 			pastRequestsByBeneficiary.add(foodItemMapping);
 		}
 		return pastRequestsByBeneficiary;
