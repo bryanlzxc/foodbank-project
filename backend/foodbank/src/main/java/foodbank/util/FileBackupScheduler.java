@@ -18,14 +18,21 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
 import foodbank.inventory.entity.FoodItem;
+import foodbank.inventory.service.FoodService;
 
 @Component
 public class FileBackupScheduler implements CommandLineRunner {
 	
+	// TODO: Allow this class to do file writing on schedule
+	
 	private static final String BACKUP_BUCKET = "foodbank-backup";
+	
+	@Autowired
+	private FoodService foodService;
 	
 	@Override
 	public void run(String... arg0) throws Exception {
@@ -47,20 +54,18 @@ public class FileBackupScheduler implements CommandLineRunner {
 			switch(bucketName) {
 				case(BACKUP_BUCKET):
 					S3Object object = client.getObject(BACKUP_BUCKET, "inventory-data-backup.csv");
-					writeData(object, bucketName);
+					writeData(client, object, bucketName);
 					break;
 			}
 		}
 		
 	}
 	
-	private void writeData(S3Object object, String bucketName) {
-		List<FoodItem> allFoodItems = new ArrayList<FoodItem>();
-		allFoodItems.add(new FoodItem("a", "b", "c", 1));
-		allFoodItems.add(new FoodItem("d", "e", "f", 2));
-		System.out.println(allFoodItems);
+	private void writeData(AmazonS3 s3client, S3Object object, String bucketName) {
+		List<FoodItem> allFoodItems = foodService.retrieveAllFoodItems();
+		File f = new File("inventory-data-backup.csv");
 		try 
-			( BufferedWriter out = new BufferedWriter(new FileWriter(new File("inventory-data-backup.csv"), false)); ) 
+			( BufferedWriter out = new BufferedWriter(new FileWriter(f, false)); ) 
 		{
 			// Write the header
 			out.write("Food Category,Item Classification,Item Description,Quantity");
@@ -73,6 +78,8 @@ public class FileBackupScheduler implements CommandLineRunner {
 				out.write(toWrite);
 				out.newLine();
 			}
+			s3client.putObject(new PutObjectRequest(
+	                 bucketName, "inventory-data-backup.csv", f));
 		} catch (IOException e) {
 			// handle IOException
 			e.printStackTrace();
