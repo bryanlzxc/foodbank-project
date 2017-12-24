@@ -42,23 +42,11 @@ public class AllocationController {
 		return allocationService.retrieveAllocationByBeneficiary(beneficiary);
 	}
 	
-	@PutMapping("/generate-allocations")
+	@PostMapping("/generate-allocations")
 	public ResponseDTO generateAllocations() {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_GENERATE_SUCCESS);
 		try {
 			allocationService.generateAllocationList();
-		} catch (Exception e) {
-			responseDTO.setStatus(ResponseDTO.Status.FAIL);
-			responseDTO.setMessage(e.getMessage());
-		}
-		return responseDTO;
-	}
-	
-	@PutMapping("/insert-allocation")
-	public ResponseDTO insertAllocation(@RequestBody AllocationDTO allocation) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_CREATE_SUCCESS);
-		try {
-			allocationService.createAllocation(allocation);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

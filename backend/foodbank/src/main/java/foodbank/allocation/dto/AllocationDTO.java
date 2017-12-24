@@ -19,11 +19,11 @@ public class AllocationDTO {
 	
 	@NotNull
 	@JsonProperty("allocatedItems")
-	private List<AllocatedFoodItems> allocatedItems;
+	private List<FoodItem> allocatedItems;
 	
 	public AllocationDTO() {}
 
-	public AllocationDTO(@JsonProperty("id") String id, @JsonProperty("beneficiary") String beneficiary, @JsonProperty("allocatedItems") List<AllocatedFoodItems> allocatedItems) {
+	public AllocationDTO(@JsonProperty("id") String id, @JsonProperty("beneficiary") String beneficiary, @JsonProperty("allocatedItems") List<FoodItem> allocatedItems) {
 		this.id = id;
 		this.beneficiary = beneficiary;
 		this.allocatedItems = allocatedItems;
@@ -45,11 +45,11 @@ public class AllocationDTO {
 		this.beneficiary = beneficiary;
 	}
 
-	public List<AllocatedFoodItems> getAllocatedItems() {
+	public List<FoodItem> getAllocatedItems() {
 		return allocatedItems;
 	}
 
-	public void setAllocatedItems(List<AllocatedFoodItems> allocatedItems) {
+	public void setAllocatedItems(List<FoodItem> allocatedItems) {
 		this.allocatedItems = allocatedItems;
 	}
 	

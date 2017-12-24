@@ -18,6 +18,7 @@ import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.allocation.service.AllocationService;
+import foodbank.backup.AllocationFoodItem;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.exceptions.InvalidAllocationException;
@@ -141,18 +142,6 @@ public class AllocationServiceImpl implements AllocationService {
 		UUID uniqueId = InventorySerializer.serials.get(category+classification+description);
 		return InventorySerializer.foodItemMap.get(uniqueId);
 	}
-	
-	@Override
-	public void createAllocation(AllocationDTO allocation) {
-		// TODO Auto-generated method stub
-		if(allocation.getId() == null) {
-			Beneficiary beneficiary = beneficiaryRepository.findByUsername(allocation.getBeneficiary());
-			if(beneficiary == null) {
-				throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
-			}
-			allocationRepository.insert(new Allocation(beneficiary, allocation.getAllocatedItems()));
-		}
-	}
 
 	@Override
 	public void updateAllocation(AllocationDTO allocation) {
@@ -168,10 +157,10 @@ public class AllocationServiceImpl implements AllocationService {
 			String key = allocatedFoodItem.getCategory() + "," + allocatedFoodItem.getClassification() + "," + allocatedFoodItem.getDescription();
 			dbAllocationMap.put(key, i);
 		}
-		List<AllocatedFoodItems> updatedAllocatedItems = allocation.getAllocatedItems();
-		for(AllocatedFoodItems foodItem : updatedAllocatedItems) {
+		List<FoodItem> updatedAllocatedItems = allocation.getAllocatedItems();
+		for(FoodItem foodItem : updatedAllocatedItems) {
 			String key = foodItem.getCategory() + "," + foodItem.getClassification() + "," + foodItem.getDescription();
-			dbAllocatedItems.get(dbAllocationMap.get(key)).setAllocatedQuantity(foodItem.getAllocatedQuantity());
+			dbAllocatedItems.get(dbAllocationMap.get(key)).setAllocatedQuantity(foodItem.getQuantity());
 		}
 		dbAllocation.setAllocatedItems(dbAllocatedItems);
 		allocationRepository.save(dbAllocation);

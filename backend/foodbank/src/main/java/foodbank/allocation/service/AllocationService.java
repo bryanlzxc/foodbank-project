@@ -14,9 +14,7 @@ public interface AllocationService {
 	List<AllocatedFoodItems> retrieveAllocationByBeneficiary(final String beneficiary);
 	
 	void generateAllocationList();
-	
-	void createAllocation(final AllocationDTO allocation);
-	
+		
 	void updateAllocation(final AllocationDTO allocation);
 	
 	void batchAllocationUpdate(final BatchAllocationDTO batchAllocation);
