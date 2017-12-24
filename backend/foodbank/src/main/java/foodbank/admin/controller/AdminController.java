@@ -44,6 +44,11 @@ public class AdminController {
 		return Collections.singletonMap("windowStatus", adminService.getWindowStatus());
 	}
 	
+	@GetMapping("/display/opening-date")
+	public Map<String, String> getOpeningDate() {
+		return Collections.singletonMap("windowStartDateTime", adminService.getWindowStartDate());
+	}
+	
 	@GetMapping("/display/closing-date")
 	public Map<String, String> getClosingDate() {
 		return Collections.singletonMap("windowEndDateTime", adminService.getWindowEndDate());
@@ -75,6 +80,33 @@ public class AdminController {
 				adminService.insertPastRequests();
 				responseDTO.setMessage(MessageConstants.WINDOW_OPEN_SUCCESS);
 			}
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/toggle/window-status")
+	public ResponseDTO toggleWindowStatus() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null);
+		AdminSettingsDTO adminSettingsDTO = new AdminSettingsDTO();
+		adminSettingsDTO.setWindowToggle(true);
+		WindowStatus status = adminService.updateWindowStatus(adminSettingsDTO);
+		if(status == WindowStatus.ACTIVE) {
+			responseDTO.setMessage(MessageConstants.WINDOW_CLOSE_SUCCESS);
+		} else {
+			adminService.insertPastRequests();
+			responseDTO.setMessage(MessageConstants.WINDOW_OPEN_SUCCESS);
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/update/opening-date")
+	public ResponseDTO updateOpeningDate(@RequestBody AdminSettingsDTO adminSettings) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.OPENING_DATE_UPDATE_SUCCESS);
+		try {
+			adminService.updateWindowOpeningDate(adminSettings);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

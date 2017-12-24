@@ -3,6 +3,7 @@ package foodbank.admin.service.impl;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -139,10 +140,23 @@ public class AdminServiceImpl implements AdminService {
 			} else {
 				adminSettings.setWindowStatus(WindowStatus.ACTIVE);
 				try {
-					adminSettings.setWindowStartDateTime(new SimpleDateFormat("dd/MM/yyyy HH:mm")
-							.parse(settings.getStartingDate()));
-					adminSettings.setWindowEndDateTime(new SimpleDateFormat("dd/MM/yyyy HH:mm")
-							.parse(settings.getClosingDate()));
+					Date startingDate = null;
+					Date endingDate = null;
+					if(settings.getStartingDate() != null) {
+						startingDate = DateParser.convertToDate(settings.getStartingDate());
+					} else {
+						startingDate = new Date();
+					}
+					if(settings.getClosingDate() != null) {
+						endingDate = DateParser.convertToDate(settings.getClosingDate());
+					} else {
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTime(startingDate);
+						calendar.add(Calendar.DAY_OF_YEAR, 7);
+						endingDate = calendar.getTime();
+					}
+					adminSettings.setWindowStartDateTime(startingDate);
+					adminSettings.setWindowEndDateTime(endingDate);
 				} catch (Exception e) {
 					throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
 				}
@@ -188,9 +202,29 @@ public class AdminServiceImpl implements AdminService {
 			WindowStatus currentWindowStatus = adminSettings.getWindowStatus();
 			if(currentWindowStatus == WindowStatus.ACTIVE) {
 				adminSettings.setWindowStatus(WindowStatus.INACTIVE);
+				adminSettings.setWindowStartDateTime(null);
 				adminSettings.setWindowEndDateTime(null);
 			} else {
 				adminSettings.setWindowStatus(WindowStatus.ACTIVE);
+				Date startingDate = null;
+				String startingDateString = settings.getStartingDate();
+				Date closingDate = null;
+				String closingDateString = settings.getClosingDate();
+				if(startingDateString != null) {
+					startingDate = DateParser.convertToDate(startingDateString);
+				} else {
+					startingDate = new Date();
+				}
+				if(closingDateString != null) {
+					closingDate = DateParser.convertToDate(closingDateString);
+				} else {
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(startingDate);
+					calendar.add(Calendar.DAY_OF_YEAR, 7);
+					closingDate = calendar.getTime();
+				}
+				adminSettings.setWindowStartDateTime(startingDate);
+				adminSettings.setWindowEndDateTime(closingDate);
 			}
 		}
 		adminSettings.setDecayRate(settings.getDecayRate());
@@ -199,10 +233,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	private Boolean evaluateClosingDateUpdateIntent(AdminSettings currentSettings, AdminSettingsDTO newSettings) {
-		Boolean updateIntent = false;
+		Boolean updateIntent = true;
 		String dbClosingDate = currentSettings.getWindowEndDateTime();
 		String newClosingDate = newSettings.getClosingDate();
-		updateIntent = dbClosingDate.equals(newClosingDate) ? false : true;
+		if(dbClosingDate != null) {
+			updateIntent = dbClosingDate.equals(newClosingDate) ? false : true;
+		}
 		return updateIntent;
 	}
 
@@ -255,6 +291,7 @@ public class AdminServiceImpl implements AdminService {
 			pastRequests.add(pastRequest);
 		}
 		pastRequests.forEach(pastRequest -> historyRepository.insert(pastRequest));
+		requestRepository.deleteAll();
 	}
 
 }

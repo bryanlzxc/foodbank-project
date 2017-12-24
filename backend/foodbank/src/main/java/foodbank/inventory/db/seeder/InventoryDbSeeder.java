@@ -1,18 +1,12 @@
 package foodbank.inventory.db.seeder;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +30,15 @@ public class InventoryDbSeeder implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		// TODO Auto-generated method stub
-		/*
 		foodRepository.deleteAll();
-		List<String[]> inventoryData = Files.lines(Paths.get(ClassLoader.getSystemResource("inventory-data.csv").getFile().substring(1)))
+		InputStream is = ClassLoader.getSystemResourceAsStream("inventory-data.csv");
+		List<String> fileData = new BufferedReader(new InputStreamReader(is)).lines().collect(Collectors.toList());
+		List<String[]> inventoryData = fileData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
+		List<FoodItem> foodItems = new ArrayList<FoodItem>();
+		inventoryData.forEach(currentLine -> foodItems.add(new FoodItem(currentLine[0], currentLine[1], currentLine[2], Integer.parseInt(currentLine[3].trim()))));
+		foodRepository.insert(foodItems);
+		/*
+		List<String[]> inventoryData = Files.lines(Paths.get(ClassLoader.getSystemResourceAsStream("inventory-data.csv").toString().substring(1)))
 			.skip(1)
 			.map(currentLine -> currentLine.split(","))
 			.collect(Collectors.toList());

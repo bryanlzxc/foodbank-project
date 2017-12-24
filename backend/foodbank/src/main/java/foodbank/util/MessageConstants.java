@@ -17,6 +17,7 @@ public final class MessageConstants {
 	public static final String BENEFICIARY_ADD_SUCCESS = "Beneficiary successfully added.";
 	public static final String WINDOW_OPEN_SUCCESS = "Window successfully opened";
 	public static final String WINDOW_CLOSE_SUCCESS = "Window successfully closed";
+	public static final String OPENING_DATE_UPDATE_SUCCESS = "Opening date successfully updated.";
 	public static final String CLOSING_DATE_UPDATE_SUCCESS = "Closing date successfully updated.";
 	public static final String DECAY_RATE_UPDATE_SUCCESS = "Decay rate successfully updated.";
 	public static final String MULTIPLIER_RATE_UPDATE_SUCCESS = "Multiplier rate successfully updated.";

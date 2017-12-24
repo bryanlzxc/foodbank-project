@@ -1,12 +1,11 @@
 package foodbank.inventory.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "FoodItems")
 public class FoodItem {
 
-	private String id;
-	
 	private String category;
 	
 	private String classification;
@@ -22,14 +21,6 @@ public class FoodItem {
 		this.classification = classification;
 		this.description = description;
 		this.quantity = quantity;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getCategory() {

@@ -35,7 +35,7 @@ public class HistoryServiceImpl implements HistoryService {
 			requestHistoryDTOList.add(new RequestHistoryDTO(requestHistory.getUsername(), 
 					requestHistory.getCategory(), requestHistory.getClassification(), 
 					requestHistory.getDescription(), requestHistory.getRequestedQuantity(), 
-					requestHistory.getAllocatedQuantity()));
+					requestHistory.getAllocatedQuantity(), requestHistory.getRequestCreationDate()));
 		}
 		return requestHistoryDTOList;
 	}
