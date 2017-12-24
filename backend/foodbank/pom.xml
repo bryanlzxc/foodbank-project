@@ -61,6 +61,16 @@
   		<artifactId>thymeleaf-spring4</artifactId>
   	</dependency>
   	-->
+  	<dependency>
+  		<groupId>com.amazonaws</groupId>
+  		<artifactId>aws-java-sdk</artifactId>
+  		<version>1.11.252</version>
+  	</dependency>
+  	<dependency>
+	    <groupId>org.mindrot</groupId>
+	    <artifactId>jbcrypt</artifactId>
+	    <version>0.3m</version>
+	</dependency>
   </dependencies>
   <build>
 	<plugins>
