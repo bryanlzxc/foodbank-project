@@ -277,7 +277,7 @@ public class AdminServiceImpl implements AdminService {
 		Map<String, Map<String, Integer>> requestAllocationMap = new HashMap<String, Map<String, Integer>>();
 		for(Allocation allocation : allocations) {
 			Map<String, Integer> allocationByItemsForBeneficiary = new HashMap<String, Integer>();
-			allocation.getAllocatedItems().forEach(foodItem -> allocationByItemsForBeneficiary.put(foodItem.getDescription(), foodItem.getQuantity()));
+			allocation.getAllocatedItems().forEach(foodItem -> allocationByItemsForBeneficiary.put(foodItem.getDescription(), foodItem.getAllocatedQuantity()));
 			requestAllocationMap.put(allocation.getBeneficiary().getUser().getUsername(), allocationByItemsForBeneficiary);
 		}
 		List<RequestHistory> pastRequests = new ArrayList<RequestHistory>();

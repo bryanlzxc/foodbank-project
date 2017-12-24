@@ -32,7 +32,6 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	
 	public Beneficiary(User user, String sector, int numBeneficiary, String address, double score,
 			long membershipNumber, long acraRegistrationNumber, String memberType) {
-		super();
 		this.user = user;
 		this.username = user.getUsername();
 		this.sector = sector;

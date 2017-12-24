@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import foodbank.allocation.dto.AllocationDTO;
 import foodbank.allocation.dto.BatchAllocationDTO;
+import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.allocation.service.AllocationService;
@@ -46,9 +47,9 @@ public class AllocationServiceImpl implements AllocationService {
 	}
 	
 	@Override
-	public List<FoodItem> retrieveAllocationByBeneficiary(String beneficiary) {
+	public List<AllocatedFoodItems> retrieveAllocationByBeneficiary(String beneficiary) {
 		List<Allocation> allocations = allocationRepository.findAll();
-		List<FoodItem> foodItemsAllocated = new ArrayList<FoodItem>();
+		List<AllocatedFoodItems> foodItemsAllocated = new ArrayList<AllocatedFoodItems>();
 		for(Allocation allocation : allocations) {
 			if(allocation.getBeneficiary().getUser().getName().equals(beneficiary)) {
 				foodItemsAllocated.addAll(allocation.getAllocatedItems());
@@ -113,14 +114,19 @@ public class AllocationServiceImpl implements AllocationService {
 					inventoryQuantity -= allocatedQuantity;
 					String beneficiaryName = currentRequest.getBeneficiary().getUser().getName();
 					Allocation allocation = allocationMap.get(beneficiaryName);
+					FoodItem foodItem = currentRequest.getFoodItem();
+					String category = foodItem.getCategory();
+					String classification = foodItem.getClassification();
+					String description = foodItem.getDescription();
 					if(allocation != null) {
-						allocation.getAllocatedItems().add(new FoodItem(currentRequest.getFoodItem().getCategory(), currentRequest.getFoodItem().getClassification(),
-								currentRequest.getFoodItem().getDescription(), allocatedQuantity));
+						allocation.getAllocatedItems().add(new AllocatedFoodItems(category, classification, description, 
+								allocatedQuantity, requestedQuantity, InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
 						allocationMap.replace(beneficiaryName, allocation);
 					} else {
-						ArrayList<FoodItem> foodItems = new ArrayList<FoodItem>();
+						ArrayList<AllocatedFoodItems> foodItems = new ArrayList<AllocatedFoodItems>();
 						String[] keyArray = key.split(",");
-						foodItems.add(new FoodItem(keyArray[0], keyArray[1], keyArray[2], allocatedQuantity));
+						foodItems.add(new AllocatedFoodItems(keyArray[0], keyArray[1], keyArray[2], allocatedQuantity, requestedQuantity, 
+								InventorySerializer.retrieveQuantityOfItem(keyArray[0], keyArray[1], keyArray[2])));
 						allocation = new Allocation(currentRequest.getBeneficiary(), foodItems);
 						allocationMap.put(beneficiaryName, allocation);
 					}
@@ -155,14 +161,17 @@ public class AllocationServiceImpl implements AllocationService {
 		if(dbAllocation == null) {
 			throw new InvalidAllocationException(ErrorMessages.INVALID_ALLOCATION);
 		}
-		List<FoodItem> dbAllocatedItems = dbAllocation.getAllocatedItems();
+		List<AllocatedFoodItems> dbAllocatedItems = dbAllocation.getAllocatedItems();
 		Map<String, Integer> dbAllocationMap = new HashMap<String, Integer>();
 		for(int i = 0; i < dbAllocatedItems.size(); i++) {
-			dbAllocationMap.put(dbAllocatedItems.get(i).getDescription(), i);
+			AllocatedFoodItems allocatedFoodItem = dbAllocatedItems.get(i);
+			String key = allocatedFoodItem.getCategory() + "," + allocatedFoodItem.getClassification() + "," + allocatedFoodItem.getDescription();
+			dbAllocationMap.put(key, i);
 		}
-		List<FoodItem> updatedAllocatedItems = allocation.getAllocatedItems();
-		for(FoodItem foodItem : updatedAllocatedItems) {
-			dbAllocatedItems.get(dbAllocationMap.get(foodItem.getDescription())).setQuantity(foodItem.getQuantity());
+		List<AllocatedFoodItems> updatedAllocatedItems = allocation.getAllocatedItems();
+		for(AllocatedFoodItems foodItem : updatedAllocatedItems) {
+			String key = foodItem.getCategory() + "," + foodItem.getClassification() + "," + foodItem.getDescription();
+			dbAllocatedItems.get(dbAllocationMap.get(key)).setAllocatedQuantity(foodItem.getAllocatedQuantity());
 		}
 		dbAllocation.setAllocatedItems(dbAllocatedItems);
 		allocationRepository.save(dbAllocation);

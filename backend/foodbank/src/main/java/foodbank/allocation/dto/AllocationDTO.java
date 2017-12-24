@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.inventory.entity.FoodItem;
 
 public class AllocationDTO {
@@ -18,11 +19,11 @@ public class AllocationDTO {
 	
 	@NotNull
 	@JsonProperty("allocatedItems")
-	private List<FoodItem> allocatedItems;
+	private List<AllocatedFoodItems> allocatedItems;
 	
 	public AllocationDTO() {}
 
-	public AllocationDTO(@JsonProperty("id") String id, @JsonProperty("beneficiary") String beneficiary, @JsonProperty("allocatedItems") List<FoodItem> allocatedItems) {
+	public AllocationDTO(@JsonProperty("id") String id, @JsonProperty("beneficiary") String beneficiary, @JsonProperty("allocatedItems") List<AllocatedFoodItems> allocatedItems) {
 		this.id = id;
 		this.beneficiary = beneficiary;
 		this.allocatedItems = allocatedItems;
@@ -44,11 +45,11 @@ public class AllocationDTO {
 		this.beneficiary = beneficiary;
 	}
 
-	public List<FoodItem> getAllocatedItems() {
+	public List<AllocatedFoodItems> getAllocatedItems() {
 		return allocatedItems;
 	}
 
-	public void setAllocatedItems(List<FoodItem> allocatedItems) {
+	public void setAllocatedItems(List<AllocatedFoodItems> allocatedItems) {
 		this.allocatedItems = allocatedItems;
 	}
 	

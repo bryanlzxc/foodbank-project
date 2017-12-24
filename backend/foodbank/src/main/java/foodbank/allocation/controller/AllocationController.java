@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.allocation.dto.AllocationDTO;
+import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.service.AllocationService;
-import foodbank.inventory.entity.FoodItem;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
 
@@ -38,7 +38,7 @@ public class AllocationController {
 	}
 	
 	@GetMapping("/display-allocations/beneficiary={beneficiary}")
-	public List<FoodItem> retrieveFoodItemsAllocatedToBeneficiary(@PathVariable("beneficiary") String beneficiary) {
+	public List<AllocatedFoodItems> retrieveFoodItemsAllocatedToBeneficiary(@PathVariable("beneficiary") String beneficiary) {
 		return allocationService.retrieveAllocationByBeneficiary(beneficiary);
 	}
 	

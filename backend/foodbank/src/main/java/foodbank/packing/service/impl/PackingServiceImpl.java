@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.inventory.entity.FoodItem;
@@ -47,7 +48,7 @@ public class PackingServiceImpl implements PackingService {
 		List<Allocation> allocations = allocationRepository.findAll();
 		List<PackingList> packingLists = new ArrayList<PackingList>();
 		for(Allocation allocation : allocations) {
-			List<FoodItem> foodItems = allocation.getAllocatedItems();
+			List<AllocatedFoodItems> foodItems = allocation.getAllocatedItems();
 			List<FoodItem> packedItems = new ArrayList<FoodItem>();
 			foodItems.forEach(foodItem -> packedItems.add(new FoodItem(foodItem.getCategory(), foodItem.getClassification(), 
 					foodItem.getDescription(), 0)));

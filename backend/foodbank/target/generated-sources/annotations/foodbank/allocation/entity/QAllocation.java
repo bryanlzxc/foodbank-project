@@ -22,11 +22,15 @@ public class QAllocation extends EntityPathBase<Allocation> {
 
     public static final QAllocation allocation = new QAllocation("allocation");
 
-    public final ListPath<foodbank.inventory.entity.FoodItem, foodbank.inventory.entity.QFoodItem> allocatedItems = this.<foodbank.inventory.entity.FoodItem, foodbank.inventory.entity.QFoodItem>createList("allocatedItems", foodbank.inventory.entity.FoodItem.class, foodbank.inventory.entity.QFoodItem.class, PathInits.DIRECT2);
+    public final ListPath<AllocatedFoodItems, QAllocatedFoodItems> allocatedItems = this.<AllocatedFoodItems, QAllocatedFoodItems>createList("allocatedItems", AllocatedFoodItems.class, QAllocatedFoodItems.class, PathInits.DIRECT2);
 
     public final foodbank.beneficiary.entity.QBeneficiary beneficiary;
 
     public final StringPath id = createString("id");
+
+    public final NumberPath<Integer> inventoryAmount = createNumber("inventoryAmount", Integer.class);
+
+    public final NumberPath<Integer> requestedAmount = createNumber("requestedAmount", Integer.class);
 
     public QAllocation(String variable) {
         this(Allocation.class, forVariable(variable), INITS);

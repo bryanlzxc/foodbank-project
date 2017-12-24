@@ -4,14 +4,14 @@ import java.util.List;
 
 import foodbank.allocation.dto.AllocationDTO;
 import foodbank.allocation.dto.BatchAllocationDTO;
+import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
-import foodbank.inventory.entity.FoodItem;
 
 public interface AllocationService {
 	
 	List<Allocation> retrieveAllAllocations();
 	
-	List<FoodItem> retrieveAllocationByBeneficiary(final String beneficiary);
+	List<AllocatedFoodItems> retrieveAllocationByBeneficiary(final String beneficiary);
 	
 	void generateAllocationList();
 	

@@ -21,11 +21,14 @@ public class Allocation {
 	@DBRef
 	private Beneficiary beneficiary;
 	
-	private List<FoodItem> allocatedItems;
+	private List<AllocatedFoodItems> allocatedItems;
+	
+	private Integer requestedAmount;
+	private Integer inventoryAmount;
 	
 	public Allocation() {}
 	
-	public Allocation(Beneficiary beneficiary, List<FoodItem> allocatedItems) {
+	public Allocation(Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems) {
 		this.beneficiary = beneficiary;
 		this.allocatedItems = allocatedItems;
 	}
@@ -46,11 +49,11 @@ public class Allocation {
 		this.beneficiary = beneficiary;
 	}
 	
-	public List<FoodItem> getAllocatedItems() {
+	public List<AllocatedFoodItems> getAllocatedItems() {
 		return allocatedItems;
 	}
 	
-	public void setAllocatedItems(List<FoodItem> allocatedItems) {
+	public void setAllocatedItems(List<AllocatedFoodItems> allocatedItems) {
 		this.allocatedItems = allocatedItems;
 	}
 	
