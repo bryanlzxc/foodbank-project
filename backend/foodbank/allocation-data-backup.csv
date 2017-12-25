@@ -1,0 +1,3 @@
+Beneficiary,Allocated Items,Requested Amount,Inventory Amount
+Bene1,pass2000,beneficiary,Bene1,bene1@gmail.com,Bene1,Elderly,340,11 Jalan Ubi Blk 6, 409074,100.0,123456789,987654321,Welfare,[Dried Food,Other Dried Food,RoastedChestnuts-250g,0,1,1],null,null
+Bene2,pass2000,beneficiary,Bene2,bene2@gmail.com,Bene2,Elderly,600,11 Jalan Ubi Blk 6, 409074,200.0,321,123,Testing,[Dried Food,Other Dried Food,RoastedChestnuts-250g,1,1,1],null,null
