@@ -1,5 +1,0 @@
-User,Username,Sector,Num Beneficiary,Address,Score,Membership Number,ACRA Registration Number,Member Type
-Bene1,pass2000,beneficiary,Bene1,bene1@gmail.com,Bene1,Elderly,340,11 Jalan Ubi Blk 6, 409074,100.0,123456789,987654321,Welfare
-Bene2,pass2000,beneficiary,Bene2,bene2@gmail.com,Bene2,Elderly,600,11 Jalan Ubi Blk 6, 409074,200.0,321,123,Testing
-tester,test,beneficiary,TESTER,test@gmail.com,tester,Youth,1337,99 Mars Blk 11, 123456,1001.0,9001,9001,Welfare
-inputBene,test,beneficiary,inputBene,test@gmail.com,inputBene,Youth,1337,99 Shirong House Blk 11, 123456,9999.0,1337,1337,Welfare
