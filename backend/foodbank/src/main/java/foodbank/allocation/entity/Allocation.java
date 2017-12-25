@@ -57,6 +57,14 @@ public class Allocation {
 		this.allocatedItems = allocatedItems;
 	}
 	
+	@Override
+	public String toString() {
+		return beneficiary + ","
+				+ allocatedItems + ","
+				+ requestedAmount + ","
+				+ inventoryAmount;
+	}
+	
 	/*
 	// BV : Description+Qty
 	private HashMap<String, ArrayList<FoodItem>> details;

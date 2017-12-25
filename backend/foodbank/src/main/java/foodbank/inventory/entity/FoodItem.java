@@ -55,4 +55,11 @@ public class FoodItem {
 		this.quantity = quantity;
 	}
 	
+	@Override
+	public String toString() {
+		return category + "," 
+				+ classification + ","
+				+ description + ","
+				+ quantity;
+	}
 }

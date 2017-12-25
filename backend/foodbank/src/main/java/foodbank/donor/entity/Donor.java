@@ -37,4 +37,9 @@ public class Donor {
 		this.donations = donations;
 	}
 	
+	@Override
+	public String toString() {
+		return name + ","
+				+ donations;
+	}
 }

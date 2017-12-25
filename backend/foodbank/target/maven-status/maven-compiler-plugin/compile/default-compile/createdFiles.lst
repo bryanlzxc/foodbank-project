@@ -22,6 +22,7 @@ foodbank\email\entity\SendEmail$SMTPAuthenticator.class
 foodbank\packing\dto\PackingListDTO.class
 foodbank\backup\AllocationUpdate.class
 foodbank\user\dto\UserDTO.class
+foodbank\util\FileBackupScheduler.class
 foodbank\history\entity\QRequestHistory.class
 foodbank\donor\service\DonorService.class
 foodbank\user\entity\User.class

@@ -114,4 +114,17 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		return Double.compare(o.score, this.score);
 	}
 	
+	@Override
+	public String toString() {
+		return user + ","
+				+ username + ","
+				+ sector + ","
+				+ numBeneficiary + ","
+				+ address + ","
+				+ score + ","
+				+ membershipNumber + ","
+				+ acraRegistrationNumber + ","
+				+ memberType;
+	}
+	
 }

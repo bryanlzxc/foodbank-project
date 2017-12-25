@@ -44,4 +44,9 @@ public class PackingList {
 		this.packedItems = packedItems;
 	}
 	
+	@Override
+	public String toString() {
+		return allocation + ","
+				+ packedItems;
+	}
 }

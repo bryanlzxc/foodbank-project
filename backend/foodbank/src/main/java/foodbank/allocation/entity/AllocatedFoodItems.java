@@ -69,4 +69,13 @@ public class AllocatedFoodItems {
 		this.inventoryQuantity = inventoryQuantity;
 	}
 
+	@Override
+	public String toString() {
+		return category + ","
+				+ classification + ","
+				+ description + ","
+				+ allocatedQuantity + ","
+				+ requestedQuantity + ","
+				+ inventoryQuantity;
+	}
 }

@@ -112,4 +112,15 @@ public class RequestHistory {
 		this.allocatedQuantity = allocatedQuantity;
 	}
 
+	@Override
+	public String toString() {
+		return beneficiary + ","
+				+ username + ","
+				+ requestCreationDate + ","
+				+ category + ","
+				+ classification + ","
+				+ description + ","
+				+ requestedQuantity + ","
+				+ allocatedQuantity;
+	}
 }

@@ -77,4 +77,12 @@ public class Request {
 		this.inventoryQuantity = inventoryQuantity;
 	}
 	
+	@Override 
+	public String toString() {
+		return beneficiary + ","
+				+ foodItem + ","
+				+ inventoryQuantity + ","
+				+ requestCreationDate;
+	}
+	
 }

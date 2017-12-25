@@ -38,4 +38,11 @@ public class Donation {
 		this.foodItem = foodItem;
 	}
 	
+	@Override
+	public String toString() {
+		return category + ","
+				+ classification + ","
+				+ foodItem;
+	}
+	
 }

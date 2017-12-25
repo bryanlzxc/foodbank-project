@@ -88,4 +88,13 @@ public class AdminSettings {
 		this.multiplierRate = multiplierRate;
 	}
 	
+	@Override
+	public String toString() {
+		return windowStatus + ","
+				+ windowStartDateTime + ","
+				+ windowEndDateTime + ","
+				+ decayRate + ","
+				+ multiplierRate;
+	}
+	
 }
