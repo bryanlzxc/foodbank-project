@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "FoodItems")
 public class FoodItem {
 
+	@Id
+	private String id;
+	
 	private String category;
 	
 	private String classification;
