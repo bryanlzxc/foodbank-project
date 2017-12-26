@@ -87,7 +87,7 @@ public class FileBackupScheduler {
 		CSVFileHeaderMap.put("user-data.csv","Username,Password,User Type,Name,Email");
 	}
 	
-	@Scheduled(fixedRate = 86,400,000)	// daily interval
+	@Scheduled(fixedRate = 86400000)	// daily interval
 	public void scheduledBackup() {
 		init();
 			
