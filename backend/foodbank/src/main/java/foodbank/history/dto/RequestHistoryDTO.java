@@ -82,5 +82,16 @@ public class RequestHistoryDTO {
 	public void setRequestCreationDate(Date requestCreationDate) {
 		this.requestCreationDate = requestCreationDate;
 	}
+	
+	@Override
+	public String toString() {
+		return beneficiary + ","
+				+ category + ","
+				+ classification + ","
+				+ description + ","
+				+ requestedQuantity + ","
+				+ allocatedQuantity + ","
+				+ requestCreationDate;
+	}
 
 }

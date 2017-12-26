@@ -1,9 +1,9 @@
 package foodbank.util;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -87,7 +87,7 @@ public class FileBackupScheduler {
 		CSVFileHeaderMap.put("user-data.csv","Username,Password,User Type,Name,Email");
 	}
 	
-	@Scheduled(fixedRate = 300000)	// 5 mins interval
+	@Scheduled(fixedRate = 300000)	// 20 mins interval
 	public void scheduledBackup() {
 		init();
 			
@@ -108,110 +108,60 @@ public class FileBackupScheduler {
 	}
 	
 	private void writeData(S3Object s3Object, String bucketName, String CSVFileName) {
-		File file = new File(CSVFileName); 
-		try 
-			( BufferedWriter out = new BufferedWriter(new FileWriter(file, false)); )
-		{
-			out.write(CSVFileHeaderMap.get(CSVFileName));
-			out.newLine();
+		File file = new File(CSVFileName);
+		try (PrintStream out = 
+				new PrintStream(new FileOutputStream(file, false))) {
+			out.println(CSVFileHeaderMap.get(CSVFileName));
 			
 			switch(CSVFileName) {
 
 				case("admin-data.csv"): 
 					AdminSettings adminSettings = adminService.getAdminSettings();
-					out.write(adminSettings.toString());
-					out.newLine();
+					out.println(adminSettings.toString());
 					break;
 					
 				case("allocation-data.csv"): 
 					List<Allocation> allocationList = allocationService.retrieveAllAllocations();
-					allocationList.forEach(allocation -> { 
-							try {
-								out.write(allocation.toString());
-								out.newLine();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						});			
+					for (Allocation a : allocationList) { out.println(a.toString()); }
 					break;
 				
 				case("beneficiary-data.csv"):
 					List<Beneficiary> beneficiaryList = beneficiaryService.getAllBeneficiaries();
-					beneficiaryList.forEach(beneficiary -> { 
-						try {
-							out.write(beneficiary.toString());
-							out.newLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						});			
+					for (Beneficiary b : beneficiaryList) { out.println(b.toString()); }
 					break;
 				
 				// TODO: Calls RequestHistoryDTO, while DB stores RequestHistory
 				// Need to rework this
 				case("historical-data.csv"):
 					List<RequestHistoryDTO> historyList = historyService.retrieveAllPastRequest();
-					historyList.forEach(history -> {
-						try {
-							out.write(history.toString());
-							out.newLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
+					for (RequestHistoryDTO rh : historyList) { out.println(rh.toString()); }
 					break;
 					
 				case("inventory-data.csv"):
 					List<FoodItem> foodItemList = foodService.retrieveAllFoodItems();
-					foodItemList.forEach(foodItem -> {
-						try {
-							out.write(foodItem.toString());
-							out.newLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
+					for (FoodItem fi : foodItemList) { out.println(fi.toString()); }
 					break;
 				
 				case("packing-data.csv"):
 					List<PackingList> packingList = packingService.retrieveAllPackingLists();
-					packingList.forEach(packing -> {
-						try {
-							out.write(packing.toString());
-							out.newLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
+					for (PackingList pl : packingList) { out.println(pl.toString()); }
 					break;
 					
 				case("request-data.csv"):
 					List<Request> requestList = requestService.getAllRequests();
-					requestList.forEach(request -> {
-						try {
-							out.write(request.toString());
-							out.newLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
+					for (Request r : requestList) { out.println(r.toString()); }
 					break;
 					
 				case("user-data.csv"):
 					List<User> userList = userService.getAllUsers();
-					userList.forEach(user -> {
-						try {
-							out.write(user.toString());
-							out.newLine();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					});
+					for (User u : userList) { out.println(u.toString()); }
 					break;
+					
 			}
+			
 			// Upload to Amazon S3
 			client.putObject(new PutObjectRequest(bucketName, CSVFileName, file));
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("File Not Found!");
