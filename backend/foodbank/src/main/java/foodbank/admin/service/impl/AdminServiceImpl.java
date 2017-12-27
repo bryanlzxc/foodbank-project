@@ -114,6 +114,9 @@ public class AdminServiceImpl implements AdminService {
 	public void updateWindowClosingDate(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
 		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
+		if(adminSettings.getWindowStatus() == WindowStatus.INACTIVE) {
+			throw new SettingsUpdateException(ErrorMessages.INACTIVE_WINDOW);
+		}
 		Date newClosingDate = null;
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -254,12 +257,12 @@ public class AdminServiceImpl implements AdminService {
 		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		windowData.setDecayRate(adminSettings.getDecayRate());
 		windowData.setMultiplierRate(adminSettings.getMultiplierRate());
-		if(adminSettings.getWindowEndDateTime() == null) {
+		if(adminSettings.getWindowEndDateTime() == null || adminSettings.getWindowStatus() == WindowStatus.INACTIVE) {
 			windowData.setWindowEndDateTime(null);
 		} else {
 			windowData.setWindowEndDateTime(DateParser.convertToDate(adminSettings.getWindowEndDateTime()));
 		}
-		if(adminSettings.getWindowStartDateTime() == null) {
+		if(adminSettings.getWindowStartDateTime() == null || adminSettings.getWindowStatus() == WindowStatus.INACTIVE) {
 			windowData.setWindowStartDateTime(null);
 		} else {
 			windowData.setWindowStartDateTime(DateParser.convertToDate(adminSettings.getWindowStartDateTime()));
