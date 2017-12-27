@@ -59,10 +59,17 @@ public class Allocation {
 	
 	@Override
 	public String toString() {
-		return beneficiary + ","
-				+ allocatedItems + ","
-				+ requestedAmount + ","
-				+ inventoryAmount;
+		String allocatedItemString = "";
+		for(AllocatedFoodItems allocatedItem : allocatedItems) {
+			allocatedItemString += "{" + allocatedItem.getCategory() + "," 
+				+ allocatedItem.getClassification() + "," 
+				+ allocatedItem.getDescription() + ","
+				+ allocatedItem.getAllocatedQuantity() + ","
+				+ allocatedItem.getRequestedQuantity() + "}";
+		}
+		return id + "," 
+				+ "[" + allocatedItemString + "]"
+				+ beneficiary.getId();
 	}
 	
 	/*

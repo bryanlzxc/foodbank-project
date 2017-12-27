@@ -79,10 +79,13 @@ public class Request {
 	
 	@Override 
 	public String toString() {
-		return beneficiary + ","
-				+ foodItem + ","
+		return id + ","
+				+ foodItem.getCategory() + ","
+				+ foodItem.getClassification() + ","
+				+ foodItem.getDescription() + ","
 				+ inventoryQuantity + ","
-				+ requestCreationDate;
+				+ requestCreationDate + ","
+				+ beneficiary.getId();
 	}
 	
 }

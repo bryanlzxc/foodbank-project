@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.util.DateParser;
 
 @Document(collection = "PastRequests")
 public class RequestHistory {
@@ -114,9 +115,9 @@ public class RequestHistory {
 
 	@Override
 	public String toString() {
-		return beneficiary + ","
-				+ username + ","
-				+ requestCreationDate + ","
+		return id + "," 
+				+ beneficiary.getId() + ","
+				+ DateParser.displayDayMonthYearOnly(requestCreationDate) + ","
 				+ category + ","
 				+ classification + ","
 				+ description + ","

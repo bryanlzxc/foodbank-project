@@ -45,18 +45,18 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private HistoryRepository historyRepository;
 	
-	private static final String adminId = "59f4a3316f9d43370468907b";
+	private static final String ADMIN_ID = "59f4a3316f9d43370468907b";
 	
 	@Override
 	public AdminSettings getAdminSettings() {
 		// TODO Auto-generated method stub
-		return adminRepository.findOne(adminId);
+		return adminRepository.findOne(ADMIN_ID);
 	}
 
 	@Override
 	public WindowStatus getWindowStatus() {
 		// TODO Auto-generated method stub
-		return adminRepository.findOne(adminId).getWindowStatus();
+		return adminRepository.findOne(ADMIN_ID).getWindowStatus();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		String windowStartDate = null;
 		try {
-			windowStartDate = adminRepository.findOne(adminId).getWindowStartDateTime();
+			windowStartDate = adminRepository.findOne(ADMIN_ID).getWindowStartDateTime();
 		} catch (NullPointerException e) {
 			windowStartDate = ErrorMessages.INACTIVE_WINDOW;
 		}
@@ -74,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void updateWindowOpeningDate(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		Date newStartingDate = null;
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -91,7 +91,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		String windowEndDate = null;
 		try {
-			windowEndDate = adminRepository.findOne(adminId).getWindowEndDateTime();
+			windowEndDate = adminRepository.findOne(ADMIN_ID).getWindowEndDateTime();
 		} catch (NullPointerException e) {
 			windowEndDate = ErrorMessages.INACTIVE_WINDOW;
 		}
@@ -101,19 +101,19 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public Double getDecayRate() {
 		// TODO Auto-generated method stub
-		return adminRepository.findOne(adminId).getDecayRate();
+		return adminRepository.findOne(ADMIN_ID).getDecayRate();
 	}
 
 	@Override
 	public Double getMultiplierRate() {
 		// TODO Auto-generated method stub
-		return adminRepository.findOne(adminId).getMultiplierRate();
+		return adminRepository.findOne(ADMIN_ID).getMultiplierRate();
 	}
 
 	@Override
 	public void updateWindowClosingDate(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		Date newClosingDate = null;
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -129,7 +129,7 @@ public class AdminServiceImpl implements AdminService {
 	public WindowStatus updateWindowStatus(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
 		Boolean toggle = settings.getWindowToggle();
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		WindowStatus currentWindowStatus = null;
 		if(toggle) {
 			currentWindowStatus = adminSettings.getWindowStatus();
@@ -169,7 +169,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void updateDecayRate(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		adminSettings.setDecayRate(settings.getDecayRate());
 		adminRepository.save(adminSettings);
 	}
@@ -177,7 +177,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void updateMultiplierRate(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		adminSettings.setMultiplierRate(settings.getMultiplierRate());
 		adminRepository.save(adminSettings);
 	}
@@ -186,7 +186,7 @@ public class AdminServiceImpl implements AdminService {
 	public void updateAdminSettings(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
 		// Call this method to perform a batch update of all settings
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		Boolean closingDateUpdateIntent = evaluateClosingDateUpdateIntent(adminSettings, settings);
 		if(closingDateUpdateIntent) {
 			Date newClosingDate = null;
@@ -251,7 +251,7 @@ public class AdminServiceImpl implements AdminService {
 			uniqueUsers.add(request.getBeneficiary().getUser().getUsername());
 		}
 		WindowData windowData = new WindowData();
-		AdminSettings adminSettings = adminRepository.findOne(adminId);
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		windowData.setDecayRate(adminSettings.getDecayRate());
 		windowData.setMultiplierRate(adminSettings.getMultiplierRate());
 		if(adminSettings.getWindowEndDateTime() == null) {

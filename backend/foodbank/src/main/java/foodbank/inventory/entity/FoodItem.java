@@ -60,7 +60,8 @@ public class FoodItem {
 	
 	@Override
 	public String toString() {
-		return category + "," 
+		return id + "," 
+				+ category + "," 
 				+ classification + ","
 				+ description + ","
 				+ quantity;

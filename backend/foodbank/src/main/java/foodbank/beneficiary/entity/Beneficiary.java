@@ -43,6 +43,10 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		this.memberType = memberType;
 	}
 	
+	public String getId() {
+		return id;
+	}
+	
 	public String getSector() {
 		return sector;
 	}
@@ -116,8 +120,8 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	
 	@Override
 	public String toString() {
-		return user + ","
-				+ username + ","
+		return id + "," 
+				+ user.getId() + ","
 				+ sector + ","
 				+ numBeneficiary + ","
 				+ address + ","
