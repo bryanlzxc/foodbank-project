@@ -79,6 +79,15 @@ public class User {
 		this.email = email;
 	}
 	
+	public User(String id, String username, String password, String usertype, String name, String email) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.usertype = usertype;
+		this.name = name;
+		this.email = email;
+	}
+	
 	@Override
 	public String toString() {
 		return id + ","

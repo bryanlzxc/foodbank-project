@@ -115,7 +115,7 @@ public class RequestHistory {
 
 	@Override
 	public String toString() {
-		return id + "," 
+		return id + ","
 				+ beneficiary.getId() + ","
 				+ DateParser.displayDayMonthYearOnly(requestCreationDate) + ","
 				+ category + ","

@@ -83,7 +83,7 @@ public class FileBackupScheduler {
 	private AWSCredentials credentials;
 	private AmazonS3 client;
 	//private HashMap<String, String> csvFileHeaderMap;
-	private List<String> csvFileList;
+	private List<String> csvFileList = new ArrayList<String>();
 	
 	private void init() {
 		//credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");

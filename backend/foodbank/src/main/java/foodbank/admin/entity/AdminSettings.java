@@ -98,4 +98,19 @@ public class AdminSettings {
 				+ multiplierRate;
 	}
 	
+	public AdminSettings(String id, String windowStatus, Date windowStartDateTime, Date windowEndDateTime, double decayRate, double multiplierRate) {
+		this.id = id;
+		if (windowStatus.equals("ACTIVE")) { 
+			setWindowStatus(WindowStatus.ACTIVE);
+		} else {
+			setWindowStatus(WindowStatus.INACTIVE);
+		}
+		this.windowStartDateTime = windowStartDateTime;
+		this.windowEndDateTime = windowEndDateTime;	
+		this.decayRate = decayRate;
+		this.multiplierRate = multiplierRate;
+	}
+	
+	public AdminSettings() {}
+	
 }
