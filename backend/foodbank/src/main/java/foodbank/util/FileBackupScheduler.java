@@ -78,11 +78,10 @@ public class FileBackupScheduler {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private static final String ADMIN_ID = "59f4a3316f9d43370468907b";
+	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
 	private static final String BACKUP_BUCKET = "foodbank-backup-data";
 	private AWSCredentials credentials;
 	private AmazonS3 client;
-	//private HashMap<String, String> csvFileHeaderMap;
 	private List<String> csvFileList = new ArrayList<String>();
 	
 	private void init() {
@@ -95,15 +94,6 @@ public class FileBackupScheduler {
 		if(!client.doesBucketExistV2(BACKUP_BUCKET)) {
 			client.createBucket(BACKUP_BUCKET);
 		}
-		//csvFileHeaderMap = new HashMap<String, String>();
-		//csvFileHeaderMap.put("admin-data.csv", "Window Status,Window Start DateTime,Window End DateTime,Decay Rate,Multiplier Rate");
-		//csvFileHeaderMap.put("allocation-data.csv", "Beneficiary,Allocated Items,Requested Amount,Inventory Amount");
-		//csvFileHeaderMap.put("beneficiary-data.csv", "User,Username,Sector,Num Beneficiary,Address,Score,Membership Number,ACRA Registration Number,Member Type");
-		//csvFileHeaderMap.put("historical-data.csv", "Beneficiary,Username,Request Creation Date,Category,Classification,Description,Requested Quantity,Allocated Quantity");
-		//csvFileHeaderMap.put("inventory-data.csv", "Food Category,Item Classification,Item Description,Quantity");
-		//csvFileHeaderMap.put("packing-data.csv","Allocation,Packed Items");
-		//csvFileHeaderMap.put("request-data.csv","Beneficiary,Food Item,Inventory Quantity,Request Creation Date");
-		//csvFileHeaderMap.put("user-data.csv","Username,Password,User Type,Name,Email");
 		csvFileList.add("user-data.csv,User Id,Username,Password,Usertype,Name,Email");
 		csvFileList.add("beneficiary-data.csv,Beneficiary Id,User Id,Sector,Number of Beneficiaries,Address,Postal Code,Score,Membership Number,"
 				+ "ACRA Registration Number,Member Type");
@@ -115,7 +105,8 @@ public class FileBackupScheduler {
 				+ "Item Description,Requested Quantity,Allocated Quantity");
 	}
 	
-	@Scheduled(fixedRate = 86400000)	// daily interval
+	//86400000
+	@Scheduled(fixedRate = 600000, initialDelay = 300000)	// daily interval
 	public void scheduledBackup() {
 		init();
 		List<Bucket> buckets = client.listBuckets();
@@ -143,9 +134,8 @@ public class FileBackupScheduler {
 			for(int i = 1; i < fileDetailsArray.length; i++) {
 				header += fileDetailsArray[i] + ",";
 			}
-			header = header.substring(0, header.length() - 2);
+			header = header.substring(0, header.length() - 1);
 			out.println(header);
-			//out.println(csvFileHeaderMap.get(CSVFileName));
 			switch(fileName) {
 				case("admin-data.csv"): 
 					AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
@@ -182,8 +172,7 @@ public class FileBackupScheduler {
 			}
 			client.putObject(new PutObjectRequest(bucketName, fileName, file));
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("File Not Found!");
+			e.printStackTrace(); //IOException is unlikely to be thrown due to S3's implementation
 		}
 	}
 		

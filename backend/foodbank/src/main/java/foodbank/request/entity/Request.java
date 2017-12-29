@@ -30,9 +30,15 @@ public class Request {
 	
 	private FoodItem foodItem;
 	private Integer inventoryQuantity;
-	private final String requestCreationDate = DateParser.getCurrentDate(new Date());
+	private String requestCreationDate = DateParser.getCurrentDate(new Date());
 	
 	public Request() {}
+	
+	public Request(String id, Beneficiary beneficiary, FoodItem foodItem, String requestCreationDate) {
+		this(beneficiary, foodItem);
+		this.id = id;
+		this.requestCreationDate = requestCreationDate;
+	}
 	
 	public Request(Beneficiary beneficiary, FoodItem foodItem) {
 		this.beneficiary = beneficiary;

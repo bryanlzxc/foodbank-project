@@ -28,10 +28,6 @@ public class QAllocation extends EntityPathBase<Allocation> {
 
     public final StringPath id = createString("id");
 
-    public final NumberPath<Integer> inventoryAmount = createNumber("inventoryAmount", Integer.class);
-
-    public final NumberPath<Integer> requestedAmount = createNumber("requestedAmount", Integer.class);
-
     public QAllocation(String variable) {
         this(Allocation.class, forVariable(variable), INITS);
     }

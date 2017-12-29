@@ -53,6 +53,17 @@ public class DateParser {
 		return dateObject;
 	}
 	
+	public static Date convertToDBDate(String date) {
+		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		Date dateObject = null;
+		try {
+			dateObject = format.parse(date);
+		} catch (Exception e) {
+			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+		}
+		return dateObject;
+	}
+	
 	public static String displayDayMonthYearOnly(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		return format.format(date);

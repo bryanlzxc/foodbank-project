@@ -45,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private HistoryRepository historyRepository;
 	
-	private static final String ADMIN_ID = "59f4a3316f9d43370468907b";
+	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
 	
 	@Override
 	public AdminSettings getAdminSettings() {

@@ -30,6 +30,14 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	private long acraRegistrationNumber;
 	private String memberType;
 	
+	public Beneficiary() {}
+	
+	public Beneficiary(String id, User user, String sector, int numBeneficiary, String address, double score,
+			long membershipNumber, long acraRegistrationNumber, String memberType) {
+		this(user, sector, numBeneficiary, address, score, membershipNumber, acraRegistrationNumber, memberType);
+		this.id = id;
+	}
+	
 	public Beneficiary(User user, String sector, int numBeneficiary, String address, double score,
 			long membershipNumber, long acraRegistrationNumber, String memberType) {
 		this.user = user;

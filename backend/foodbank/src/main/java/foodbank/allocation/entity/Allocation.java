@@ -23,10 +23,12 @@ public class Allocation {
 	
 	private List<AllocatedFoodItems> allocatedItems;
 	
-	private Integer requestedAmount;
-	private Integer inventoryAmount;
-	
 	public Allocation() {}
+	
+	public Allocation(String id, Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems) {
+		this(beneficiary, allocatedItems);
+		this.id = id;
+	}
 	
 	public Allocation(Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems) {
 		this.beneficiary = beneficiary;
@@ -61,14 +63,14 @@ public class Allocation {
 	public String toString() {
 		String allocatedItemString = "";
 		for(AllocatedFoodItems allocatedItem : allocatedItems) {
-			allocatedItemString += "{" + allocatedItem.getCategory() + "," 
-				+ allocatedItem.getClassification() + "," 
-				+ allocatedItem.getDescription() + ","
-				+ allocatedItem.getAllocatedQuantity() + ","
+			allocatedItemString += "{" + allocatedItem.getCategory() + "+" 
+				+ allocatedItem.getClassification() + "+" 
+				+ allocatedItem.getDescription() + "+"
+				+ allocatedItem.getAllocatedQuantity() + "+"
 				+ allocatedItem.getRequestedQuantity() + "}";
 		}
 		return id + "," 
-				+ "[" + allocatedItemString + "]"
+				+ "[" + allocatedItemString + "]" + ","
 				+ beneficiary.getId();
 	}
 	

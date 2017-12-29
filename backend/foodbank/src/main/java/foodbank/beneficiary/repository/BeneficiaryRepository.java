@@ -9,7 +9,9 @@ import foodbank.beneficiary.entity.Beneficiary;
  */
 
 public interface BeneficiaryRepository extends MongoRepository<Beneficiary, String>{
-
+	
+	Beneficiary findById(String id);
+	
 	Beneficiary findByUsername(String beneficiary);
 	
 }

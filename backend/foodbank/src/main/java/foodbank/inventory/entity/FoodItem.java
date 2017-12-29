@@ -19,6 +19,11 @@ public class FoodItem {
 
 	public FoodItem() {}
 	
+	public FoodItem(String id, String category, String classification, String description, Integer quantity) {
+		this(category, classification, description, quantity);
+		this.id = id;
+	}
+	
 	public FoodItem(String category, String classification, String description, Integer quantity) {
 		this.category = category;
 		this.classification = classification;
