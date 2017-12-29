@@ -26,6 +26,7 @@ import foodbank.exceptions.InvalidBeneficiaryException;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
+import foodbank.user.entity.User;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
 
@@ -40,6 +41,9 @@ public class AllocationServiceImpl implements AllocationService {
 	
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
+	
+	private final int maxNumberBeneficiariesPerFoodItem = 5;
+	
 		
 	@Override
 	public List<Allocation> retrieveAllAllocations() {
@@ -63,13 +67,16 @@ public class AllocationServiceImpl implements AllocationService {
 	public void generateAllocationList() {
 		// TODO Auto-generated method stub
 		List<Request> requests = requestRepository.findAll();
-		HashMap<String, Allocation> allocationMap = generateAllocationMapping(generateMapping(requests));
+		List<Beneficiary> beneficiaries = beneficiaryRepository.findAll();
+		HashMap<String, Double> beneficiariesScoreTable = generateBeneficiaryScoreTable(beneficiaries);
+		HashMap<String, Allocation> allocationMap = generateAllocationMapping(generateMapping(requests),beneficiariesScoreTable);
 		for(Allocation allocation : allocationMap.values()) {
 			allocationRepository.insert(allocation);
 		}
 	}
 	
 	// Helper method to generate the mapping for items by description
+	// Takes in all current request when window is closed, and returns a HashMap - Key:FoodItem Description; Value:Requests
 	private HashMap<String, List<Request>> generateMapping(List<Request> requests) {
 		HashMap<String, List<Request>> requestsByFoodItems = new HashMap<String, List<Request>>();
 		for(Request request : requests) {
@@ -81,8 +88,8 @@ public class AllocationServiceImpl implements AllocationService {
 			if(requestsContainingFoodItem != null) {
 				requestsContainingFoodItem.add(request);
 				/* Testing comparing function to avoid writing of a comparator */
-				requestsContainingFoodItem.sort(Comparator.comparing(Request::getBeneficiary, Comparator.comparingDouble(Beneficiary::getScore)));
-				Collections.reverse(requestsContainingFoodItem);
+//				requestsContainingFoodItem.sort(Comparator.comparing(Request::getBeneficiary, Comparator.comparingDouble(Beneficiary::getScore)));	//should we do the sorting at the end outside this for loop? So we dont sort everytime we add one
+//				Collections.reverse(requestsContainingFoodItem);
 				requestsByFoodItems.replace(key, requestsContainingFoodItem);
 			} else {
 				requestsContainingFoodItem = new ArrayList<Request>();
@@ -94,42 +101,92 @@ public class AllocationServiceImpl implements AllocationService {
 	}
 	
 	// Helper method to generate the mapping for allocations for each beneficiary using their name as the key
-	private HashMap<String, Allocation> generateAllocationMapping(Map<String, List<Request>> requestsByFoodItems) {
-		HashMap<String, Allocation> allocationMap = new HashMap<String, Allocation>();
+	private HashMap<String, Allocation> generateAllocationMapping(Map<String, List<Request>> requestsByFoodItems, HashMap<String,Double> beneficiariesScoreTable) {
+		
+		HashMap<String, Allocation> allocationMap = new HashMap<String, Allocation>();	//key = beneficiary username; value= ALlocation
+		
 		for(Map.Entry<String, List<Request>> entry : requestsByFoodItems.entrySet()) {
 			String key = entry.getKey();
-			List<Request> requestsForFoodItem = entry.getValue();
+			List<Request> requestsForFoodItem = entry.getValue();		//if this is non-null, this fooditem has some requests
 			Request request = requestsForFoodItem.size() > 0 ? requestsForFoodItem.get(0) : null;
 			if(request != null) {
-				int inventoryQuantity = retrieveInventoryDetails(
+				int inventoryQuantity = retrieveInventoryDetails(				//this variable is the max quantity which we can allocate out
 						request.getFoodItem().getCategory(), request.getFoodItem().getClassification(), request.getFoodItem().getDescription()).getQuantity();
-				for(Request currentRequest : requestsForFoodItem) {
+				
+				//Now this requestsForFoodItem is sorted in accordance to highest score bene to lowest. We want to check if >5 request, make list only contain
+				//the highest 5, then we need to get the total score of the beneficiaries to use as denominator.
+				
+				int numberOfBeneficiaryAllocated = requestsForFoodItem.size();	//this variable is the number of beneficiaries which will be allocated for this specific food item
+				double totalScore = 0.0;
+				
+				if(numberOfBeneficiaryAllocated > maxNumberBeneficiariesPerFoodItem) {
+					numberOfBeneficiaryAllocated = maxNumberBeneficiariesPerFoodItem;
+				}
+				
+				for(int i = 0; i<numberOfBeneficiaryAllocated; i++) {			//this loop is used to get the total score of all beneficiaries which will be allocated for this food item
+					totalScore += requestsForFoodItem.get(i).getBeneficiary().getScore();
+				}
+				
+				requestsForFoodItem.sort((Request r1, Request r2)->(int)(beneficiariesScoreTable.get(r1.getBeneficiary().getUser().getUsername()) - beneficiariesScoreTable.get(r2.getBeneficiary().getUser().getUsername())));	
+				Collections.reverse(requestsForFoodItem);
+				
+				for(int i = 0; i<requestsForFoodItem.size(); i++) {				
+					Request currentRequest = requestsForFoodItem.get(i);
+					
+					
+					beneficiariesScoreTable.get(currentRequest.getBeneficiary().getUser().getUsername());
+					
+					double beneficiaryScore = currentRequest.getBeneficiary().getScore();
+					double allocationRatio = beneficiaryScore/totalScore;
+					
+					int maxAllocatedQuantity = (int)Math.ceil(allocationRatio*inventoryQuantity);		//this rounds up the number, calculated by their weightage of score against other beneficiaries scores
+					
 					int allocatedQuantity = 0;
 					int requestedQuantity = currentRequest.getFoodItem().getQuantity();
-					/** Current logic is to assign as much as possible to priority beneficiary, which is flawed! **/
-					if(requestedQuantity > inventoryQuantity) {
-						allocatedQuantity = inventoryQuantity;
-					} else {
-						allocatedQuantity = requestedQuantity;
+					
+					if(inventoryQuantity > 0) {			//inventoryQuantity will not fall below 0, once it reaches 0, all beneficiaries from this iter will have allocation of 0
+						if(maxAllocatedQuantity <= inventoryQuantity) {	//when inventory is sufficient to allocate to this beneficiary
+							if(requestedQuantity > maxAllocatedQuantity) {		//when beneficiary request more than what they can get
+								allocatedQuantity = maxAllocatedQuantity;
+							}else {
+								allocatedQuantity = requestedQuantity;
+							}
+						}else {		//when not enough inventory to meet maxAllocatedQuantity
+							maxAllocatedQuantity = inventoryQuantity;
+							if(requestedQuantity > maxAllocatedQuantity) {
+								allocatedQuantity = maxAllocatedQuantity;
+							}else {
+								allocatedQuantity = requestedQuantity;
+							}
+						}
+					}else {	//when inventoryQuantity is 0, allocatedQuantity will always be 0
+						//do nothing
 					}
+					
 					inventoryQuantity -= allocatedQuantity;
-					String beneficiaryName = currentRequest.getBeneficiary().getUser().getName();
-					Allocation allocation = allocationMap.get(beneficiaryName);
+					
+					String beneficiaryUsername = currentRequest.getBeneficiary().getUser().getUsername();
+					Allocation allocation = allocationMap.get(beneficiaryUsername);
 					FoodItem foodItem = currentRequest.getFoodItem();
 					String category = foodItem.getCategory();
 					String classification = foodItem.getClassification();
 					String description = foodItem.getDescription();
-					if(allocation != null) {
+					
+					//Changing the score after allocation of this food item
+					Double oldScore = beneficiariesScoreTable.get(beneficiaryUsername);
+					beneficiariesScoreTable.put(beneficiaryUsername, (double)(oldScore-allocatedQuantity));
+					
+					if(allocation != null) {		//if this beneficiary already has allocations of other food items
 						allocation.getAllocatedItems().add(new AllocatedFoodItems(category, classification, description, 
 								allocatedQuantity, requestedQuantity, InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
-						allocationMap.replace(beneficiaryName, allocation);
-					} else {
+						allocationMap.replace(beneficiaryUsername, allocation);
+					} else {						//if beneficiary has no other allocation of food items
 						ArrayList<AllocatedFoodItems> foodItems = new ArrayList<AllocatedFoodItems>();
 						String[] keyArray = key.split(",");
 						foodItems.add(new AllocatedFoodItems(keyArray[0], keyArray[1], keyArray[2], allocatedQuantity, requestedQuantity, 
 								InventorySerializer.retrieveQuantityOfItem(keyArray[0], keyArray[1], keyArray[2])));
 						allocation = new Allocation(currentRequest.getBeneficiary(), foodItems);
-						allocationMap.put(beneficiaryName, allocation);
+						allocationMap.put(beneficiaryUsername, allocation);
 					}
 				}
 			}
@@ -142,6 +199,15 @@ public class AllocationServiceImpl implements AllocationService {
 		UUID uniqueId = InventorySerializer.serials.get(category+classification+description);
 		return InventorySerializer.foodItemMap.get(uniqueId);
 	}
+	
+	private HashMap<String, Double> generateBeneficiaryScoreTable(List<Beneficiary> beneficiaries){
+		HashMap<String, Double> beneficiariesScoreTable = new HashMap<>();
+		for(Beneficiary beneficiary: beneficiaries) {
+			beneficiariesScoreTable.put(beneficiary.getUser().getUsername(), beneficiary.getScore());
+		}
+		return beneficiariesScoreTable;
+	}
+	
 
 	@Override
 	public void updateAllocation(AllocationDTO allocation) {
