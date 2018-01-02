@@ -297,6 +297,7 @@ public class AdminServiceImpl implements AdminService {
 		for(Request request : requests) {
 			Integer allocatedQuantity = null;
 			allocatedQuantity = requestAllocationMap.get(request.getBeneficiary().getUser().getUsername()).get(request.getFoodItem().getDescription());
+			System.out.println("Allocated quantity = " + allocatedQuantity);
 			RequestHistory pastRequest = new RequestHistory(request.getBeneficiary(), 
 					DateParser.convertToDate(request.getRequestCreationDate()), 
 					request.getFoodItem().getCategory(), request.getFoodItem().getClassification(), request.getFoodItem().getDescription(), 
