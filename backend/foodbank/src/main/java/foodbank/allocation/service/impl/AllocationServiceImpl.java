@@ -212,8 +212,12 @@ public class AllocationServiceImpl implements AllocationService {
 				
 				//this chunk of code is to allocate leftovers
 				while(inventoryQuantity > 0) {
-					
-					String usernameKey = unfulfilledRequests.keySet().iterator().next();	
+					System.out.println("yobreakkkkk");
+					if(unfulfilledRequests.keySet().isEmpty()) {
+						break;
+					}
+					String usernameKey = unfulfilledRequests.keySet().iterator().next();
+
 					AllocatedFoodItems unfulfilledRequest = unfulfilledRequests.get(usernameKey);
 					
 					int allocatedQuantity = unfulfilledRequest.getAllocatedQuantity();
@@ -223,6 +227,7 @@ public class AllocationServiceImpl implements AllocationService {
 					if(difference >= inventoryQuantity) {
 						unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+inventoryQuantity);
 						inventoryQuantity -= inventoryQuantity;
+						break;
 					}else {
 						unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+difference);
 						inventoryQuantity -= difference;
@@ -245,7 +250,6 @@ public class AllocationServiceImpl implements AllocationService {
 					}
 					allocation.getAllocatedItems().add(unfulfilledRequest);
 					allocationMap.replace(usernameKey, allocation);
-					
 				}
 			}
 		}
