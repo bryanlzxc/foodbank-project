@@ -155,12 +155,12 @@ public class AdminServiceImpl implements AdminService {
 					Date startingDate = null;
 					Date endingDate = null;
 					if(settings.getStartingDate() != null) {
-						startingDate = DateParser.convertToDate(settings.getStartingDate());
+						startingDate = DateParser.convertToDBDate(settings.getStartingDate());
 					} else {
 						startingDate = new Date();
 					}
 					if(settings.getClosingDate() != null) {
-						endingDate = DateParser.convertToDate(settings.getClosingDate());
+						endingDate = DateParser.convertToDBDate(settings.getClosingDate());
 					} else {
 						Calendar calendar = Calendar.getInstance();
 						calendar.setTime(startingDate);
@@ -223,12 +223,12 @@ public class AdminServiceImpl implements AdminService {
 				Date closingDate = null;
 				String closingDateString = settings.getClosingDate();
 				if(startingDateString != null) {
-					startingDate = DateParser.convertToDate(startingDateString);
+					startingDate = DateParser.convertToDBDate(startingDateString);
 				} else {
 					startingDate = new Date();
 				}
 				if(closingDateString != null) {
-					closingDate = DateParser.convertToDate(closingDateString);
+					closingDate = DateParser.convertToDBDate(closingDateString);
 				} else {
 					Calendar calendar = Calendar.getInstance();
 					calendar.setTime(startingDate);

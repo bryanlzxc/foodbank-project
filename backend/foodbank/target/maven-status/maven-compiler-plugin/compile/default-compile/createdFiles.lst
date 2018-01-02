@@ -1,4 +1,5 @@
 foodbank\login\controller\LoginController.class
+foodbank\util\MessageConstants$EmailMessages.class
 foodbank\inventory\entity\QFoodItem.class
 foodbank\login\dto\LoginDTO.class
 foodbank\allocation\entity\Allocation.class
@@ -52,7 +53,6 @@ foodbank\allocation\entity\QAllocation.class
 foodbank\history\repository\HistoryRepository.class
 foodbank\util\MessageConstants.class
 foodbank\packing\repository\PackingRepository.class
-foodbank\MainApp$1.class
 foodbank\inventory\repository\FoodRepository.class
 foodbank\history\service\HistoryService.class
 foodbank\response\dto\ResponseDTO$Status.class
