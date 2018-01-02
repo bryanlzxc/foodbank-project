@@ -31,6 +31,7 @@ import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
+import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
@@ -108,76 +109,97 @@ public class FileManager implements CommandLineRunner {
 		List<String[]> inputDataArray = inputData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
 		switch(csvFilename) {
 			case("inventory-data.csv"):
-				List<FoodItem> foodItems = new ArrayList<FoodItem>();
-				inputDataArray.forEach(entry -> foodItems.add(new FoodItem(entry[0], entry[1], entry[2], entry[3], Integer.parseInt(entry[4]))));
-				foodRepository.insert(foodItems);
+				loadInventoryData(inputDataArray);
 				break;
 			case("user-data.csv"):
-				List<User> users = new ArrayList<User>();
-				inputDataArray.forEach(entry -> users.add(new User(entry[0], entry[1], entry[2], entry[3], entry[4], entry[5]))); // skip entry[0] for id
-				userRepository.insert(users);
+				loadUserData(inputDataArray);
 				break;
 			case("admin-data.csv"):
-				List<AdminSettings> adminSettingsList = new ArrayList<AdminSettings>();
-				Date windowStartDate = inputDataArray.get(0)[2].equals("null") ? null : DateParser.convertToDBDate(inputDataArray.get(0)[2]);
-				Date windowEndDate = inputDataArray.get(0)[3].equals("null") ? null : DateParser.convertToDBDate(inputDataArray.get(0)[3]);
-				inputDataArray.forEach(entry -> adminSettingsList.add(
-						new AdminSettings(entry[0], entry[1], windowStartDate, windowEndDate, 
-								Double.parseDouble(entry[4]), Double.parseDouble(entry[5]))));
-				adminRepository.insert(adminSettingsList);
+				loadAdminData(inputDataArray);
 				break;
 			case("beneficiary-data.csv"):
-				List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
-				inputDataArray.forEach(entry -> beneficiaries.add(new Beneficiary(entry[0], userRepository.findById(entry[1]), 
-							entry[2], Integer.parseInt(entry[3]), (entry[4] + ", " + entry[5]), Double.parseDouble(entry[6]), Long.parseLong(entry[7]), 
-							Long.parseLong(entry[8]), entry[9])));
-				beneficiaryRepository.insert(beneficiaries);
+				loadBeneficiaryData(inputDataArray);
 				break;
 			case("request-data.csv"):
-				List<Request> requests = new ArrayList<Request>();
-				inputDataArray.forEach(entry -> requests.add(new Request(entry[0], beneficiaryRepository.findById(entry[6]), 
-						new FoodItem(entry[1], entry[2], entry[3], Integer.parseInt(entry[4])), entry[5])));
-				requestRepository.insert(requests);
+				loadRequestData(inputDataArray);
 				break;
 			case("allocation-data.csv"):
-				List<Allocation> allocations = new ArrayList<Allocation>();
-				for(int i = 1; i < inputData.size(); i++) {
-					String input = inputData.get(i);
-					int allocationStartIndex = input.indexOf("[");
-					int allocationEndIndex = input.indexOf("]");
-					String id = input.substring(0, allocationStartIndex-1);
-					String allocatedItemString = input.substring(allocationStartIndex+1, allocationEndIndex);
-					String beneficiaryId = input.substring(allocationEndIndex+2);
-					ArrayList<AllocatedFoodItems> allocatedItems = new ArrayList<AllocatedFoodItems>();
-					String[] allocatedItemsData = allocatedItemString.trim().split("\\{|\\}");
-					List<String> data = Arrays.stream(allocatedItemsData).filter(entry -> !entry.isEmpty()).collect(Collectors.toList());
-					for(int j = 0; j < data.size(); j++) {
-						String[] dataArray = data.get(j).split("\\+");
-						String category = dataArray[0];
-						String classification = dataArray[1];
-						String description = dataArray[2];
-						Integer allocatedQuantity = Integer.parseInt(dataArray[3]);
-						Integer requestedQuantity = Integer.parseInt(dataArray[4]);
-						allocatedItems.add(new AllocatedFoodItems(category, classification, description, allocatedQuantity, requestedQuantity, 
-								InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
-					}
-					allocations.add(new Allocation(id, beneficiaryRepository.findById(beneficiaryId), allocatedItems));
-				}
-				allocationRepository.insert(allocations);
+				loadAllocationData(inputData);
 				break;
+			case("historical-data-csv"):
+				loadHistoricalData(inputDataArray);
 		}
 	}
 	
-	//	private void loadData(S3Object object, String bucketName) {
-	//		S3ObjectInputStream stream = object.getObjectContent();
-	//		if(bucketName.equals(INVENTORY_BUCKET)) {
-	//			List<String> inventoryData = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.toList());
-	//			List<String[]> inventoryDataArray = inventoryData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
-	//			List<FoodItem> foodItems = new ArrayList<FoodItem>();
-	//			inventoryDataArray.forEach(entry -> foodItems.add(new FoodItem(entry[0], entry[1], entry[2], Integer.parseInt(entry[3]))));
-	//			foodRepository.deleteAll();
-	//			foodRepository.insert(foodItems);
-	//		}
-	//	}
+	private void loadInventoryData(List<String[]> data) {
+		List<FoodItem> foodItems = new ArrayList<FoodItem>();
+		data.forEach(entry -> foodItems.add(new FoodItem(entry[0], entry[1], entry[2], entry[3], Integer.parseInt(entry[4]))));
+		foodRepository.insert(foodItems);
+	}
+	
+	private void loadUserData(List<String[]> data) {
+		List<User> users = new ArrayList<User>();
+		data.forEach(entry -> users.add(new User(entry[0], entry[1], entry[2], entry[3], entry[4], entry[5]))); // skip entry[0] for id
+		userRepository.insert(users);
+	}
+	
+	private void loadAdminData(List<String[]> data) {
+		List<AdminSettings> adminSettingsList = new ArrayList<AdminSettings>();
+		Date windowStartDate = data.get(0)[2].equals("null") ? null : DateParser.convertToDBDate(data.get(0)[2]);
+		Date windowEndDate = data.get(0)[3].equals("null") ? null : DateParser.convertToDBDate(data.get(0)[3]);
+		data.forEach(entry -> adminSettingsList.add(
+				new AdminSettings(entry[0], entry[1], windowStartDate, windowEndDate, 
+						Double.parseDouble(entry[4]), Double.parseDouble(entry[5]))));
+		adminRepository.insert(adminSettingsList);
+	}
+	
+	private void loadBeneficiaryData(List<String[]> data) {
+		List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
+		data.forEach(entry -> beneficiaries.add(new Beneficiary(entry[0], userRepository.findById(entry[1]), 
+					entry[2], Integer.parseInt(entry[3]), (entry[4] + ", " + entry[5]), Double.parseDouble(entry[6]), Long.parseLong(entry[7]), 
+					Long.parseLong(entry[8]), entry[9])));
+		beneficiaryRepository.insert(beneficiaries);
+	}
+	
+	private void loadRequestData(List<String[]> data) {
+		List<Request> requests = new ArrayList<Request>();
+		data.forEach(entry -> requests.add(new Request(entry[0], beneficiaryRepository.findById(entry[6]), 
+				new FoodItem(entry[1], entry[2], entry[3], Integer.parseInt(entry[4])), entry[5])));
+		requestRepository.insert(requests);
+	}
+	
+	private void loadAllocationData(List<String> dataList) {
+		List<Allocation> allocations = new ArrayList<Allocation>();
+		for(int i = 1; i < dataList.size(); i++) {
+			String input = dataList.get(i);
+			int allocationStartIndex = input.indexOf("[");
+			int allocationEndIndex = input.indexOf("]");
+			String id = input.substring(0, allocationStartIndex-1);
+			String allocatedItemString = input.substring(allocationStartIndex+1, allocationEndIndex);
+			String beneficiaryId = input.substring(allocationEndIndex+2);
+			ArrayList<AllocatedFoodItems> allocatedItems = new ArrayList<AllocatedFoodItems>();
+			String[] allocatedItemsData = allocatedItemString.trim().split("\\{|\\}");
+			List<String> data = Arrays.stream(allocatedItemsData).filter(entry -> !entry.isEmpty()).collect(Collectors.toList());
+			for(int j = 0; j < data.size(); j++) {
+				String[] dataArray = data.get(j).split("\\+");
+				String category = dataArray[0];
+				String classification = dataArray[1];
+				String description = dataArray[2];
+				Integer allocatedQuantity = Integer.parseInt(dataArray[3]);
+				Integer requestedQuantity = Integer.parseInt(dataArray[4]);
+				allocatedItems.add(new AllocatedFoodItems(category, classification, description, allocatedQuantity, requestedQuantity, 
+						InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
+			}
+			allocations.add(new Allocation(id, beneficiaryRepository.findById(beneficiaryId), allocatedItems));
+		}
+		allocationRepository.insert(allocations);
+	}
+	
+	private void loadHistoricalData(List<String[]> data) {
+		List<RequestHistory> requestHistoryList = new ArrayList<RequestHistory>();
+		data.forEach(entry -> requestHistoryList.add(new RequestHistory(entry[0], beneficiaryRepository.findById(entry[1]), DateParser.convertToDate(entry[2]), entry[3], entry[4],
+				entry[5], Integer.parseInt(entry[6]), Integer.parseInt(entry[7]))));
+		historyRepository.insert(requestHistoryList);
+	}
 	
 }

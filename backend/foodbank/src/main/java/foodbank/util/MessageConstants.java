@@ -6,6 +6,7 @@ public final class MessageConstants {
 	public static final String USER_UPDATE_SUCCESS = "User successfully updated.";
 	public static final String USER_DELETE_SUCCESS = "User successfully deleted.";
 	public static final String LOGIN_SUCCESS = "User successfully authenticated.";
+	public static final String ITEM_CREATION_SUCCESS = "Item successfully created.";
 	public static final String ITEM_OVERWRITE_SUCCESS = "Item successfully updated.";
 	public static final String ITEM_UPDATE_SUCCESS = "Item quantity successfully updated.";
 	public static final String REQUEST_CREATE_SUCCESS = "Request successfully added.";
@@ -32,6 +33,7 @@ public final class MessageConstants {
 		public static final String USER_ALREADY_EXISTS = "This user already exists.";
 		public static final String NO_SUCH_USER = "This user does not exist.";
 		public static final String INVALID_CREDENTIALS = "Invalid login credentials.";
+		public static final String DUPLICATE_ITEM = "This item already exists.";
 		public static final String NO_SUCH_ITEM = "The specified food item cannot be found.";
 		public static final String NO_SUCH_REQUEST = "The specified request cannot be found.";
 		public static final String NO_SUCH_BENEFICIARY = "The requested beneficiary does not exist.";

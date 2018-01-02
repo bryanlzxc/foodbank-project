@@ -20,6 +20,7 @@ import foodbank.admin.entity.AdminSettings.WindowStatus;
 import foodbank.admin.entity.WindowData;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
+import foodbank.allocation.service.AllocationService;
 import foodbank.email.entity.SendEmail;
 import foodbank.history.service.HistoryService;
 import foodbank.response.dto.ResponseDTO;
@@ -33,6 +34,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private AllocationService allocationService;
 	
 	@GetMapping("/display-all")
 	public AdminSettings getAdminSettings() {
@@ -75,6 +79,7 @@ public class AdminController {
 		try {
 			WindowStatus status = adminService.updateWindowStatus(adminSettings);
 			if(status == WindowStatus.ACTIVE) {
+				allocationService.generateAllocationList();
 				responseDTO.setMessage(MessageConstants.WINDOW_CLOSE_SUCCESS);
 			} else {
 				adminService.insertPastRequests();
@@ -94,6 +99,7 @@ public class AdminController {
 		adminSettingsDTO.setWindowToggle(true);
 		WindowStatus status = adminService.updateWindowStatus(adminSettingsDTO);
 		if(status == WindowStatus.ACTIVE) {
+			allocationService.generateAllocationList();
 			responseDTO.setMessage(MessageConstants.WINDOW_CLOSE_SUCCESS);
 		} else {
 			adminService.insertPastRequests();

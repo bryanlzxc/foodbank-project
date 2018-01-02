@@ -24,6 +24,7 @@ public class MainApp {
 		SpringApplication.run(MainApp.class, args);
 	}
 	
+	/*
 	@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
@@ -31,8 +32,8 @@ public class MainApp {
                 registry.addMapping("/users/display-all").allowedMethods("GET","OPTIONS").allowedOrigins("http://localhost:4200").allowedHeaders("*");
                 registry.addMapping("/authenticate").allowedMethods("POST","OPTIONS").allowedOrigins("http://localhost:4200").allowedHeaders("*").allowCredentials(true);
             }
-        };
-        
+        };   
     }
+	*/
 
 }

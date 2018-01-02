@@ -38,5 +38,17 @@ public class InventorySerializer {
 	public static Integer retrieveQuantityOfItem(String category, String classification, String description) {
 		return InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getQuantity();
 	}
-
+	
+	public static void updateQuantity(String category, String classification, String description, Integer quantity) {
+		UUID key = InventorySerializer.serials.get(category+classification+description);
+		if(key == null) {
+			key = UUID.randomUUID();
+			InventorySerializer.serials.put(category+classification+description, key);
+			InventorySerializer.foodItemMap.put(key, new FoodItem(category, classification, description, quantity));
+		}
+		FoodItem foodItem = InventorySerializer.foodItemMap.get(key);
+		foodItem.setQuantity(quantity);
+		InventorySerializer.foodItemMap.replace(key, foodItem);
+	}
+	
 }

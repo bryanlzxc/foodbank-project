@@ -28,6 +28,13 @@ public class RequestHistory {
 	
 	public RequestHistory() {}
 	
+	public RequestHistory(String id, Beneficiary beneficiary, Date requestCreationDate, 
+			String category, String classification, String description,
+			Integer requestedQuantity, Integer allocatedQuantity) {
+		this(beneficiary, requestCreationDate, category, classification, description, requestedQuantity, allocatedQuantity);
+		this.id = id;
+	}
+	
 	public RequestHistory(Beneficiary beneficiary, Date requestCreationDate, 
 			String category, String classification, String description,
 			Integer requestedQuantity, Integer allocatedQuantity) {

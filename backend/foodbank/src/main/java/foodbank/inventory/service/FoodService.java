@@ -15,6 +15,8 @@ public interface FoodService {
 	
 	int retrieveFoodItemQuantity(final String categoryName, final String classificationName, final String description);
 	
+	void createFoodItem(final FoodItemDTO foodItem);
+	
 	void overwriteFoodItem(final FoodItemDTO foodItem);
 	
 	void amendFoodItemQuantity(final FoodItemDTO foodItem);

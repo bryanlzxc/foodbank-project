@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,18 @@ public class FoodController {
 		String url = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
 		classification = url.substring(url.indexOf("classification=")+"classification=".length(), url.indexOf("/display-all"));
 		return foodService.retrieveFoodItemsByCategoryAndClassification(category, classification);
+	}
+	
+	@PutMapping("/create-item")
+	public ResponseDTO createFoodItem(@RequestBody FoodItemDTO foodItem) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_CREATION_SUCCESS);
+		try {
+			foodService.createFoodItem(foodItem);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
 	}
 	
 	// This method is used to overwrite the quantity of the object in DB
