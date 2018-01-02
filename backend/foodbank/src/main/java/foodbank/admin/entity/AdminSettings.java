@@ -23,7 +23,8 @@ public class AdminSettings {
 	private Date windowEndDateTime;	
 	private double decayRate;
 	private double multiplierRate;
-	
+	private String dailyPassword;
+
 	public String getId() {
 		return id;
 	}
@@ -86,6 +87,14 @@ public class AdminSettings {
 
 	public void setMultiplierRate(double multiplierRate) {
 		this.multiplierRate = multiplierRate;
+	}
+	
+	public String getDailyPassword() {
+		return dailyPassword;
+	}
+
+	public void setDailyPassword(String dailyPassword) {
+		this.dailyPassword = dailyPassword;
 	}
 	
 	@Override

@@ -82,6 +82,7 @@ public class AdminController {
 				allocationService.generateAllocationList();
 				responseDTO.setMessage(MessageConstants.WINDOW_CLOSE_SUCCESS);
 			} else {
+				adminService.generateEmails();
 				adminService.insertPastRequests();
 				responseDTO.setMessage(MessageConstants.WINDOW_OPEN_SUCCESS);
 			}
@@ -161,20 +162,6 @@ public class AdminController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ADMIN_BATCH_UPDATE_SUCCESS);
 		try {
 			adminService.updateAdminSettings(adminSettings);
-		} catch (Exception e) {
-			responseDTO.setStatus(ResponseDTO.Status.FAIL);
-			responseDTO.setMessage(e.getMessage());
-		}
-		return responseDTO;
-	}
-	
-	// Send email
-	@GetMapping("/send-email/email={email}/subject={subject}/body={body}")
-	public ResponseDTO sendEmail(@PathVariable("email") String email, @PathVariable("subject") String subject, 
-			@PathVariable("body") String body) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.EMAIL_SEND_SUCCESS);
-		try {
-			new SendEmail(email, subject, body);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
