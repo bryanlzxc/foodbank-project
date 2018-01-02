@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -129,6 +131,14 @@ public class AllocationServiceImpl implements AllocationService {
 				
 				requestsForFoodItem.sort((Request r1, Request r2)->(int)(beneficiariesScoreTable.get(r1.getBeneficiary().getUser().getUsername()) - beneficiariesScoreTable.get(r2.getBeneficiary().getUser().getUsername())));	
 				Collections.reverse(requestsForFoodItem);
+				System.out.println("--------------------------------------");
+				System.out.println(request.getFoodItem().getDescription());
+				for(Request r: requestsForFoodItem) {
+					System.out.print(r.getBeneficiary().getUser().getUsername());
+					System.out.println(" |Score: "+beneficiariesScoreTable.get(r.getBeneficiary().getUser().getUsername()));
+				}
+				
+				LinkedHashMap<String, AllocatedFoodItems> unfulfilledRequests = new LinkedHashMap<>();
 				
 				for(int i = 0; i<requestsForFoodItem.size(); i++) {				
 					Request currentRequest = requestsForFoodItem.get(i);
@@ -176,18 +186,66 @@ public class AllocationServiceImpl implements AllocationService {
 					Double oldScore = beneficiariesScoreTable.get(beneficiaryUsername);
 					beneficiariesScoreTable.put(beneficiaryUsername, (double)(oldScore-allocatedQuantity));
 					
+					AllocatedFoodItems allocationByAlgo =  new AllocatedFoodItems(category, classification, description, 
+							allocatedQuantity, requestedQuantity, InventorySerializer.retrieveQuantityOfItem(category, classification, description));
+					
 					if(allocation != null) {		//if this beneficiary already has allocations of other food items
-						allocation.getAllocatedItems().add(new AllocatedFoodItems(category, classification, description, 
-								allocatedQuantity, requestedQuantity, InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
+//						allocation.getAllocatedItems().add(new AllocatedFoodItems(category, classification, description, 
+//								allocatedQuantity, requestedQuantity, InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
+						allocation.getAllocatedItems().add(allocationByAlgo);
 						allocationMap.replace(beneficiaryUsername, allocation);
 					} else {						//if beneficiary has no other allocation of food items
 						ArrayList<AllocatedFoodItems> foodItems = new ArrayList<AllocatedFoodItems>();
 						String[] keyArray = key.split(",");
-						foodItems.add(new AllocatedFoodItems(keyArray[0], keyArray[1], keyArray[2], allocatedQuantity, requestedQuantity, 
-								InventorySerializer.retrieveQuantityOfItem(keyArray[0], keyArray[1], keyArray[2])));
+//						foodItems.add(new AllocatedFoodItems(keyArray[0], keyArray[1], keyArray[2], allocatedQuantity, requestedQuantity, 
+//								InventorySerializer.retrieveQuantityOfItem(keyArray[0], keyArray[1], keyArray[2])));
+						foodItems.add(allocationByAlgo);
 						allocation = new Allocation(currentRequest.getBeneficiary(), foodItems);
 						allocationMap.put(beneficiaryUsername, allocation);
 					}
+					
+					if(requestedQuantity > maxAllocatedQuantity) {
+						unfulfilledRequests.put(beneficiaryUsername, allocationByAlgo);
+					}
+				}
+				
+				
+				//this chunk of code is to allocate leftovers
+				while(inventoryQuantity > 0) {
+					
+					String usernameKey = unfulfilledRequests.keySet().iterator().next();	
+					AllocatedFoodItems unfulfilledRequest = unfulfilledRequests.get(usernameKey);
+					
+					int allocatedQuantity = unfulfilledRequest.getAllocatedQuantity();
+					int requestedQuantity = unfulfilledRequest.getRequestedQuantity();
+					int difference = requestedQuantity - allocatedQuantity;
+					
+					if(difference >= inventoryQuantity) {
+						unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+inventoryQuantity);
+						inventoryQuantity -= inventoryQuantity;
+					}else {
+						unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+difference);
+						inventoryQuantity -= difference;
+					}
+					
+					String cat = unfulfilledRequest.getCategory();
+					String classi = unfulfilledRequest.getClassification();
+					String des = unfulfilledRequest.getDescription();
+					
+					Allocation allocation = allocationMap.get(usernameKey);
+
+					//iterator used to remove previously added AllocatedFoodItem
+					Iterator<AllocatedFoodItems> iterAllocationList = allocation.getAllocatedItems().iterator();
+					while(iterAllocationList.hasNext()) {
+						AllocatedFoodItems allocatedFoodItem = iterAllocationList.next();
+						if(allocatedFoodItem.getCategory().equals(cat) && allocatedFoodItem.getClassification().equals(classi) && allocatedFoodItem.getDescription().equals(des)) {
+							iterAllocationList.remove();
+							break;
+						}
+					}
+					allocation.getAllocatedItems().add(unfulfilledRequest);
+					allocationMap.replace(usernameKey, allocation);
+					
 				}
 			}
 		}
