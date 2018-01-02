@@ -11,7 +11,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import foodbank.admin.dto.AdminSettingsDTO;
@@ -22,12 +24,16 @@ import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
+import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.beneficiary.repository.BeneficiaryRepository;
+import foodbank.email.entity.SendEmail;
 import foodbank.exceptions.SettingsUpdateException;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.DateParser;
+import foodbank.util.MessageConstants.EmailMessages;
 import foodbank.util.MessageConstants.ErrorMessages;
 
 @Service
@@ -44,6 +50,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private HistoryRepository historyRepository;
+	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
 	
 	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
 	
@@ -267,6 +276,7 @@ public class AdminServiceImpl implements AdminService {
 		} else {
 			windowData.setWindowStartDateTime(DateParser.convertToDate(adminSettings.getWindowStartDateTime()));
 		}
+		windowData.setDailyPassword(adminSettings.getDailyPassword());
 		windowData.setWindowStatus(adminSettings.getWindowStatus());
 		windowData.setUniqueBeneficiaryCount(Integer.valueOf(uniqueUsers.size()));
 		return windowData;
@@ -295,6 +305,32 @@ public class AdminServiceImpl implements AdminService {
 		}
 		pastRequests.forEach(pastRequest -> historyRepository.insert(pastRequest));
 		requestRepository.deleteAll();
+		allocationRepository.deleteAll();
+	}
+	
+	@Override
+	public void generateEmails() {
+		List<Beneficiary> beneficiaries = beneficiaryRepository.findAll();
+		for(Beneficiary beneficiary : beneficiaries) {
+			String emailAddress = beneficiary.getUser().getEmail();
+			try {
+				new SendEmail(emailAddress, EmailMessages.WINDOW_OPENING_SUBJECT, EmailMessages.WINDOW_OPENING_MESSAGE);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	@Scheduled(fixedRate = 86400000, initialDelay = 300000)
+	public void generateDailyPassword() {
+		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
+		int length = 8;
+		boolean useLetters = true;
+		boolean useNumbers = true;
+		String dailyPassword = RandomStringUtils.random(length, useLetters, useNumbers);
+		adminSettings.setDailyPassword(dailyPassword);
+		adminRepository.save(adminSettings);
 	}
 
 }

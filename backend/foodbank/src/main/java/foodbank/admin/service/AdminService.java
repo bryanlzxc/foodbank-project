@@ -34,5 +34,9 @@ public interface AdminService {
 	WindowData retrieveWindowData();
 
 	void insertPastRequests();
+	
+	void generateEmails();
+	
+	void generateDailyPassword();
 
 }

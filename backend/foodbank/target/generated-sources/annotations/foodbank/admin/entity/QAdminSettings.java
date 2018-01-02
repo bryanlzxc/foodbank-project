@@ -19,6 +19,8 @@ public class QAdminSettings extends EntityPathBase<AdminSettings> {
 
     public static final QAdminSettings adminSettings = new QAdminSettings("adminSettings");
 
+    public final StringPath dailyPassword = createString("dailyPassword");
+
     public final NumberPath<Double> decayRate = createNumber("decayRate", Double.class);
 
     public final StringPath id = createString("id");

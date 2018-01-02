@@ -22,6 +22,9 @@ public class QWindowData extends EntityPathBase<WindowData> {
     public final QAdminSettings _super = new QAdminSettings(this);
 
     //inherited
+    public final StringPath dailyPassword = _super.dailyPassword;
+
+    //inherited
     public final NumberPath<Double> decayRate = _super.decayRate;
 
     //inherited
