@@ -18,7 +18,7 @@ public interface RequestService {
 	
 	void updateOverwriteRequest(final RequestDTO request);
 	
-	void deleteRequest(final RequestDTO request);
+	void deleteRequest(final String id);
 	
 	void batchInsertRequest(final BatchRequestDTO batchRequest);
 	

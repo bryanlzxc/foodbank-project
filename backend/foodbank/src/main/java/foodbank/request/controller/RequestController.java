@@ -83,11 +83,11 @@ public class RequestController {
 		return responseDTO;
 	}
 	
-	@DeleteMapping("/delete-request")
-	public ResponseDTO deleteRequest(@RequestBody RequestDTO request) {
+	@DeleteMapping("/delete-request/{id}")
+	public ResponseDTO deleteRequest(@PathVariable String id) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_DELETE_SUCCESS);
 		try {
-			requestService.deleteRequest(request);
+			requestService.deleteRequest(id);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

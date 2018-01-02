@@ -95,21 +95,13 @@ public class RequestServiceImpl implements RequestService {
 	}
 	
 	@Override
-	public void deleteRequest(RequestDTO request) {
+	public void deleteRequest(String id) {
 		// TODO Auto-generated method stub
-		List<Request> requestsByBeneficiary = getAllRequestsByBeneficiary(request.getBeneficiary());
-		boolean foundPreviousRequest = false;
-		for(Request dbRequest : requestsByBeneficiary) {
-			if(dbRequest.getFoodItem().getCategory().equals(request.getCategory()) && dbRequest.getFoodItem().getClassification().equals(request.getClassification())
-					&& dbRequest.getFoodItem().getDescription().equals(request.getDescription())) {
-				foundPreviousRequest = true;
-				requestRepository.delete(dbRequest);
-				break;
-			}
-		}
-		if(!foundPreviousRequest) {
+		Request request = requestRepository.findById(id);
+		if(request == null) {
 			throw new InvalidRequestException(ErrorMessages.NO_SUCH_REQUEST);
 		}
+		requestRepository.delete(request);
 	}
 
 	@Override
