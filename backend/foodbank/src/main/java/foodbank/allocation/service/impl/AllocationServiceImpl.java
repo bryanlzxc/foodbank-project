@@ -204,53 +204,75 @@ public class AllocationServiceImpl implements AllocationService {
 						allocationMap.put(beneficiaryUsername, allocation);
 					}
 					
-					if(requestedQuantity > maxAllocatedQuantity) {
+					if(requestedQuantity > allocatedQuantity) {
+						System.out.println("---Not fulfilled reqests---");
+						System.out.println("requested: "+requestedQuantity+" | allocated: "+allocatedQuantity);
 						unfulfilledRequests.put(beneficiaryUsername, allocationByAlgo);
 					}
+					System.out.println("****************");
+					for(String k : unfulfilledRequests.keySet()) {
+						AllocatedFoodItems afi = unfulfilledRequests.get(k);
+						System.out.println("allocated: "+afi.getAllocatedQuantity()+" | requested: "+afi.getRequestedQuantity());
+					}
 				}
 				
+				System.out.println("###############################");
 				
 				//this chunk of code is to allocate leftovers
-				while(inventoryQuantity > 0) {
-					System.out.println("yobreakkkkk");
-					if(unfulfilledRequests.keySet().isEmpty()) {
-						break;
-					}
-					String usernameKey = unfulfilledRequests.keySet().iterator().next();
-
-					AllocatedFoodItems unfulfilledRequest = unfulfilledRequests.get(usernameKey);
+				if(!unfulfilledRequests.keySet().isEmpty()) {
 					
-					int allocatedQuantity = unfulfilledRequest.getAllocatedQuantity();
-					int requestedQuantity = unfulfilledRequest.getRequestedQuantity();
-					int difference = requestedQuantity - allocatedQuantity;
-					
-					if(difference >= inventoryQuantity) {
-						unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+inventoryQuantity);
-						inventoryQuantity -= inventoryQuantity;
-						break;
-					}else {
-						unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+difference);
-						inventoryQuantity -= difference;
-					}
-					
-					String cat = unfulfilledRequest.getCategory();
-					String classi = unfulfilledRequest.getClassification();
-					String des = unfulfilledRequest.getDescription();
-					
-					Allocation allocation = allocationMap.get(usernameKey);
-
-					//iterator used to remove previously added AllocatedFoodItem
-					Iterator<AllocatedFoodItems> iterAllocationList = allocation.getAllocatedItems().iterator();
-					while(iterAllocationList.hasNext()) {
-						AllocatedFoodItems allocatedFoodItem = iterAllocationList.next();
-						if(allocatedFoodItem.getCategory().equals(cat) && allocatedFoodItem.getClassification().equals(classi) && allocatedFoodItem.getDescription().equals(des)) {
-							iterAllocationList.remove();
+					int counter = 0;
+					while(inventoryQuantity > 0) {
+						System.out.println("----------------");
+						if(unfulfilledRequests.keySet().isEmpty()) {
 							break;
 						}
+						String usernameKey = unfulfilledRequests.keySet().iterator().next();
+						
+						AllocatedFoodItems unfulfilledRequest = unfulfilledRequests.get(usernameKey);
+						unfulfilledRequests.remove(usernameKey);
+						int allocatedQuantity = unfulfilledRequest.getAllocatedQuantity();
+						int requestedQuantity = unfulfilledRequest.getRequestedQuantity();
+						int difference = requestedQuantity - allocatedQuantity;
+						System.out.println("allocated qty: "+allocatedQuantity);
+						System.out.println("requested qty: "+requestedQuantity);
+						System.out.println("difference: "+difference);
+						
+						System.out.println(inventoryQuantity);
+						
+						if(difference >= inventoryQuantity) {
+							unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+inventoryQuantity);
+							inventoryQuantity -= inventoryQuantity;
+							break;
+						}else {
+							unfulfilledRequest.setAllocatedQuantity(unfulfilledRequest.getAllocatedQuantity()+difference);
+							inventoryQuantity -= difference;
+						}
+						System.out.println(inventoryQuantity);
+						
+						String cat = unfulfilledRequest.getCategory();
+						String classi = unfulfilledRequest.getClassification();
+						String des = unfulfilledRequest.getDescription();
+						
+						Allocation allocation = allocationMap.get(usernameKey);
+
+						//iterator used to remove previously added AllocatedFoodItem
+						Iterator<AllocatedFoodItems> iterAllocationList = allocation.getAllocatedItems().iterator();
+						while(iterAllocationList.hasNext()) {
+							AllocatedFoodItems allocatedFoodItem = iterAllocationList.next();
+							if(allocatedFoodItem.getCategory().equals(cat) && allocatedFoodItem.getClassification().equals(classi) && allocatedFoodItem.getDescription().equals(des)) {
+								iterAllocationList.remove();
+								allocation.getAllocatedItems().add(unfulfilledRequest);
+								allocationMap.replace(usernameKey, allocation);
+								System.out.println("ENTERED");
+								System.out.println("allocated - "+unfulfilledRequest.getAllocatedQuantity()+" | requested - "+unfulfilledRequest.getRequestedQuantity());
+								break;
+							}
+						}
+						
 					}
-					allocation.getAllocatedItems().add(unfulfilledRequest);
-					allocationMap.replace(usernameKey, allocation);
 				}
+				
 			}
 		}
 		return allocationMap;
