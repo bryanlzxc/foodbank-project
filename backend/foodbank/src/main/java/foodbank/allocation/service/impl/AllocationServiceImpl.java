@@ -44,7 +44,7 @@ public class AllocationServiceImpl implements AllocationService {
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
 	
-	private final int maxNumberBeneficiariesPerFoodItem = 5;
+	private int maxNumberBeneficiariesPerFoodItem = 5;
 	
 		
 	@Override
@@ -120,6 +120,14 @@ public class AllocationServiceImpl implements AllocationService {
 				
 				int numberOfBeneficiaryAllocated = requestsForFoodItem.size();	//this variable is the number of beneficiaries which will be allocated for this specific food item
 				double totalScore = 0.0;
+				
+				if(inventoryQuantity < 50) {
+					maxNumberBeneficiariesPerFoodItem = 5;
+				} else if(inventoryQuantity < 100) {
+					maxNumberBeneficiariesPerFoodItem = 10;
+				}else {
+					maxNumberBeneficiariesPerFoodItem = 20;
+				}
 				
 				if(numberOfBeneficiaryAllocated > maxNumberBeneficiariesPerFoodItem) {
 					numberOfBeneficiaryAllocated = maxNumberBeneficiariesPerFoodItem;
