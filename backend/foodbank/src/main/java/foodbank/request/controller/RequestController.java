@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.request.dto.BatchRequestDTO;
@@ -37,8 +38,9 @@ public class RequestController {
 		return requestService.getAllRequests();
 	}
 	
-	@GetMapping("/display/beneficiary={beneficiary}")
-	public List<Request> getAllRequestsFromBeneficiary(@PathVariable("beneficiary") String beneficiary) {
+//	@GetMapping("/display/beneficiary={beneficiary}")
+	@GetMapping("/display")
+	public List<Request> getAllRequestsFromBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		return requestService.getAllRequestsByBeneficiary(beneficiary);
 	}
 	
@@ -83,8 +85,8 @@ public class RequestController {
 		return responseDTO;
 	}
 	
-	@DeleteMapping("/delete-request/{id}")
-	public ResponseDTO deleteRequest(@PathVariable String id) {
+	@DeleteMapping("/delete-request")
+	public ResponseDTO deleteRequest(@RequestParam (value = "id", required = true) String id) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_DELETE_SUCCESS);
 		try {
 			requestService.deleteRequest(id);
