@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.history.dto.RequestHistoryDTO;
@@ -27,8 +28,8 @@ public class HistoryController {
 		return historyService.retrieveAllPastRequest();
 	}
 	
-	@GetMapping("/requests/display/beneficiary={beneficiary}")
-	public Object retrieveAllPastRequestsByBeneficiary(@PathVariable("beneficiary") String beneficiary) {
+	@GetMapping("/requests/display")
+	public Object retrieveAllPastRequestsByBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		Object response = null;
 		try {
 			response = historyService.retrieveAllPastRequestsByBeneficiary(beneficiary);

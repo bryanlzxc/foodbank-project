@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -38,16 +39,18 @@ public class FoodController {
 		return foodService.retrieveAllFoodItems();
 	}
 	
-	@GetMapping("/category={category}/display-all")
-	public List<FoodItem> getAllFoodItemsInCategory(@PathVariable("category") String category) {
+//	@GetMapping("/category={category}/display-all")
+	@GetMapping("/display-by-category")
+	public List<FoodItem> getAllFoodItemsInCategory(@RequestParam(value = "category", required = true) String category) {
 		return foodService.retrieveAllFoodItemsInCategory(category);
 	}
 	
-	@GetMapping("/category={category}/classification={classification}/**/display-all")
-	public List<FoodItem> getAllFoodItemsInClassification(@PathVariable("category") String category, @PathVariable("classification") String classification,
+//	@GetMapping("/category={category}/classification={classification}/**/display-all")
+	@GetMapping("/display-by-category-classification")
+	public List<FoodItem> getAllFoodItemsInClassification(@RequestParam(value = "category", required = true) String category, @RequestParam(value = "classification", required = true) String classification,
 			HttpServletRequest request) {
 		String url = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
-		classification = url.substring(url.indexOf("classification=")+"classification=".length(), url.indexOf("/display-all"));
+//		classification = url.substring(url.indexOf("classification=")+"classification=".length(), url.indexOf("/display-all"));
 		return foodService.retrieveFoodItemsByCategoryAndClassification(category, classification);
 	}
 	
