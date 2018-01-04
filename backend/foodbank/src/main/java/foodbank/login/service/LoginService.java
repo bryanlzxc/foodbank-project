@@ -6,4 +6,6 @@ public interface LoginService {
 
 	void authenticate(final LoginDTO loginDetails);
 	
+	void authenticateVolunteers(final String dailyPassword);
+	
 }

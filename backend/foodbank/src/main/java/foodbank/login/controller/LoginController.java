@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import foodbank.login.dto.LoginDTO;
 import foodbank.login.dto.LoginResponseDTO;
 import foodbank.login.service.LoginService;
+import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
 
 /*
@@ -35,6 +36,18 @@ public class LoginController {
 			loginResponseDTO.setMessage(e.getMessage());
 		}
 		return loginResponseDTO;
+	}
+	
+	@PostMapping("/volunteer-app")
+	public ResponseDTO authenticateVolunteers(@RequestBody String dailyPassword) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.LOGIN_SUCCESS);
+		try {
+			loginService.authenticateVolunteers(dailyPassword);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
 	}
 	
 	/*

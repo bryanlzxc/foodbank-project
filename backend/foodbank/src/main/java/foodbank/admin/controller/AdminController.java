@@ -169,6 +169,18 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	@PostMapping("/reset-password")
+	public ResponseDTO resetPassword(@RequestBody String username) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.RESET_PASSWORD_SUCCESS);
+		try {
+			adminService.resetPassword(username);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	/*
 	private AdminRepository adminRepository;
 	private static final String adminId = "59f4a3316f9d43370468907b";

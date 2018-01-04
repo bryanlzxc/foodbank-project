@@ -22,11 +22,11 @@ public class QPackingList extends EntityPathBase<PackingList> {
 
     public static final QPackingList packingList = new QPackingList("packingList");
 
-    public final foodbank.allocation.entity.QAllocation allocation;
+    public final foodbank.beneficiary.entity.QBeneficiary beneficiary;
 
     public final StringPath id = createString("id");
 
-    public final ListPath<foodbank.inventory.entity.FoodItem, foodbank.inventory.entity.QFoodItem> packedItems = this.<foodbank.inventory.entity.FoodItem, foodbank.inventory.entity.QFoodItem>createList("packedItems", foodbank.inventory.entity.FoodItem.class, foodbank.inventory.entity.QFoodItem.class, PathInits.DIRECT2);
+    public final ListPath<PackedFoodItem, QPackedFoodItem> packedItems = this.<PackedFoodItem, QPackedFoodItem>createList("packedItems", PackedFoodItem.class, QPackedFoodItem.class, PathInits.DIRECT2);
 
     public QPackingList(String variable) {
         this(PackingList.class, forVariable(variable), INITS);
@@ -46,7 +46,7 @@ public class QPackingList extends EntityPathBase<PackingList> {
 
     public QPackingList(Class<? extends PackingList> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.allocation = inits.isInitialized("allocation") ? new foodbank.allocation.entity.QAllocation(forProperty("allocation"), inits.get("allocation")) : null;
+        this.beneficiary = inits.isInitialized("beneficiary") ? new foodbank.beneficiary.entity.QBeneficiary(forProperty("beneficiary"), inits.get("beneficiary")) : null;
     }
 
 }

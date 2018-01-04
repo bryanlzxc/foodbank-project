@@ -35,8 +35,10 @@ public interface AdminService {
 
 	void insertPastRequests();
 	
-	void generateEmails();
+	void generateEmails() throws Exception;
 	
 	void generateDailyPassword();
+	
+	void resetPassword(final String username) throws Exception;
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import foodbank.allocation.entity.Allocation;
+import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.inventory.entity.FoodItem;
 
 @Document(collection = "PackingList")
@@ -17,36 +18,50 @@ public class PackingList {
 	private String id;
 	
 	@DBRef
-	private Allocation allocation;
+	private Beneficiary beneficiary;
 	
-	private List<FoodItem> packedItems = new ArrayList<FoodItem>();
+	private List<PackedFoodItem> packedItems = new ArrayList<PackedFoodItem>();
 
 	public PackingList() {}
 	
-	public PackingList(Allocation allocation, List<FoodItem> packedItems) {
-		this.allocation = allocation;
+	public PackingList(Beneficiary beneficiary, List<PackedFoodItem> packedItems) {
+		this.beneficiary = beneficiary;
+		this.packedItems = packedItems;
+	}
+	
+	public PackingList(String id, Beneficiary beneficiary, List<PackedFoodItem> packedItems) {
+		this.id = id;
+		this.beneficiary = beneficiary;
 		this.packedItems = packedItems;
 	}
 
-	public Allocation getAllocation() {
-		return allocation;
+	public String getId() {
+		return id;
 	}
 
-	public void setAllocation(Allocation allocation) {
-		this.allocation = allocation;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public List<FoodItem> getPackedItems() {
+	public Beneficiary getBeneficiary() {
+		return beneficiary;
+	}
+
+	public void setBeneficiary(Beneficiary beneficiary) {
+		this.beneficiary = beneficiary;
+	}
+
+	public List<PackedFoodItem> getPackedItems() {
 		return packedItems;
 	}
 
-	public void setPackedItems(List<FoodItem> packedItems) {
+	public void setPackedItems(List<PackedFoodItem> packedItems) {
 		this.packedItems = packedItems;
 	}
 	
 	@Override
 	public String toString() {
-		return allocation + ","
+		return id + ","
 				+ packedItems;
 	}
 }

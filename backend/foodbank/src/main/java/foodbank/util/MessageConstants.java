@@ -27,6 +27,9 @@ public final class MessageConstants {
 	public static final String ALLOCATION_CREATE_SUCCESS = "Allocation successfully created.";
 	public static final String ALLOCATION_UPDATE_SUCCESS = "Allocation successfully updated.";
 	public static final String EMAIL_SEND_SUCCESS = "Email successfully sent.";
+	public static final String PACKING_LIST_GENERATE_SUCCESS = "Packing lists successfully generated.";
+	public static final String PACKING_LIST_UPDATE_SUCCESS = "Packing list successfully updated.";
+	public static final String RESET_PASSWORD_SUCCESS = "The password has been successfully reset.";
 	
 	public static class ErrorMessages {
 		
@@ -43,6 +46,7 @@ public final class MessageConstants {
 		public static final String INVALID_ALLOCATION = "The specified allocation cannot be found.";
 		public static final String EMAIL_AUTH_ERROR = "Sender email cannot be authenticated.";
 		public static final String EMAIL_RECIPIENT_NOT_FOUND = "Email cannot be sent to desired recipient.";
+		public static final String PACKING_UPDATE_ERROR = "This packing list does not exist.";
 		
 	}
 	
@@ -51,6 +55,10 @@ public final class MessageConstants {
 		public static final String WINDOW_OPENING_SUBJECT = "[NOTICE] Food Bank Singapore - Window Opened";
 		public static final String WINDOW_OPENING_MESSAGE = "This e-mail serves to notify you that the request window is now open. You may now feel free"
 				+ "to make your requests for the items available this window.\n\n*** This is an automatically generated e-mail, please do not reply ***";
+		public static final String RESET_PASSWORD_SUBJECT = "[NOTICE] Food Bank Singapore - Reset Password Request";
+		public static final String RESET_PASSWORD_MESSAGE1 = "We have recently received a request to reset your password. Your new password is: ";
+		public static final String RESET_PASSWORD_MESSAGE2 = "\n\nPlease log-in with the generated password and proceed to change your password for security purposes."
+				+ "\n\n*** This is an automatically generated e-mail, please do not reply ***";
 		
 	}
 	

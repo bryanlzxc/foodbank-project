@@ -28,10 +28,13 @@ import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.email.entity.SendEmail;
 import foodbank.exceptions.SettingsUpdateException;
+import foodbank.exceptions.UserException;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
+import foodbank.user.entity.User;
+import foodbank.user.repository.UserRepository;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants.EmailMessages;
 import foodbank.util.MessageConstants.ErrorMessages;
@@ -53,6 +56,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
 	
@@ -297,7 +303,6 @@ public class AdminServiceImpl implements AdminService {
 		for(Request request : requests) {
 			Integer allocatedQuantity = null;
 			allocatedQuantity = requestAllocationMap.get(request.getBeneficiary().getUser().getUsername()).get(request.getFoodItem().getDescription());
-			System.out.println("Allocated quantity = " + allocatedQuantity);
 			RequestHistory pastRequest = new RequestHistory(request.getBeneficiary(), 
 					DateParser.convertToDate(request.getRequestCreationDate()), 
 					request.getFoodItem().getCategory(), request.getFoodItem().getClassification(), request.getFoodItem().getDescription(), 
@@ -310,15 +315,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public void generateEmails() {
+	public void generateEmails() throws Exception {
 		List<Beneficiary> beneficiaries = beneficiaryRepository.findAll();
 		for(Beneficiary beneficiary : beneficiaries) {
 			String emailAddress = beneficiary.getUser().getEmail();
-			try {
-				new SendEmail(emailAddress, EmailMessages.WINDOW_OPENING_SUBJECT, EmailMessages.WINDOW_OPENING_MESSAGE);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			new SendEmail(emailAddress, EmailMessages.WINDOW_OPENING_SUBJECT, EmailMessages.WINDOW_OPENING_MESSAGE);
 		}
 	}
 	
@@ -331,7 +332,27 @@ public class AdminServiceImpl implements AdminService {
 		boolean useNumbers = true;
 		String dailyPassword = RandomStringUtils.random(length, useLetters, useNumbers);
 		adminSettings.setDailyPassword(dailyPassword);
+		User dbUser = userRepository.findByUsername("volunteer");
+		dbUser = dbUser == null ? new User("volunteer", null, "volunteer", "volunteer", "volunteer-fb@gmail.com") : dbUser;
+		dbUser.setPassword(dailyPassword);
+		userRepository.save(dbUser);
 		adminRepository.save(adminSettings);
+	}
+
+	@Override
+	public void resetPassword(String username) throws Exception {
+		// TODO Auto-generated method stub
+		User dbUser = userRepository.findByUsername(username);
+		if(dbUser == null) {
+			throw new UserException(ErrorMessages.NO_SUCH_USER);
+		}
+		int length = 8;
+		boolean useLetters = true;
+		boolean useNumbers = true;
+		String newPassword = RandomStringUtils.random(length, useLetters, useNumbers);
+		new SendEmail(dbUser.getEmail(), EmailMessages.RESET_PASSWORD_SUBJECT, EmailMessages.RESET_PASSWORD_MESSAGE1 + newPassword + EmailMessages.RESET_PASSWORD_MESSAGE2);
+		dbUser.setPassword(newPassword);
+		userRepository.save(dbUser);
 	}
 
 }
