@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.allocation.dto.AllocationDTO;
@@ -37,8 +38,9 @@ public class AllocationController {
 		return allocationService.retrieveAllAllocations();
 	}
 	
-	@GetMapping("/display-allocations/beneficiary={beneficiary}")
-	public List<AllocatedFoodItems> retrieveFoodItemsAllocatedToBeneficiary(@PathVariable("beneficiary") String beneficiary) {
+//	@GetMapping("/display-allocations/beneficiary={beneficiary}")
+	@GetMapping("/display-allocations")
+	public List<AllocatedFoodItems> retrieveFoodItemsAllocatedToBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		return allocationService.retrieveAllocationByBeneficiary(beneficiary);
 	}
 	
