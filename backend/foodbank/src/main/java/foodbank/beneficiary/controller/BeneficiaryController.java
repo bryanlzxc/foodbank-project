@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.beneficiary.dto.BeneficiaryDTO;
@@ -36,8 +37,8 @@ public class BeneficiaryController {
 		return beneficiaryService.getAllBeneficiaries();
 	}
 	
-	@GetMapping("/name={beneficiary}/get-score")
-	public Object getBeneficiaryScore(@PathVariable("beneficiary") String beneficiary) {
+	@GetMapping("/get-score")
+	public Object getBeneficiaryScore(@RequestParam(value = "beneficiary", required = true)  String beneficiary) {
 		Double score = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_RETRIEVE_SUCCESS);
 		try {
@@ -50,8 +51,8 @@ public class BeneficiaryController {
 		return score;
 	}
 	
-	@GetMapping("/name={beneficiary}/get-details")
-	public Object getBeneficiaryDetails(@PathVariable("beneficiary") String beneficiary) {
+	@GetMapping("/get-details")
+	public Object getBeneficiaryDetails(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		Beneficiary dbBeneficiary = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_RETRIEVE_SUCCESS);
 		try {
