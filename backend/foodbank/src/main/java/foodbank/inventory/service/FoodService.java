@@ -1,6 +1,7 @@
 package foodbank.inventory.service;
 
 import java.util.List;
+import java.util.Map;
 
 import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
@@ -24,5 +25,7 @@ public interface FoodService {
 	void overwriteFoodItems(final FoodItemDTO[] foodItems);
 	
 	void amendFoodItemsQuantity(final FoodItemDTO[] foodItems);
+	
+	Map<String, String> readBarcode(final String barcode);
 
 }

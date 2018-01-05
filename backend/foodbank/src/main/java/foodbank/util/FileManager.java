@@ -7,7 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
+import ch.qos.logback.core.net.server.Client;
 import foodbank.admin.entity.AdminSettings;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.allocation.entity.AllocatedFoodItems;
@@ -67,13 +70,14 @@ public class FileManager implements CommandLineRunner {
 	//private static final String INVENTORY_BUCKET = "foodbank-inventory-data";
 	private static final String BACKUP_BUCKET = "foodbank-backup-data";
 	private List<String> csvFileList = new ArrayList<String>();
+	private static AmazonS3 client;
 	
 	@Override
 	public void run(String... arg0) throws Exception {
 		// TODO Auto-generated method stub
 		//	AWSCredentials credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
 		AWSCredentials credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
-		AmazonS3 client = AmazonS3ClientBuilder.standard()
+		client = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(Regions.US_EAST_2)
 				.build();
@@ -200,6 +204,19 @@ public class FileManager implements CommandLineRunner {
 		data.forEach(entry -> requestHistoryList.add(new RequestHistory(entry[0], beneficiaryRepository.findById(entry[1]), DateParser.convertToDate(entry[2]), entry[3], entry[4],
 				entry[5], Integer.parseInt(entry[6]), Integer.parseInt(entry[7]))));
 		historyRepository.insert(requestHistoryList);
+	}
+	
+	public static Map<String, String[]> generateBarcodeMap() {
+		Map<String, String[]> barcodeMap = new HashMap<String, String[]>();
+		S3Object s3Object = client.getObject(BACKUP_BUCKET, "barcode-data.csv");
+		S3ObjectInputStream stream = s3Object.getObjectContent();
+		List<String> inputData = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.toList());
+		List<String[]> inputDataArray = inputData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
+		for(String[] data : inputDataArray) {
+			String[] itemData = {data[1], data[2], data[3]};
+			barcodeMap.put(data[0], itemData);
+		}
+		return barcodeMap;
 	}
 	
 }

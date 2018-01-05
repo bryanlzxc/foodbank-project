@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.response.dto.ResponseDTO;
@@ -36,9 +37,14 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/display-all/{usertype}")
-	public List<User> getAllUsersByType(@PathVariable("usertype") String usertype) {
+	@GetMapping("/display-all")
+	public List<User> getAllUsersByType(@RequestParam("usertype") String usertype) {
 		return userService.getAllUsersByType(usertype);
+	}
+	
+	@GetMapping
+	public User getUserDetails(@RequestParam("username") String username) {
+		return userService.getUserDetails(username);
 	}
 	
 	@PutMapping("/insert-user")

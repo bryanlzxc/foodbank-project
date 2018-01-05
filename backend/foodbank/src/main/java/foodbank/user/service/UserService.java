@@ -11,6 +11,8 @@ public interface UserService {
 	
 	List<User> getAllUsersByType(final String usertype);
 	
+	User getUserDetails(final String username);
+	
 	void insertUser(final UserDTO user);
 	
 	void updateUser(final UserDTO user);

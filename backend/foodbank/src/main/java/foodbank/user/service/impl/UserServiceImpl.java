@@ -69,4 +69,14 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(dbUser);
 	}
 
+	@Override
+	public User getUserDetails(String username) {
+		// TODO Auto-generated method stub
+		User dbUser = userRepository.findByUsername(username);
+		if(dbUser == null) {
+			throw new UserException(ErrorMessages.NO_SUCH_USER);
+		}
+		return dbUser;
+	}
+
 }

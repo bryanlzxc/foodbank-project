@@ -1,6 +1,8 @@
 package foodbank.inventory.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
+import foodbank.util.FileManager;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.InvalidFoodException;
@@ -18,6 +21,8 @@ public class FoodServiceImpl implements FoodService {
 	
 	@Autowired
 	private FoodRepository foodRepository;
+	
+	private Map<String, String[]> barcodeMap;
 	
 	@Override
 	public List<FoodItem> retrieveAllFoodItems() {
@@ -214,6 +219,22 @@ public class FoodServiceImpl implements FoodService {
 			FoodItemDTO foodItem = foodItems[i];
 			amendFoodItemQuantity(foodItem);
 		}
+	}
+
+	@Override
+	public Map<String, String> readBarcode(String barcode) {
+		// TODO Auto-generated method stub
+		if(barcodeMap == null) {
+			barcodeMap = FileManager.generateBarcodeMap();
+		}
+		String[] itemDetailsArray = barcodeMap.get(barcode);
+		Map<String, String> itemDetails = new HashMap<String, String>();
+		if(itemDetailsArray != null) {
+			itemDetails.put("category", itemDetailsArray[0]);
+			itemDetails.put("classification", itemDetailsArray[1]);
+			itemDetails.put("description", itemDetailsArray[2]);
+		}
+		return itemDetails;
 	}
 
 }

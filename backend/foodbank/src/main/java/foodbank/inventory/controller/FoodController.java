@@ -1,6 +1,7 @@
 package foodbank.inventory.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -116,6 +117,11 @@ public class FoodController {
 			responseDTO.setMessage(e.getMessage());
 		}
 		return responseDTO;
+	}
+	
+	@GetMapping("/scanner")
+	public Map<String, String> getBarcodeDetails(@RequestBody String barcode) {
+		return foodService.readBarcode(barcode);
 	}
 	
 	/*
