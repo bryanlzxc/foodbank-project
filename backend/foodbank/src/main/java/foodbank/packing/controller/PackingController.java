@@ -31,7 +31,7 @@ public class PackingController {
 	}
 	
 	@GetMapping("/display-by")
-	public PackingList getBeneficiaryPackingList(@RequestParam("beneficiary") String beneficiary) {
+	public PackingList getBeneficiaryPackingList(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		return packingService.findByBeneficiary(beneficiary);
 	}
 	

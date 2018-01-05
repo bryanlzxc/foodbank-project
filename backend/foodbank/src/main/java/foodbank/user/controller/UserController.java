@@ -38,12 +38,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/display-all-by")
-	public List<User> getAllUsersByType(@RequestParam("usertype") String usertype) {
+	public List<User> getAllUsersByType(@RequestParam(value = "usertype", required = true) String usertype) {
 		return userService.getAllUsersByType(usertype);
 	}
 	
 	@GetMapping
-	public User getUserDetails(@RequestParam("username") String username) {
+	public User getUserDetails(@RequestParam(value = "username", required = true) String username) {
 		return userService.getUserDetails(username);
 	}
 	
@@ -71,8 +71,8 @@ public class UserController {
 		return responseDTO;
 	}
 	
-	@DeleteMapping("/delete-user/{username}")
-	public ResponseDTO deleteUser(@PathVariable("username") String username) {
+	@DeleteMapping("/delete-user")
+	public ResponseDTO deleteUser(@RequestParam(value = "username", required = true) String username) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_DELETE_SUCCESS);
 		try {
 			userService.deleteUser(username);
