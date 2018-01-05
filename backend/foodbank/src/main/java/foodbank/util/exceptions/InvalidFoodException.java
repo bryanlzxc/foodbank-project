@@ -1,4 +1,4 @@
-package foodbank.exceptions;
+package foodbank.util.exceptions;
 
 public class InvalidFoodException extends RuntimeException {
 

@@ -30,7 +30,7 @@ public class PackingController {
 		return packingService.retrieveAllPackingLists();
 	}
 	
-	@GetMapping("/beneficiary/display-all")
+	@GetMapping("/display-by")
 	public PackingList getBeneficiaryPackingList(@RequestParam("beneficiary") String beneficiary) {
 		return packingService.findByBeneficiary(beneficiary);
 	}

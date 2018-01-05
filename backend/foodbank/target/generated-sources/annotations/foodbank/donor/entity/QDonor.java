@@ -20,11 +20,15 @@ public class QDonor extends EntityPathBase<Donor> {
 
     public static final QDonor donor = new QDonor("donor");
 
-    public final ListPath<Donation, QDonation> donations = this.<Donation, QDonation>createList("donations", Donation.class, QDonation.class, PathInits.DIRECT2);
+    public final StringPath address = createString("address");
 
     public final StringPath id = createString("id");
 
     public final StringPath name = createString("name");
+
+    public final ListPath<NonperishableDonation, QNonperishableDonation> nonperishableDonations = this.<NonperishableDonation, QNonperishableDonation>createList("nonperishableDonations", NonperishableDonation.class, QNonperishableDonation.class, PathInits.DIRECT2);
+
+    public final ListPath<PerishableDonation, QPerishableDonation> perishableDonations = this.<PerishableDonation, QPerishableDonation>createList("perishableDonations", PerishableDonation.class, QPerishableDonation.class, PathInits.DIRECT2);
 
     public QDonor(String variable) {
         super(Donor.class, forVariable(variable));

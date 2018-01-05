@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import foodbank.exceptions.InvalidFoodException;
 import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.InvalidFoodException;
 
 @Service
 public class FoodServiceImpl implements FoodService {

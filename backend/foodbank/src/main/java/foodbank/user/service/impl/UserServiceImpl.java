@@ -2,21 +2,26 @@ package foodbank.user.service.impl;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import foodbank.exceptions.UserException;
+import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
 import foodbank.user.service.UserService;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.UserException;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -35,7 +40,9 @@ public class UserServiceImpl implements UserService {
 		if(dbUser != null) {
 			throw new UserException(ErrorMessages.USER_ALREADY_EXISTS);
 		}
-		userRepository.insert(user.transformToUser());		
+		dbUser = user.transformToUser();
+		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
+		userRepository.insert(dbUser);
 	}
 	
 	@Override
@@ -55,6 +62,9 @@ public class UserServiceImpl implements UserService {
 		User dbUser = userRepository.findByUsername(username);
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
+		}
+		if(dbUser.getUsername().equalsIgnoreCase("beneficiary")) {
+			beneficiaryRepository.delete(beneficiaryRepository.findByUsername(username));
 		}
 		userRepository.delete(dbUser);
 	}

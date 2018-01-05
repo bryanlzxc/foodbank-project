@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import foodbank.beneficiary.repository.BeneficiaryRepository;
-import foodbank.exceptions.InvalidRequestException;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.request.dto.BatchRequestDTO;
 import foodbank.request.dto.RequestDTO;
@@ -18,6 +17,7 @@ import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.request.service.RequestService;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.InvalidRequestException;
 
 @Service
 public class RequestServiceImpl implements RequestService {

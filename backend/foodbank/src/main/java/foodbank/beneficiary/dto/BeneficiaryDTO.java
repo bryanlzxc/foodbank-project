@@ -27,10 +27,6 @@ public class BeneficiaryDTO {
 	
 	// Core Details required for a Beneficiary
 	@NotNull
-	@JsonProperty("sector")
-	private String sector;
-	
-	@NotNull
 	@JsonProperty("numBeneficiary")
 	private Integer numBeneficiary;
 	
@@ -43,16 +39,20 @@ public class BeneficiaryDTO {
 	private Double score;
 	
 	@NotNull
-	@JsonProperty("membershipNumber")
-	private Long membershipNumber;
+	@JsonProperty("contactPerson")
+	private String contactPerson;
 	
 	@NotNull
-	@JsonProperty("acraRegistrationNumber")
-	private Long acraRegistrationNumber;
+	@JsonProperty("contactNumber")
+	private String contactNumber;
 	
 	@NotNull
 	@JsonProperty("memberType")
 	private String memberType;
+	
+	@NotNull
+	@JsonProperty("hasTransport")
+	private Boolean hasTransport;
 	
 	public String getUsername() {
 		return username;
@@ -90,14 +90,6 @@ public class BeneficiaryDTO {
 		this.email = email;
 	}
 
-	public String getSector() {
-		return sector;
-	}
-
-	public void setSector(String sector) {
-		this.sector = sector;
-	}
-
 	public int getNumBeneficiary() {
 		return numBeneficiary;
 	}
@@ -122,28 +114,44 @@ public class BeneficiaryDTO {
 		this.score = score;
 	}
 
-	public long getMembershipNumber() {
-		return membershipNumber;
-	}
-
-	public void setMembershipNumber(long membershipNumber) {
-		this.membershipNumber = membershipNumber;
-	}
-
-	public long getAcraRegistrationNumber() {
-		return acraRegistrationNumber;
-	}
-
-	public void setAcraRegistrationNumber(long acraRegistrationNumber) {
-		this.acraRegistrationNumber = acraRegistrationNumber;
-	}
-
 	public String getMemberType() {
 		return memberType;
 	}
 
 	public void setMemberType(String memberType) {
 		this.memberType = memberType;
+	}
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public Boolean getHasTransport() {
+		return hasTransport;
+	}
+
+	public void setHasTransport(Boolean hasTransport) {
+		this.hasTransport = hasTransport;
+	}
+
+	public void setNumBeneficiary(Integer numBeneficiary) {
+		this.numBeneficiary = numBeneficiary;
+	}
+
+	public void setScore(Double score) {
+		this.score = score;
 	}
 
 }

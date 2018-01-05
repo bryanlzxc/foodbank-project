@@ -23,14 +23,14 @@ import foodbank.allocation.service.AllocationService;
 import foodbank.backup.AllocationFoodItem;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
-import foodbank.exceptions.InvalidAllocationException;
-import foodbank.exceptions.InvalidBeneficiaryException;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.user.entity.User;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.InvalidAllocationException;
+import foodbank.util.exceptions.InvalidBeneficiaryException;
 
 @Service
 public class AllocationServiceImpl implements AllocationService {

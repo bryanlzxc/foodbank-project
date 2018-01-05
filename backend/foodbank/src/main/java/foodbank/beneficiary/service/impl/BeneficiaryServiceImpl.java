@@ -10,11 +10,11 @@ import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.beneficiary.service.BeneficiaryService;
-import foodbank.exceptions.InvalidBeneficiaryException;
-import foodbank.exceptions.UserException;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.InvalidBeneficiaryException;
+import foodbank.util.exceptions.UserException;
 
 @Service
 public class BeneficiaryServiceImpl implements BeneficiaryService {
@@ -75,8 +75,8 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 		}
 		User newUser = new User(beneficiary.getUsername(), beneficiary.getPassword(), beneficiary.getUsertype(), beneficiary.getName(), beneficiary.getEmail());
 		userRepository.insert(newUser);
-		beneficiaryRepository.insert(new Beneficiary(newUser, beneficiary.getSector(), beneficiary.getNumBeneficiary(), beneficiary.getAddress(),
-				beneficiary.getScore(), beneficiary.getMembershipNumber(), beneficiary.getAcraRegistrationNumber(), beneficiary.getMemberType()));
+		beneficiaryRepository.insert(new Beneficiary(newUser, beneficiary.getNumBeneficiary(), beneficiary.getAddress(),
+				beneficiary.getScore(), beneficiary.getContactPerson(), beneficiary.getContactNumber(), beneficiary.getMemberType(), beneficiary.getHasTransport()));
 	}
 
 }

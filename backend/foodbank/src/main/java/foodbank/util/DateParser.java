@@ -3,8 +3,8 @@ package foodbank.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import foodbank.exceptions.SettingsUpdateException;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.SettingsUpdateException;
 
 /*
  * Created by: Ng Shirong

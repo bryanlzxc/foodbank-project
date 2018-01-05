@@ -156,8 +156,8 @@ public class FileManager implements CommandLineRunner {
 	private void loadBeneficiaryData(List<String[]> data) {
 		List<Beneficiary> beneficiaries = new ArrayList<Beneficiary>();
 		data.forEach(entry -> beneficiaries.add(new Beneficiary(entry[0], userRepository.findById(entry[1]), 
-					entry[2], Integer.parseInt(entry[3]), (entry[4] + ", " + entry[5]), Double.parseDouble(entry[6]), Long.parseLong(entry[7]), 
-					Long.parseLong(entry[8]), entry[9])));
+					Integer.parseInt(entry[2]), (entry[3] + ", " + entry[4]), Double.parseDouble(entry[5]), entry[6], 
+					entry[7], entry[8], Boolean.valueOf(entry[9]))));
 		beneficiaryRepository.insert(beneficiaries);
 	}
 	

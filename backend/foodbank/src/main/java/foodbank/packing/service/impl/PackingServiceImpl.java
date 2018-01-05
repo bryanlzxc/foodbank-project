@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
-import foodbank.exceptions.PackingUpdateException;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.packing.dto.PackingListDTO;
 import foodbank.packing.entity.PackedFoodItem;
@@ -19,6 +18,7 @@ import foodbank.packing.entity.PackingList;
 import foodbank.packing.repository.PackingRepository;
 import foodbank.packing.service.PackingService;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.PackingUpdateException;
 
 @Service
 public class PackingServiceImpl implements PackingService {

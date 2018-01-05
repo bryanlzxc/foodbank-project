@@ -22,47 +22,71 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	private User user;
 	
 	private String username;
-	private String sector;
-	private int numBeneficiary;
+	private int numBeneficiary; 
 	private String address;
 	private double score;
-	private long membershipNumber;
-	private long acraRegistrationNumber;
+	private String contactPerson;
+	private String contactNumber;
 	private String memberType;
+	private boolean hasTransport;
 	
 	public Beneficiary() {}
 	
-	public Beneficiary(String id, User user, String sector, int numBeneficiary, String address, double score,
-			long membershipNumber, long acraRegistrationNumber, String memberType) {
-		this(user, sector, numBeneficiary, address, score, membershipNumber, acraRegistrationNumber, memberType);
+	public Beneficiary(String id, User user, int numBeneficiary, String address, double score,
+			String contactPerson, String contactNumber, String memberType, Boolean hasTransport) {
+		this(user, numBeneficiary, address, score, contactPerson, contactNumber, memberType, hasTransport);
 		this.id = id;
 	}
 	
-	public Beneficiary(User user, String sector, int numBeneficiary, String address, double score,
-			long membershipNumber, long acraRegistrationNumber, String memberType) {
+	public Beneficiary(User user, int numBeneficiary, String address, double score,
+			String contactPerson, String contactNumber, String memberType, Boolean hasTransport) {
 		this.user = user;
 		this.username = user.getUsername();
-		this.sector = sector;
 		this.numBeneficiary = numBeneficiary;
 		this.address = address;
 		this.score = score;
-		this.membershipNumber = membershipNumber;
-		this.acraRegistrationNumber = acraRegistrationNumber;
+		this.contactPerson = contactPerson;
+		this.contactNumber = contactNumber;
 		this.memberType = memberType;
+		this.hasTransport = hasTransport;
 	}
 	
 	public String getId() {
 		return id;
 	}
 	
-	public String getSector() {
-		return sector;
+	public String getUsername() {
+		return username;
 	}
-	
-	public void setSector(String sector) {
-		this.sector = sector;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	
+
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
+	public boolean isHasTransport() {
+		return hasTransport;
+	}
+
+	public void setHasTransport(boolean hasTransport) {
+		this.hasTransport = hasTransport;
+	}
+
 	public int getNumBeneficiary() {
 		return numBeneficiary;
 	}
@@ -87,22 +111,6 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		this.score = score;
 	}
 	
-	public long getMembershipNumber() {
-		return membershipNumber;
-	}
-
-	public void setMembershipNumber(long membershipNumber) {
-		this.membershipNumber = membershipNumber;
-	}
-
-	public long getAcraRegistrationNumber() {
-		return acraRegistrationNumber;
-	}
-
-	public void setAcraRegistrationNumber(long acraRegistrationNumber) {
-		this.acraRegistrationNumber = acraRegistrationNumber;
-	}
-
 	public String getMemberType() {
 		return memberType;
 	}
@@ -130,13 +138,13 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	public String toString() {
 		return id + "," 
 				+ user.getId() + ","
-				+ sector + ","
 				+ numBeneficiary + ","
 				+ address + ","
 				+ score + ","
-				+ membershipNumber + ","
-				+ acraRegistrationNumber + ","
-				+ memberType;
+				+ contactPerson + ","
+				+ contactNumber + ","
+				+ memberType + ","
+				+ hasTransport;
 	}
 	
 }

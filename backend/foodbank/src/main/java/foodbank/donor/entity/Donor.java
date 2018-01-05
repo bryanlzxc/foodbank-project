@@ -12,13 +12,25 @@ public class Donor {
 	private String id;
 	
 	private String name;
-	private List<Donation> donations;
+	private String address;
+	private List<NonperishableDonation> nonperishableDonations;
+	private List<PerishableDonation> perishableDonations;
 	
 	public Donor() {}
 	
-	public Donor(String name, List<Donation> donations) {
+	public Donor(String name, String address, List<NonperishableDonation> nonperishableDonations, List<PerishableDonation> perishableDonations) {
 		this.name = name;
-		this.donations = donations;
+		this.address = address;
+		this.nonperishableDonations = nonperishableDonations;
+		this.perishableDonations = perishableDonations;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -28,18 +40,29 @@ public class Donor {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public List<Donation> getDonations() {
-		return donations;
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public List<NonperishableDonation> getNonperishableDonations() {
+		return nonperishableDonations;
+	}
+
+	public void setNonperishableDonations(List<NonperishableDonation> nonperishableDonations) {
+		this.nonperishableDonations = nonperishableDonations;
+	}
+
+	public List<PerishableDonation> getPerishableDonations() {
+		return perishableDonations;
+	}
+
+	public void setPerishableDonations(List<PerishableDonation> perishableDonations) {
+		this.perishableDonations = perishableDonations;
 	}
 	
-	public void setDonations(List<Donation> donations) {
-		this.donations = donations;
-	}
-	
-	@Override
-	public String toString() {
-		return name + ","
-				+ donations;
-	}
 }

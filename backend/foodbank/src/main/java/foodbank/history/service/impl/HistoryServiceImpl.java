@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
-import foodbank.exceptions.InvalidBeneficiaryException;
 import foodbank.history.dto.RequestHistoryDTO;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
@@ -21,6 +20,7 @@ import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.InvalidBeneficiaryException;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {

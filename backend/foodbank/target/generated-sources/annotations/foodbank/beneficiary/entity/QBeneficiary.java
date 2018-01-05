@@ -22,21 +22,21 @@ public class QBeneficiary extends EntityPathBase<Beneficiary> {
 
     public static final QBeneficiary beneficiary = new QBeneficiary("beneficiary");
 
-    public final NumberPath<Long> acraRegistrationNumber = createNumber("acraRegistrationNumber", Long.class);
-
     public final StringPath address = createString("address");
 
-    public final StringPath id = createString("id");
+    public final StringPath contactNumber = createString("contactNumber");
 
-    public final NumberPath<Long> membershipNumber = createNumber("membershipNumber", Long.class);
+    public final StringPath contactPerson = createString("contactPerson");
+
+    public final BooleanPath hasTransport = createBoolean("hasTransport");
+
+    public final StringPath id = createString("id");
 
     public final StringPath memberType = createString("memberType");
 
     public final NumberPath<Integer> numBeneficiary = createNumber("numBeneficiary", Integer.class);
 
     public final NumberPath<Double> score = createNumber("score", Double.class);
-
-    public final StringPath sector = createString("sector");
 
     public final foodbank.user.entity.QUser user;
 

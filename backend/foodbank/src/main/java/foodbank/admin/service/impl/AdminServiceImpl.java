@@ -27,8 +27,6 @@ import foodbank.allocation.repository.AllocationRepository;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.email.entity.SendEmail;
-import foodbank.exceptions.SettingsUpdateException;
-import foodbank.exceptions.UserException;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.request.entity.Request;
@@ -38,6 +36,8 @@ import foodbank.user.repository.UserRepository;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants.EmailMessages;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.SettingsUpdateException;
+import foodbank.util.exceptions.UserException;
 
 @Service
 public class AdminServiceImpl implements AdminService {

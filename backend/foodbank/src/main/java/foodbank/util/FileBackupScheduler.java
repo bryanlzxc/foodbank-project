@@ -95,8 +95,8 @@ public class FileBackupScheduler {
 			client.createBucket(BACKUP_BUCKET);
 		}
 		csvFileList.add("user-data.csv,User Id,Username,Password,Usertype,Name,Email");
-		csvFileList.add("beneficiary-data.csv,Beneficiary Id,User Id,Sector,Number of Beneficiaries,Address,Postal Code,Score,Membership Number,"
-				+ "ACRA Registration Number,Member Type");
+		csvFileList.add("beneficiary-data.csv,Beneficiary Id,User Id,Number of Beneficiaries,Address,Postal Code,Score,Contact Person,"
+				+ "Contact Number,Member Type,Transport");
 		csvFileList.add("admin-data.csv,Settings Id,Window Status, Window Start DateTime, Window End DateTime, Decay Rate, Multiplier Rate");
 		csvFileList.add("inventory-data.csv,Item Id,Food Category,Item Classification,Item Description,Quantity");
 		csvFileList.add("request-data.csv,Request Id,Food Category,Item Classification,Item Description,Quantity,Request Creation Date,Beneficiary Id");
