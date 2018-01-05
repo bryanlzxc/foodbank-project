@@ -37,7 +37,7 @@ public class UserController {
 		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/display-all")
+	@GetMapping("/display-all-by")
 	public List<User> getAllUsersByType(@RequestParam("usertype") String usertype) {
 		return userService.getAllUsersByType(usertype);
 	}
