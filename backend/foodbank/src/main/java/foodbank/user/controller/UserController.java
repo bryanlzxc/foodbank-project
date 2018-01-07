@@ -42,7 +42,7 @@ public class UserController {
 		return userService.getAllUsersByType(usertype);
 	}
 	
-	@GetMapping
+	@GetMapping("/display-user")
 	public User getUserDetails(@RequestParam(value = "username", required = true) String username) {
 		return userService.getUserDetails(username);
 	}
