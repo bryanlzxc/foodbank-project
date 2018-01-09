@@ -4,6 +4,7 @@ import foodbank.admin.dto.AdminSettingsDTO;
 import foodbank.admin.entity.AdminSettings;
 import foodbank.admin.entity.AdminSettings.WindowStatus;
 import foodbank.admin.entity.WindowData;
+import foodbank.user.dto.UserDTO;
 
 public interface AdminService {
 	
@@ -39,6 +40,6 @@ public interface AdminService {
 	
 	void generateDailyPassword();
 	
-	void resetPassword(final String username) throws Exception;
+	void resetPassword(final UserDTO user) throws Exception;
 
 }

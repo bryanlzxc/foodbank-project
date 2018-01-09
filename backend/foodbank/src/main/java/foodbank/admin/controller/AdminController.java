@@ -24,6 +24,7 @@ import foodbank.allocation.service.AllocationService;
 import foodbank.email.entity.SendEmail;
 import foodbank.history.service.HistoryService;
 import foodbank.response.dto.ResponseDTO;
+import foodbank.user.dto.UserDTO;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants;
 
@@ -170,10 +171,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("/reset-password")
-	public ResponseDTO resetPassword(@RequestBody String username) {
+	public ResponseDTO resetPassword(@RequestBody UserDTO user) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.RESET_PASSWORD_SUCCESS);
 		try {
-			adminService.resetPassword(username);
+			adminService.resetPassword(user);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

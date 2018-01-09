@@ -31,6 +31,7 @@ import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
+import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
 import foodbank.util.DateParser;
@@ -340,11 +341,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void resetPassword(String username) throws Exception {
+	public void resetPassword(UserDTO user) throws Exception {
 		// TODO Auto-generated method stub
-		User dbUser = userRepository.findByUsername(username);
-		System.out.println("DBuser = " + dbUser);
-		System.out.println("Username = " + username.toString());
+		User dbUser = userRepository.findByUsername(user.getUsername());
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}
