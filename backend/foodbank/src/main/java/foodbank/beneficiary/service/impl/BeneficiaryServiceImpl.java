@@ -66,7 +66,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public void createBeneficiary(BeneficiaryDTO beneficiary) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getName());
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getUsername());
 		if(dbBeneficiary != null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.BENEFICIARY_ALREADY_EXISTS);
 		}
@@ -82,13 +82,17 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	
 	@Override
 	public void updateBeneficiary(BeneficiaryDTO beneficiary) {
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getName());
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getUsername());
+		User dbUser = userRepository.findByUsername(beneficiary.getUsername());
 		if(dbBeneficiary == null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
 		
-		dbBeneficiary.getUser().setName(beneficiary.getName());
-		dbBeneficiary.getUser().setEmail(beneficiary.getEmail());
+
+		dbUser.setName(beneficiary.getName());
+		dbUser.setEmail(beneficiary.getEmail());
+		userRepository.save(dbUser);
+		
 		dbBeneficiary.setNumBeneficiary(beneficiary.getNumBeneficiary());
 		dbBeneficiary.setAddress(beneficiary.getAddress());
 		dbBeneficiary.setContactPerson(beneficiary.getContactPerson());
