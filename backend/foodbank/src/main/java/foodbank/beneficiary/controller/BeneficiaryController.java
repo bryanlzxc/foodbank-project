@@ -89,6 +89,18 @@ public class BeneficiaryController {
 		return responseDTO;
 	}
 	
+	@PostMapping("/update-beneficiary")
+	public ResponseDTO updateBeneficiary(@RequestBody BeneficiaryDTO beneficiary) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
+		try {
+			beneficiaryService.updateBeneficiary(beneficiary);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	
 	/*
 	@Autowired

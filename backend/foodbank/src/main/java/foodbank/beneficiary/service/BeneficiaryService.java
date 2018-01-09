@@ -18,4 +18,6 @@ public interface BeneficiaryService {
 	
 	void createBeneficiary(final BeneficiaryDTO beneficiary);
 
+	void updateBeneficiary(final BeneficiaryDTO beneficiary);
+
 }

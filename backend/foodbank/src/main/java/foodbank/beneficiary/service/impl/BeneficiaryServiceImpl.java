@@ -79,5 +79,23 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 		beneficiaryRepository.insert(new Beneficiary(newUser, beneficiary.getNumBeneficiary(), beneficiary.getAddress(),
 				beneficiary.getScore(), beneficiary.getContactPerson(), beneficiary.getContactNumber(), beneficiary.getMemberType(), beneficiary.getHasTransport()));
 	}
+	
+	@Override
+	public void updateBeneficiary(BeneficiaryDTO beneficiary) {
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getName());
+		if(dbBeneficiary == null) {
+			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
+		}
+		
+		dbBeneficiary.getUser().setName(beneficiary.getName());
+		dbBeneficiary.getUser().setEmail(beneficiary.getEmail());
+		dbBeneficiary.setNumBeneficiary(beneficiary.getNumBeneficiary());
+		dbBeneficiary.setAddress(beneficiary.getAddress());
+		dbBeneficiary.setContactPerson(beneficiary.getContactPerson());
+		dbBeneficiary.setContactNumber(beneficiary.getContactNumber());
+		dbBeneficiary.setMemberType(beneficiary.getMemberType());
+		dbBeneficiary.setHasTransport(beneficiary.getHasTransport());
+		beneficiaryRepository.save(dbBeneficiary);
+	}
 
 }
