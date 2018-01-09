@@ -32,6 +32,8 @@ public class LoginServiceImpl implements LoginService {
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}
+		System.out.println("Password stored in DB = " + dbUser.getPassword() + " and the size is " + dbUser.getPassword().length());
+		System.out.println(BCrypt.checkpw(loginDetails.getPassword(), dbUser.getPassword()));
 		if(!BCrypt.checkpw(loginDetails.getPassword(), dbUser.getPassword())) {
 			throw new InvalidLoginException(ErrorMessages.INVALID_CREDENTIALS);
 		}

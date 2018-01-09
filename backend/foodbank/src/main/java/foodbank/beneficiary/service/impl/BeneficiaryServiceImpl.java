@@ -2,6 +2,7 @@ package foodbank.beneficiary.service.impl;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +74,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 		if(dbUser != null) {
 			throw new UserException(ErrorMessages.USER_ALREADY_EXISTS);
 		}
-		User newUser = new User(beneficiary.getUsername(), beneficiary.getPassword(), beneficiary.getUsertype(), beneficiary.getName(), beneficiary.getEmail());
+		User newUser = new User(beneficiary.getUsername(), BCrypt.hashpw(beneficiary.getPassword(), BCrypt.gensalt()), beneficiary.getUsertype(), beneficiary.getName(), beneficiary.getEmail());
 		userRepository.insert(newUser);
 		beneficiaryRepository.insert(new Beneficiary(newUser, beneficiary.getNumBeneficiary(), beneficiary.getAddress(),
 				beneficiary.getScore(), beneficiary.getContactPerson(), beneficiary.getContactNumber(), beneficiary.getMemberType(), beneficiary.getHasTransport()));

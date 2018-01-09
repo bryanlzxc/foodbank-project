@@ -343,6 +343,8 @@ public class AdminServiceImpl implements AdminService {
 	public void resetPassword(String username) throws Exception {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsername(username);
+		System.out.println("DBuser = " + dbUser);
+		System.out.println("Username = " + username.toString());
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}
