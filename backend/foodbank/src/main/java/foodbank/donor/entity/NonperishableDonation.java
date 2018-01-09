@@ -14,6 +14,7 @@ public class NonperishableDonation {
 		this.foodItem = foodItem;
 		this.donationDate = donationDate;
 	}
+	
 	public FoodItem getFoodItem() {
 		return foodItem;
 	}

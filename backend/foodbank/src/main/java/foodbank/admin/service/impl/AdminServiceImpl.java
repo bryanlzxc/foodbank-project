@@ -351,6 +351,7 @@ public class AdminServiceImpl implements AdminService {
 		boolean useLetters = true;
 		boolean useNumbers = true;
 		String newPassword = RandomStringUtils.random(length, useLetters, useNumbers);
+		System.out.println("The new password is : " + newPassword);
 		new SendEmail(dbUser.getEmail(), EmailMessages.RESET_PASSWORD_SUBJECT, EmailMessages.RESET_PASSWORD_MESSAGE1 + newPassword + EmailMessages.RESET_PASSWORD_MESSAGE2);
 		dbUser.setPassword(newPassword);
 		userRepository.save(dbUser);
