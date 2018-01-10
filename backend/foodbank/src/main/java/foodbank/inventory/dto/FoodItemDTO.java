@@ -7,6 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FoodItemDTO {
 	
 	@NotNull
+	@JsonProperty("donorName")
+	private String donorName = null;
+	
+	@NotNull
 	@JsonProperty("category")
 	private String category;
 	
@@ -22,12 +26,29 @@ public class FoodItemDTO {
 	@JsonProperty("quantity")
 	private int quantity;
 	
+//	public FoodItemDTO(@JsonProperty("category") String category, @JsonProperty("classification") String classification, 
+//			@JsonProperty("description") String description, @JsonProperty("quantity") int quantity) {
+//		this.category = category;
+//		this.classification = classification;
+//		this.description = description;
+//		this.quantity = quantity;
+//	}
+	
 	public FoodItemDTO(@JsonProperty("category") String category, @JsonProperty("classification") String classification, 
-			@JsonProperty("description") String description, @JsonProperty("quantity") int quantity) {
+			@JsonProperty("description") String description, @JsonProperty("quantity") int quantity, @JsonProperty("donorName") String donorName) {
 		this.category = category;
 		this.classification = classification;
 		this.description = description;
 		this.quantity = quantity;
+		this.donorName = donorName;
+	}
+
+	public String getDonorName() {
+		return donorName;
+	}
+
+	public void setDonorName(String donorName) {
+		this.donorName = donorName;
 	}
 
 	public String getCategory() {

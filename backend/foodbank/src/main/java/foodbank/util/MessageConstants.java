@@ -30,6 +30,8 @@ public final class MessageConstants {
 	public static final String PACKING_LIST_GENERATE_SUCCESS = "Packing lists successfully generated.";
 	public static final String PACKING_LIST_UPDATE_SUCCESS = "Packing list successfully updated.";
 	public static final String RESET_PASSWORD_SUCCESS = "The password has been successfully reset.";
+	public static final String DONOR_ADD_SUCCESS = "Donor successfully added.";
+	public static final String DONOR_UPDATE_SUCCESS = "Donor update successfully.";
 	
 	public static class ErrorMessages {
 		
@@ -47,6 +49,8 @@ public final class MessageConstants {
 		public static final String EMAIL_AUTH_ERROR = "Sender email cannot be authenticated.";
 		public static final String EMAIL_RECIPIENT_NOT_FOUND = "Email cannot be sent to desired recipient.";
 		public static final String PACKING_UPDATE_ERROR = "This packing list does not exist.";
+		public static final String DONOR_ALREADY_EXISTS = "This donor already exists.";
+		public static final String DONOR_DOES_NOT_EXIST = "This donor does not exists.";
 		
 	}
 	
