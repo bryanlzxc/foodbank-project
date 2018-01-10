@@ -335,7 +335,7 @@ public class AdminServiceImpl implements AdminService {
 		adminSettings.setDailyPassword(dailyPassword);
 		User dbUser = userRepository.findByUsername("volunteer");
 		dbUser = dbUser == null ? new User("volunteer", null, "volunteer", "volunteer", "volunteer-fb@gmail.com") : dbUser;
-		dbUser.setPassword(dailyPassword);
+		dbUser.setPassword(BCrypt.hashpw(dailyPassword, BCrypt.gensalt()));
 		userRepository.save(dbUser);
 		adminRepository.save(adminSettings);
 	}
