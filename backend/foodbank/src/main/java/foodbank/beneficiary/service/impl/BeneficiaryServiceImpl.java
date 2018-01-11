@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.beneficiary.dto.BeneficiaryAccountDTO;
 import foodbank.beneficiary.dto.BeneficiaryDTO;
 import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
 import foodbank.beneficiary.entity.Beneficiary;
@@ -99,6 +100,27 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 		dbBeneficiary.setContactNumber(beneficiary.getContactNumber());
 		dbBeneficiary.setMemberType(beneficiary.getMemberType());
 		dbBeneficiary.setHasTransport(beneficiary.getHasTransport());
+		beneficiaryRepository.save(dbBeneficiary);
+	}
+	
+	@Override
+	public void updateBeneficiaryAccount(BeneficiaryAccountDTO beneficiaryAccount) {
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryAccount.getUsername());
+		User dbUser = userRepository.findByUsername(beneficiaryAccount.getUsername());
+		if (dbUser == null) {
+			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
+		}
+
+		dbUser.setName(beneficiaryAccount.getName());
+		dbUser.setEmail(beneficiaryAccount.getEmail());
+		userRepository.save(dbUser);
+		
+		dbBeneficiary.setNumBeneficiary(beneficiaryAccount.getNumBeneficiary());
+		dbBeneficiary.setAddress(beneficiaryAccount.getAddress());
+		dbBeneficiary.setContactPerson(beneficiaryAccount.getContactPerson());
+		dbBeneficiary.setContactNumber(beneficiaryAccount.getContactNumber());
+		dbBeneficiary.setMemberType(beneficiaryAccount.getMemberType());
+		dbBeneficiary.setHasTransport(beneficiaryAccount.getHasTransport());
 		beneficiaryRepository.save(dbBeneficiary);
 	}
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.beneficiary.dto.BeneficiaryAccountDTO;
 import foodbank.beneficiary.dto.BeneficiaryDTO;
 import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
 import foodbank.beneficiary.entity.Beneficiary;
@@ -94,6 +95,19 @@ public class BeneficiaryController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
 		try {
 			beneficiaryService.updateBeneficiary(beneficiary);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/update-beneficiary-account")
+	public ResponseDTO updateBeneficiaryAccount(@RequestBody BeneficiaryAccountDTO beneficiaryAccount) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
+		// TODO: The try-catch for service call
+		try {
+			beneficiaryService.updateBeneficiaryAccount(beneficiaryAccount);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
