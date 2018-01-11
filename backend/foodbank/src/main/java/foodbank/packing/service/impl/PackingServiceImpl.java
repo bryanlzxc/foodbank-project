@@ -88,7 +88,6 @@ public class PackingServiceImpl implements PackingService {
 			}
 		}
 		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
-		
 		String beneficiary = packingListDTO.getBeneficiary();
 		List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
 		HashMap<String, PackedFoodItem> packedItemsMap = new HashMap<String, PackedFoodItem>();
@@ -100,10 +99,8 @@ public class PackingServiceImpl implements PackingService {
 			String description = (String)map.get("description");
 			Integer packedQuantity = (Integer)map.get("packedQuantity");
 			packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
-			
 			FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, null);
 			amendFoodItemQuantity(foodItemDTO);
-			
 			BeneficiaryUpdateDTO beneficiaryUpdateDTO = new BeneficiaryUpdateDTO(beneficiary, -(double)packedQuantity);
 			modifyBeneficiaryScore(beneficiaryUpdateDTO);
 		}
@@ -123,16 +120,22 @@ public class PackingServiceImpl implements PackingService {
 		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
 		List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
 		int previouslyPackedAmount = 0;
+		String category = String.valueOf(details.get("category"));
+		String classification = String.valueOf(details.get("classification"));
+		String description = String.valueOf(details.get("description"));
 		for(PackedFoodItem packedItem : beneficiaryPackedItems) {
-			if(packedItem.getCategory().equals(String.valueOf(details.get("category"))) 
-					&& packedItem.getClassification().equals(String.valueOf(details.get("classification")))
-					&& packedItem.getDescription().equals(String.valueOf(details.get("description")))) {
+			if(packedItem.getCategory().equals(category) && packedItem.getClassification().equals(classification)
+					&& packedItem.getDescription().equals(description)) {
 				previouslyPackedAmount = packedItem.getQuantity();
 				packedItem.setQuantity((int)details.get("packedQuantity"));
 				break;
 			}
 		}
 		if(previouslyPackedAmount - (int)details.get("packedQuantity") != 0) {
+			FoodItem foodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
+			foodItem.setQuantity(foodItem.getQuantity() + previouslyPackedAmount - (int)details.get("packedQuantity"));
+			foodRepository.save(foodItem);
+			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
 			modifyBeneficiaryScore(new BeneficiaryUpdateDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (double)details.get("packedQuantity")));
 		} 
 		packingRepository.save(dbPackingList);
