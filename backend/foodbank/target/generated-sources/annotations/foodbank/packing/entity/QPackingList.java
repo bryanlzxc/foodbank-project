@@ -28,6 +28,8 @@ public class QPackingList extends EntityPathBase<PackingList> {
 
     public final ListPath<PackedFoodItem, QPackedFoodItem> packedItems = this.<PackedFoodItem, QPackedFoodItem>createList("packedItems", PackedFoodItem.class, QPackedFoodItem.class, PathInits.DIRECT2);
 
+    public final BooleanPath packingStatus = createBoolean("packingStatus");
+
     public QPackingList(String variable) {
         this(PackingList.class, forVariable(variable), INITS);
     }

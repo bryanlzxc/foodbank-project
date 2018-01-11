@@ -17,6 +17,7 @@ import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
+import foodbank.response.dto.ResponseDTO;
 import foodbank.util.FileManager;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
@@ -267,9 +268,12 @@ public class FoodServiceImpl implements FoodService {
 		String[] itemDetailsArray = barcodeMap.get(barcode);
 		Map<String, String> itemDetails = new HashMap<String, String>();
 		if(itemDetailsArray != null) {
+			itemDetails.put("status", ResponseDTO.Status.SUCCESS.toString());
 			itemDetails.put("category", itemDetailsArray[0]);
 			itemDetails.put("classification", itemDetailsArray[1]);
 			itemDetails.put("description", itemDetailsArray[2]);
+		} else {
+			itemDetails.put("status", ResponseDTO.Status.FAIL.toString());
 		}
 		return itemDetails;
 	}

@@ -1,6 +1,8 @@
 package foodbank.packing.controller;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import foodbank.packing.dto.PackingListDTO;
 import foodbank.packing.entity.PackingList;
@@ -52,6 +55,30 @@ public class PackingController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
 			packingService.updatePackedQuantities(packingList);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/update-by-item")
+	public ResponseDTO updateByItem(@RequestBody Map<String, Object> details) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
+		try {
+			packingService.updateBeneficiaryPackingList(details);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/update-packing-status")
+	public ResponseDTO updatePackingStatus(@RequestBody WebRequest data) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
+		try {
+			packingService.updatePackingStatus(data);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

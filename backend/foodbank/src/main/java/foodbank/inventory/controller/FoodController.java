@@ -120,7 +120,7 @@ public class FoodController {
 	}
 	
 	@GetMapping("/scanner")
-	public Map<String, String> getBarcodeDetails(@RequestBody String barcode) {
+	public Map<String, String> getBarcodeDetails(@RequestParam(value = "barcode", required = true) String barcode) {
 		return foodService.readBarcode(barcode);
 	}
 	

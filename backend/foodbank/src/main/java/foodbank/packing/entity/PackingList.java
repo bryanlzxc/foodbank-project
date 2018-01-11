@@ -21,6 +21,8 @@ public class PackingList {
 	private Beneficiary beneficiary;
 	
 	private List<PackedFoodItem> packedItems = new ArrayList<PackedFoodItem>();
+	
+	private boolean packingStatus = false;
 
 	public PackingList() {}
 	
@@ -59,6 +61,14 @@ public class PackingList {
 		this.packedItems = packedItems;
 	}
 	
+	public boolean getPackingStatus() {
+		return packingStatus;
+	}
+
+	public void setPackingStatus(boolean packingStatus) {
+		this.packingStatus = packingStatus;
+	}
+
 	@Override
 	public String toString() {
 		return id + ","
