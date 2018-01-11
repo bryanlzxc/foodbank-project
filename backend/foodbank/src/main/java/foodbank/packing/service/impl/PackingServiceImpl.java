@@ -17,7 +17,10 @@ import foodbank.packing.entity.PackedFoodItem;
 import foodbank.packing.entity.PackingList;
 import foodbank.packing.repository.PackingRepository;
 import foodbank.packing.service.PackingService;
+import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
+import foodbank.util.exceptions.InvalidBeneficiaryException;
+import foodbank.util.exceptions.InvalidFoodException;
 import foodbank.util.exceptions.PackingUpdateException;
 
 @Service
@@ -28,6 +31,12 @@ public class PackingServiceImpl implements PackingService {
 	
 	@Autowired
 	private AllocationRepository allocationRepository;
+	
+	@Autowired
+	private FoodRepository foodRepository;
+	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
 	
 	@Override
 	public List<PackingList> retrieveAllPackingLists() {
@@ -73,6 +82,8 @@ public class PackingServiceImpl implements PackingService {
 			}
 		}
 		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
+		
+		String beneficiary = packingListDTO.getBeneficiary();
 		List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
 		HashMap<String, PackedFoodItem> packedItemsMap = new HashMap<String, PackedFoodItem>();
 		beneficiaryPackedItems.forEach(item -> packedItemsMap.put(item.getCategory() + item.getClassification() + item.getDescription(), item));
@@ -82,7 +93,13 @@ public class PackingServiceImpl implements PackingService {
 			String classification = (String)map.get("classification");
 			String description = (String)map.get("description");
 			Integer packedQuantity = (Integer)map.get("packedQuantity");
-			packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);
+			packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
+			
+			FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, null);
+			amendFoodItemQuantity(foodItemDTO);
+			
+			BeneficiaryUpdateDTO beneficiaryUpdateDTO = new BeneficiaryUpdateDTO(beneficiary, -(double)packedQuantity);
+			modifyBeneficiaryScore(beneficiaryUpdateDTO);
 		}
 		packingRepository.save(dbPackingList);
 	}
@@ -99,14 +116,19 @@ public class PackingServiceImpl implements PackingService {
 		}
 		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
 		List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
+		int previouslyPackedAmount = 0;
 		for(PackedFoodItem packedItem : beneficiaryPackedItems) {
 			if(packedItem.getCategory().equals(String.valueOf(details.get("category"))) 
 					&& packedItem.getClassification().equals(String.valueOf(details.get("classification")))
 					&& packedItem.getDescription().equals(String.valueOf(details.get("description")))) {
-				packedItem.setQuantity((Integer)details.get("packedQuantity"));
+				previouslyPackedAmount = packedItem.getQuantity();
+				packedItem.setQuantity((int)details.get("packedQuantity"));
 				break;
 			}
 		}
+		if(previouslyPackedAmount - (int)details.get("packedQuantity") != 0) {
+			modifyBeneficiaryScore(new BeneficiaryUpdateDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (double)details.get("packedQuantity")));
+		} 
 		packingRepository.save(dbPackingList);
 	}
 
@@ -128,6 +150,33 @@ public class PackingServiceImpl implements PackingService {
 			dbPackingList.setPackingStatus(false);
 		}
 		packingRepository.save(dbPackingList);
+	}
+		
+	//This method is for internal call to deduct food item quantity when fb volunteer pressed packed
+	private void amendFoodItemQuantity(FoodItemDTO foodItem) {
+		// This method increments/decrements the existing DB object's quantity
+		String category = foodItem.getCategory();
+		String classification = foodItem.getClassification();
+		String description = foodItem.getDescription();
+		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
+		if(dbFoodItem != null) {
+			dbFoodItem.setQuantity(dbFoodItem.getQuantity() - foodItem.getQuantity());		//this is the deduction from db
+			foodRepository.save(dbFoodItem);
+			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+		} else {
+			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
+		}
+	}
+	
+	//This method is for internal call to deduct beneficiary score once fb volunteer pressed packed
+	private void modifyBeneficiaryScore(BeneficiaryUpdateDTO beneficiaryUpdate) {
+		// TODO Auto-generated method stub
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryUpdate.getBeneficiary());
+		if(dbBeneficiary == null) { throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY); }
+		double inventoryQuantityPacked = beneficiaryUpdate.getScore();
+		double scoreToDeduct = inventoryQuantityPacked;			//currently the score which is deducted from beneficiary is the quantity of packed items
+		dbBeneficiary.setScore(dbBeneficiary.getScore() + scoreToDeduct);
+		beneficiaryRepository.save(dbBeneficiary);
 	}
 	
 }
