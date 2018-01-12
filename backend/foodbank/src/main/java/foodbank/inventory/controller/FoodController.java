@@ -127,7 +127,7 @@ public class FoodController {
 			
 			// Create the FoodItemDTO and add into DB
 			try {
-				foodService.createFoodItem(foodItem);
+				foodService.amendFoodItemQuantity(foodItem);
 			} catch (InvalidFoodException e) { 
 				foodService.incrementFoodItem(foodItem); // foodItem exists, increment instead
 			}
