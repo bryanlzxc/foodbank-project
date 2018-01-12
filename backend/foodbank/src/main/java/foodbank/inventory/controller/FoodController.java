@@ -117,30 +117,6 @@ public class FoodController {
 	}
 	
 	/*
-	 * This method will be called by the Volunteer's mobile app for
-	 * stocktaking purposes.
-	 */
-	@PostMapping("/add-donor-item")
-	public ResponseDTO addDonorItem(@RequestBody FoodItemDTO foodItem) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.STOCKTAKE_ADD_DONOR_ITEM_SUCCESS);
-		try {
-			
-			// Create the FoodItemDTO and add into DB
-			try {
-				foodService.amendFoodItemQuantity(foodItem);
-			} catch (InvalidFoodException e) { 
-				foodService.incrementFoodItem(foodItem); // foodItem exists, increment instead
-			}
-			
-			donorService.updateDonorNonperishable(foodItem);
-		} catch (Exception e) {
-			responseDTO.setStatus(ResponseDTO.Status.FAIL);
-			responseDTO.setMessage(e.getMessage());
-		}
-		return responseDTO;
-	}
-	
-	/*
 	@GetMapping("/display-all")
 	public List<FoodItem> getAllCategories() {
 		return foodService.retrieveAllCategories();

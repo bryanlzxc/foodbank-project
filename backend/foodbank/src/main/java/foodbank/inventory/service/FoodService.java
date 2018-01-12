@@ -26,6 +26,6 @@ public interface FoodService {
 	
 	Map<String, String> readBarcode(final String barcode);
 	
-	void incrementFoodItem(final FoodItemDTO foodItem);
+	//void incrementFoodItem(final FoodItemDTO foodItem);
 
 }

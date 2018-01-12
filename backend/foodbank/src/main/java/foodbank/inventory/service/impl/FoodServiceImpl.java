@@ -272,6 +272,7 @@ public class FoodServiceImpl implements FoodService {
 		return itemDetails;
 	}
 	
+	/*
 	@Override
 	public void incrementFoodItem(FoodItemDTO foodItem) {
 		// TODO Auto-generated method stub
@@ -289,5 +290,6 @@ public class FoodServiceImpl implements FoodService {
 			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
 		}
 	}
+	*/
 
 }
