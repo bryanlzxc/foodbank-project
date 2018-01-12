@@ -141,7 +141,7 @@ public class FoodController {
 			try {
 				foodService.createFoodItem(foodItem);
 			} catch (InvalidFoodException e) { 
-				foodService.overwriteFoodItem(foodItem); // foodItem exists, overwrite instead
+				foodService.incrementFoodItem(foodItem); // foodItem exists, increment instead
 			}
 			
 			donorService.updateDonorNonperishable(foodItem);

@@ -277,5 +277,23 @@ public class FoodServiceImpl implements FoodService {
 		}
 		return itemDetails;
 	}
+	
+	@Override
+	public void incrementFoodItem(FoodItemDTO foodItem) {
+		// TODO Auto-generated method stub
+		// This method increments the existing object in DB
+		String category = foodItem.getCategory();
+		String classification = foodItem.getClassification();
+		String description = foodItem.getDescription();
+		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
+		if(dbFoodItem != null) {
+			int updatedQuantity = dbFoodItem.getQuantity() + foodItem.getQuantity();
+			dbFoodItem.setQuantity(updatedQuantity); // increment
+			foodRepository.save(dbFoodItem);
+			InventorySerializer.updateQuantity(category, classification, description, updatedQuantity);
+		} else {
+			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
+		}
+	}
 
 }
