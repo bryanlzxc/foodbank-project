@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerMapping;
 
+import foodbank.donor.service.DonorService;
 import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.service.FoodService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
+import foodbank.util.exceptions.InvalidFoodException;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -34,6 +36,8 @@ public class FoodController {
 	
 	@Autowired
 	private FoodService foodService;
+	@Autowired
+	private DonorService donorService;
 	
 	@GetMapping("/display-all")
 	public List<FoodItem> getAllFoodItems() {
@@ -110,6 +114,30 @@ public class FoodController {
 	@GetMapping("/scanner")
 	public Map<String, String> getBarcodeDetails(@RequestParam(value = "barcode", required = true) String barcode) {
 		return foodService.readBarcode(barcode);
+	}
+	
+	/*
+	 * This method will be called by the Volunteer's mobile app for
+	 * stocktaking purposes.
+	 */
+	@PostMapping("/add-donor-item")
+	public ResponseDTO addDonorItem(@RequestBody FoodItemDTO foodItem) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.STOCKTAKE_ADD_DONOR_ITEM_SUCCESS);
+		try {
+			
+			// Create the FoodItemDTO and add into DB
+			try {
+				foodService.createFoodItem(foodItem);
+			} catch (InvalidFoodException e) { 
+				foodService.incrementFoodItem(foodItem); // foodItem exists, increment instead
+			}
+			
+			donorService.updateDonorNonperishable(foodItem);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
 	}
 	
 	/*

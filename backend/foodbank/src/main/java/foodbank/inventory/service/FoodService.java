@@ -25,5 +25,7 @@ public interface FoodService {
 	void amendFoodItemsQuantity(final FoodItemDTO[] foodItems);
 	
 	Map<String, String> readBarcode(final String barcode);
+	
+	void incrementFoodItem(final FoodItemDTO foodItem);
 
 }

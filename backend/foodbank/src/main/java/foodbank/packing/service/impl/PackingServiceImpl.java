@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
+import foodbank.beneficiary.dto.BeneficiaryDeductScoreDTO;
 import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
@@ -101,8 +102,8 @@ public class PackingServiceImpl implements PackingService {
 			packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
 			FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, null);
 			amendFoodItemQuantity(foodItemDTO);
-			BeneficiaryUpdateDTO beneficiaryUpdateDTO = new BeneficiaryUpdateDTO(beneficiary, -(double)packedQuantity);
-			modifyBeneficiaryScore(beneficiaryUpdateDTO);
+			BeneficiaryDeductScoreDTO beneficiaryDeductScoreDTO = new BeneficiaryDeductScoreDTO(beneficiary, -packedQuantity);
+			modifyBeneficiaryScore(beneficiaryDeductScoreDTO);
 		}
 		packingRepository.save(dbPackingList);
 	}
@@ -136,7 +137,7 @@ public class PackingServiceImpl implements PackingService {
 			foodItem.setQuantity(foodItem.getQuantity() + previouslyPackedAmount - (int)details.get("packedQuantity"));
 			foodRepository.save(foodItem);
 			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
-			modifyBeneficiaryScore(new BeneficiaryUpdateDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (double)details.get("packedQuantity")));
+			modifyBeneficiaryScore(new BeneficiaryDeductScoreDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (Integer)details.get("packedQuantity")));
 		} 
 		packingRepository.save(dbPackingList);
 	}
@@ -178,11 +179,11 @@ public class PackingServiceImpl implements PackingService {
 	}
 	
 	//This method is for internal call to deduct beneficiary score once fb volunteer pressed packed
-	private void modifyBeneficiaryScore(BeneficiaryUpdateDTO beneficiaryUpdate) {
+	private void modifyBeneficiaryScore(BeneficiaryDeductScoreDTO beneficiaryUpdate) {
 		// TODO Auto-generated method stub
 		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryUpdate.getBeneficiary());
 		if(dbBeneficiary == null) { throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY); }
-		double inventoryQuantityPacked = beneficiaryUpdate.getScore();
+		double inventoryQuantityPacked = beneficiaryUpdate.getQuantity();
 		double scoreToDeduct = inventoryQuantityPacked;			//currently the score which is deducted from beneficiary is the quantity of packed items
 		dbBeneficiary.setScore(dbBeneficiary.getScore() + scoreToDeduct);
 		beneficiaryRepository.save(dbBeneficiary);

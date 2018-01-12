@@ -32,6 +32,7 @@ public final class MessageConstants {
 	public static final String RESET_PASSWORD_SUCCESS = "The password has been successfully reset.";
 	public static final String DONOR_ADD_SUCCESS = "Donor successfully added.";
 	public static final String DONOR_UPDATE_SUCCESS = "Donor update successfully.";
+	public static final String STOCKTAKE_ADD_DONOR_ITEM_SUCCESS = "Item and quantity by donor added successfully.";
 	
 	public static class ErrorMessages {
 		
