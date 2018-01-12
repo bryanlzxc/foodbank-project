@@ -2,6 +2,7 @@ package foodbank.inventory.service.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,6 @@ import foodbank.response.dto.ResponseDTO;
 import foodbank.util.FileManager;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
-import foodbank.util.exceptions.InvalidDonorException;
 import foodbank.util.exceptions.InvalidFoodException;
 
 @Service
@@ -84,12 +84,12 @@ public class FoodServiceImpl implements FoodService {
 		String classification = foodItem.getClassification();
 		String description = foodItem.getDescription();
 		String barcode = foodItem.getBarcode();
+		if(barcodeMap == null) { barcodeMap = FileManager.generateBarcodeMap(); }
 		String[] itemDetailsArray = barcodeMap.get(barcode);
-		if(itemDetailsArray == null) {
+		if(itemDetailsArray == null && barcode != null) {
 			itemDetailsArray = new String[] { category, classification, description };
 			barcodeMap.put(barcode, itemDetailsArray);
 		}
-		System.out.println("Debugging statement, does it run here?");
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() + foodItem.getQuantity());
@@ -116,23 +116,22 @@ public class FoodServiceImpl implements FoodService {
 			dbDonor.setName(foodItem.getDonorName());
 			dbDonor.setAddress("Testing Address, Singapore 123910");
 			donorRepository.save(dbDonor);
-			System.out.println("Successfully created Donor!");
-			System.out.println("Donor details = " + foodItem.getDonorName());
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
-		
+		if(dbNonperishableDonationList == null) {
+			dbNonperishableDonationList = new ArrayList<NonperishableDonation>();
+			dbDonor.setNonperishableDonations(dbNonperishableDonationList);
+		}
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription());
 		dbFoodItem.setQuantity(foodItem.getQuantity());
-		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		String donationDate = dateFormat.format(date);
-		
 		NonperishableDonation newNonperishableDonation = new NonperishableDonation(dbFoodItem, donationDate);
 		dbNonperishableDonationList.add(newNonperishableDonation);
+		System.out.println(dbNonperishableDonationList);
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);
 		donorRepository.save(dbDonor);
-		
 	}
 	
 	// Code marked for deletion upon testing
