@@ -111,7 +111,10 @@ public class FoodServiceImpl implements FoodService {
 	private void updateDonorNonperishable(FoodItemDTO foodItem) {
 		Donor dbDonor = donorRepository.findByName(foodItem.getDonorName());
 		if(dbDonor == null) {
-			throw new InvalidDonorException(ErrorMessages.DONOR_DOES_NOT_EXIST);
+			dbDonor = new Donor();
+			dbDonor.setName(foodItem.getDonorName());
+			dbDonor.setAddress("Testing Address, Singapore 123910");
+			donorRepository.save(dbDonor);
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
 		
