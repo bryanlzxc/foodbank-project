@@ -60,21 +60,6 @@ public class FoodServiceImpl implements FoodService {
 	}
 	
 	@Override
-	public void createFoodItem(FoodItemDTO foodItem) {
-		String category = foodItem.getCategory();
-		String classification = foodItem.getClassification();
-		String description = foodItem.getDescription();
-		Integer quantity = foodItem.getQuantity();
-		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
-		if(dbFoodItem == null) {
-			foodRepository.insert(new FoodItem(category, classification, description, quantity));
-			InventorySerializer.updateQuantity(category, classification, description, quantity);
-		} else {
-			throw new InvalidFoodException(ErrorMessages.DUPLICATE_ITEM);
-		}
-	}
-
-	@Override
 	public void overwriteFoodItem(FoodItemDTO foodItem) {
 		// TODO Auto-generated method stub
 		// This method overwrites the existing object in DB
@@ -98,19 +83,28 @@ public class FoodServiceImpl implements FoodService {
 		String category = foodItem.getCategory();
 		String classification = foodItem.getClassification();
 		String description = foodItem.getDescription();
-
+		String barcode = foodItem.getBarcode();
+		String[] itemDetailsArray = barcodeMap.get(barcode);
+		if(itemDetailsArray == null) {
+			itemDetailsArray = new String[] { category, classification, description };
+			barcodeMap.put(barcode, itemDetailsArray);
+		}
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() + foodItem.getQuantity());
 			foodRepository.save(dbFoodItem);
 			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
-			
 			if(foodItem.getDonorName() != null) {
 				//call DonorController's method to add food item into non-perishable list for specific donor
 				updateDonorNonperishable(foodItem);
 			}
 		} else {
-			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
+			dbFoodItem = new FoodItem(category, classification, description, foodItem.getQuantity());
+			foodRepository.save(dbFoodItem);
+			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+			if(foodItem.getDonorName() != null) {
+				updateDonorNonperishable(foodItem);
+			}
 		}
 	}
 	

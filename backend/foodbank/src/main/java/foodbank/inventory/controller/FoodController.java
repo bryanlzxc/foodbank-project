@@ -55,18 +55,6 @@ public class FoodController {
 		return foodService.retrieveFoodItemsByCategoryAndClassification(category, classification);
 	}
 	
-	@PutMapping("/create-item")
-	public ResponseDTO createFoodItem(@RequestBody FoodItemDTO foodItem) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_CREATION_SUCCESS);
-		try {
-			foodService.createFoodItem(foodItem);
-		} catch (Exception e) {
-			responseDTO.setStatus(ResponseDTO.Status.FAIL);
-			responseDTO.setMessage(e.getMessage());
-		}
-		return responseDTO;
-	}
-	
 	// This method is used to overwrite the quantity of the object in DB
 	@PostMapping("/update-item")
 	public ResponseDTO updateFoodItem(@RequestBody FoodItemDTO foodItem) {
