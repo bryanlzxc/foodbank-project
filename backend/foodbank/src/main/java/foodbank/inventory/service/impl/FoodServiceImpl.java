@@ -89,6 +89,7 @@ public class FoodServiceImpl implements FoodService {
 			itemDetailsArray = new String[] { category, classification, description };
 			barcodeMap.put(barcode, itemDetailsArray);
 		}
+		System.out.println("Debugging statement, does it run here?");
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() + foodItem.getQuantity());
@@ -115,6 +116,8 @@ public class FoodServiceImpl implements FoodService {
 			dbDonor.setName(foodItem.getDonorName());
 			dbDonor.setAddress("Testing Address, Singapore 123910");
 			donorRepository.save(dbDonor);
+			System.out.println("Successfully created Donor!");
+			System.out.println("Donor details = " + foodItem.getDonorName());
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
 		
