@@ -40,7 +40,7 @@ public class LoginController {
 	
 	@PostMapping("/volunteer-app")
 	public ResponseDTO authenticateVolunteers(@RequestBody String dailyPassword) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null,  MessageConstants.LOGIN_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.LOGIN_SUCCESS);
 		try {
 			loginService.authenticateVolunteers(dailyPassword);
 		} catch (Exception e) {
