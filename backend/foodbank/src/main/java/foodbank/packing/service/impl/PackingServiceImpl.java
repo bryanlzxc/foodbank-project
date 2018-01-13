@@ -71,8 +71,14 @@ public class PackingServiceImpl implements PackingService {
 		for(Allocation allocation : allocations) {
 			List<AllocatedFoodItems> foodItems = allocation.getAllocatedItems();
 			List<PackedFoodItem> packedItems = new ArrayList<PackedFoodItem>();
-			foodItems.forEach(foodItem -> packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
-					foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0)));
+			for(AllocatedFoodItems foodItem: foodItems) {
+				if(foodItem.getAllocatedQuantity() > 0) {	//packing list only contains food items which allocated qty are more than 0
+					packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
+							foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0));
+				}
+			}
+//			foodItems.forEach(foodItem -> packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
+//					foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0)));
 			packingLists.add(new PackingList(allocation.getBeneficiary(), packedItems));
 		}
 		packingRepository.insert(packingLists);
