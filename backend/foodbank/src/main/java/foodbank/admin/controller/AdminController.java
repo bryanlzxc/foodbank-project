@@ -27,6 +27,7 @@ import foodbank.response.dto.ResponseDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 
 @RestController
 @CrossOrigin
@@ -40,38 +41,94 @@ public class AdminController {
 	private AllocationService allocationService;
 	
 	@GetMapping("/display-all")
-	public AdminSettings getAdminSettings() {
-		return adminService.getAdminSettings();
+	public ResponseDTO getAdminSettings() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			AdminSettings as = adminService.getAdminSettings();
+			responseDTO.setResult(as);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display/window-status")
-	public Map<String, WindowStatus> getWindowStatus() {
-		return Collections.singletonMap("windowStatus", adminService.getWindowStatus());
+	public ResponseDTO getWindowStatus() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			Map<String, WindowStatus> map = Collections.singletonMap("windowStatus", adminService.getWindowStatus());
+			responseDTO.setResult(map);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display/opening-date")
-	public Map<String, String> getOpeningDate() {
-		return Collections.singletonMap("windowStartDateTime", adminService.getWindowStartDate());
+	public ResponseDTO getOpeningDate() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			Map<String, String> map = Collections.singletonMap("windowStartDateTime", adminService.getWindowStartDate());
+			responseDTO.setResult(map);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display/closing-date")
-	public Map<String, String> getClosingDate() {
-		return Collections.singletonMap("windowEndDateTime", adminService.getWindowEndDate());
+	public ResponseDTO getClosingDate() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			Map<String, String> map = Collections.singletonMap("windowEndDateTime", adminService.getWindowEndDate());
+			responseDTO.setResult(map);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display/decay-rate")
-	public Map<String, Double> getDecayRate() {
-		return Collections.singletonMap("decayRate", adminService.getDecayRate());
+	public ResponseDTO getDecayRate() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			Map<String, Double> map = Collections.singletonMap("decayRate", adminService.getDecayRate());
+			responseDTO.setResult(map);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display/multiplier-rate")
-	public Map<String, Double> getMultiplierRate() {
-		return Collections.singletonMap("multiplierRate", adminService.getMultiplierRate());
+	public ResponseDTO getMultiplierRate() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			Map<String, Double> map = Collections.singletonMap("multiplierRate", adminService.getMultiplierRate());
+			responseDTO.setResult(map);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display/side-bar")
-	public WindowData retrieveWindowData() {
-		return adminService.retrieveWindowData();
+	public ResponseDTO retrieveWindowData() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			WindowData wd = adminService.retrieveWindowData();
+			responseDTO.setResult(wd);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@PostMapping("/update/window-status")
