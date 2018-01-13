@@ -35,6 +35,8 @@ public final class MessageConstants {
 	public static final String DONOR_UPDATE_SUCCESS = "Donor update successfully.";
 	public static final String STOCKTAKE_ADD_DONOR_ITEM_SUCCESS = "Item and quantity by donor added successfully.";
 	public static final String DONOR_DELETE_SUCCESS = "Donor successfully deleted.";
+	public static final String USER_LIST_RETRIEVE_SUCCESS = "User list retrieved successfully.";
+	public static final String USER_RETRIEVE_SUCCESS = "User retrieved successfully.";
 	
 	public static class ErrorMessages {
 		

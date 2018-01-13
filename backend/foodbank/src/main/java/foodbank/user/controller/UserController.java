@@ -33,23 +33,52 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping("/display-all")
-	public List<User> getAllUsers() {
-		return userService.getAllUsers();
+	public ResponseDTO getAllUsers() {
+		List<User> allUsers = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_LIST_RETRIEVE_SUCCESS);
+		try {
+			allUsers = userService.getAllUsers();
+		} catch ( Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(allUsers);
+		return responseDTO;
 	}
 	
 	@GetMapping("/display-all-by")
-	public List<User> getAllUsersByType(@RequestParam(value = "usertype", required = true) String usertype) {
-		return userService.getAllUsersByType(usertype);
+	public ResponseDTO getAllUsersByType(@RequestParam(value = "usertype", required = true) String usertype) {
+		List<User> allUsersByType = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_LIST_RETRIEVE_SUCCESS);
+		try {
+			allUsersByType = userService.getAllUsersByType(usertype);
+		} catch ( Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(allUsersByType);
+		return responseDTO;
 	}
 	
 	@GetMapping("/display-user")
-	public User getUserDetails(@RequestParam(value = "username", required = true) String username) {
-		return userService.getUserDetails(username);
+	public ResponseDTO getUserDetails(@RequestParam(value = "username", required = true) String username) {
+//		return userService.getUserDetails(username);
+		
+		User allUsersByType = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_RETRIEVE_SUCCESS);
+		try {
+			allUsersByType = userService.getUserDetails(username);
+		} catch ( Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(allUsersByType);
+		return responseDTO;
 	}
 	
 	@PutMapping("/insert-user")
 	public ResponseDTO insertUser(@RequestBody UserDTO user) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_ADD_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_ADD_SUCCESS);
 		try {
 			userService.insertUser(user);
 		} catch (Exception e) {
@@ -61,7 +90,7 @@ public class UserController {
 	
 	@PostMapping("/update-user")
 	public ResponseDTO updateUser(@RequestBody UserDTO user) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_UPDATE_SUCCESS);
 		try {
 			userService.updateUser(user);
 		} catch (Exception e) {
@@ -73,7 +102,7 @@ public class UserController {
 	
 	@DeleteMapping("/delete-user")
 	public ResponseDTO deleteUser(@RequestParam(value = "username", required = true) String username) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.USER_DELETE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_DELETE_SUCCESS);
 		try {
 			userService.deleteUser(username);
 		} catch (Exception e) {
