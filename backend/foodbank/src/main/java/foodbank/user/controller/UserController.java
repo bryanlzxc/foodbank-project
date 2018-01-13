@@ -64,15 +64,15 @@ public class UserController {
 	public ResponseDTO getUserDetails(@RequestParam(value = "username", required = true) String username) {
 //		return userService.getUserDetails(username);
 		
-		User allUsersByType = null;
+		User user = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_RETRIEVE_SUCCESS);
 		try {
-			allUsersByType = userService.getUserDetails(username);
+			user = userService.getUserDetails(username);
 		} catch ( Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
 		}
-		responseDTO.setResult(allUsersByType);
+		responseDTO.setResult(user);
 		return responseDTO;
 	}
 	
@@ -110,6 +110,5 @@ public class UserController {
 			responseDTO.setMessage(e.getMessage());
 		}
 		return responseDTO;
-	}
-	
+	}	
 }
