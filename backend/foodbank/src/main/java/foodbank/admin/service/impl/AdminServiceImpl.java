@@ -163,12 +163,12 @@ public class AdminServiceImpl implements AdminService {
 					Date startingDate = null;
 					Date endingDate = null;
 					if(settings.getStartingDate() != null) {
-						startingDate = DateParser.convertToDBDate(settings.getStartingDate());
+						startingDate = DateParser.convertToDate(settings.getStartingDate());
 					} else {
 						startingDate = new Date();
 					}
 					if(settings.getClosingDate() != null) {
-						endingDate = DateParser.convertToDBDate(settings.getClosingDate());
+						endingDate = DateParser.convertToDate(settings.getClosingDate());
 					} else {
 						Calendar calendar = Calendar.getInstance();
 						calendar.setTime(startingDate);
@@ -231,12 +231,12 @@ public class AdminServiceImpl implements AdminService {
 				Date closingDate = null;
 				String closingDateString = settings.getClosingDate();
 				if(startingDateString != null) {
-					startingDate = DateParser.convertToDBDate(startingDateString);
+					startingDate = DateParser.convertToDate(startingDateString);
 				} else {
 					startingDate = new Date();
 				}
 				if(closingDateString != null) {
-					closingDate = DateParser.convertToDBDate(closingDateString);
+					closingDate = DateParser.convertToDate(closingDateString);
 				} else {
 					Calendar calendar = Calendar.getInstance();
 					calendar.setTime(startingDate);
@@ -277,11 +277,13 @@ public class AdminServiceImpl implements AdminService {
 		if(adminSettings.getWindowEndDateTime() == null || adminSettings.getWindowStatus() == WindowStatus.INACTIVE) {
 			windowData.setWindowEndDateTime(null);
 		} else {
+			System.out.println("Current adminSettings getWindowEndDateTime(): " + adminSettings.getWindowEndDateTime());
 			windowData.setWindowEndDateTime(DateParser.convertToDate(adminSettings.getWindowEndDateTime()));
 		}
 		if(adminSettings.getWindowStartDateTime() == null || adminSettings.getWindowStatus() == WindowStatus.INACTIVE) {
 			windowData.setWindowStartDateTime(null);
 		} else {
+			System.out.println("Current adminSettings getWindowStartDateTime(): " + adminSettings.getWindowStartDateTime());
 			windowData.setWindowStartDateTime(DateParser.convertToDate(adminSettings.getWindowStartDateTime()));
 		}
 		windowData.setDailyPassword(adminSettings.getDailyPassword());
@@ -305,6 +307,7 @@ public class AdminServiceImpl implements AdminService {
 		for(Request request : requests) {
 			Integer allocatedQuantity = null;
 			allocatedQuantity = requestAllocationMap.get(request.getBeneficiary().getUser().getUsername()).get(request.getFoodItem().getDescription());
+			System.out.println("Date stored in Request entity: " + request.getRequestCreationDate());
 			RequestHistory pastRequest = new RequestHistory(request.getBeneficiary(), 
 					DateParser.convertToDate(request.getRequestCreationDate()), 
 					request.getFoodItem().getCategory(), request.getFoodItem().getClassification(), request.getFoodItem().getDescription(), 
