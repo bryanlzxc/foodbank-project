@@ -339,4 +339,17 @@ public class AllocationServiceImpl implements AllocationService {
 		}
 	}
 	
+	@Override
+	public Boolean checkApproveStatus() {
+		Boolean result = true; 
+		List<Allocation> allocations = allocationRepository.findAll();
+		for (Allocation allocation : allocations) {
+			if (!allocation.getApprovalStatus()) {
+				result = false;
+				break;
+			}
+		}
+		return result;
+	}
+	
 }

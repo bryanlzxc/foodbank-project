@@ -98,6 +98,19 @@ public class AllocationController {
 		return responseDTO;
 	}
 	
+	@GetMapping("/approval-status")
+	public ResponseDTO getApproveStatus() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
+		try {
+			Boolean result = allocationService.checkApproveStatus();
+			responseDTO.setResult(result);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ADMIN_GET_FAIL);
+		}
+		return responseDTO;
+	}
+	
 	/*
 	@Autowired
 	private AllocationRepository allocationRepository;
