@@ -56,7 +56,7 @@ public class PackingServiceImpl implements PackingService {
 		List<PackingList> packingLists = packingRepository.findAll();
 		PackingList dbPackingList = null;
 		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUser().getName().equals(beneficiary)) {
+			if(packingList.getBeneficiary().getUser().getUsername().equals(beneficiary)) {
 				dbPackingList = packingList;
 			}
 		}
@@ -84,7 +84,7 @@ public class PackingServiceImpl implements PackingService {
 		List<PackingList> packingLists = packingRepository.findAll();
 		PackingList dbPackingList = null;
 		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUser().getName().equals(packingListDTO.getBeneficiary())) {
+			if(packingList.getBeneficiary().getUser().getUsername().equals(packingListDTO.getBeneficiary())) {
 				dbPackingList = packingList;
 				break;
 			}
