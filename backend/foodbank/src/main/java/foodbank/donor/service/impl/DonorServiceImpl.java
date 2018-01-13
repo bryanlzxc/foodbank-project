@@ -1,7 +1,5 @@
 package foodbank.donor.service.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +16,7 @@ import foodbank.donor.service.DonorService;
 import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
+import foodbank.util.DateParser;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.InvalidDonorException;
 import foodbank.util.exceptions.InvalidRequestException;
@@ -62,17 +61,13 @@ public class DonorServiceImpl implements DonorService {
 	public void updateDonorNonperishable(FoodItemDTO foodItem) {
 		Donor dbDonor = donorRepository.findByName(foodItem.getDonorName());
 		if(dbDonor == null) {
-			throw new InvalidDonorException(ErrorMessages.DONOR_DOES_NOT_EXIST);
+			dbDonor = new Donor(foodItem.getDonorName());
+			donorRepository.save(dbDonor);
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
-		
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription());
 		dbFoodItem.setQuantity(foodItem.getQuantity());
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String donationDate = dateFormat.format(date);
-		
+		String donationDate = DateParser.getCurrentDate(new Date());
 		NonperishableDonation newNonperishableDonation = new NonperishableDonation(dbFoodItem, donationDate);
 		dbNonperishableDonationList.add(newNonperishableDonation);
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);

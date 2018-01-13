@@ -1,5 +1,6 @@
 package foodbank.donor.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -13,10 +14,15 @@ public class Donor {
 	
 	private String name;
 	private String address;
-	private List<NonperishableDonation> nonperishableDonations;
-	private List<PerishableDonation> perishableDonations;
+	private List<NonperishableDonation> nonperishableDonations = new ArrayList<NonperishableDonation>();
+	private List<PerishableDonation> perishableDonations = new ArrayList<PerishableDonation>();
 	
 	public Donor() {}
+	
+	public Donor(String name) {
+		this.name = name;
+		this.address = "Placeholder Text, Singapore XXXXXX";
+	}
 	
 	public Donor(String name, String address, List<NonperishableDonation> nonperishableDonations, List<PerishableDonation> perishableDonations) {
 		this.name = name;

@@ -19,6 +19,7 @@ import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
 import foodbank.response.dto.ResponseDTO;
+import foodbank.util.DateParser;
 import foodbank.util.FileManager;
 import foodbank.util.InventorySerializer;
 import foodbank.util.MessageConstants.ErrorMessages;
@@ -94,42 +95,27 @@ public class FoodServiceImpl implements FoodService {
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() + foodItem.getQuantity());
 			foodRepository.save(dbFoodItem);
-			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
-			if(foodItem.getDonorName() != null) {
-				//call DonorController's method to add food item into non-perishable list for specific donor
-				updateDonorNonperishable(foodItem);
-			}
 		} else {
 			dbFoodItem = new FoodItem(category, classification, description, foodItem.getQuantity());
-			foodRepository.save(dbFoodItem);
-			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
-			if(foodItem.getDonorName() != null) {
-				updateDonorNonperishable(foodItem);
-			}
+			foodRepository.insert(dbFoodItem);
+		}
+		InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+		if(foodItem.getDonorName() != null) {
+			//call DonorController's method to add food item into non-perishable list for specific donor
+			updateDonorNonperishable(dbFoodItem, foodItem.getDonorName());
 		}
 	}
 	
-	private void updateDonorNonperishable(FoodItemDTO foodItem) {
-		Donor dbDonor = donorRepository.findByName(foodItem.getDonorName());
+	private void updateDonorNonperishable(FoodItem foodItem, String donorName) {
+		Donor dbDonor = donorRepository.findByName(donorName);
 		if(dbDonor == null) {
-			dbDonor = new Donor();
-			dbDonor.setName(foodItem.getDonorName());
-			dbDonor.setAddress("Testing Address, Singapore 123910");
+			dbDonor = new Donor(donorName);
 			donorRepository.save(dbDonor);
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
-		if(dbNonperishableDonationList == null) {
-			dbNonperishableDonationList = new ArrayList<NonperishableDonation>();
-			dbDonor.setNonperishableDonations(dbNonperishableDonationList);
-		}
-		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription());
-		dbFoodItem.setQuantity(foodItem.getQuantity());
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String donationDate = dateFormat.format(date);
-		NonperishableDonation newNonperishableDonation = new NonperishableDonation(dbFoodItem, donationDate);
+		String donationDate = DateParser.getCurrentDate(new Date());
+		NonperishableDonation newNonperishableDonation = new NonperishableDonation(foodItem, donationDate);
 		dbNonperishableDonationList.add(newNonperishableDonation);
-		System.out.println(dbNonperishableDonationList);
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);
 		donorRepository.save(dbDonor);
 	}
