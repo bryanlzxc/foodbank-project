@@ -75,6 +75,7 @@ public class PackingServiceImpl implements PackingService {
 					foodItem.getDescription(), 0, foodItem.getAllocatedQuantity())));
 			packingLists.add(new PackingList(allocation.getBeneficiary(), packedItems));
 		}
+		packingRepository.insert(packingLists);
 	}
 
 	@Override

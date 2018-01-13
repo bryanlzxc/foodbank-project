@@ -76,7 +76,7 @@ public class AdminController {
 	
 	@PostMapping("/update/window-status")
 	public ResponseDTO toggleWindowStatus(@RequestBody AdminSettingsDTO adminSettings) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, null);
 		try {
 			WindowStatus status = adminService.updateWindowStatus(adminSettings);
 			if(status == WindowStatus.ACTIVE) {
@@ -96,7 +96,7 @@ public class AdminController {
 	
 	@PostMapping("/toggle/window-status")
 	public ResponseDTO toggleWindowStatus() {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, null);
 		AdminSettingsDTO adminSettingsDTO = new AdminSettingsDTO();
 		adminSettingsDTO.setWindowToggle(true);
 		WindowStatus status = adminService.updateWindowStatus(adminSettingsDTO);
@@ -112,7 +112,7 @@ public class AdminController {
 	
 	@PostMapping("/update/opening-date")
 	public ResponseDTO updateOpeningDate(@RequestBody AdminSettingsDTO adminSettings) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.OPENING_DATE_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.OPENING_DATE_UPDATE_SUCCESS);
 		try {
 			adminService.updateWindowOpeningDate(adminSettings);
 		} catch (Exception e) {
@@ -124,7 +124,7 @@ public class AdminController {
 	
 	@PostMapping("/update/closing-date")
 	public ResponseDTO updateClosingDate(@RequestBody AdminSettingsDTO adminSettings) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.CLOSING_DATE_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.CLOSING_DATE_UPDATE_SUCCESS);
 		try {
 			adminService.updateWindowClosingDate(adminSettings);
 		} catch (Exception e) {
@@ -136,7 +136,7 @@ public class AdminController {
 	
 	@PostMapping("/update/decay-rate")
 	public ResponseDTO updateDecayRate(@RequestBody AdminSettingsDTO adminSettings) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.DECAY_RATE_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DECAY_RATE_UPDATE_SUCCESS);
 		try {
 			adminService.updateDecayRate(adminSettings);
 		} catch (Exception e) {
@@ -148,7 +148,7 @@ public class AdminController {
 	
 	@PostMapping("/update/multiplier-rate")
 	public ResponseDTO updateMultiplierRate(@RequestBody AdminSettingsDTO adminSettings) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.MULTIPLIER_RATE_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.MULTIPLIER_RATE_UPDATE_SUCCESS);
 		try {
 			adminService.updateMultiplierRate(adminSettings);
 		} catch (Exception e) {
@@ -160,7 +160,7 @@ public class AdminController {
 	
 	@PostMapping("/update/batch")
 	public ResponseDTO updateAllSettings(@RequestBody AdminSettingsDTO adminSettings) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ADMIN_BATCH_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_BATCH_UPDATE_SUCCESS);
 		try {
 			adminService.updateAdminSettings(adminSettings);
 		} catch (Exception e) {
@@ -172,7 +172,7 @@ public class AdminController {
 	
 	@PostMapping("/reset-password")
 	public ResponseDTO resetPassword(@RequestBody UserDTO user) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.RESET_PASSWORD_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.RESET_PASSWORD_SUCCESS);
 		try {
 			adminService.resetPassword(user);
 		} catch (Exception e) {

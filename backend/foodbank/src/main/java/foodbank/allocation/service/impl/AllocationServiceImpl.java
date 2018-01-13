@@ -329,5 +329,14 @@ public class AllocationServiceImpl implements AllocationService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void approveAllocations() {
+		// TODO Auto-generated method stub
+		List<Allocation> allocations = allocationRepository.findAll();
+		for(Allocation allocation : allocations) {
+			allocation.setApprovalStatus(true);
+		}
+	}
 	
 }

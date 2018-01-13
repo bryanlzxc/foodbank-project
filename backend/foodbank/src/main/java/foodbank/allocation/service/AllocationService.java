@@ -18,5 +18,7 @@ public interface AllocationService {
 	void updateAllocation(final AllocationDTO allocation);
 	
 	void batchAllocationUpdate(final BatchAllocationDTO batchAllocation);
+	
+	void approveAllocations();
 
 }

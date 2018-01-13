@@ -85,8 +85,8 @@ public class FileBackupScheduler {
 	private List<String> csvFileList = new ArrayList<String>();
 	
 	private void init() {
-		//credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
-		credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
+		credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
+		// credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
 		client = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(Regions.US_EAST_2)
@@ -100,7 +100,7 @@ public class FileBackupScheduler {
 		csvFileList.add("admin-data.csv,Settings Id,Window Status, Window Start DateTime, Window End DateTime, Decay Rate, Multiplier Rate");
 		csvFileList.add("inventory-data.csv,Item Id,Food Category,Item Classification,Item Description,Quantity");
 		csvFileList.add("request-data.csv,Request Id,Food Category,Item Classification,Item Description,Quantity,Request Creation Date,Beneficiary Id");
-		csvFileList.add("allocation-data.csv,Allocation Id,Allocated Items,Beneficiary Id");
+		csvFileList.add("allocation-data.csv,Allocation Id,Allocated Items,Beneficiary Id,Approval Status");
 		csvFileList.add("historical-data.csv,Historical Request Id,Beneficiary Id,Request Creation Date,Food Category,Item Classification,"
 				+ "Item Description,Requested Quantity,Allocated Quantity");
 	}

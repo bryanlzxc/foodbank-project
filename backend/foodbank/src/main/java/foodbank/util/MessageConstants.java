@@ -26,6 +26,7 @@ public final class MessageConstants {
 	public static final String ALLOCATION_GENERATE_SUCCESS = "Allocations successfully generated.";
 	public static final String ALLOCATION_CREATE_SUCCESS = "Allocation successfully created.";
 	public static final String ALLOCATION_UPDATE_SUCCESS = "Allocation successfully updated.";
+	public static final String ALLOCATION_APPROVE_SUCCESS = "Allocations successfully approved.";
 	public static final String EMAIL_SEND_SUCCESS = "Email successfully sent.";
 	public static final String PACKING_LIST_GENERATE_SUCCESS = "Packing lists successfully generated.";
 	public static final String PACKING_LIST_UPDATE_SUCCESS = "Packing list successfully updated.";

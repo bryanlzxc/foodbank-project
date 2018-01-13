@@ -23,11 +23,15 @@ public class Allocation {
 	
 	private List<AllocatedFoodItems> allocatedItems;
 	
+	private Boolean approvalStatus = false;
+	
 	public Allocation() {}
 	
-	public Allocation(String id, Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems) {
+	public Allocation(String id, Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems,
+			Boolean approvalStatus) {
 		this(beneficiary, allocatedItems);
 		this.id = id;
+		this.approvalStatus = approvalStatus;
 	}
 	
 	public Allocation(Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems) {
@@ -59,6 +63,14 @@ public class Allocation {
 		this.allocatedItems = allocatedItems;
 	}
 	
+	public Boolean getApprovalStatus() {
+		return approvalStatus;
+	}
+
+	public void setApprovalStatus(Boolean approvalStatus) {
+		this.approvalStatus = approvalStatus;
+	}
+
 	@Override
 	public String toString() {
 		String allocatedItemString = "";
@@ -71,7 +83,8 @@ public class Allocation {
 		}
 		return id + "," 
 				+ "[" + allocatedItemString + "]" + ","
-				+ beneficiary.getId();
+				+ beneficiary.getId() + ","
+				+ approvalStatus;
 	}
 	
 	/*

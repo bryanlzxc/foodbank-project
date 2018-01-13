@@ -24,6 +24,8 @@ public class QAllocation extends EntityPathBase<Allocation> {
 
     public final ListPath<AllocatedFoodItems, QAllocatedFoodItems> allocatedItems = this.<AllocatedFoodItems, QAllocatedFoodItems>createList("allocatedItems", AllocatedFoodItems.class, QAllocatedFoodItems.class, PathInits.DIRECT2);
 
+    public final BooleanPath approvalStatus = createBoolean("approvalStatus");
+
     public final foodbank.beneficiary.entity.QBeneficiary beneficiary;
 
     public final StringPath id = createString("id");

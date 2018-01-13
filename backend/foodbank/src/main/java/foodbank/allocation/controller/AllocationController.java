@@ -46,7 +46,7 @@ public class AllocationController {
 	
 	@PostMapping("/generate-allocations")
 	public ResponseDTO generateAllocations() {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_GENERATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ALLOCATION_GENERATE_SUCCESS);
 		try {
 			allocationService.generateAllocationList();
 		} catch (Exception e) {
@@ -58,9 +58,21 @@ public class AllocationController {
 	
 	@PostMapping("/update-allocation")
 	public ResponseDTO updateAllocation(@RequestBody AllocationDTO allocation) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ALLOCATION_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ALLOCATION_UPDATE_SUCCESS);
 		try {
 			allocationService.updateAllocation(allocation);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/approve-allocations")
+	public ResponseDTO approveAllocations() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ALLOCATION_APPROVE_SUCCESS);
+		try {
+			allocationService.approveAllocations();
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

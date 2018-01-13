@@ -75,8 +75,8 @@ public class FileManager implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		// TODO Auto-generated method stub
-		//	AWSCredentials credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
+		AWSCredentials credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
+		// AWSCredentials credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
 		client = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(Regions.US_EAST_2)
@@ -180,7 +180,9 @@ public class FileManager implements CommandLineRunner {
 			int allocationEndIndex = input.indexOf("]");
 			String id = input.substring(0, allocationStartIndex-1);
 			String allocatedItemString = input.substring(allocationStartIndex+1, allocationEndIndex);
-			String beneficiaryId = input.substring(allocationEndIndex+2);
+			String[] beneficiaryIdAndStatusArray = input.substring(allocationEndIndex+2).split(",");
+			String beneficiaryId = beneficiaryIdAndStatusArray[0];
+			Boolean approvalStatus = Boolean.valueOf(beneficiaryIdAndStatusArray[1]);
 			ArrayList<AllocatedFoodItems> allocatedItems = new ArrayList<AllocatedFoodItems>();
 			String[] allocatedItemsData = allocatedItemString.trim().split("\\{|\\}");
 			List<String> data = Arrays.stream(allocatedItemsData).filter(entry -> !entry.isEmpty()).collect(Collectors.toList());
@@ -194,7 +196,7 @@ public class FileManager implements CommandLineRunner {
 				allocatedItems.add(new AllocatedFoodItems(category, classification, description, allocatedQuantity, requestedQuantity, 
 						InventorySerializer.retrieveQuantityOfItem(category, classification, description)));
 			}
-			allocations.add(new Allocation(id, beneficiaryRepository.findById(beneficiaryId), allocatedItems));
+			allocations.add(new Allocation(id, beneficiaryRepository.findById(beneficiaryId), allocatedItems, approvalStatus));
 		}
 		allocationRepository.insert(allocations);
 	}

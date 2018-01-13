@@ -39,36 +39,36 @@ public class BeneficiaryController {
 	}
 	
 	@GetMapping("/get-score")
-	public Object getBeneficiaryScore(@RequestParam(value = "beneficiary", required = true)  String beneficiary) {
+	public ResponseDTO getBeneficiaryScore(@RequestParam(value = "beneficiary", required = true)  String beneficiary) {
 		Double score = null;
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_RETRIEVE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_RETRIEVE_SUCCESS);
 		try {
 			score = beneficiaryService.getBeneficiaryScore(beneficiary);
+			responseDTO.setResult(score);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
-			return responseDTO;
 		}
-		return score;
+		return responseDTO;
 	}
 	
 	@GetMapping("/get-details")
-	public Object getBeneficiaryDetails(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
+	public ResponseDTO getBeneficiaryDetails(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		Beneficiary dbBeneficiary = null;
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_RETRIEVE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_RETRIEVE_SUCCESS);
 		try {
 			dbBeneficiary = beneficiaryService.getBeneficiaryDetails(beneficiary);
+			responseDTO.setResult(dbBeneficiary);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
-			return responseDTO;
 		}
-		return dbBeneficiary;
+		return responseDTO;
 	}
 	
 	@PutMapping("/insert-beneficiary")
 	public ResponseDTO insertBeneficiary(@RequestBody BeneficiaryDTO beneficiary) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_ADD_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_ADD_SUCCESS);
 		try {
 			beneficiaryService.createBeneficiary(beneficiary);
 		} catch (Exception e) {
@@ -80,7 +80,7 @@ public class BeneficiaryController {
 	
 	@PostMapping("/update-score")
 	public ResponseDTO updateBeneficiaryScore(@RequestBody BeneficiaryUpdateDTO beneficiaryUpdate) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
 		try {
 			beneficiaryService.modifyBeneficiaryScore(beneficiaryUpdate);
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class BeneficiaryController {
 	
 	@PostMapping("/update-beneficiary")
 	public ResponseDTO updateBeneficiary(@RequestBody BeneficiaryDTO beneficiary) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
 		try {
 			beneficiaryService.updateBeneficiary(beneficiary);
 		} catch (Exception e) {
@@ -104,7 +104,7 @@ public class BeneficiaryController {
 	
 	@PostMapping("/update-beneficiary-account")
 	public ResponseDTO updateBeneficiaryAccount(@RequestBody BeneficiaryAccountDTO beneficiaryAccount) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_UPDATE_SUCCESS);
 		// TODO: The try-catch for service call
 		try {
 			beneficiaryService.updateBeneficiaryAccount(beneficiaryAccount);
