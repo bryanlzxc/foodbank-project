@@ -72,7 +72,7 @@ public class PackingServiceImpl implements PackingService {
 			List<AllocatedFoodItems> foodItems = allocation.getAllocatedItems();
 			List<PackedFoodItem> packedItems = new ArrayList<PackedFoodItem>();
 			foodItems.forEach(foodItem -> packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
-					foodItem.getDescription(), 0, foodItem.getAllocatedQuantity())));
+					foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0)));
 			packingLists.add(new PackingList(allocation.getBeneficiary(), packedItems));
 		}
 		packingRepository.insert(packingLists);
