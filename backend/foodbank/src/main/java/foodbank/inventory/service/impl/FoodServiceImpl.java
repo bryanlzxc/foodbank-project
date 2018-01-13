@@ -1,8 +1,5 @@
 package foodbank.inventory.service.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +13,7 @@ import foodbank.donor.entity.NonperishableDonation;
 import foodbank.donor.repository.DonorRepository;
 import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.inventory.manager.BarcodeManager;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
 import foodbank.response.dto.ResponseDTO;
@@ -33,8 +31,6 @@ public class FoodServiceImpl implements FoodService {
 	
 	@Autowired
 	private DonorRepository donorRepository;
-	
-	private Map<String, String[]> barcodeMap;
 	
 	@Override
 	public List<FoodItem> retrieveAllFoodItems() {
@@ -85,11 +81,10 @@ public class FoodServiceImpl implements FoodService {
 		String classification = foodItem.getClassification();
 		String description = foodItem.getDescription();
 		String barcode = foodItem.getBarcode();
-		if(barcodeMap == null) { barcodeMap = FileManager.generateBarcodeMap(); }
-		String[] itemDetailsArray = barcodeMap.get(barcode);
+		String[] itemDetailsArray = BarcodeManager.barcodeMap.get(barcode);
 		if(itemDetailsArray == null && barcode != null) {
 			itemDetailsArray = new String[] { category, classification, description };
-			barcodeMap.put(barcode, itemDetailsArray);
+			BarcodeManager.barcodeMap.put(barcode, itemDetailsArray);
 		}
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 		if(dbFoodItem != null) {
@@ -262,10 +257,7 @@ public class FoodServiceImpl implements FoodService {
 	@Override
 	public Map<String, String> readBarcode(String barcode) {
 		// TODO Auto-generated method stub
-		if(barcodeMap == null) {
-			barcodeMap = FileManager.generateBarcodeMap();
-		}
-		String[] itemDetailsArray = barcodeMap.get(barcode);
+		String[] itemDetailsArray = BarcodeManager.barcodeMap.get(barcode);
 		Map<String, String> itemDetails = new HashMap<String, String>();
 		if(itemDetailsArray != null) {
 			itemDetails.put("status", ResponseDTO.Status.SUCCESS.toString());

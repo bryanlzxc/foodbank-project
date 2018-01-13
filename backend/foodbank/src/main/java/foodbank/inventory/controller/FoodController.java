@@ -37,8 +37,6 @@ public class FoodController {
 	
 	@Autowired
 	private FoodService foodService;
-	@Autowired
-	private DonorService donorService;
 	
 	@GetMapping("/display-all")
 	public ResponseDTO getAllFoodItems() {

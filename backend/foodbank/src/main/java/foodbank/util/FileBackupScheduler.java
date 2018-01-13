@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.history.service.HistoryService;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.inventory.manager.BarcodeManager;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.inventory.service.FoodService;
 import foodbank.packing.entity.PackingList;
@@ -104,6 +106,7 @@ public class FileBackupScheduler {
 		csvFileList.add("allocation-data.csv,Allocation Id,Allocated Items,Beneficiary Id,Approval Status");
 		csvFileList.add("historical-data.csv,Historical Request Id,Beneficiary Id,Request Creation Date,Food Category,Item Classification,"
 				+ "Item Description,Requested Quantity,Allocated Quantity");
+		csvFileList.add("barcode-data.csv,Barcode Id,Category,Classification,Description");
 	}
 	
 	//86400000
@@ -169,6 +172,15 @@ public class FileBackupScheduler {
 				case("user-data.csv"):
 					List<User> userList = userRepository.findAll();
 					for (User user : userList) { out.println(user.toString()); }
+					break;
+				case("barcode-data.csv"):
+					for(Map.Entry<String, String[]> keyValuePair : BarcodeManager.barcodeMap.entrySet()) {
+						String barcode = keyValuePair.getKey();
+						String category = keyValuePair.getValue()[0];
+						String classification = keyValuePair.getValue()[1];
+						String description = keyValuePair.getValue()[2];
+						out.println(barcode + "," + category + "," + classification + "," + description);
+					}
 					break;
 			}
 			client.putObject(new PutObjectRequest(bucketName, fileName, file));
