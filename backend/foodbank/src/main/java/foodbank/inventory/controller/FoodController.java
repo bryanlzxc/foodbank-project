@@ -98,6 +98,18 @@ public class FoodController {
 		return responseDTO;
 	}
 	
+	@PutMapping("/create-item")
+	public ResponseDTO createFoodItem(@RequestBody FoodItemDTO foodItem) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_CREATION_SUCCESS);
+		try {
+			foodService.createFoodItem(foodItem);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	// This method is used for BATCH amendment of the quantities of the objects in DB
 	@PostMapping("/batch/update-items-quantity")
 	public ResponseDTO updateFoodItemsQuantity(@RequestBody FoodItemDTO[] foodItems) {

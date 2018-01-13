@@ -257,6 +257,21 @@ public class FoodServiceImpl implements FoodService {
 			amendFoodItemQuantity(foodItem);
 		}
 	}
+	
+	@Override
+	public void createFoodItem(FoodItemDTO foodItem) {
+		String category = foodItem.getCategory();
+		String classification = foodItem.getClassification();
+		String description = foodItem.getDescription();
+		Integer quantity = foodItem.getQuantity();
+		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
+		if(dbFoodItem == null) {
+			foodRepository.insert(new FoodItem(category, classification, description, quantity));
+			InventorySerializer.updateQuantity(category, classification, description, quantity);
+		} else {
+			throw new InvalidFoodException(ErrorMessages.DUPLICATE_ITEM);
+		}
+	}
 
 	@Override
 	public Map<String, String> readBarcode(String barcode) {
