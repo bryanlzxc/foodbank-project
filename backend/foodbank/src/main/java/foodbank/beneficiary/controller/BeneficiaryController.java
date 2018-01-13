@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.allocation.entity.Allocation;
 import foodbank.beneficiary.dto.BeneficiaryAccountDTO;
 import foodbank.beneficiary.dto.BeneficiaryDTO;
 import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
@@ -21,6 +22,7 @@ import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.beneficiary.service.BeneficiaryService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 
 /*
  * Created by: Ng Shirong
@@ -34,8 +36,16 @@ public class BeneficiaryController {
 	private BeneficiaryService beneficiaryService;
 	
 	@GetMapping("/display-all")
-	public List<Beneficiary> getAllBeneficiaries() {
-		return beneficiaryService.getAllBeneficiaries();
+	public ResponseDTO getAllBeneficiaries() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BENEFICIARY_GET_SUCCESS);
+		try {
+			List<Beneficiary> list = beneficiaryService.getAllBeneficiaries();
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.BENEFICIARY_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/get-score")

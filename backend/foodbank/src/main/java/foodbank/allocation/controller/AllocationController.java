@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.admin.entity.AdminSettings;
 import foodbank.allocation.dto.AllocationDTO;
 import foodbank.allocation.entity.AllocatedFoodItems;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.service.AllocationService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 
  /*
   * Created by: Lim Jian Quan, Jaren
@@ -34,14 +36,30 @@ public class AllocationController {
 	private AllocationService allocationService;
 	
 	@GetMapping("/display-all")
-	public List<Allocation> retrieveAllocations() {
-		return allocationService.retrieveAllAllocations();
+	public ResponseDTO retrieveAllocations() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ALLOCATION_GET_SUCCESS);
+		try {
+			List<Allocation> list = allocationService.retrieveAllAllocations();
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ALLOCATION_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 //	@GetMapping("/display-allocations/beneficiary={beneficiary}")
 	@GetMapping("/display-allocations")
-	public List<AllocatedFoodItems> retrieveFoodItemsAllocatedToBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
-		return allocationService.retrieveAllocationByBeneficiary(beneficiary);
+	public ResponseDTO retrieveFoodItemsAllocatedToBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ALLOCATION_GET_SUCCESS);
+		try {
+			List<AllocatedFoodItems> list = allocationService.retrieveAllocationByBeneficiary(beneficiary);
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.ALLOCATION_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@PostMapping("/generate-allocations")

@@ -9,7 +9,6 @@ public final class MessageConstants {
 	public static final String ITEM_CREATION_SUCCESS = "Item successfully created.";
 	public static final String ITEM_OVERWRITE_SUCCESS = "Item successfully updated.";
 	public static final String ITEM_UPDATE_SUCCESS = "Item quantity successfully updated.";
-	public static final String ITEM_RETRIEVE_SUCCESS = "Item successfully retrieved.";
 	public static final String REQUEST_CREATE_SUCCESS = "Request successfully added.";
 	public static final String REQUEST_UPDATE_SUCCESS = "Request successfully updated.";
 	public static final String REQUEST_DELETE_SUCCESS = "Request successfully deleted.";
@@ -31,15 +30,22 @@ public final class MessageConstants {
 	public static final String EMAIL_SEND_SUCCESS = "Email successfully sent.";
 	public static final String PACKING_LIST_GENERATE_SUCCESS = "Packing lists successfully generated.";
 	public static final String PACKING_LIST_UPDATE_SUCCESS = "Packing list successfully updated.";
-	public static final String PACKING_LIST_RETRIEVE_SUCCESS = "Packing list successfully retrieved.";
 	public static final String RESET_PASSWORD_SUCCESS = "The password has been successfully reset.";
 	public static final String DONOR_ADD_SUCCESS = "Donor successfully added.";
 	public static final String DONOR_UPDATE_SUCCESS = "Donor update successfully.";
 	public static final String STOCKTAKE_ADD_DONOR_ITEM_SUCCESS = "Item and quantity by donor added successfully.";
 	public static final String DONOR_DELETE_SUCCESS = "Donor successfully deleted.";
-	public static final String REQUEST_HISTORY_RETRIEVE_SUCCESS = "Request history successfully retrieved.";
-	public static final String USER_LIST_RETRIEVE_SUCCESS = "User list retrieved successfully.";
-	public static final String USER_RETRIEVE_SUCCESS = "User retrieved successfully.";
+	public static final String ADMIN_GET_SUCCESS = "GET call for ADMIN is successful.";
+	public static final String ALLOCATION_GET_SUCCESS = "GET call for ALLOCATION is successful.";
+	public static final String BENEFICIARY_GET_SUCCESS = "GET call for BENEFICIARY is successful";
+	public static final String DONOR_GET_SUCCESS = "GET call for DONOR is successful";
+	public static final String REQUEST_GET_SUCCESS = "GET call for REQUEST is successful";
+    public static final String REQUEST_HISTORY_RETRIEVE_SUCCESS = "Request history successfully retrieved.";
+    public static final String USER_LIST_RETRIEVE_SUCCESS = "User list retrieved successfully.";
+    public static final String USER_RETRIEVE_SUCCESS = "User retrieved successfully.";
+    public static final String ITEM_RETRIEVE_SUCCESS = "Item successfully retrieved.";
+    public static final String PACKING_LIST_RETRIEVE_SUCCESS = "Packing list successfully retrieved.";
+
 	
 	public static class ErrorMessages {
 		
@@ -59,6 +65,11 @@ public final class MessageConstants {
 		public static final String PACKING_UPDATE_ERROR = "This packing list does not exist.";
 		public static final String DONOR_ALREADY_EXISTS = "This donor already exists.";
 		public static final String DONOR_DOES_NOT_EXIST = "This donor does not exists.";
+		public static final String ADMIN_GET_FAIL = "GET call for ADMIN failed.";
+		public static final String ALLOCATION_GET_FAIL = "GET call for ALLOCATION failed";
+		public static final String BENEFICIARY_GET_FAIL = "GET call for BENEFICIARY failed";
+		public static final String DONOR_GET_FAIL = "GET call for DONOR failed";
+		public static final String REQUEST_GET_FAIL = "GET call for REQUEST failed";
 		
 		
 	}

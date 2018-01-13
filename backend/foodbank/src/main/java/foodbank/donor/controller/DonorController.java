@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.donor.dto.DonorDTO;
 import foodbank.donor.entity.Donor;
 import foodbank.donor.service.DonorService;
@@ -27,6 +28,7 @@ import foodbank.response.dto.ResponseDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.util.DateParser;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 
 @RestController
 @CrossOrigin
@@ -40,19 +42,35 @@ public class DonorController {
 	private FoodRepository foodRepository;
 	
 	@GetMapping("/display-all")
-	public List<Donor> getAllDonors() {
-		return donorService.getAllDonors();
+	public ResponseDTO getAllDonors() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_GET_SUCCESS);
+		try {
+			List<Donor> list = donorService.getAllDonors();
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.DONOR_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display-donors")
-	public List<String> getDonorNames(){
-		return donorService.getDonorNames();
+	public ResponseDTO getDonorNames(){
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_GET_SUCCESS);
+		try {
+			List<String> list = donorService.getDonorNames();
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.DONOR_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	//this is used to create a new donor with empty list of PerishableDonation and NonperishableDonation
 	@PutMapping("/create-donor")
 	public ResponseDTO createDonor(@RequestBody DonorDTO donor) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.DONOR_ADD_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_ADD_SUCCESS);
 		try {
 			donorService.createDonor(donor);
 		} catch (Exception e) {
@@ -64,7 +82,7 @@ public class DonorController {
 	
 	@DeleteMapping("/delete-donor")
 	public ResponseDTO deleteDonor(@RequestParam (value = "id", required = true) String id) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.DONOR_DELETE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_DELETE_SUCCESS);
 		try {
 			donorService.deleteDonor(id);
 		} catch (Exception e) {
@@ -78,7 +96,7 @@ public class DonorController {
 	//this will be called by FoodService
 	@PostMapping("/update-donor-nonperishable")
 	public ResponseDTO updateDonorNonperishable(@RequestBody FoodItemDTO foodItem) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.DONOR_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_UPDATE_SUCCESS);
 		try {
 			donorService.updateDonorNonperishable(foodItem);
 		}catch (Exception e) {

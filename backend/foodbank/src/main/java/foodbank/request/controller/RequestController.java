@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.donor.entity.Donor;
 import foodbank.request.dto.BatchRequestDTO;
 import foodbank.request.dto.RequestDTO;
 import foodbank.request.entity.Request;
 import foodbank.request.service.RequestService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 
 /*
  * Created by: Ng Shirong
@@ -34,24 +36,48 @@ public class RequestController {
 	private RequestService requestService;
 	
 	@GetMapping("/display-all")
-	public List<Request> getAllRequests() {
-		return requestService.getAllRequests();
+	public ResponseDTO getAllRequests() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_GET_SUCCESS);
+		try {
+			List<Request> list = requestService.getAllRequests();
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.REQUEST_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 //	@GetMapping("/display/beneficiary={beneficiary}")
 	@GetMapping("/display")
-	public List<Request> getAllRequestsFromBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
-		return requestService.getAllRequestsByBeneficiary(beneficiary);
+	public ResponseDTO getAllRequestsFromBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_GET_SUCCESS);
+		try {
+			List<Request> list = requestService.getAllRequestsByBeneficiary(beneficiary);
+			responseDTO.setResult(list);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.REQUEST_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@GetMapping("/display-count/unique-beneficiaries")
-	public Integer retrieveUniqueBeneficiaryCount() {
-		return requestService.countDistinctBeneficiaryRequests();
+	public ResponseDTO retrieveUniqueBeneficiaryCount() {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_GET_SUCCESS);
+		try {
+			Integer i = requestService.countDistinctBeneficiaryRequests(); 
+			responseDTO.setResult(i);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.REQUEST_GET_FAIL);
+		}
+		return responseDTO;
 	}
 	
 	@PutMapping("/create-request")
 	public ResponseDTO createRequest(@RequestBody RequestDTO request) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_CREATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_CREATE_SUCCESS);
 		try {
 			requestService.insertRequest(request);
 		} catch (Exception e) {
@@ -63,7 +89,7 @@ public class RequestController {
 	
 	@PostMapping("/overwrite-request")
 	public ResponseDTO updateOverwriteRequest(@RequestBody RequestDTO request) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_UPDATE_SUCCESS);
 		try {
 			requestService.updateOverwriteRequest(request);
 		} catch (Exception e) {
@@ -75,7 +101,7 @@ public class RequestController {
 	
 	@PostMapping("/update-request")
 	public ResponseDTO updateRequest(@RequestBody RequestDTO request) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_UPDATE_SUCCESS);
 		try {
 			requestService.updateRequest(request);
 		} catch (Exception e) {
@@ -87,7 +113,7 @@ public class RequestController {
 	
 	@DeleteMapping("/delete-request")
 	public ResponseDTO deleteRequest(@RequestParam (value = "id", required = true) String id) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.REQUEST_DELETE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.REQUEST_DELETE_SUCCESS);
 		try {
 			requestService.deleteRequest(id);
 		} catch (Exception e) {
@@ -99,7 +125,7 @@ public class RequestController {
 	
 	@PutMapping("/batch/create-request")
 	public ResponseDTO createRequest(@RequestBody BatchRequestDTO batchRequest) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.BATCH_REQUEST_CREATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.BATCH_REQUEST_CREATE_SUCCESS);
 		try {
 			requestService.batchInsertRequest(batchRequest);
 		} catch (Exception e) {
