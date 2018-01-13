@@ -15,5 +15,7 @@ public interface DonorService {
 	void createDonor(DonorDTO donor);
 
 	void updateDonorNonperishable(FoodItemDTO foodItem);
+
+	void deleteDonor(String id);
 	
 }

@@ -9,5 +9,7 @@ import foodbank.donor.entity.Donor;
 public interface DonorRepository extends MongoRepository<Donor, String> {
 	
 	Donor findByName(String name);
+	
+	Donor findById(String id);
 
 }

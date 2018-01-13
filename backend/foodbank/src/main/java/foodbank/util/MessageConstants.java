@@ -33,6 +33,7 @@ public final class MessageConstants {
 	public static final String DONOR_ADD_SUCCESS = "Donor successfully added.";
 	public static final String DONOR_UPDATE_SUCCESS = "Donor update successfully.";
 	public static final String STOCKTAKE_ADD_DONOR_ITEM_SUCCESS = "Item and quantity by donor added successfully.";
+	public static final String DONOR_DELETE_SUCCESS = "Donor successfully deleted.";
 	
 	public static class ErrorMessages {
 		
@@ -52,6 +53,7 @@ public final class MessageConstants {
 		public static final String PACKING_UPDATE_ERROR = "This packing list does not exist.";
 		public static final String DONOR_ALREADY_EXISTS = "This donor already exists.";
 		public static final String DONOR_DOES_NOT_EXIST = "This donor does not exists.";
+		
 		
 	}
 	

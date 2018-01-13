@@ -20,6 +20,7 @@ import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.InvalidDonorException;
+import foodbank.util.exceptions.InvalidRequestException;
 
 @Service
 public class DonorServiceImpl implements DonorService {
@@ -77,6 +78,15 @@ public class DonorServiceImpl implements DonorService {
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);
 		donorRepository.save(dbDonor);
 		
+	}
+
+	@Override
+	public void deleteDonor(String id) {
+		Donor dbDonor = donorRepository.findById(id);
+		if(dbDonor == null) {
+			throw new InvalidRequestException(ErrorMessages.DONOR_DOES_NOT_EXIST);
+		}
+		donorRepository.delete(dbDonor);
 	}
 	
 
