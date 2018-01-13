@@ -79,7 +79,8 @@ public class FileBackupScheduler {
 	private UserRepository userRepository;
 	
 	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
-	private static final String BACKUP_BUCKET = "foodbank-backup-data";
+	private static final String DEVELOPMENT_BACKUP_BUCKET = "foodbank-backup";
+	private static final String DEPLOYMENT_BACKUP_BUCKET = "foodbank-backup-data";
 	private AWSCredentials credentials;
 	private AmazonS3 client;
 	private List<String> csvFileList = new ArrayList<String>();
@@ -91,8 +92,8 @@ public class FileBackupScheduler {
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(Regions.US_EAST_2)
 				.build();
-		if(!client.doesBucketExistV2(BACKUP_BUCKET)) {
-			client.createBucket(BACKUP_BUCKET);
+		if(!client.doesBucketExistV2(DEVELOPMENT_BACKUP_BUCKET)) {
+			client.createBucket(DEVELOPMENT_BACKUP_BUCKET);
 		}
 		csvFileList.add("user-data.csv,User Id,Username,Password,Usertype,Name,Email");
 		csvFileList.add("beneficiary-data.csv,Beneficiary Id,User Id,Number of Beneficiaries,Address,Postal Code,Score,Contact Person,"
@@ -113,13 +114,13 @@ public class FileBackupScheduler {
 		for(Bucket bucket : buckets) {
 			String bucketName = bucket.getName();
 			if(bucketName.equals("aws-website-visualanalyticstax-ed-k71jr")) { continue; }
-			if(bucketName.equals(BACKUP_BUCKET)) {
+			if(bucketName.equals(DEPLOYMENT_BACKUP_BUCKET)) {
 				for(int i = 0; i < csvFileList.size(); i++) {
 					String file = csvFileList.get(i);
 					String[] fileArray = file.split(",");
 					String fileName = fileArray[0];
-					S3Object s3Object = client.getObject(BACKUP_BUCKET, fileName);
-					backupFile(s3Object, BACKUP_BUCKET, fileName, i);
+					S3Object s3Object = client.getObject(DEPLOYMENT_BACKUP_BUCKET, fileName);
+					backupFile(s3Object, DEPLOYMENT_BACKUP_BUCKET, fileName, i);
 				}
 			}
 		}

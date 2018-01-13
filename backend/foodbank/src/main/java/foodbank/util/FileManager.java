@@ -67,8 +67,8 @@ public class FileManager implements CommandLineRunner {
 	@Autowired
 	private HistoryRepository historyRepository;
 		
-	//private static final String INVENTORY_BUCKET = "foodbank-inventory-data";
-	private static final String BACKUP_BUCKET = "foodbank-backup-data";
+	private static final String DEVELOPMENT_BACKUP_BUCKET = "foodbank-backup";
+	private static final String DEPLOYMENT_BACKUP_BUCKET = "foodbank-backup-data";
 	private List<String> csvFileList = new ArrayList<String>();
 	private static AmazonS3 client;
 	
@@ -92,7 +92,7 @@ public class FileManager implements CommandLineRunner {
 		dropExistingData();
 		for (String csvFilename : csvFileList) {
 			System.out.println("Trying to read file: " + csvFilename);
-			S3Object s3Object = client.getObject(BACKUP_BUCKET, csvFilename);
+			S3Object s3Object = client.getObject(DEVELOPMENT_BACKUP_BUCKET, csvFilename);
 			loadData(s3Object, csvFilename);
 		}
 	}
@@ -210,7 +210,7 @@ public class FileManager implements CommandLineRunner {
 	
 	public static Map<String, String[]> generateBarcodeMap() {
 		Map<String, String[]> barcodeMap = new HashMap<String, String[]>();
-		S3Object s3Object = client.getObject(BACKUP_BUCKET, "barcode-data.csv");
+		S3Object s3Object = client.getObject(DEVELOPMENT_BACKUP_BUCKET, "barcode-data.csv");
 		S3ObjectInputStream stream = s3Object.getObjectContent();
 		List<String> inputData = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.toList());
 		List<String[]> inputDataArray = inputData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
