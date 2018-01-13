@@ -29,18 +29,36 @@ public class PackingController {
 	private PackingService packingService;
 	
 	@GetMapping("/display-all")
-	public List<PackingList> getAllPackingLists() {
-		return packingService.retrieveAllPackingLists();
+	public ResponseDTO getAllPackingLists() {
+		List<PackingList> result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.PACKING_LIST_RETRIEVE_SUCCESS);
+		try {
+			result = packingService.retrieveAllPackingLists();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(result);
+		return responseDTO;
 	}
 	
 	@GetMapping("/display-by")
-	public PackingList getBeneficiaryPackingList(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
-		return packingService.findByBeneficiary(beneficiary);
+	public ResponseDTO getBeneficiaryPackingList(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
+		PackingList result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.PACKING_LIST_RETRIEVE_SUCCESS);
+		try {
+			result = packingService.findByBeneficiary(beneficiary);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(result);
+		return responseDTO;
 	}
 	
 	@PostMapping("/generate-list")
 	public ResponseDTO generatePackingList() {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_GENERATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_GENERATE_SUCCESS);
 		try {
 			packingService.generatePackingList();
 		} catch (Exception e) {
@@ -52,7 +70,7 @@ public class PackingController {
 	
 	@PostMapping("/update-list")
 	public ResponseDTO updateList(@RequestBody PackingListDTO packingList) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
 			packingService.updatePackedQuantities(packingList);
 		} catch (Exception e) {
@@ -64,7 +82,7 @@ public class PackingController {
 	
 	@PostMapping("/update-by-item")
 	public ResponseDTO updateByItem(@RequestBody Map<String, Object> details) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
 			packingService.updateBeneficiaryPackingList(details);
 		} catch (Exception e) {
@@ -76,7 +94,7 @@ public class PackingController {
 	
 	@PostMapping("/update-packing-status")
 	public ResponseDTO updatePackingStatus(@RequestBody WebRequest data) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
 			packingService.updatePackingStatus(data);
 		} catch (Exception e) {

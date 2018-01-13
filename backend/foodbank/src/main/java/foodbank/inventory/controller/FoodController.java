@@ -22,6 +22,7 @@ import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.service.FoodService;
 import foodbank.response.dto.ResponseDTO;
+import foodbank.response.dto.ResponseDTO.Status;
 import foodbank.util.MessageConstants;
 import foodbank.util.exceptions.InvalidFoodException;
 
@@ -40,29 +41,56 @@ public class FoodController {
 	private DonorService donorService;
 	
 	@GetMapping("/display-all")
-	public List<FoodItem> getAllFoodItems() {
-		return foodService.retrieveAllFoodItems();
+	public ResponseDTO getAllFoodItems() {
+		List<FoodItem> result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.ITEM_RETRIEVE_SUCCESS);
+		try {
+			result = foodService.retrieveAllFoodItems();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(result);
+		return responseDTO;
 	}
 	
 //	@GetMapping("/category={category}/display-all")
 	@GetMapping("/display-by-category")
-	public List<FoodItem> getAllFoodItemsInCategory(@RequestParam(value = "category", required = true) String category) {
-		return foodService.retrieveAllFoodItemsInCategory(category);
+	public ResponseDTO getAllFoodItemsInCategory(@RequestParam(value = "category", required = true) String category) {
+		List<FoodItem> result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.ITEM_RETRIEVE_SUCCESS);
+		try {
+			result = foodService.retrieveAllFoodItemsInCategory(category);
+		} catch (Exception e) { 
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(result);
+		return responseDTO;
 	}
 	
 //	@GetMapping("/category={category}/classification={classification}/**/display-all")
 	@GetMapping("/display-by-category-classification")
-	public List<FoodItem> getAllFoodItemsInClassification(@RequestParam(value = "category", required = true) String category, @RequestParam(value = "classification", required = true) String classification,
+	public ResponseDTO getAllFoodItemsInClassification(@RequestParam(value = "category", required = true) String category, @RequestParam(value = "classification", required = true) String classification,
 			HttpServletRequest request) {
-		String url = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
+		// String url = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
 //		classification = url.substring(url.indexOf("classification=")+"classification=".length(), url.indexOf("/display-all"));
-		return foodService.retrieveFoodItemsByCategoryAndClassification(category, classification);
+		Object result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.ITEM_RETRIEVE_SUCCESS);
+		try {
+			result = foodService.retrieveFoodItemsByCategoryAndClassification(category, classification);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(result);
+		return responseDTO;
 	}
 	
 	// This method is used to overwrite the quantity of the object in DB
 	@PostMapping("/update-item")
 	public ResponseDTO updateFoodItem(@RequestBody FoodItemDTO foodItem) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_OVERWRITE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_OVERWRITE_SUCCESS);
 		try {
 			foodService.overwriteFoodItem(foodItem);
 		} catch (Exception e) {
@@ -75,7 +103,7 @@ public class FoodController {
 	// This method is used to amend the quantity of the object in DB
 	@PostMapping("/update-item-quantity")
 	public ResponseDTO updateFoodItemQuantity(@RequestBody FoodItemDTO foodItem) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_UPDATE_SUCCESS);
 		try {
 			foodService.amendFoodItemQuantity(foodItem);
 		} catch (Exception e) {
@@ -88,7 +116,7 @@ public class FoodController {
 	// This method is used for BATCH overwrite of the quantities of the objects in DB
 	@PostMapping("/batch/update-items")
 	public ResponseDTO updateFoodItems(@RequestBody FoodItemDTO[] foodItems) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_OVERWRITE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_OVERWRITE_SUCCESS);
 		try {
 			foodService.overwriteFoodItems(foodItems);
 		} catch (Exception e) {
@@ -100,7 +128,7 @@ public class FoodController {
 	
 	@PutMapping("/create-item")
 	public ResponseDTO createFoodItem(@RequestBody FoodItemDTO foodItem) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_CREATION_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_CREATION_SUCCESS);
 		try {
 			foodService.createFoodItem(foodItem);
 		} catch (Exception e) {
@@ -113,7 +141,7 @@ public class FoodController {
 	// This method is used for BATCH amendment of the quantities of the objects in DB
 	@PostMapping("/batch/update-items-quantity")
 	public ResponseDTO updateFoodItemsQuantity(@RequestBody FoodItemDTO[] foodItems) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, MessageConstants.ITEM_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_UPDATE_SUCCESS);
 		try {
 			foodService.amendFoodItemsQuantity(foodItems);
 		} catch (Exception e) {

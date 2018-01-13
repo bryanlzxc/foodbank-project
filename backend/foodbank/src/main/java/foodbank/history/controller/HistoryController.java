@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import foodbank.history.dto.RequestHistoryDTO;
 import foodbank.history.service.HistoryService;
 import foodbank.response.dto.ResponseDTO;
+import foodbank.util.MessageConstants;
 
 @RestController
 @CrossOrigin
@@ -24,19 +25,31 @@ public class HistoryController {
 	private HistoryService historyService;
 	
 	@GetMapping("/requests/display-all")
-	public List<RequestHistoryDTO> retrieveAllRequestHistory() {
-		return historyService.retrieveAllPastRequest();
+	public ResponseDTO retrieveAllRequestHistory() {
+		List<RequestHistoryDTO> requestHistories = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, requestHistories, MessageConstants.REQUEST_HISTORY_RETRIEVE_SUCCESS);
+		try {
+			requestHistories = historyService.retrieveAllPastRequest();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(requestHistories);
+		return responseDTO;
 	}
 	
 	@GetMapping("/requests/display")
-	public Object retrieveAllPastRequestsByBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
+	public ResponseDTO retrieveAllPastRequestsByBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		Object response = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, response, MessageConstants.REQUEST_HISTORY_RETRIEVE_SUCCESS);
 		try {
 			response = historyService.retrieveAllPastRequestsByBeneficiary(beneficiary);
 		} catch (Exception e) {
-			response = new ResponseDTO(ResponseDTO.Status.FAIL, e.getMessage());
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
 		}
-		return response;
+		responseDTO.setResult(response);
+		return responseDTO;
 	}
 	
 }
