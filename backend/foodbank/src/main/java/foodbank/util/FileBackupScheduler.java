@@ -117,13 +117,13 @@ public class FileBackupScheduler {
 		for(Bucket bucket : buckets) {
 			String bucketName = bucket.getName();
 			if(bucketName.equals("aws-website-visualanalyticstax-ed-k71jr")) { continue; }
-			if(bucketName.equals(DEPLOYMENT_BACKUP_BUCKET)) {
+			if(bucketName.equals(DEVELOPMENT_BACKUP_BUCKET)) {
 				for(int i = 0; i < csvFileList.size(); i++) {
 					String file = csvFileList.get(i);
 					String[] fileArray = file.split(",");
 					String fileName = fileArray[0];
-					S3Object s3Object = client.getObject(DEPLOYMENT_BACKUP_BUCKET, fileName);
-					backupFile(s3Object, DEPLOYMENT_BACKUP_BUCKET, fileName, i);
+					S3Object s3Object = client.getObject(DEVELOPMENT_BACKUP_BUCKET, fileName);
+					backupFile(s3Object, DEVELOPMENT_BACKUP_BUCKET, fileName, i);
 				}
 			}
 		}
