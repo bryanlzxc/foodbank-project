@@ -63,7 +63,6 @@ public class UserController {
 	@GetMapping("/display-user")
 	public ResponseDTO getUserDetails(@RequestParam(value = "username", required = true) String username) {
 //		return userService.getUserDetails(username);
-		
 		User user = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_RETRIEVE_SUCCESS);
 		try {
