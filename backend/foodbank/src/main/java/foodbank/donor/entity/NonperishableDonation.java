@@ -4,23 +4,23 @@ import foodbank.inventory.entity.FoodItem;
 
 public class NonperishableDonation {
 	
-	private FoodItem foodItem;
+	private DonatedFoodItem donatedFoodItem;
 
 	private String donationDate;
 	
 	public NonperishableDonation() {}
 	
-	public NonperishableDonation(FoodItem foodItem, String donationDate) {
-		this.foodItem = foodItem;
+	public NonperishableDonation(DonatedFoodItem donatedFoodItem, String donationDate) {
+		this.donatedFoodItem = donatedFoodItem;
 		this.donationDate = donationDate;
 	}
 	
-	public FoodItem getFoodItem() {
-		return foodItem;
+	public FoodItem getDonatedFoodItem() {
+		return donatedFoodItem;
 	}
 
-	public void setFoodItem(FoodItem foodItem) {
-		this.foodItem = foodItem;
+	public void setFoodItem(DonatedFoodItem donatedFoodItem) {
+		this.donatedFoodItem = donatedFoodItem;
 	}
 	
 	public String getDonationDate() {

@@ -45,7 +45,6 @@ public final class MessageConstants {
     public static final String USER_RETRIEVE_SUCCESS = "User retrieved successfully.";
     public static final String ITEM_RETRIEVE_SUCCESS = "Item successfully retrieved.";
     public static final String PACKING_LIST_RETRIEVE_SUCCESS = "Packing list successfully retrieved.";
-
 	
 	public static class ErrorMessages {
 		

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import foodbank.donor.dto.DonorDTO;
+import foodbank.donor.entity.DonatedFoodItem;
 import foodbank.donor.entity.Donor;
 import foodbank.donor.entity.NonperishableDonation;
 import foodbank.donor.entity.PerishableDonation;
@@ -68,11 +69,11 @@ public class DonorServiceImpl implements DonorService {
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription());
 		dbFoodItem.setQuantity(foodItem.getQuantity());
 		String donationDate = DateParser.getCurrentDate(new Date());
-		NonperishableDonation newNonperishableDonation = new NonperishableDonation(dbFoodItem, donationDate);
+		NonperishableDonation newNonperishableDonation = new NonperishableDonation(new DonatedFoodItem(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription(), 
+				foodItem.getQuantity()), donationDate);
 		dbNonperishableDonationList.add(newNonperishableDonation);
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);
 		donorRepository.save(dbDonor);
-		
 	}
 
 	@Override

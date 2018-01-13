@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.donor.entity.DonatedFoodItem;
 import foodbank.donor.entity.Donor;
 import foodbank.donor.entity.NonperishableDonation;
 import foodbank.donor.repository.DonorRepository;
@@ -97,11 +98,11 @@ public class FoodServiceImpl implements FoodService {
 		InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
 		if(foodItem.getDonorName() != null) {
 			//call DonorController's method to add food item into non-perishable list for specific donor
-			updateDonorNonperishable(dbFoodItem, foodItem.getDonorName());
+			updateDonorNonperishable(new DonatedFoodItem(category, classification, description, foodItem.getQuantity()), foodItem.getDonorName());
 		}
 	}
 	
-	private void updateDonorNonperishable(FoodItem foodItem, String donorName) {
+	private void updateDonorNonperishable(DonatedFoodItem donatedItem, String donorName) {
 		Donor dbDonor = donorRepository.findByName(donorName);
 		if(dbDonor == null) {
 			dbDonor = new Donor(donorName);
@@ -109,7 +110,7 @@ public class FoodServiceImpl implements FoodService {
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
 		String donationDate = DateParser.getCurrentDate(new Date());
-		NonperishableDonation newNonperishableDonation = new NonperishableDonation(foodItem, donationDate);
+		NonperishableDonation newNonperishableDonation = new NonperishableDonation(donatedItem, donationDate);
 		dbNonperishableDonationList.add(newNonperishableDonation);
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);
 		donorRepository.save(dbDonor);

@@ -213,11 +213,13 @@ public class FileManager implements CommandLineRunner {
 		S3Object s3Object = client.getObject(DEVELOPMENT_BACKUP_BUCKET, "barcode-data.csv");
 		S3ObjectInputStream stream = s3Object.getObjectContent();
 		List<String> inputData = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.toList());
+		System.out.println("xxx = " + inputData);
 		List<String[]> inputDataArray = inputData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
 		for(String[] data : inputDataArray) {
 			String[] itemData = {data[1], data[2], data[3]};
 			barcodeMap.put(data[0], itemData);
 		}
+		System.out.println(barcodeMap.toString());
 		return barcodeMap;
 	}
 	

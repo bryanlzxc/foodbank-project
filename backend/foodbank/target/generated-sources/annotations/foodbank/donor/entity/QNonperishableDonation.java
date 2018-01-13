@@ -22,9 +22,9 @@ public class QNonperishableDonation extends BeanPath<NonperishableDonation> {
 
     public static final QNonperishableDonation nonperishableDonation = new QNonperishableDonation("nonperishableDonation");
 
-    public final StringPath donationDate = createString("donationDate");
+    public final foodbank.inventory.entity.QFoodItem donatedFoodItem;
 
-    public final foodbank.inventory.entity.QFoodItem foodItem;
+    public final StringPath donationDate = createString("donationDate");
 
     public QNonperishableDonation(String variable) {
         this(NonperishableDonation.class, forVariable(variable), INITS);
@@ -44,7 +44,7 @@ public class QNonperishableDonation extends BeanPath<NonperishableDonation> {
 
     public QNonperishableDonation(Class<? extends NonperishableDonation> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.foodItem = inits.isInitialized("foodItem") ? new foodbank.inventory.entity.QFoodItem(forProperty("foodItem")) : null;
+        this.donatedFoodItem = inits.isInitialized("donatedFoodItem") ? new foodbank.inventory.entity.QFoodItem(forProperty("donatedFoodItem")) : null;
     }
 
 }
