@@ -112,6 +112,7 @@ public class PackingServiceImpl implements PackingService {
 			BeneficiaryDeductScoreDTO beneficiaryDeductScoreDTO = new BeneficiaryDeductScoreDTO(beneficiary, -packedQuantity);
 			modifyBeneficiaryScore(beneficiaryDeductScoreDTO);
 		}
+		dbPackingList.setPackingStatus(true);
 		packingRepository.save(dbPackingList);
 	}
 	
