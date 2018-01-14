@@ -96,6 +96,9 @@ public class AdminServiceImpl implements AdminService {
 	public void updateWindowOpeningDate(AdminSettingsDTO settings) {
 		// TODO Auto-generated method stub
 		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
+		if(adminSettings.getWindowStatus() == WindowStatus.INACTIVE) {
+			throw new SettingsUpdateException(ErrorMessages.INACTIVE_WINDOW);
+		}
 		Date newStartingDate = null;
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
