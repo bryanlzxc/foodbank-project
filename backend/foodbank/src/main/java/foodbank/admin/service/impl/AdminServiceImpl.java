@@ -30,6 +30,7 @@ import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.email.entity.SendEmail;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
+import foodbank.packing.repository.PackingRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.user.dto.UserDTO;
@@ -61,6 +62,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PackingRepository packingRepository;
 	
 	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
 	
@@ -317,6 +321,7 @@ public class AdminServiceImpl implements AdminService {
 		pastRequests.forEach(pastRequest -> historyRepository.insert(pastRequest));
 		requestRepository.deleteAll();
 		allocationRepository.deleteAll();
+		packingRepository.deleteAll();
 	}
 	
 	@Override
