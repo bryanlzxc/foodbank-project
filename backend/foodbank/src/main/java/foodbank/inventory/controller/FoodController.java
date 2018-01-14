@@ -152,7 +152,7 @@ public class FoodController {
 	@GetMapping("/scanner")
 	public ResponseDTO getBarcodeDetails(@RequestParam(value = "barcode", required = true) String barcode) {
 		Map<String, String> foodDetails = null;
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_UPDATE_SUCCESS);
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_RETRIEVE_SUCCESS);
 		try {
 			foodDetails = foodService.readBarcode(barcode);
 		} catch (Exception e) {
