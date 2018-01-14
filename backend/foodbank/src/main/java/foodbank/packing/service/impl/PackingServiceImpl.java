@@ -192,7 +192,11 @@ public class PackingServiceImpl implements PackingService {
 		if(dbBeneficiary == null) { throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY); }
 		double inventoryQuantityPacked = beneficiaryUpdate.getQuantity();
 		double scoreToDeduct = inventoryQuantityPacked;			//currently the score which is deducted from beneficiary is the quantity of packed items
-		dbBeneficiary.setScore(dbBeneficiary.getScore() + scoreToDeduct);
+		double newScore = dbBeneficiary.getScore() + scoreToDeduct;
+		if(newScore < 0) {		//score will never be less than 0;
+			newScore = 0;
+		}
+		dbBeneficiary.setScore(newScore);
 		beneficiaryRepository.save(dbBeneficiary);
 	}
 	
