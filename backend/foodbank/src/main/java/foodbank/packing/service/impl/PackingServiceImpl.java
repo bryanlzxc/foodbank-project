@@ -150,12 +150,14 @@ public class PackingServiceImpl implements PackingService {
 	}
 
 	@Override
-	public void updatePackingStatus(WebRequest data) {
+	public void updatePackingStatus(String beneficiary) {
 		// TODO Auto-generated method stub
 		List<PackingList> packingLists = packingRepository.findAll();
 		PackingList dbPackingList = null;
 		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUsername().equals(data.getParameter("beneficiary"))) {
+			System.out.println("Beneficiary Data: " + packingList.getBeneficiary().getUsername());
+			System.out.println("Beneficiary Searching: " + beneficiary);
+			if(packingList.getBeneficiary().getUsername().equals(beneficiary)) {
 				dbPackingList = packingList;
 				break;
 			}

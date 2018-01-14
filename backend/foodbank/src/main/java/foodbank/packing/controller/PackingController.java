@@ -93,10 +93,10 @@ public class PackingController {
 	}
 	
 	@PostMapping("/update-packing-status")
-	public ResponseDTO updatePackingStatus(@RequestBody WebRequest data) {
+	public ResponseDTO updatePackingStatus(@RequestBody Map<String, String> beneficiary) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
-			packingService.updatePackingStatus(data);
+			packingService.updatePackingStatus(beneficiary.get("beneficiary"));
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

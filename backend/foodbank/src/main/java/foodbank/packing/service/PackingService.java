@@ -20,6 +20,6 @@ public interface PackingService {
 	
 	void updateBeneficiaryPackingList(final Map<String, Object> details);
 	
-	void updatePackingStatus(final WebRequest data);
+	void updatePackingStatus(final String beneficiary);
 	
 }
