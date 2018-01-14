@@ -77,7 +77,7 @@ public final class MessageConstants {
 		
 		public static final String WINDOW_OPENING_SUBJECT = "[NOTICE] Food Bank Singapore - Window Opened";
 		public static final String WINDOW_OPENING_MESSAGE = "This e-mail serves to notify you that the request window is now open. You may now feel free"
-				+ "to make your requests for the items available this window.\n\n*** This is an automatically generated e-mail, please do not reply ***";
+				+ " to make your requests for the items available this window.\n\n*** This is an automatically generated e-mail, please do not reply ***";
 		public static final String RESET_PASSWORD_SUBJECT = "[NOTICE] Food Bank Singapore - Reset Password Request";
 		public static final String RESET_PASSWORD_MESSAGE1 = "We have recently received a request to reset your password. Your new password is: ";
 		public static final String RESET_PASSWORD_MESSAGE2 = "\n\nPlease log-in with the generated password and proceed to change your password for security purposes."
