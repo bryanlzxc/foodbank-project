@@ -150,8 +150,18 @@ public class FoodController {
 	}
 	
 	@GetMapping("/scanner")
-	public Map<String, String> getBarcodeDetails(@RequestParam(value = "barcode", required = true) String barcode) {
-		return foodService.readBarcode(barcode);
+	public ResponseDTO getBarcodeDetails(@RequestParam(value = "barcode", required = true) String barcode) {
+		Map<String, String> foodDetails = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_UPDATE_SUCCESS);
+		try {
+			foodDetails = foodService.readBarcode(barcode);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(foodDetails);
+		return responseDTO;
+		
 	}
 	
 	/*
