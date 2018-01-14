@@ -337,6 +337,7 @@ public class AllocationServiceImpl implements AllocationService {
 		for(Allocation allocation : allocations) {
 			allocation.setApprovalStatus(true);
 		}
+		allocationRepository.save(allocations);
 	}
 	
 	@Override
