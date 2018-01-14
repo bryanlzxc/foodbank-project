@@ -24,6 +24,7 @@ import foodbank.inventory.service.FoodService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.response.dto.ResponseDTO.Status;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.InvalidFoodException;
 
 /*
@@ -151,17 +152,17 @@ public class FoodController {
 	
 	@GetMapping("/scanner")
 	public ResponseDTO getBarcodeDetails(@RequestParam(value = "barcode", required = true) String barcode) {
-		Map<String, String> foodDetails = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_RETRIEVE_SUCCESS);
-		try {
-			foodDetails = foodService.readBarcode(barcode);
-		} catch (Exception e) {
-			responseDTO.setStatus(ResponseDTO.Status.FAIL);
-			responseDTO.setMessage(e.getMessage());
-		}
-		responseDTO.setResult(foodDetails);
-		return responseDTO;
+		Map<String, String> foodDetails = foodService.readBarcode(barcode);
 		
+		if (foodDetails == null) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.NO_SUCH_ITEM);
+		} else {
+			responseDTO.setResult(foodDetails);
+		}
+		
+		return responseDTO;		
 	}
 	
 	/*

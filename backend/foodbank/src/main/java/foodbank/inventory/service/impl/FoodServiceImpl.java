@@ -266,7 +266,8 @@ public class FoodServiceImpl implements FoodService {
 			itemDetails.put("classification", itemDetailsArray[1]);
 			itemDetails.put("description", itemDetailsArray[2]);
 		} else {
-			itemDetails.put("status", ResponseDTO.Status.FAIL.toString());
+			// itemDetails.put("status", ResponseDTO.Status.FAIL.toString());
+			itemDetails = null;
 		}
 		return itemDetails;
 	}
