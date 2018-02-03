@@ -27,6 +27,10 @@ public class FoodItemDTO {
 	private int quantity;
 	
 	@NotNull
+	@JsonProperty("value")
+	private double value;
+	
+	@NotNull
 	@JsonProperty("barcode")
 	private String barcode;
 	
@@ -39,11 +43,13 @@ public class FoodItemDTO {
 //	}
 	
 	public FoodItemDTO(@JsonProperty("category") String category, @JsonProperty("classification") String classification, 
-			@JsonProperty("description") String description, @JsonProperty("quantity") int quantity, @JsonProperty("donorName") String donorName) {
+			@JsonProperty("description") String description, @JsonProperty("quantity") int quantity, 
+			@JsonProperty("value") double value, @JsonProperty("donorName") String donorName) {
 		this.category = category;
 		this.classification = classification;
 		this.description = description;
 		this.quantity = quantity;
+		this.value = value;
 		this.donorName = donorName;
 	}
 
@@ -71,8 +77,6 @@ public class FoodItemDTO {
 		this.classification = classification;
 	}
 
-
-
 	public String getDescription() {
 		return description;
 	}
@@ -87,6 +91,14 @@ public class FoodItemDTO {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	public double getValue() {
+		return value;
+	}
+	
+	public void setValue(double value) {
+		this.value = value;
 	}
 
 	public String getBarcode() {

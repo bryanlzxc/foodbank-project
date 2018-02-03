@@ -20,7 +20,13 @@ import foodbank.inventory.repository.FoodRepository;
 @EnableScheduling
 public class MainApp {
 	
+	private static final String DEVELOPMENT_BACKUP_BUCKET = "foodbank-backup";
+	private static final String DEPLOYMENT_BACKUP_BUCKET = "foodbank-backup-data";
+	public static boolean deploymentStatus = false;
+	public static String bucket;
+	
 	public static void main(String[] args) {
+		bucket = deploymentStatus ? DEPLOYMENT_BACKUP_BUCKET : DEVELOPMENT_BACKUP_BUCKET;
 		SpringApplication.run(MainApp.class, args);
 	}
 	

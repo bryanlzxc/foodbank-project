@@ -1,6 +1,5 @@
 package foodbank.packing.controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.WebRequest;
 
 import foodbank.packing.dto.PackingListDTO;
 import foodbank.packing.entity.PackingList;
 import foodbank.packing.service.PackingService;
+import foodbank.reporting.service.ReportService;
 import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
 
@@ -27,6 +26,9 @@ public class PackingController {
 	
 	@Autowired
 	private PackingService packingService;
+	
+	@Autowired
+	private ReportService reportService;
 	
 	@GetMapping("/display-all")
 	public ResponseDTO getAllPackingLists() {
@@ -73,6 +75,8 @@ public class PackingController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
 			packingService.updatePackedQuantities(packingList);
+			PackingList dbPackingList = packingService.findByBeneficiary(packingList.getBeneficiary());
+			reportService.generateDbInvoice(dbPackingList);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

@@ -29,6 +29,8 @@ public class QFoodItem extends EntityPathBase<FoodItem> {
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
+    public final NumberPath<Double> value = createNumber("value", Double.class);
+
     public QFoodItem(String variable) {
         super(FoodItem.class, forVariable(variable));
     }

@@ -38,6 +38,9 @@ public class QPackedFoodItem extends EntityPathBase<PackedFoodItem> {
     //inherited
     public final NumberPath<Integer> quantity = _super.quantity;
 
+    //inherited
+    public final NumberPath<Double> value = _super.value;
+
     public QPackedFoodItem(String variable) {
         super(PackedFoodItem.class, forVariable(variable));
     }

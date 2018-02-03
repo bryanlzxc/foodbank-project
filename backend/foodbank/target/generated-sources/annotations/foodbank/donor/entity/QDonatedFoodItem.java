@@ -36,6 +36,9 @@ public class QDonatedFoodItem extends EntityPathBase<DonatedFoodItem> {
     //inherited
     public final NumberPath<Integer> quantity = _super.quantity;
 
+    //inherited
+    public final NumberPath<Double> value = _super.value;
+
     public QDonatedFoodItem(String variable) {
         super(DonatedFoodItem.class, forVariable(variable));
     }

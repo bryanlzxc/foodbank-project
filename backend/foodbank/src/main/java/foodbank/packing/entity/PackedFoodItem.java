@@ -20,5 +20,11 @@ public class PackedFoodItem extends FoodItem {
 	public void setAllocatedQuantity(Integer allocatedQuantity) {
 		this.allocatedQuantity = allocatedQuantity;
 	}
+	
+	@Override
+	public String toString() {
+		return  "{" + getCategory() + "+" + getClassification() + "+" + getDescription() + "+"
+				+ getAllocatedQuantity() + "+" + getQuantity() + "}";
+	}
 
 }

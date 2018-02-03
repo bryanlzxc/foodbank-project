@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ import com.amazonaws.services.s3.model.ListBucketsRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
+import foodbank.MainApp;
 import foodbank.admin.entity.AdminSettings;
 import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.impl.AdminServiceImpl;
@@ -81,29 +84,38 @@ public class FileBackupScheduler {
 	private UserRepository userRepository;
 	
 	private static final String ADMIN_ID = "5a45bb3ff36d287dc13af228";
-	private static final String DEVELOPMENT_BACKUP_BUCKET = "foodbank-backup";
-	private static final String DEPLOYMENT_BACKUP_BUCKET = "foodbank-backup-data";
+	// private static final String DEVELOPMENT_BACKUP_BUCKET = "foodbank-backup";
+	// private static final String DEPLOYMENT_BACKUP_BUCKET = "foodbank-backup-data";
 	private AWSCredentials credentials;
 	private AmazonS3 client;
 	private List<String> csvFileList = new ArrayList<String>();
 	
 	private void init() {
-		credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
+		
+		if(MainApp.deploymentStatus) {
+			// Deployment Server
+			credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
+		} else {
+			// Development Server
+			credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
+		}
+		// credentials = new BasicAWSCredentials("AKIAI46ALB2WZXMFSD2Q", "4Rd0PDfxu0+cI+QBKLMufcI4hZ5iPxe+U9X1h80s");
 		// credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
 		client = AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(Regions.US_EAST_2)
 				.build();
-		if(!client.doesBucketExistV2(DEVELOPMENT_BACKUP_BUCKET)) {
-			client.createBucket(DEVELOPMENT_BACKUP_BUCKET);
+		if(!client.doesBucketExistV2(MainApp.bucket)) {
+			client.createBucket(MainApp.bucket);
 		}
 		csvFileList.add("user-data.csv,User Id,Username,Password,Usertype,Name,Email");
 		csvFileList.add("beneficiary-data.csv,Beneficiary Id,User Id,Number of Beneficiaries,Address,Postal Code,Score,Contact Person,"
 				+ "Contact Number,Member Type,Transport");
 		csvFileList.add("admin-data.csv,Settings Id,Window Status, Window Start DateTime, Window End DateTime, Decay Rate, Multiplier Rate");
-		csvFileList.add("inventory-data.csv,Item Id,Food Category,Item Classification,Item Description,Quantity");
+		csvFileList.add("inventory-data.csv,Item Id,Food Category,Item Classification,Item Description,Quantity,Value");
 		csvFileList.add("request-data.csv,Request Id,Food Category,Item Classification,Item Description,Quantity,Request Creation Date,Beneficiary Id");
 		csvFileList.add("allocation-data.csv,Allocation Id,Allocated Items,Beneficiary Id,Approval Status");
+		csvFileList.add("packing-data.csv,Packing Id,PackedItems,Beneficiary Id,PackingStatus");
 		csvFileList.add("historical-data.csv,Historical Request Id,Beneficiary Id,Request Creation Date,Food Category,Item Classification,"
 				+ "Item Description,Requested Quantity,Allocated Quantity");
 		csvFileList.add("barcode-data.csv,Barcode Id,Category,Classification,Description");
@@ -117,19 +129,20 @@ public class FileBackupScheduler {
 		for(Bucket bucket : buckets) {
 			String bucketName = bucket.getName();
 			if(bucketName.equals("aws-website-visualanalyticstax-ed-k71jr")) { continue; }
-			if(bucketName.equals(DEVELOPMENT_BACKUP_BUCKET)) {
+			if(bucketName.equals(MainApp.bucket)) {
 				for(int i = 0; i < csvFileList.size(); i++) {
 					String file = csvFileList.get(i);
 					String[] fileArray = file.split(",");
 					String fileName = fileArray[0];
-					S3Object s3Object = client.getObject(DEVELOPMENT_BACKUP_BUCKET, fileName);
-					backupFile(s3Object, DEVELOPMENT_BACKUP_BUCKET, fileName, i);
+					S3Object s3Object = client.getObject(MainApp.bucket, fileName);
+					backupFile(s3Object, MainApp.bucket, fileName, i);
 				}
 			}
 		}
 	}
 	
 	private void backupFile(S3Object s3Object, String bucketName, String fileName, int fileIndex) {
+		
 		File file = new File(fileName);
 		try (PrintStream out = new PrintStream(new FileOutputStream(file, false))) {
 			String fileDetails = csvFileList.get(fileIndex);

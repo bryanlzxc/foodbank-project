@@ -69,4 +69,9 @@ public class DateParser {
 		return format.format(date);
 	}
 	
+	public static String displayMonthYearOnly(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+		return format.format(date);
+	}
+	
 }

@@ -79,7 +79,9 @@ public class PackingServiceImpl implements PackingService {
 			}
 //			foodItems.forEach(foodItem -> packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
 //					foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0)));
-			packingLists.add(new PackingList(allocation.getBeneficiary(), packedItems));
+			if(!packedItems.isEmpty()) {
+				packingLists.add(new PackingList(allocation.getBeneficiary(), packedItems));
+			}
 		}
 		packingRepository.insert(packingLists);
 	}
@@ -107,7 +109,7 @@ public class PackingServiceImpl implements PackingService {
 			String description = (String)map.get("description");
 			Integer packedQuantity = (Integer)map.get("packedQuantity");
 			packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
-			FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, null);
+			FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, 0, null);
 			amendFoodItemQuantity(foodItemDTO);
 			BeneficiaryDeductScoreDTO beneficiaryDeductScoreDTO = new BeneficiaryDeductScoreDTO(beneficiary, -packedQuantity);
 			modifyBeneficiaryScore(beneficiaryDeductScoreDTO);

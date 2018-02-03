@@ -16,19 +16,40 @@ public class FoodItem {
 	private String description;
 	
 	private Integer quantity;
+	
+	private Double value;
 
 	public FoodItem() {}
 	
-	public FoodItem(String id, String category, String classification, String description, Integer quantity) {
-		this(category, classification, description, quantity);
+	public FoodItem(String id, String category, String classification, String description, Integer quantity, Double value) {
+		this(category, classification, description, quantity, value);
 		this.id = id;
 	}
 	
+	/* 
+	 * This constructor should only be used for PackedFoodItem and RequestServiceImpl
+	 */
 	public FoodItem(String category, String classification, String description, Integer quantity) {
 		this.category = category;
 		this.classification = classification;
 		this.description = description;
 		this.quantity = quantity;
+	}
+	
+	public FoodItem(String category, String classification, String description, Integer quantity, Double value) {
+		this.category = category;
+		this.classification = classification;
+		this.description = description;
+		this.quantity = quantity;
+		this.value = value;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getCategory() {
@@ -63,12 +84,21 @@ public class FoodItem {
 		this.quantity = quantity;
 	}
 	
+	public Double getValue() {
+		return value;
+	}
+	
+	public void setValue(Double value) {
+		this.value = value;
+	}
+	
 	@Override
 	public String toString() {
 		return id + "," 
 				+ category + "," 
 				+ classification + ","
 				+ description + ","
-				+ quantity;
+				+ quantity + "," +
+				+ value;
 	}
 }

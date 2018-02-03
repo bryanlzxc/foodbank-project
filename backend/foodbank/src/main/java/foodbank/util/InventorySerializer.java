@@ -8,7 +8,6 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Component;
 
 import foodbank.inventory.entity.FoodItem;
@@ -35,8 +34,16 @@ public class InventorySerializer {
 		}
 	}
 	
+	public static String retrieveItemId(String category, String classification, String description) {
+		return InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getId();
+	}
+	
 	public static Integer retrieveQuantityOfItem(String category, String classification, String description) {
 		return InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getQuantity();
+	}
+	
+	public static Double retrieveValueOfItem(String category, String classification, String description) {
+		return InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getValue();
 	}
 	
 	public static void updateQuantity(String category, String classification, String description, Integer quantity) {

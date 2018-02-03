@@ -92,7 +92,7 @@ public class FoodServiceImpl implements FoodService {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() + foodItem.getQuantity());
 			foodRepository.save(dbFoodItem);
 		} else {
-			dbFoodItem = new FoodItem(category, classification, description, foodItem.getQuantity());
+			dbFoodItem = new FoodItem(category, classification, description, foodItem.getQuantity(), 0.0);
 			foodRepository.insert(dbFoodItem);
 		}
 		InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
@@ -246,9 +246,10 @@ public class FoodServiceImpl implements FoodService {
 		String classification = foodItem.getClassification();
 		String description = foodItem.getDescription();
 		Integer quantity = foodItem.getQuantity();
+		Double value = foodItem.getValue();
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 		if(dbFoodItem == null) {
-			foodRepository.insert(new FoodItem(category, classification, description, quantity));
+			foodRepository.insert(new FoodItem(category, classification, description, quantity, value));
 			InventorySerializer.updateQuantity(category, classification, description, quantity);
 		} else {
 			throw new InvalidFoodException(ErrorMessages.DUPLICATE_ITEM);

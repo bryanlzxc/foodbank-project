@@ -36,6 +36,11 @@ public class PackingList {
 		this.beneficiary = beneficiary;
 		this.packedItems = packedItems;
 	}
+	
+	public PackingList(String id, Beneficiary beneficiary, List<PackedFoodItem> packedItems, Boolean packingStatus) {
+		this(id, beneficiary, packedItems);
+		this.packingStatus = packingStatus;
+	}
 
 	public String getId() {
 		return id;
@@ -71,7 +76,13 @@ public class PackingList {
 
 	@Override
 	public String toString() {
+		String packedItemString = "[";
+		for(PackedFoodItem packedItem : packedItems) {
+			packedItemString += packedItem.toString();
+		}
 		return id + ","
-				+ packedItems;
+				+ packedItemString + "]," 
+				+ beneficiary.getId() + "," 
+				+ packingStatus;
 	}
 }

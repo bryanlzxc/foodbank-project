@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}
-		if(dbUser.getUsername().equalsIgnoreCase("beneficiary")) {
+		if(dbUser.getUsertype().equalsIgnoreCase("beneficiary")) {
 			beneficiaryRepository.delete(beneficiaryRepository.findByUsername(username));
 		}
 		userRepository.delete(dbUser);
