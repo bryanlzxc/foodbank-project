@@ -22,4 +22,6 @@ public interface PackingService {
 	
 	void updatePackingStatus(final String beneficiary);
 	
+	Boolean reviewAllPackingStatus();
+	
 }

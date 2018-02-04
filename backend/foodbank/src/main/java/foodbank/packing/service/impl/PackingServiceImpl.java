@@ -202,5 +202,17 @@ public class PackingServiceImpl implements PackingService {
 		dbBeneficiary.setScore(newScore);
 		beneficiaryRepository.save(dbBeneficiary);
 	}
+
+	@Override
+	public Boolean reviewAllPackingStatus() {
+		// TODO Auto-generated method stub
+		List<PackingList> packingLists = packingRepository.findAll();
+		for(PackingList packingList : packingLists) {
+			if(!packingList.getPackingStatus()) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 }

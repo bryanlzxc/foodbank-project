@@ -49,7 +49,8 @@ public final class MessageConstants {
     public static final String INVOICE_DATA_RETRIEVE_SUCCESS = "Invoice data successfully retrieved.";
 	public static final String INVOICE_GENERATE_SUCCESS = "Invoice successfully generated.";
     public static final String INVOICE_DOWNLOAD_LINK_GENERATE_SUCCESS = "Invoice URL successfully generated.";
-	public static final String RESET_SUCCESS = "Inventory successfully reset to 0.";
+	public static final String INVENTORY_RESET_SUCCESS = "Inventory successfully reset to 0.";
+	public static final String ALL_PACKING_STATUS_RETRIEVE_SUCCESS = "All packing list statuses successfully retrieved.";
 	
 	public static class ErrorMessages {
 		

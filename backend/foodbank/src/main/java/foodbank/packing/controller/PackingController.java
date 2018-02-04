@@ -58,6 +58,19 @@ public class PackingController {
 		return responseDTO;
 	}
 	
+	@GetMapping("/review-statuses")
+	public ResponseDTO viewAllPackingStatus() {
+		Boolean result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.ALL_PACKING_STATUS_RETRIEVE_SUCCESS);
+		try {
+			result = packingService.reviewAllPackingStatus();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	@PostMapping("/generate-list")
 	public ResponseDTO generatePackingList() {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_GENERATE_SUCCESS);

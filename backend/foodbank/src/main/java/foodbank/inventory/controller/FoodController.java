@@ -174,7 +174,7 @@ public class FoodController {
 	
     @PostMapping("/reset-all")
     public ResponseDTO resetFoodQuantity() {
-	    ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.RESET_SUCCESS);
+	    ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.INVENTORY_RESET_SUCCESS);
 	    try {
 	        foodService.resetFoodQuantity();
 	    } catch (Exception e) {
