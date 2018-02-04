@@ -2,6 +2,7 @@ package foodbank.user.service;
 
 import java.util.List;
 
+import foodbank.user.dto.PasswordDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 
@@ -18,5 +19,7 @@ public interface UserService {
 	void updateUser(final UserDTO user);
 	
 	void deleteUser(final String username);
+	
+	void changePassword(final PasswordDTO passwordDetails);
 
 }

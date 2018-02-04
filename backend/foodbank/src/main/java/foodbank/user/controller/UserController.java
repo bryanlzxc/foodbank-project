@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.response.dto.ResponseDTO;
+import foodbank.user.dto.PasswordDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.service.UserService;
 import foodbank.user.entity.User;
@@ -95,6 +96,18 @@ public class UserController {
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/change-password")
+	public ResponseDTO changePassword(@RequestBody PasswordDTO passwordDetails) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PASSWORD_CHANGE_SUCCESS);
+		try {
+			userService.changePassword(passwordDetails);
+		} catch (Exception e) {
+			responseDTO.setMessage(e.getMessage());
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 		}
 		return responseDTO;
 	}

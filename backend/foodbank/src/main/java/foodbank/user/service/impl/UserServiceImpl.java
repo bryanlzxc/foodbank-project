@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import foodbank.beneficiary.repository.BeneficiaryRepository;
+import foodbank.user.dto.PasswordDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
@@ -77,6 +78,18 @@ public class UserServiceImpl implements UserService {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}
 		return dbUser;
+	}
+
+	@Override
+	public void changePassword(PasswordDTO passwordDetails) {
+		// TODO Auto-generated method stub
+		User dbUser = userRepository.findByUsername(passwordDetails.getUsername());
+		if(dbUser == null) {
+			throw new UserException(ErrorMessages.NO_SUCH_USER);
+		}
+		if(BCrypt.checkpw(passwordDetails.getOldPassword(), dbUser.getPassword())) {
+			dbUser.setPassword(BCrypt.hashpw(passwordDetails.getNewPassword(), BCrypt.gensalt()));
+		}
 	}
 
 }
