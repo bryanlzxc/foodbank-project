@@ -97,12 +97,15 @@ public class FoodServiceImpl implements FoodService {
 			foodRepository.insert(dbFoodItem);
 		}
 		InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+		/*
 		if(foodItem.getDonorName() != null) {
 			//call DonorController's method to add food item into non-perishable list for specific donor
 			updateDonorNonperishable(new DonatedFoodItem(category, classification, description, foodItem.getQuantity()), foodItem.getDonorName());
 		}
+		*/
 	}
 	
+	/*
 	private void updateDonorNonperishable(DonatedFoodItem donatedItem, String donorName) {
 		Donor dbDonor = donorRepository.findByName(donorName);
 		if(dbDonor == null) {
@@ -116,6 +119,7 @@ public class FoodServiceImpl implements FoodService {
 		dbDonor.setNonperishableDonations(dbNonperishableDonationList);
 		donorRepository.save(dbDonor);
 	}
+	*/
 	
     @Override
 	public void resetFoodQuantity() {
