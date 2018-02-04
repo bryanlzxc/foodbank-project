@@ -124,7 +124,7 @@ public class FileManager implements CommandLineRunner {
 		dropExistingData();
 		for (String csvFilename : csvFileList) {
 			System.out.println("Trying to read file: " + csvFilename);
-			S3Object s3Object = client.getObject(MainApp.bucket, csvFilename);
+			S3Object s3Object = client.getObject(MainApp.dataBucket, csvFilename);
 			loadData(s3Object, csvFilename);
 		}
 	}
@@ -276,7 +276,7 @@ public class FileManager implements CommandLineRunner {
 	
 	public static Map<String, String[]> generateBarcodeMap() {
 		Map<String, String[]> barcodeMap = new HashMap<String, String[]>();
-		S3Object s3Object = client.getObject(MainApp.bucket, "barcode-data.csv");
+		S3Object s3Object = client.getObject(MainApp.dataBucket, "barcode-data.csv");
 		S3ObjectInputStream stream = s3Object.getObjectContent();
 		List<String> inputData = new BufferedReader(new InputStreamReader(stream)).lines().collect(Collectors.toList());
 		List<String[]> inputDataArray = inputData.stream().skip(1).map(currentLine -> currentLine.split(",")).collect(Collectors.toList());
@@ -288,8 +288,8 @@ public class FileManager implements CommandLineRunner {
 	}
 	
 	public static void generatePDFPageCounts(String filename) {
-		client.putObject(new PutObjectRequest(MainApp.bucket, filename, new File(filename)));
-		S3Object pdf = client.getObject(MainApp.bucket, filename);
+		client.putObject(new PutObjectRequest(MainApp.reportBucket, filename, new File(filename)));
+		S3Object pdf = client.getObject(MainApp.reportBucket, filename);
 		S3ObjectInputStream stream = pdf.getObjectContent();
 		try {
 			PdfReader reader = new PdfReader(stream);
@@ -302,7 +302,7 @@ public class FileManager implements CommandLineRunner {
 			}
 			stamper.close();
 			reader.close();
-			client.putObject(new PutObjectRequest(MainApp.bucket, filename, new File(filename)));
+			client.putObject(new PutObjectRequest(MainApp.reportBucket, filename, new File(filename)));
 		} catch (IOException | DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -310,7 +310,7 @@ public class FileManager implements CommandLineRunner {
 	}
 	
 	public static URL retrieveInvoiceURL(String invoiceNumber) {
-		return client.generatePresignedUrl(new GeneratePresignedUrlRequest(MainApp.bucket, invoiceNumber + ".pdf"));
+		return client.generatePresignedUrl(new GeneratePresignedUrlRequest(MainApp.reportBucket, invoiceNumber + ".pdf"));
 	}
 	
 }

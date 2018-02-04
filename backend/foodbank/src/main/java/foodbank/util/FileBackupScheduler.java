@@ -105,8 +105,8 @@ public class FileBackupScheduler {
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(Regions.US_EAST_2)
 				.build();
-		if(!client.doesBucketExistV2(MainApp.bucket)) {
-			client.createBucket(MainApp.bucket);
+		if(!client.doesBucketExistV2(MainApp.dataBucket)) {
+			client.createBucket(MainApp.dataBucket);
 		}
 		csvFileList.add("user-data.csv,User Id,Username,Password,Usertype,Name,Email");
 		csvFileList.add("beneficiary-data.csv,Beneficiary Id,User Id,Number of Beneficiaries,Address,Postal Code,Score,Contact Person,"
@@ -129,13 +129,13 @@ public class FileBackupScheduler {
 		for(Bucket bucket : buckets) {
 			String bucketName = bucket.getName();
 			if(bucketName.equals("aws-website-visualanalyticstax-ed-k71jr")) { continue; }
-			if(bucketName.equals(MainApp.bucket)) {
+			if(bucketName.equals(MainApp.dataBucket)) {
 				for(int i = 0; i < csvFileList.size(); i++) {
 					String file = csvFileList.get(i);
 					String[] fileArray = file.split(",");
 					String fileName = fileArray[0];
-					S3Object s3Object = client.getObject(MainApp.bucket, fileName);
-					backupFile(s3Object, MainApp.bucket, fileName, i);
+					S3Object s3Object = client.getObject(MainApp.dataBucket, fileName);
+					backupFile(s3Object, MainApp.dataBucket, fileName, i);
 				}
 			}
 		}
