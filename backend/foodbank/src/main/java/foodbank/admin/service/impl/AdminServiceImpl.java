@@ -337,7 +337,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	@Scheduled(fixedRate = 86400000, initialDelay = 300000)
+	@Scheduled(fixedRate = 86400000)
 	public void generateDailyPassword() {
 		AdminSettings adminSettings = adminRepository.findOne(ADMIN_ID);
 		int length = 8;
