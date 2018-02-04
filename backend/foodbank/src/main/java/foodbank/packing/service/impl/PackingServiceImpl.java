@@ -146,7 +146,7 @@ public class PackingServiceImpl implements PackingService {
 			FoodItem foodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 			foodItem.setQuantity(foodItem.getQuantity() + previouslyPackedAmount - (int)details.get("packedQuantity"));
 			foodRepository.save(foodItem);
-			// InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
 			modifyBeneficiaryScore(new BeneficiaryDeductScoreDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (Integer)details.get("packedQuantity")));
 		} 
 		packingRepository.save(dbPackingList);
@@ -182,7 +182,7 @@ public class PackingServiceImpl implements PackingService {
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() - foodItem.getQuantity());		//this is the deduction from db
 			foodRepository.save(dbFoodItem);
-			// InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+			InventorySerializer.updateQuantity(category, classification, description, dbFoodItem.getQuantity());
 		} else {
 			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
 		}
