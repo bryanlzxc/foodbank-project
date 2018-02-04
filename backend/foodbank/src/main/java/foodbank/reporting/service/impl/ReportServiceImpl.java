@@ -340,8 +340,11 @@ public class ReportServiceImpl implements ReportService {
 		String[] descriptionArray = description.split("-");
 		String itemName = descriptionArray[0];
 		String weight = descriptionArray[1];
-		String halalStatus = descriptionArray[2];
-		return itemName + " (" + weight + ", " + halalStatus + ")";
+		String halalStatus = "";
+		if(descriptionArray.length == 3) {
+			halalStatus = ", " + descriptionArray[2];
+		}
+		return itemName + " (" + weight + halalStatus + ")";
 	}
 	
 	private String formatValue(double value) {

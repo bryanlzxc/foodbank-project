@@ -67,8 +67,10 @@ public class FoodServiceImpl implements FoodService {
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(foodItem.getQuantity());
+			dbFoodItem.setValue(foodItem.getValue());
 			foodRepository.save(dbFoodItem);
 			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+			InventorySerializer.updateValue(category, classification, description, foodItem.getValue());
 		} else {
 			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
 		}

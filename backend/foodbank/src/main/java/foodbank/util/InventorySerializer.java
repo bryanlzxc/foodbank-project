@@ -58,4 +58,16 @@ public class InventorySerializer {
 		InventorySerializer.foodItemMap.replace(key, foodItem);
 	}
 	
+	public static void updateValue(String category, String classification, String description, Double value) {
+		UUID key = InventorySerializer.serials.get(category+classification+description);
+		if(key == null) {
+			key = UUID.randomUUID();
+			InventorySerializer.serials.put(category+classification+description, key);
+			InventorySerializer.foodItemMap.put(key, new FoodItem(category, classification, description, 0));
+		}
+		FoodItem foodItem = InventorySerializer.foodItemMap.get(key);
+		foodItem.setValue(value);
+		InventorySerializer.foodItemMap.replace(key, foodItem);
+	}
+	
 }

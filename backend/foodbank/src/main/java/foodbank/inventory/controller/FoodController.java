@@ -39,6 +39,9 @@ public class FoodController {
 	@Autowired
 	private FoodService foodService;
 	
+	@Autowired
+	private DonorService donorService;
+	
 	@GetMapping("/display-all")
 	public ResponseDTO getAllFoodItems() {
 		List<FoodItem> result = null;
@@ -105,6 +108,7 @@ public class FoodController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ITEM_UPDATE_SUCCESS);
 		try {
 			foodService.amendFoodItemQuantity(foodItem);
+			donorService.updateDonorNonperishable(foodItem);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

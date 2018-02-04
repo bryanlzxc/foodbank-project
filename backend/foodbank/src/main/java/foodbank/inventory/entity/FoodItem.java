@@ -17,7 +17,7 @@ public class FoodItem {
 	
 	private Integer quantity;
 	
-	private Double value;
+	private Double value = 0.0;
 
 	public FoodItem() {}
 	
