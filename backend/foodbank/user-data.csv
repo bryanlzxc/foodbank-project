@@ -1,0 +1,7 @@
+User Id,Username,Password,Usertype,Name,Email
+5a5444c22f1aac0004a8154d,admin,$2y$10$kdo//x2FceXisw1tv10jsuGMv.UoSoMb6ccPLRXkaxjbcUvRdaSoq,admin,admin,louis.lim.2015@smu.edu.sg
+5a5444d62f1aac0004a8154e,volunteer,$2a$10$2oGGTU8vwP6cLGGe1owqjuNHwZQ3PkYHFw6HaOvEKDUruO3CQ2v7K,volunteer,volunteer,bryanlzxc@gmail.com
+5a5a1030a6ac7b076b9a7fda,bene1,$2a$10$qX3OmHvoXHVnePBMmj6yL.2sugpWuH3m2lvuj2vXEhs9hi7dQzcZO,beneficiary,Bene1,bene1@gmail.com
+5a5a104aa6ac7b076b9a7fdc,bene2,$2a$10$PZ6uYXtJiYAEuLalpSxrzul9McWchnd1EumrGZYJRQ5Mb0.Y7oBMm,beneficiary,Bene2,bene1@gmail.com
+5a5a2971a6ac7b2b67fdca3a,bene2test,$2a$10$CZHO2FBlvkjX3lKbr.CFiOL8lzCw0.Y8aQLwBUpTladxYfsg1UBtS,beneficiary,Bene1,bene1@gmail.com
+5a5ad1f6b773d1213b286eb3,inputBene,$2a$10$4TD/G595nx9l3apZ.Zz9o.P1kZ4A8Pb3a5QaNo3XjUd7XR27CCXZm,beneficiary,Bene4,bene4@gmail.com

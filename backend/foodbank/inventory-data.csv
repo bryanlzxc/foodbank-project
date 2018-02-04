@@ -1,0 +1,832 @@
+Item Id,Food Category,Item Classification,Item Description,Quantity,Value
+5a43675dab86fd38705b2b17,Staples,Other Staples,Lentils-1.5kg-Halal,4,8.0
+5a765ff6e833a30854e34ef6,Condiments,Sugar,RawSugar-450g,246,0.0
+5a765ff9e833a30854e34ef7,Condiments,Sugar,BrownSugar-250g,246,0.0
+5a43675dab86fd38705b29a5,Condiments,Sauces & Dressing,Chilli Sauce-250g,1,3.0
+5a43675dab86fd38705b29a6,Condiments,Sauces & Dressing,Chilli Sauce-250g-Halal,2,3.0
+5a43675dab86fd38705b29a7,Condiments,Sauces & Dressing,Chilli Sauce-3.5kg-Halal,1,8.0
+5a43675dab86fd38705b29a8,Condiments,Sauces & Dressing,Chilli Sauce-350g-Halal,2,4.0
+5a43675dab86fd38705b2a96,Snacks,Chips,Chips-1.5kg-Halal,1,0.0
+5a43675dab86fd38705b2990,Condiments,Oil & Fats,Cooking Oil-5.5l,1,15.9
+5a43675dab86fd38705b298f,Condiments,Oil & Fats,Cooking Oil-5.5l-Halal,2,15.9
+5a43675dab86fd38705b2991,Condiments,Oil & Fats,Cooking Oil-550ml-Halal,7,5.0
+5a43675dab86fd38705b2992,Condiments,Oil & Fats,Cooking Oil-950ml-Halal,33,10.0
+5a43675dab86fd38705b287c,Beverages,Ready to Drink,Cordial-250ml-Halal,22,4.0
+5a43675dab86fd38705b287d,Beverages,Ready to Drink,Cordial-950ml-Halal,1,0.0
+5a43675dab86fd38705b2945,Canned Food,Vegetables,Corn-150g-Halal,1,0.0
+5a43675dab86fd38705b2946,Canned Food,Vegetables,Corn-350g,6,0.0
+5a43675dab86fd38705b2a52,Preserved Food,Vegetables,Corn-450g,1,3.0
+5a43675dab86fd38705b2947,Canned Food,Vegetables,Corn-450g,2,3.0
+5a43675dab86fd38705b2948,Canned Food,Vegetables,Corn-450g-Halal,5,3.0
+5a43675dab86fd38705b2949,Canned Food,Vegetables,Corn-50g,1,0.0
+5a43675dab86fd38705b2803,Baking Needs,Flour,Corn Flour-450g-Halal,1,2.0
+5a43675dab86fd38705b2934,Canned Food,Soup,Corn Soup-350g-Halal,2,2.0
+5a43675dab86fd38705b2b15,Staples,Other Staples,Couscous-250g,1,0.0
+5a43675dab86fd38705b2a09,Dried Food,Beans/Peas/Peanuts,Couscous-450g-Halal,1,0.0
+5a43675dab86fd38705b28db,Canned Food,Dairy,Cream-150g-Halal,1,0.0
+5a43675dab86fd38705b28dc,Canned Food,Dairy,Cream-250g,1,0.0
+5a43675dab86fd38705b2970,Condiments,Dairy,Creamer-350g-Halal,1,0.0
+5a43675dab86fd38705b2971,Condiments,Dairy,Creamer-450g-Halal,4,0.0
+5a43675dab86fd38705b28e3,Canned Food,Fish/Seafood,Croaker-150g,1,0.0
+5a43675dab86fd38705b2af7,Staples,Noodles,Cup Noodles-50g,9,0.0
+5a43675dab86fd38705b2af8,Staples,Noodles,Cup Noodles-50g-Halal,8,0.0
+5a43675dab86fd38705b2ad9,Staples,Instant Meals,Cup Porridge-250g-Halal,1,1.6
+5a43675dab86fd38705b2977,Condiments,Herbs & Spices,Curry Paste-150g,4,4.0
+5a43675dab86fd38705b2978,Condiments,Herbs & Spices,Curry Paste-250g,3,3.0
+5a43675dab86fd38705b297a,Condiments,Herbs & Spices,Curry Paste-350g,2,4.0
+5a43675dab86fd38705b297b,Condiments,Herbs & Spices,Curry Powder-50g-Halal,1,1.0
+5a43675dab86fd38705b28e4,Canned Food,Fish/Seafood,Dace-150g,1,0.0
+5a43675dab86fd38705b29cd,Condiments,Seasoning,Dark Soy Sauce-350g-Halal,1,1.5
+5a43675dab86fd38705b29aa,Condiments,Sauces & Dressing,Dark Soy Sauce-450g-Halal,1,3.0
+5a43675dab86fd38705b29ce,Condiments,Seasoning,Dark Soy Sauce-650g-Halal,2,0.0
+5a43675dab86fd38705b2a18,Dried Food,Fruits,Dates-150g,1,1.0
+5a43675dab86fd38705b2a17,Dried Food,Fruits,Dates-150g-Halal,1,1.0
+5a43675dab86fd38705b2a1a,Dried Food,Fruits,Dates-50g,1,0.0
+5a43675dab86fd38705b2a19,Dried Food,Fruits,Dates-50g-Halal,1,0.0
+5a43675dab86fd38705b2a0a,Dried Food,Beans/Peas/Peanuts,Dhall-250g-Halal,4,0.0
+5a43675dab86fd38705b2a0b,Dried Food,Beans/Peas/Peanuts,Dhall-550g,1,0.0
+5a43675dab86fd38705b2a1b,Dried Food,Fruits,Dried Banana-450g-Halal,1,0.0
+5a43675dab86fd38705b2a1c,Dried Food,Fruits,Dried Durian-150g,1,4.0
+5a43675dab86fd38705b2a29,Dried Food,Other Dried Food,Dried Fish-50g,4,1.0
+5a43675dab86fd38705b2a2f,Dried Food,Others,Dried Fish-50g-Halal,1,1.0
+5a43675dab86fd38705b2a1d,Dried Food,Fruits,Dried Fruits-350g,1,0.0
+5a43675dab86fd38705b2a1e,Dried Food,Fruits,Dried Mango-150g,3,4.0
+5a43675dab86fd38705b2a20,Dried Food,Fruits,Dried Mango-250g,1,3.0
+5a43675dab86fd38705b2a1f,Dried Food,Fruits,Dried Mango-250g-Halal,2,3.0
+5a43675dab86fd38705b2a21,Dried Food,Fruits,Dried Mango-50g,2,1.0
+5a43675dab86fd38705b2a22,Dried Food,Fruits,Dried Plum-150g,1,0.0
+5a43675dab86fd38705b291d,Canned Food,Meat,Duck-150g,2,2.0
+5a43675dab86fd38705b287e,Beverages,Ready to Drink,Energy Drink-450ml,1,1.5
+5a43675dab86fd38705b287f,Beverages,Ready to Drink,Energy Drink-50ml,2,2.0
+5a43675dab86fd38705b2972,Condiments,Dairy,Evaporated Milk-350ml-Halal,4,1.8
+5a43675dab86fd38705b2973,Condiments,Dairy,Evaporated Milk-450ml-Halal,9,0.0
+5a43675dab86fd38705b28c4,Canned Food,Beans/Peas/Peanuts,Fava Bean-450g,1,0.0
+5a43675dab86fd38705b2a3d,Others,Supplement,Fibersource-250ml,36,0.0
+5a43675dab86fd38705b28e5,Canned Food,Fish/Seafood,Fischeon Meat-350g-Halal,1,3.8
+5a43675dab86fd38705b28e6,Canned Food,Fish/Seafood,Fischeon Meat-450g-Halal,2,0.0
+5a43675dab86fd38705b2a2a,Dried Food,Other Dried Food,Fishmaw-250g,1,0.0
+5a43675dab86fd38705b29ab,Condiments,Sauces & Dressing,Fish Sauce-250g-Halal,2,1.0
+5a43675dab86fd38705b29ac,Condiments,Sauces & Dressing,Fish Sauce-750g-Halal,1,0.0
+5a66d459fdc53f000419408f,Beverages,Hot Beverages,Floral Tea-150g,1,0.0
+5a43675dab86fd38705b284c,Beverages,Hot Beverages,Instant Cereal/Oats-450g-Halal,11,5.0
+5a43675dab86fd38705b284f,Beverages,Hot Beverages,Instant Cereal/Oats-50g,7,1.0
+5a43675dab86fd38705b284e,Beverages,Hot Beverages,Instant Cereal/Oats-50g-Halal,7,1.0
+5a43675dab86fd38705b2850,Beverages,Hot Beverages,Instant Cereal/Oats-550g,8,5.0
+5a43675dab86fd38705b2851,Beverages,Hot Beverages,Instant Cereal/Oats-550g-Halal,2,5.0
+5a43675dab86fd38705b2852,Beverages,Hot Beverages,Instant Cereal/Oats-650g-Halal,1,5.0
+5a43675dab86fd38705b2853,Beverages,Hot Beverages,Instant Cereal/Oats-750g-Halal,1,7.0
+5a43675dab86fd38705b2854,Beverages,Hot Beverages,Instant Cereal/Oats-850g,1,5.0
+5a43675dab86fd38705b2855,Beverages,Hot Beverages,Instant Cereal/Oats-850g-Halal,3,5.0
+5a43675dab86fd38705b2856,Beverages,Hot Beverages,Instant Cereal/Oats-950g-Halal,4,8.0
+5a43675dab86fd38705b2a4e,Preserved Food,Meat,Instant Jellyfish-150g,1,0.0
+5a43675dab86fd38705b2ada,Staples,Instant Meals,Instant Meals-1.5kg-Halal,2,10.0
+5a43675dab86fd38705b2adb,Staples,Instant Meals,Instant Meals-150g-Halal,7,3.0
+5a43675dab86fd38705b2adc,Staples,Instant Meals,Instant Meals-2.5kg-Halal,5,0.0
+5a43675dab86fd38705b2add,Staples,Instant Meals,Instant Meals-250g-Halal,3,4.0
+5a43675dab86fd38705b2af9,Staples,Noodles,Instant Meals-350g,4,4.0
+5a43675dab86fd38705b2afa,Staples,Noodles,Instant Meals-450g,11,5.0
+5a43675dab86fd38705b2ade,Staples,Instant Meals,Instant Meals-450g-Halal,1,5.0
+5a43675dab86fd38705b2adf,Staples,Instant Meals,Instant Meals-50g-Halal,1,3.0
+5a43675dab86fd38705b2ae0,Staples,Instant Meals,Instant Meals-850g,1,8.05
+5a43675dab86fd38705b2afc,Staples,Noodles,Instant Noodles-150g,11,0.0
+5a43675dab86fd38705b2afb,Staples,Noodles,Instant Noodles-150g-Halal,51,0.0
+5a43675dab86fd38705b2afd,Staples,Noodles,Instant Noodles-250g-Halal,2,0.0
+5a43675dab86fd38705b2afe,Staples,Noodles,Instant Noodles-350g,1,3.0
+5a43675dab86fd38705b2aff,Staples,Noodles,Instant Noodles-350g-Halal,14,3.0
+5a43675dab86fd38705b2b00,Staples,Noodles,Instant Noodles-450g-Halal,62,3.0
+5a43675dab86fd38705b2b02,Staples,Noodles,Instant Noodles-50g,62,1.0
+5a43675dab86fd38705b2b01,Staples,Noodles,Instant Noodles-50g-Halal,77,1.0
+5a43675dab86fd38705b2b03,Staples,Noodles,Instant Noodles-550g,22,2.0
+5a43675dab86fd38705b2b04,Staples,Noodles,Instant Noodles-550g-Halal,4,2.0
+5a43675dab86fd38705b2b05,Staples,Noodles,Instant Noodles-650g,3,0.0
+5a43675dab86fd38705b2b06,Staples,Noodles,Instant Noodles-650g-Halal,10,0.0
+5a43675dab86fd38705b2b07,Staples,Noodles,Instant Noodles-750g-Halal,1,0.0
+5a43675dab86fd38705b2ae3,Staples,Instant Meals,Instant Rice-450g,1,0.0
+5a43675dab86fd38705b2a53,Preserved Food,Vegetables,Instant Sea Vegetables-150g,1,0.0
+5a43675dab86fd38705b2ae4,Staples,Instant Meals,Instant Soup-50g-Halal,1,0.0
+5a43675dab86fd38705b297e,Condiments,Herbs & Spices,Italian Herbs-50g,1,5.0
+5a43675dab86fd38705b29e3,Condiments,Spreads,Jam-250g,3,3.0
+5a43675dab86fd38705b29e4,Condiments,Spreads,Jam-250g-Halal,1,3.0
+5a43675dab86fd38705b29e5,Condiments,Spreads,Jam-350g,1,4.0
+5a43675dab86fd38705b29e6,Condiments,Spreads,Jam-550g,3,0.0
+5a43675dab86fd38705b2aa8,Snacks,Jelly,Jelly-150g,4,0.0
+5a43675dab86fd38705b2aa9,Snacks,Jelly,Jelly-250g,3,2.0
+5a43675dab86fd38705b2aaa,Snacks,Jelly,Jelly-250g-Halal,2,2.0
+5a43675dab86fd38705b2aab,Snacks,Jelly,Jelly-350g-Halal,4,3.0
+5a43675dab86fd38705b2aac,Snacks,Jelly,Jelly-50g,4,2.0
+5a43675dab86fd38705b2aad,Snacks,Jelly,Jelly-550g,1,0.0
+5a43675dab86fd38705b2aaf,Snacks,Jelly,Jelly-750g,2,0.0
+5a43675dab86fd38705b2aae,Snacks,Jelly,Jelly-750g-Halal,2,0.0
+5a43675dab86fd38705b2ab0,Snacks,Jelly,Jelly-850g,1,5.0
+5a43675dab86fd38705b280a,Baking Needs,Other Baking Needs,Jelly Crystals-150g-Halal,1,0.0
+5a43675dab86fd38705b2a0f,Dried Food,Beans/Peas/Peanuts,Kadalai-550g,1,0.0
+5a43675dab86fd38705b29e7,Condiments,Spreads,Kaya-250g-Halal,1,0.0
+5a43675dab86fd38705b29e8,Condiments,Spreads,Kaya-450g-Halal,2,0.0
+5a43675dab86fd38705b29e9,Condiments,Spreads,Kaya-550g-Halal,5,2.0
+5a43675dab86fd38705b28d0,Canned Food,Beans/Peas/Peanuts,Kidney Beans-150g,1,2.0
+5a43675dab86fd38705b28d1,Canned Food,Beans/Peas/Peanuts,Kidney Beans-350g,2,0.0
+5a43675dab86fd38705b28d3,Canned Food,Beans/Peas/Peanuts,Kidney Beans-450g,7,0.0
+5a43675dab86fd38705b28d2,Canned Food,Beans/Peas/Peanuts,Kidney Beans-450g-Halal,3,0.0
+5a43675dab86fd38705b294b,Canned Food,Vegetables,Leaf Mustard-150g,3,3.0
+5a43675dab86fd38705b2b16,Staples,Other Staples,Lentils-550g-Halal,16,2.0
+5a43675dab86fd38705b2935,Canned Food,Soup,Mushroom Soup-250g-Halal,15,0.0
+5a43675dab86fd38705b2a54,Preserved Food,Vegetables,Mushroom-250g-Halal,1,2.0
+5a43675dab86fd38705b2937,Canned Food,Soup,Mushroom Soup-350g,3,0.0
+5a43675dab86fd38705b2a55,Preserved Food,Vegetables,Mushroom-50g-Halal,1,1.0
+5a43675dab86fd38705b2a31,Dried Food,Vegetables,Mushrooms-150g,1,0.0
+5a43675dab86fd38705b2950,Canned Food,Vegetables,Mushrooms-150g,1,0.0
+5a43675dab86fd38705b294f,Canned Food,Vegetables,Mushrooms-150g-Halal,9,0.0
+5a43675dab86fd38705b2952,Canned Food,Vegetables,Mushrooms-250g-Halal,3,2.0
+5a43675dab86fd38705b2a56,Preserved Food,Vegetables,Mushrooms-350g,1,0.0
+5a43675dab86fd38705b2955,Canned Food,Vegetables,Mushrooms-450g,35,4.0
+5a43675dab86fd38705b2953,Canned Food,Vegetables,Mushrooms-450g-Halal,24,4.0
+5a43675dab86fd38705b2a32,Dried Food,Vegetables,Mushrooms-50g,3,1.0
+5a43675dab86fd38705b2957,Canned Food,Vegetables,Mushrooms-550g-Halal,2,3.0
+5a43675dab86fd38705b2938,Canned Food,Soup,Mushroom Soup-450g,1,0.0
+5a43675dab86fd38705b2924,Canned Food,Meat,Mutton-350g-Halal,1,0.0
+5a43675dab86fd38705b2a43,Others,Supplements,Nin Jiom Pei Pa Koa-50ml,5,0.0
+5a43675dab86fd38705b2b0a,Staples,Noodles,Noodles-150g,2,0.0
+5a43675dab86fd38705b2b0b,Staples,Noodles,Noodles-250g-Halal,1,2.6
+5a43675dab86fd38705b2b0c,Staples,Noodles,Noodles-350g-Halal,1,3.0
+5a43675dab86fd38705b2b0e,Staples,Noodles,Noodles-450g,2,0.0
+5a43675dab86fd38705b2b0d,Staples,Noodles,Noodles-450g-Halal,2,0.0
+5a43675dab86fd38705b2b0f,Staples,Noodles,Noodles-50g,8,0.0
+5a43675dab86fd38705b2b10,Staples,Noodles,Noodles-550g,8,0.0
+5a43675dab86fd38705b2b11,Staples,Noodles,Noodles-550g-Halal,2,0.0
+5a43675dab86fd38705b2b12,Staples,Noodles,Noodles-650g-Halal,1,0.0
+5a43675dab86fd38705b2b13,Staples,Noodles,Noodles-750g-Halal,3,3.0
+5a43675dab86fd38705b2862,Beverages,Hot Beverages,Nutri Mix-750g,1,0.0
+5a43675dab86fd38705b2ab5,Snacks,Nuts,Nuts-150g,10,0.0
+5a43675dab86fd38705b2ab4,Snacks,Nuts,Nuts-150g-Halal,12,0.0
+5a43675dab86fd38705b2ab6,Snacks,Nuts,Nuts-250g,3,0.0
+5a43675dab86fd38705b2ab7,Snacks,Nuts,Nuts-250g-Halal,1,0.0
+5a43675dab86fd38705b2a10,Dried Food,Beans/Peas/Peanuts,Nuts-250g-Halal,3,0.0
+5a43675dab86fd38705b2ab8,Snacks,Nuts,Nuts-350g,3,3.0
+5a5da4f3a77c490004af0c5a,Dried Food,Beans/Peas/Peanuts,Nuts-350g-Halal,1,3.0
+5a43675dab86fd38705b2ab9,Snacks,Nuts,Nuts-450g-Halal,2,5.0
+5a43675dab86fd38705b2aba,Snacks,Nuts,Nuts-50g,2,0.0
+5a43675dab86fd38705b2abb,Snacks,Nuts,Nuts-50g-Halal,5,0.0
+5a43675dab86fd38705b2a77,Snacks,Biscuit/Crackers,Nuts-650g,8,3.0
+5a43675dab86fd38705b2abc,Snacks,Nuts,Nuts-650g-Halal,1,3.0
+5a43675dab86fd38705b2abd,Snacks,Nuts,Nuts-950g-Halal,1,3.0
+5a43675dab86fd38705b2863,Beverages,Hot Beverages,Oat Cereal-50g-Halal,13,0.0
+5a43675dab86fd38705b2806,Baking Needs,Flour,Oat Flour-650g,1,0.0
+5a43675dab86fd38705b2ae6,Staples,Instant Meals,Oatmeal-1.5kg-Halal,2,0.0
+5a43675dab86fd38705b2a8a,Snacks,Breakfast Cereals,Oatmeal-250g-Halal,1,0.0
+5a43675dab86fd38705b2ae7,Staples,Instant Meals,Oatmeal-450g-Halal,3,0.0
+5a43675dab86fd38705b2ae9,Staples,Instant Meals,Oatmeal-50g,2,0.0
+5a43675dab86fd38705b2ae8,Staples,Instant Meals,Oatmeal-50g-Halal,6,0.0
+5a43675dab86fd38705b2aea,Staples,Instant Meals,Oatmeal-850g,2,0.0
+5a43675dab86fd38705b2aeb,Staples,Instant Meals,Oats-1.5kg-Halal,2,0.0
+5a43675dab86fd38705b2aec,Staples,Instant Meals,Oats-250g-Halal,2,0.0
+5a43675dab86fd38705b2a8b,Snacks,Breakfast Cereals,Oats-850g-Halal,8,0.0
+5a43675dab86fd38705b2aed,Staples,Instant Meals,Oats-950g,1,0.0
+5a43675dab86fd38705b28eb,Canned Food,Fish/Seafood,Octopus-50g,1,0.0
+5a43675dab86fd38705b2993,Condiments,Oil & Fats,Olive Oil-950ml,1,0.0
+5a43675dab86fd38705b297f,Condiments,Herbs & Spices,Olives-250g,1,3.0
+5a43675dab86fd38705b2a33,Dried Food,Vegetables,Onions-250g,1,0.0
+5a43675dab86fd38705b2892,Beverages,Ready to Drink,Oolong Tea-350ml-Halal,2,0.0
+5a43675dab86fd38705b290b,Canned Food,Fruits,Orange-250g-Halal,1,2.0
+5a43675dab86fd38705b290c,Canned Food,Fruits,Orange-350g,1,0.0
+5a43675dab86fd38705b29b2,Condiments,Sauces & Dressing,Orange Dressing-450g,1,0.0
+5a43675dab86fd38705b2864,Beverages,Hot Beverages,Ovaltine-150g,1,0.0
+5a43675dab86fd38705b2865,Beverages,Hot Beverages,Ovaltine-650g,1,5.0
+5a43675dab86fd38705b29b4,Condiments,Sauces & Dressing,Oyster Sauce-550g,2,0.0
+5a43675dab86fd38705b29b3,Condiments,Sauces & Dressing,Oyster Sauce-550g-Halal,1,0.0
+5a43675dab86fd38705b290d,Canned Food,Fruits,Palm Fruit-550g-Halal,2,3.0
+5a43675dab86fd38705b280d,Baking Needs,Premix Powder,Pancake Mix-450g,1,6.0
+5a43675dab86fd38705b2b1a,Staples,Pasta,Pasta-250g,1,0.0
+5a43675dab86fd38705b2b1b,Staples,Pasta,Pasta-250g-Halal,3,0.0
+5a43675dab86fd38705b2b1c,Staples,Pasta,Pasta-350g,3,0.0
+5a43675dab86fd38705b2b1e,Staples,Pasta,Pasta-450g,9,3.0
+5a43675dab86fd38705b2b1d,Staples,Pasta,Pasta-450g-Halal,2,3.0
+5a43675dab86fd38705b2b14,Staples,Pasta,Pasta-50g-Halal,1,1.0
+5a43675dab86fd38705b2b20,Staples,Pasta,Pasta-550g,52,3.0
+5a43675dab86fd38705b2b1f,Staples,Pasta,Pasta-550g-Halal,5,3.0
+5a43675dab86fd38705b29b5,Condiments,Sauces & Dressing,Pasta Sauce-150g,3,4.0
+5a43675dab86fd38705b29b6,Condiments,Sauces & Dressing,Pasta Sauce-250g-Halal,6,0.0
+5a43675dab86fd38705b29b7,Condiments,Sauces & Dressing,Pasta Sauce-350g-Halal,1,4.0
+5a43675dab86fd38705b29b8,Condiments,Sauces & Dressing,Pasta Sauce-450g,1,0.0
+5a43675dab86fd38705b29b9,Condiments,Sauces & Dressing,Pasta Sauce-50g,1,2.0
+5a43675dab86fd38705b29d9,Condiments,Seasoning,Paste-50g,4,0.0
+5a43675dab86fd38705b29d8,Condiments,Seasoning,Paste-50g-Halal,2,0.0
+5a43675dab86fd38705b290e,Canned Food,Fruits,Peach-450g,4,0.0
+5a43675dab86fd38705b290f,Canned Food,Fruits,Peach-450g-Halal,1,0.0
+5a43675dab86fd38705b2910,Canned Food,Fruits,Peach-850g,3,0.0
+5a43675dab86fd38705b29eb,Condiments,Spreads,Peanut Butter-450g-Halal,2,5.0
+5a43675dab86fd38705b29ec,Condiments,Spreads,Peanut Butter-550g,1,0.0
+5a43675dab86fd38705b2abe,Snacks,Nuts,Peanuts-150g-Halal,1,0.0
+5a43675dab86fd38705b2a11,Dried Food,Beans/Peas/Peanuts,Peanuts-150g-Halal,1,0.0
+5a43675dab86fd38705b2abf,Snacks,Nuts,Peanuts-2.5kg,1,0.0
+5a43675dab86fd38705b2ac0,Snacks,Nuts,Peanuts-50g,1,0.0
+5a43675dab86fd38705b2ac1,Snacks,Nuts,Peanuts-550g,1,0.0
+5a43675dab86fd38705b2980,Condiments,Herbs & Spices,Pepper-250g,2,0.0
+5a5ef7c8f0147a00047d6a8e,Canned Food,Vegetables,Pickled Lettuce-350g-Halal,2,0.0
+5a43675dab86fd38705b2958,Canned Food,Vegetables,Pickled Lettuce-150g-Halal,3,1.5
+5a43675dab86fd38705b2a57,Preserved Food,Vegetables,Pickles-250g,1,0.0
+5a43675dab86fd38705b2911,Canned Food,Fruits,Pineapple-150g-Halal,1,2.0
+5a43675dab86fd38705b2912,Canned Food,Fruits,Pineapple-550g,1,5.0
+5a43675dab86fd38705b2913,Canned Food,Fruits,Pineapple-550g-Halal,7,5.0
+5a43675dab86fd38705b28d4,Canned Food,Beans/Peas/Peanuts,Pinto Beans-450g,2,0.0
+5a43675dab86fd38705b29ba,Condiments,Sauces & Dressing,Pizza Sauce-450g,2,3.0
+5a5ad2b757adb00004e89f6f,Condiments,Sauces & Dressing,Pizza Sauce-450g-Halal,20,3.0
+5a43675dab86fd38705b2a23,Dried Food,Fruits,Plums-150g,3,0.0
+5a43675dab86fd38705b2a24,Dried Food,Fruits,Plums-50g,1,7.0
+5a43675dab86fd38705b2a25,Dried Food,Fruits,Plums-50g-Halal,1,7.0
+5a43675dab86fd38705b2ac5,Snacks,Other Snacks,Popcorn-350g,1,2.0
+5a43675dab86fd38705b2ac6,Snacks,Other Snacks,Popcorn-50g-Halal,1,2.0
+5a43675dab86fd38705b2925,Canned Food,Meat,Pork-150g,2,2.0
+5a43675dab86fd38705b2926,Canned Food,Meat,Pork-250g,1,2.0
+5a43675dab86fd38705b2927,Canned Food,Meat,Pork-350g,7,2.0
+5a43675dab86fd38705b2928,Canned Food,Meat,Pork-450g,10,4.0
+5a43675dab86fd38705b2929,Canned Food,Meat,Pork-50g,3,0.0
+5a43675dab86fd38705b292a,Canned Food,Meat,Pork Leg with Mushroom-350g,2,0.0
+5a43675dab86fd38705b2939,Canned Food,Soup,Potato and Leek-450g-Halal,1,0.0
+5a43675dab86fd38705b2807,Baking Needs,Flour,Premix Powder-1.5kg,1,0.0
+5a43675dab86fd38705b280e,Baking Needs,Premix Powder,Premix Powder-150g,2,2.0
+5a43675dab86fd38705b280f,Baking Needs,Premix Powder,Premix Powder-250g,1,4.0
+5a43675dab86fd38705b2810,Baking Needs,Premix Powder,Premix Powder-250g-Halal,1,4.0
+5a43675dab86fd38705b2811,Baking Needs,Premix Powder,Premix Powder-350g,1,2.5
+5a43675dab86fd38705b2812,Baking Needs,Premix Powder,Premix Powder-450g,1,4.0
+5a43675dab86fd38705b2a45,Preserved Food,Beans/Peas/Peanuts,Preserved Chestnuts-650g,1,0.0
+5a43675dab86fd38705b2a46,Preserved Food,Beans/Peas/Peanuts,Preserved Soy Beans-350g-Halal,1,0.0
+5a43675dab86fd38705b2a26,Dried Food,Fruits,Prune-150g,1,2.0
+5a43675dab86fd38705b2a49,Preserved Food,Fruits,Prunes-250g,2,0.0
+5a43675dab86fd38705b2b2a,Staples,Rice,Puffed Rice-250g,1,3.0
+5a43675dab86fd38705b2a2b,Dried Food,Other Dried Food,Pumpkin Seeds-50g,1,0.0
+5a43675dab86fd38705b2ac7,Snacks,Raisins,Raisins-50g-Halal,12,0.0
+5a43675dab86fd38705b2914,Canned Food,Fruits,Rambutan-550g-Halal,3,4.0
+5a43675dab86fd38705b29ee,Condiments,Sugar,Raw Sugar-450g,1,0.0
+5a43675dab86fd38705b2a12,Dried Food,Beans/Peas/Peanuts,Red Beans-550g,2,2.0
+5a43675dab86fd38705b2a13,Dried Food,Beans/Peas/Peanuts,Red Beans-550g-Halal,2,2.0
+5a43675dab86fd38705b2a14,Dried Food,Beans/Peas/Peanuts,Red Beans-950g,1,8.0
+5a43675dab86fd38705b2b2b,Staples,Rice,Red Rice-1.5kg,1,5.0
+5a43675dab86fd38705b2b2c,Staples,Rice,Red Rice-1.5kg-Halal,2,5.0
+5a43675dab86fd38705b2b2d,Staples,Rice,Red Rice-2.5kg,1,5.8
+5a43675dab86fd38705b2b2e,Staples,Rice,Red Rice-5.5kg,2,0.0
+5a43675dab86fd38705b28d5,Canned Food,Beans/Peas/Peanuts,Refried Beans-450g,2,0.0
+5a43675dab86fd38705b2b2f,Staples,Rice,Rice-25.5kg-Halal,2,0.0
+5a43675dab86fd38705b2b30,Staples,Rice,Rice Flakes-1.5kg,1,0.0
+5a43675dab86fd38705b2b31,Staples,Rice,Rice Flakes-550g,2,0.0
+5a43675dab86fd38705b2808,Baking Needs,Flour,Rice Flour-1.5kg-Halal,1,2.0
+5a43675dab86fd38705b2a2c,Dried Food,Other Dried Food,Roasted Chestnuts-250g,1,0.0
+5a43675dab86fd38705b2a2d,Dried Food,Other Dried Food,Roasted Chestnuts-50g,1,0.0
+5a43675dab86fd38705b29ef,Condiments,Sugar,Rock Sugar-450g,3,3.0
+5a43675dab86fd38705b280b,Baking Needs,Other Baking Needs,Sago Powder-450g,1,2.0
+5a43675dab86fd38705b29bb,Condiments,Sauces & Dressing,Salad Dressing-350g,1,3.0
+5a43675dab86fd38705b29bc,Condiments,Sauces & Dressing,Salad Dressing-450g-Halal,1,4.1
+5a43675dab86fd38705b2996,Condiments,Salt,Salt-1.5kg,3,2.0
+5a43675dab86fd38705b2995,Condiments,Salt,Salt-1.5kg-Halal,3,2.0
+5a43675dab86fd38705b2997,Condiments,Salt,Salt-250g-Halal,7,1.0
+5a43675dab86fd38705b2998,Condiments,Salt,Salt-3.5kg-Halal,3,3.0
+5a43675dab86fd38705b299a,Condiments,Salt,Salt-450g,2,1.5
+5a43675dab86fd38705b2999,Condiments,Salt,Salt-450g-Halal,3,1.5
+5a43675dab86fd38705b299c,Condiments,Salt,Salt-550g,2,2.0
+5a43675dab86fd38705b299b,Condiments,Salt,Salt-550g-Halal,9,2.0
+5a43675dab86fd38705b28ec,Canned Food,Fish/Seafood,Sardines-1.5kg-Halal,5,5.0
+5a43675dab86fd38705b28ee,Canned Food,Fish/Seafood,Sardines-150g,11,3.0
+5a43675dab86fd38705b28ed,Canned Food,Fish/Seafood,Sardines-150g-Halal,55,3.0
+5a43675dab86fd38705b28ef,Canned Food,Fish/Seafood,Sardines-250g,36,2.0
+5a43675dab86fd38705b28f1,Canned Food,Fish/Seafood,Sardines-450g,2,4.0
+5a43675dab86fd38705b28f0,Canned Food,Fish/Seafood,Sardines-450g-Halal,82,4.0
+5a43675dab86fd38705b28f2,Canned Food,Fish/Seafood,Sardines-50g-Halal,1,1.0
+5a43675dab86fd38705b29bd,Condiments,Sauces & Dressing,Sauce-250g,2,2.0
+5a43675dab86fd38705b28f3,Canned Food,Fish/Seafood,Sauce-250g-Halal,1,2.0
+5a43675dab86fd38705b29be,Condiments,Sauces & Dressing,Sauce-250g-Halal,1,2.0
+5a43675dab86fd38705b29bf,Condiments,Sauces & Dressing,Sauces-650g-Halal,10,0.0
+5a43675dab86fd38705b29c0,Condiments,Sauces & Dressing,Scallop Sauce-150g-Halal,1,5.0
+5a43675dab86fd38705b28f4,Canned Food,Fish/Seafood,Sea Asparagus-450g-Halal,3,8.8
+5a43675dab86fd38705b29da,Condiments,Seasoning,Seasoning Flour-350g-Halal,2,0.0
+5a43675dab86fd38705b29db,Condiments,Seasoning,Seasoning Flour-50g-Halal,1,3.0
+5a43675dab86fd38705b2ac8,Snacks,Seaweed,Seaweed-250g,1,0.0
+5a43675dab86fd38705b2a34,Dried Food,Vegetables,Seaweed-50g,2,0.0
+5a43675dab86fd38705b2aca,Snacks,Seaweed,Seaweed-50g,12,0.0
+5a43675dab86fd38705b2ac9,Snacks,Seaweed,Seaweed-50g-Halal,9,0.0
+5a43675dab86fd38705b2994,Condiments,Oil & Fats,Sesame Oil-250ml-Halal,1,0.0
+5a43675dab86fd38705b280c,Baking Needs,Other Baking Needs,Skimmed Milk Powder-250g,1,0.0
+5a66c7aefdc53f000419408d,Beverages,Ready to Drink,Soft Drink-350ml,1,1.0
+5a66c70bfdc53f000419408c,Beverages,Ready to Drink,Soft Drink-350ml-Halal,38,1.0
+5a43675dab86fd38705b2893,Beverages,Ready to Drink,Soft Drink-1.5l-Halal,12,2.0
+5a65f3ed9be1f700048e69bf,Beverages,Ready to Drink,Soft Drink-13.5l-Halal,10,0.0
+5a43675dab86fd38705b2894,Beverages,Ready to Drink,Soft Drink-250ml,4,1.0
+5a43675dab86fd38705b2896,Beverages,Ready to Drink,Soft Drink-350ml,37,1.0
+5a43675dab86fd38705b293b,Canned Food,Soup,Soup-250g,6,2.0
+5a43675dab86fd38705b293a,Canned Food,Soup,Soup-250g-Halal,3,2.0
+5a43675dab86fd38705b293c,Canned Food,Soup,Soup-350g,8,0.0
+5a43675dab86fd38705b293d,Canned Food,Soup,Soup-350g-Halal,7,0.0
+5a43675dab86fd38705b293e,Canned Food,Soup,Soup-450g,8,0.0
+5a43675dab86fd38705b293f,Canned Food,Soup,Soup-450g-Halal,2,0.0
+5a43675dab86fd38705b2940,Canned Food,Soup,Soup-550g,1,2.0
+5a43675dab86fd38705b2941,Canned Food,Soup,Soup-750g,1,0.0
+5a43675dab86fd38705b29dc,Condiments,Seasoning,Soup Mix-50g-Halal,1,0.0
+5a43675dab86fd38705b29dd,Condiments,Seasoning,Soup Stock-150g,1,1.0
+5a43675dab86fd38705b29de,Condiments,Seasoning,Soup Stock-150g-Halal,1,1.0
+5a43675dab86fd38705b29df,Condiments,Seasoning,Soup Stock-50g,1,1.0
+5a43675dab86fd38705b2898,Beverages,Ready to Drink,Soya Milk-150ml-Halal,1,4.5
+5a43675dab86fd38705b289a,Beverages,Ready to Drink,Soya Milk-250ml-Halal,19,2.0
+5a43675dab86fd38705b2869,Beverages,Ready to Drink,Soya Milk-350ml-Halal,1,3.0
+5a43675dab86fd38705b289b,Beverages,Ready to Drink,Soya Milk-950ml,1,0.0
+5a43675dab86fd38705b289c,Beverages,Ready to Drink,Soya Milk-950ml-Halal,1,0.0
+5a43675dab86fd38705b2866,Beverages,Hot Beverages,Soy Drink Powder-250g,4,0.0
+5a43675dab86fd38705b2867,Beverages,Hot Beverages,Soy Drink Powder-50g-Halal,1,1.0
+5a43675dab86fd38705b2868,Beverages,Hot Beverages,Soy Drink Powder-950g-Halal,2,3.5
+5a43675dab86fd38705b2944,Canned Food,Vegetables,Abalone-250g-Halal,1,0.0
+5a43675dab86fd38705b292f,Canned Food,Soup,Abalone-450g,1,0.0
+5a43675dab86fd38705b28df,Canned Food,Fish/Seafood,Abalone-450g,3,0.0
+5a43675dab86fd38705b28e0,Canned Food,Fish/Seafood,Abalone-450g-Halal,1,0.0
+5a43675dab86fd38705b299d,Condiments,Sauces & Dressing,Abalone Sauce-350g-Halal,1,0.0
+5a43675dab86fd38705b2813,Beverages,Hot Beverages,Adult Milk Powder-1.5kg-Halal,13,20.0
+5a43675dab86fd38705b2815,Beverages,Hot Beverages,Adult Milk Powder-150g-Halal,2,2.5
+5a43675dab86fd38705b2816,Beverages,Hot Beverages,Adult Milk Powder-350g,1,2.5
+5a43675dab86fd38705b2817,Beverages,Hot Beverages,Adult Milk Powder-450g-Halal,70,6.5
+5a43675dab86fd38705b2818,Beverages,Hot Beverages,Adult Milk Powder-50g-Halal,21,3.0
+5a43675dab86fd38705b281a,Beverages,Hot Beverages,Adult Milk Powder-550g-Halal,8,10.0
+5a43675dab86fd38705b281b,Beverages,Hot Beverages,Adult Milk Powder-650g-Halal,27,20.0
+5a43675dab86fd38705b281c,Beverages,Hot Beverages,Adult Milk Powder-750g-Halal,6,20.0
+5a43675dab86fd38705b281d,Beverages,Hot Beverages,Adult Milk Powder-950g-Halal,1,25.0
+5a43675dab86fd38705b2809,Baking Needs,Other Baking Needs,Agar Agar Powder-10g-Halal,1,0.0
+5a43675dab86fd38705b2a02,Dried Food,Beans/Peas/Peanuts,Almond-550g,1,0.0
+5a43675dab86fd38705b2875,Beverages,Ready to Drink,Almond Milk-150ml,3,0.0
+5a43675dab86fd38705b29fa,Condiments,Syrups,Almond Syrup-650g,1,0.0
+5a43675dab86fd38705b281e,Beverages,Hot Beverages,Aloe Vera Drink-150g,2,0.0
+5a43675dab86fd38705b299e,Condiments,Sauces & Dressing,Apple Sauce-150g,5,0.0
+5a43675dab86fd38705b27f1,Baby Food,Baby Cereals,Baby Cereals-250g-Halal,2,6.5
+5a43675dab86fd38705b27f2,Baby Food,Baby Cereals,Baby Cereals-450g,1,3.0
+5a43675dab86fd38705b27f3,Baby Food,Baby Cereals,Baby Cereals-50g-Halal,2,2.0
+5a43675dab86fd38705b27f4,Baby Food,Baby Food,Baby Food-150g,5,2.0
+5a43675dab86fd38705b27f5,Baby Food,Baby Food,Baby Food-50g,13,2.0
+5a43675dab86fd38705b27f6,Baby Food,Baby Food,Baby Food-50g-Halal,4,2.0
+5a43675dab86fd38705b281f,Beverages,Hot Beverages,Baby Milk Powder-2.5kg-Halal,2,0.0
+5a43675dab86fd38705b27f7,Baby Food,Baby Milk Powder,Baby Milk Powder-250g,1,5.0
+5a43675dab86fd38705b27f8,Baby Food,Baby Milk Powder,Baby Milk Powder-350g,2,18.0
+5a43675dab86fd38705b27f9,Baby Food,Baby Milk Powder,Baby Milk Powder-350g-Halal,1,18.0
+5a43675dab86fd38705b27fa,Baby Food,Baby Milk Powder,Baby Milk Powder-450g-Halal,1,0.0
+5a43675dab86fd38705b27fc,Baby Food,Baby Milk Powder,Baby Milk Powder-50g,5,2.0
+5a43675dab86fd38705b27fb,Baby Food,Baby Milk Powder,Baby Milk Powder-50g-Halal,7,2.0
+5a43675dab86fd38705b27fd,Baby Food,Baby Milk Powder,Baby Milk Powder-650g-Halal,5,10.0
+5a43675dab86fd38705b27fe,Baby Food,Baby Milk Powder,Baby Milk Powder-750g-Halal,2,35.0
+5a43675dab86fd38705b2800,Baby Food,Baby Milk Powder,Baby Milk Powder-850g,1,0.0
+5a43675dab86fd38705b27ff,Baby Food,Baby Milk Powder,Baby Milk Powder-850g-Halal,1,0.0
+5a43675dab86fd38705b2801,Baby Food,Baby Milk Powder,Baby Milk Powder-950g-Halal,1,8.0
+5a43675dab86fd38705b28b0,Canned Food,Beans/Peas/Peanuts,Baked Beans-250g,181,0.0
+5a43675dab86fd38705b28b1,Canned Food,Beans/Peas/Peanuts,Baked Beans-250g-Halal,86,0.0
+5a43675dab86fd38705b28b2,Canned Food,Beans/Peas/Peanuts,Baked Beans-350g,10,0.0
+5a43675dab86fd38705b28b4,Canned Food,Beans/Peas/Peanuts,Baked Beans-450g,35,0.0
+5a43675dab86fd38705b28b3,Canned Food,Beans/Peas/Peanuts,Baked Beans-450g-Halal,104,0.0
+5a43675dab86fd38705b28b5,Canned Food,Beans/Peas/Peanuts,Baked Beans-550g,1,0.0
+5a43675dab86fd38705b2802,Baking Needs,Baking Powder,Baking Powder-50g-Halal,1,2.0
+5a43675dab86fd38705b2822,Beverages,Hot Beverages,Bandung-50g-Halal,0,0.0
+5a43675dab86fd38705b2a03,Dried Food,Beans/Peas/Peanuts,Barley-150g,1,0.0
+5a43675dab86fd38705b2a04,Dried Food,Beans/Peas/Peanuts,Barley-250g,2,2.0
+5a43675dab86fd38705b2876,Beverages,Ready to Drink,Barley-250ml-Halal,2,5.0
+5a43675dab86fd38705b2a05,Dried Food,Beans/Peas/Peanuts,Barley-550g,2,1.3
+5a43675dab86fd38705b2a5a,Snacks,Bars,Bars-150g,2,1.5
+5a43675dab86fd38705b2a59,Snacks,Bars,Bars-150g-Halal,1,1.5
+5a43675dab86fd38705b2a5b,Snacks,Bars,Bars-250g-Halal,1,1.5
+5a43675dab86fd38705b2a5c,Snacks,Bars,Bars-50g,26,2.0
+5a5ad3ac57adb00004e89f70,Snacks,Bars,Bars-50g-Halal,3,2.0
+5a43675dab86fd38705b2974,Condiments,Herbs & Spices,Basil Leaves-250g-Halal,1,0.0
+5a43675dab86fd38705b299f,Condiments,Sauces & Dressing,BBQ Sauce-350g,1,4.5
+5a43675dab86fd38705b29a0,Condiments,Sauces & Dressing,BBQ Sauce-550g,1,5.0
+5a5d99e4a77c490004af0c59,Canned Food,Other Canned Food,Beancurd Skin-1.5kg-Halal,2,0.0
+5a43675dab86fd38705b292c,Canned Food,Other Canned Food,Beancurd Skin-250g-Halal,1,2.0
+5a43675dab86fd38705b29a1,Condiments,Sauces & Dressing,Bean Paste-250g,1,0.0
+5a43675dab86fd38705b29a2,Condiments,Sauces & Dressing,Bean Sauce-150g,1,0.0
+5a43675dab86fd38705b2a3b,Others,Other Food Items,Yu Sheng-550g-Halal,1,0.0
+5a43675dab86fd38705b292e,Canned Food,Other Canned Food,Spaghetti-450g,1,0.0
+5a59d22eb1513b00040e0068,Beverages,Ready to Drink,Sparkling Juice-450ml-Halal,22,0.0
+5a43675dab86fd38705b289d,Beverages,Ready to Drink,Sparkling Juice-750ml-Halal,1,0.0
+5a43675dab86fd38705b2981,Condiments,Herbs & Spices,Spiced Spinach Gravy-350g,1,0.0
+5a43675dab86fd38705b29c1,Condiments,Sauces & Dressing,Spices-150g,1,2.0
+5a43675dab86fd38705b2982,Condiments,Herbs & Spices,Spices-350g,1,2.0
+5a43675dab86fd38705b2984,Condiments,Herbs & Spices,Spices-50g,3,2.0
+5a43675dab86fd38705b2983,Condiments,Herbs & Spices,Spices-50g-Halal,1,2.0
+5a43675dab86fd38705b2a15,Dried Food,Beans/Peas/Peanuts,Split Green Beans-950g,1,6.0
+5a43675dab86fd38705b29c2,Condiments,Sauces & Dressing,Steak Sauce-50g,2,0.0
+5a43675dab86fd38705b2959,Canned Food,Vegetables,Straw Mushrooms-450g-Halal,5,0.0
+5a43675dab86fd38705b29f1,Condiments,Sugar,Sugar-1.5kg,5,2.0
+5a43675dab86fd38705b29f0,Condiments,Sugar,Sugar-1.5kg-Halal,8,2.0
+5a43675dab86fd38705b29f2,Condiments,Sugar,Sugar-2.5kg-Halal,2,0.0
+5a43675dab86fd38705b29f3,Condiments,Sugar,Sugar-3.5kg,3,5.0
+5a43675dab86fd38705b29f4,Condiments,Sugar,Sugar-350g,4,0.0
+5a43675dab86fd38705b29f5,Condiments,Sugar,Sugar-450g,1,2.0
+5a43675dab86fd38705b29f6,Condiments,Sugar,Sugar-450g-Halal,1,2.0
+5a43675dab86fd38705b29f7,Condiments,Sugar,Sugar-550g,1,2.0
+5a43675dab86fd38705b29f9,Condiments,Sugar,Sugar-950g,3,5.5
+5a43675dab86fd38705b29f8,Condiments,Sugar,Sugar-950g-Halal,7,5.5
+5a43675dab86fd38705b29c3,Condiments,Sauces & Dressing,Sweet & Sour Sauce-350g-Halal,1,3.0
+5a43675dab86fd38705b2a58,Preserved Food,Vegetables,Sweet Corn-450g,1,0.0
+5a43675dab86fd38705b28de,Canned Food,Dairy,Sweetener-350g-Halal,31,3.0
+5a43675dab86fd38705b2acc,Snacks,Sweets,Sweets-150g,24,1.5
+5a43675dab86fd38705b2acb,Snacks,Sweets,Sweets-150g-Halal,13,1.5
+5a43675dab86fd38705b2ace,Snacks,Sweets,Sweets-250g,7,0.0
+5a43675dab86fd38705b2acd,Snacks,Sweets,Sweets-250g-Halal,141,0.0
+5a43675dab86fd38705b2ad0,Snacks,Sweets,Sweets-350g,1,0.0
+5a43675dab86fd38705b2acf,Snacks,Sweets,Sweets-350g-Halal,2,0.0
+5a43675dab86fd38705b2ad1,Snacks,Sweets,Sweets-450g-Halal,1,0.0
+5a43675dab86fd38705b2ad3,Snacks,Sweets,Sweets-50g,210,0.5
+5a43675dab86fd38705b2ad2,Snacks,Sweets,Sweets-50g-Halal,7,0.5
+5a43675dab86fd38705b2ad4,Snacks,Sweets,Sweets-550g,2,4.0
+5a43675dab86fd38705b2a78,Snacks,Sweets,Sweets-550g-Halal,1,4.0
+5a43675dab86fd38705b2ad5,Snacks,Sweets,Sweets-650g,1,2.5
+5a43675dab86fd38705b2985,Condiments,Herbs & Spices,Tandoori Masala-50g-Halal,1,0.0
+5a5ce80e8efdf5000460d846,Beverages,Ready to Drink,Tea-1.5kg-Halal,22,6.0
+5a43675dab86fd38705b289f,Beverages,Ready to Drink,Tea-1.5l,1,2.0
+5a43675dab86fd38705b289e,Beverages,Ready to Drink,Tea-1.5l-Halal,6,2.0
+5a43675dab86fd38705b286b,Beverages,Hot Beverages,Tea-150g,35,0.0
+5a43675dab86fd38705b286c,Beverages,Hot Beverages,Tea-150g-Halal,1,0.0
+5a43675dab86fd38705b286d,Beverages,Hot Beverages,Tea-250g,5,0.5
+5a43675dab86fd38705b286e,Beverages,Hot Beverages,Tea-250g-Halal,5,0.5
+5a43675dab86fd38705b28a1,Beverages,Ready to Drink,Tea-250ml,20,0.5
+5a43675dab86fd38705b28a0,Beverages,Ready to Drink,Tea-250ml-Halal,55,0.5
+5a43675dab86fd38705b28a2,Beverages,Ready to Drink,Tea-350ml,3,1.0
+5a5c867a8efdf5000460d843,Beverages,Ready to Drink,Tea-350ml-Halal,22,1.0
+5a43675dab86fd38705b286f,Beverages,Hot Beverages,Tea-450g,2,6.0
+5a43675dab86fd38705b2870,Beverages,Hot Beverages,Tea-450g-Halal,1,6.0
+5a43675dab86fd38705b2871,Beverages,Hot Beverages,Tea-50g,40,1.0
+5a43675dab86fd38705b2872,Beverages,Hot Beverages,Tea-50g-Halal,4,1.0
+5a43675dab86fd38705b2874,Beverages,Hot Beverages,Tea-550g,1,2.0
+5a43675dab86fd38705b2873,Beverages,Hot Beverages,Tea-550g-Halal,1,2.0
+5a5b3332af19910004f1acba,Beverages,Ready to Drink,Tea-550ml,1,2.0
+5a43675dab86fd38705b28a3,Beverages,Ready to Drink,Tea-550ml-Halal,1,2.0
+5a43675dab86fd38705b28a4,Beverages,Ready to Drink,Tea-950ml-Halal,1,2.0
+5a43675dab86fd38705b295e,Canned Food,Vegetables,Tomatoes-1.5kg,4,10.0
+5a43675dab86fd38705b295f,Canned Food,Vegetables,Tomatoes-150g,1,0.0
+5a43675dab86fd38705b2960,Canned Food,Vegetables,Tomatoes-2.5kg,2,0.0
+5a43675dab86fd38705b2942,Canned Food,Soup,Tomatoes-350g-Halal,2,0.0
+5a43675dab86fd38705b2a98,Snacks,Chips,Chips-150g,9,2.0
+5a43675dab86fd38705b2915,Canned Food,Meat,Beef-150g,1,0.0
+5a43675dab86fd38705b2917,Canned Food,Meat,Beef-350g,2,0.0
+5a43675dab86fd38705b2916,Canned Food,Meat,Beef-350g-Halal,2,0.0
+5a43675dab86fd38705b2a27,Dried Food,Meat,Beef Floss-150g-Halal,1,0.0
+5a43675dab86fd38705b29ca,Condiments,Seasoning,Beef Stock-150g-Halal,1,0.0
+5a43675dab86fd38705b2aee,Staples,Noodles,Bee Hoon/Vermicelli-150g,19,5.0
+5a43675dab86fd38705b2aef,Staples,Noodles,Bee Hoon/Vermicelli-250g-Halal,1,4.0
+5a43675dab86fd38705b2af0,Staples,Noodles,Bee Hoon/Vermicelli-3.5kg-Halal,4,5.0
+5a43675dab86fd38705b2af2,Staples,Noodles,Bee Hoon/Vermicelli-350g,4,2.0
+5a43675dab86fd38705b2af1,Staples,Noodles,Bee Hoon/Vermicelli-350g-Halal,7,2.0
+5a43675dab86fd38705b2af3,Staples,Noodles,Bee Hoon/Vermicelli-450g,10,1.0
+5a43675dab86fd38705b2af4,Staples,Noodles,Bee Hoon/Vermicelli-450g-Halal,44,1.0
+5a43675dab86fd38705b2af6,Staples,Noodles,Bee Hoon/Vermicelli-550g,3,1.5
+5a43675dab86fd38705b2af5,Staples,Noodles,Bee Hoon/Vermicelli-550g-Halal,1,1.5
+5a43675dab86fd38705b2a41,Others,Supplements,Bird's Nest-50g,1,5.0
+5a43675dab86fd38705b2a39,Others,Health Supplements,Bird's Nest-50g-Halal,1,5.0
+5a43675dab86fd38705b2a5e,Snacks,Biscuit/Crackers,Biscuit/Crackers-1.5kg,1,3.0
+5a43675dab86fd38705b2a5d,Snacks,Biscuit/Crackers,Biscuit/Crackers-1.5kg-Halal,2,3.0
+5a43675dab86fd38705b2a60,Snacks,Biscuit/Crackers,Biscuit/Crackers-150g,58,2.0
+5a43675dab86fd38705b2a5f,Snacks,Biscuit/Crackers,Biscuit/Crackers-150g-Halal,126,2.0
+5a43675dab86fd38705b2a61,Snacks,Biscuit/Crackers,Biscuit/Crackers-2.5kg-Halal,7,7.0
+5a43675dab86fd38705b2a63,Snacks,Biscuit/Crackers,Biscuit/Crackers-250g,58,2.0
+5a43675dab86fd38705b2a62,Snacks,Biscuit/Crackers,Biscuit/Crackers-250g-Halal,148,2.0
+5a43675dab86fd38705b2a64,Snacks,Biscuit/Crackers,Biscuit/Crackers-3.5kg,6,0.0
+5a43675dab86fd38705b2a66,Snacks,Biscuit/Crackers,Biscuit/Crackers-350g,33,2.0
+5a43675dab86fd38705b2a65,Snacks,Biscuit/Crackers,Biscuit/Crackers-350g-Halal,141,2.0
+5a43675dab86fd38705b2a67,Snacks,Biscuit/Crackers,Biscuit/Crackers-450g,90,4.0
+5a43675dab86fd38705b2a68,Snacks,Biscuit/Crackers,Biscuit/Crackers-450g-Halal,244,4.0
+5a43675dab86fd38705b2a69,Snacks,Biscuit/Crackers,Biscuit/Crackers-50g,119,1.0
+5a43675dab86fd38705b2a6a,Snacks,Biscuit/Crackers,Biscuit/Crackers-50g-Halal,145,1.0
+5a43675dab86fd38705b2a6c,Snacks,Biscuit/Crackers,Biscuit/Crackers-550g,4,4.0
+5a43675dab86fd38705b2a6b,Snacks,Biscuit/Crackers,Biscuit/Crackers-550g-Halal,1,4.0
+5a43675dab86fd38705b2a6d,Snacks,Biscuit/Crackers,Biscuit/Crackers-650g,4,5.0
+5a43675dab86fd38705b2a6e,Snacks,Biscuit/Crackers,Biscuit/Crackers-650g-Halal,18,5.0
+5a43675dab86fd38705b2a6f,Snacks,Biscuit/Crackers,Biscuit/Crackers-750g,2,2.0
+5a43675dab86fd38705b2a70,Snacks,Biscuit/Crackers,Biscuit/Crackers-750g-Halal,7,2.0
+5a43675dab86fd38705b2a71,Snacks,Biscuit/Crackers,Biscuit/Crackers-850g-Halal,17,0.0
+5a43675dab86fd38705b2a73,Snacks,Biscuit/Crackers,Biscuit/Crackers-950g,8,0.0
+5a43675dab86fd38705b2a72,Snacks,Biscuit/Crackers,Biscuit/Crackers-950g-Halal,11,0.0
+5a43675dab86fd38705b28b6,Canned Food,Beans/Peas/Peanuts,Black Beans-150g-Halal,1,0.0
+5a43675dab86fd38705b28b7,Canned Food,Beans/Peas/Peanuts,Black Beans-450g,1,1.0
+5a43675dab86fd38705b28b8,Canned Food,Beans/Peas/Peanuts,Black Beans-550g,1,3.0
+5a43675dab86fd38705b29a3,Condiments,Sauces & Dressing,Black Bean Sauce-250g,1,0.0
+5a43675dab86fd38705b2a06,Dried Food,Beans/Peas/Peanuts,Black Eyed Beans-550g-Halal,2,0.0
+5a43675dab86fd38705b2a30,Dried Food,Vegetables,Black Fungus-150g,1,4.0
+5a43675dab86fd38705b2a07,Dried Food,Beans/Peas/Peanuts,Black Melon Seeds-250g,1,0.0
+5a43675dab86fd38705b2975,Condiments,Herbs & Spices,Black Sesame Powder-450g-Halal,1,0.0
+5a43675dab86fd38705b2a47,Preserved Food,Fruits,Bottled Fruits-250g-Halal,2,3.0
+5a43675dab86fd38705b2a4f,Preserved Food,Vegetables,Bottled Olive Vegetables-150g-Halal,1,2.0
+5a43675dab86fd38705b2a50,Preserved Food,Vegetables,Bottled Olive Vegetables-250g,1,3.0
+5a43675dab86fd38705b2a44,Preserved Food,Beans/Peas/Peanuts,Bottled Peanuts and Beans-450g,1,0.0
+5a5b2885bd7b0e00041d1ab1,Preserved Food,Meat,Bottled Sausages-150g,12,0.0
+5a43675dab86fd38705b2a4a,Preserved Food,Meat,Bottled Sausages-450g,1,0.0
+5a43675dab86fd38705b2a4b,Preserved Food,Meat,Bottled Sausages-550g,1,8.0
+5a43675dab86fd38705b2a4c,Preserved Food,Meat,Bottled Sausages-650g-Halal,0,0.0
+5a43675dab86fd38705b2a4d,Preserved Food,Meat,Bottled Seafood-150g,2,0.0
+5a43675dab86fd38705b28ba,Canned Food,Beans/Peas/Peanuts,Braised Peanuts-150g,22,1.0
+5a43675dab86fd38705b28b9,Canned Food,Beans/Peas/Peanuts,Braised Peanuts-150g-Halal,2,1.0
+5a43675dab86fd38705b28bb,Canned Food,Beans/Peas/Peanuts,Braised Peanuts-250g,1,1.5
+5a43675dab86fd38705b28bc,Canned Food,Beans/Peas/Peanuts,Braised Peanuts-750g,1,0.0
+5a43675dab86fd38705b28bd,Canned Food,Beans/Peas/Peanuts,Braised Peanuts-850g,1,4.0
+5a43675dab86fd38705b298e,Condiments,Oil & Fats,Cooking Oil-450ml-Halal,1,5.0
+5a43675dab86fd38705b2943,Canned Food,Soup,Tomatoes-450g,6,0.0
+5a43675dab86fd38705b2962,Canned Food,Vegetables,Tomatoes-450g,7,0.0
+5a43675dab86fd38705b2961,Canned Food,Vegetables,Tomatoes-450g-Halal,2,0.0
+5a43675dab86fd38705b295a,Canned Food,Vegetables,Tomato Puree-150g,1,0.0
+5a43675dab86fd38705b29c5,Condiments,Sauces & Dressing,Tomato Puree-350g,1,0.0
+5a43675dab86fd38705b295b,Canned Food,Vegetables,Tomato Puree-350g-Halal,2,0.0
+5a43675dab86fd38705b295c,Canned Food,Vegetables,Tomato Puree-450g,2,2.4
+5a43675dab86fd38705b29c6,Condiments,Sauces & Dressing,Tomato Sauce-350g,2,2.5
+5a43675dab86fd38705b29c7,Condiments,Sauces & Dressing,Tomato Sauce-350g-Halal,2,2.5
+5a43675dab86fd38705b295d,Canned Food,Vegetables,Tomato Sauce-50g,1,1.9
+5a43675dab86fd38705b29c8,Condiments,Sauces & Dressing,Tomato Sauce-750g,1,3.0
+5a43675dab86fd38705b28f5,Canned Food,Fish/Seafood,Topshell-150g-Halal,1,2.1
+5a43675dab86fd38705b28f6,Canned Food,Fish/Seafood,Topshell-450g-Halal,32,3.5
+5a43675dab86fd38705b28f7,Canned Food,Fish/Seafood,Tuna-150g,101,2.0
+5a43675dab86fd38705b28f8,Canned Food,Fish/Seafood,Tuna-150g-Halal,42,2.0
+5a43675dab86fd38705b28f9,Canned Food,Fish/Seafood,Tuna-250g-Halal,1,0.0
+5a43675dab86fd38705b28fa,Canned Food,Fish/Seafood,Tuna-350g-Halal,4,2.0
+5a43675dab86fd38705b28fc,Canned Food,Fish/Seafood,Tuna-50g,4,0.0
+5a43675dab86fd38705b28fb,Canned Food,Fish/Seafood,Tuna-50g-Halal,1,0.0
+5a43675dab86fd38705b28d6,Canned Food,Beans/Peas/Peanuts,Tuna and Beans-150g,1,0.0
+5a43675dab86fd38705b2986,Condiments,Herbs & Spices,Turmeric-50g,1,0.0
+5a43675dab86fd38705b28a6,Beverages,Ready to Drink,UHT Milk-1.5l,3,3.0
+5a43675dab86fd38705b28a5,Beverages,Ready to Drink,UHT Milk-1.5l-Halal,5,3.0
+5a43675dab86fd38705b28a7,Beverages,Ready to Drink,UHT Milk-150ml-Halal,6,2.0
+5a43675dab86fd38705b28a8,Beverages,Ready to Drink,UHT Milk-250ml-Halal,6,2.0
+5a43675dab86fd38705b28a9,Beverages,Ready to Drink,UHT Milk-450ml-Halal,4,3.0
+5a43675dab86fd38705b28aa,Beverages,Ready to Drink,UHT Milk-950ml-Halal,6,5.0
+5a43675dab86fd38705b2a2e,Dried Food,Other Dried Food,Varagu-550g,1,0.0
+5a43675dab86fd38705b2a35,Dried Food,Vegetables,Vegetable Powder-50g,1,0.0
+5a43675dab86fd38705b2963,Canned Food,Vegetables,Vegetarian-150g,4,0.0
+5a43675dab86fd38705b2965,Canned Food,Vegetables,Vegetarian-250g,1,2.0
+5a43675dab86fd38705b2966,Canned Food,Vegetables,Vegetarian-250g-Halal,2,2.0
+5a43675dab86fd38705b2967,Canned Food,Vegetables,Vegetarian-350g,14,2.0
+5a43675dab86fd38705b2968,Canned Food,Vegetables,Vegetarian-350g-Halal,1,2.0
+5a43675dab86fd38705b29e0,Condiments,Seasoning,Vinegar-550g,2,5.0
+5a65d4499be1f700048e69a8,Others,Supplements,Vitamin C-350g,10,0.0
+5a65d5969be1f700048e69a9,Others,Health Supplements,Vitamin D-150g-Halal,15,0.0
+5a43675dab86fd38705b2a3e,Others,Supplement,Vitamins-450g-Halal,1,5.0
+5a43675dab86fd38705b2a40,Others,Supplement,Vitamins-750g,1,0.0
+5a43675dab86fd38705b2a3f,Others,Supplement,Vitamins-750g-Halal,1,0.0
+5a43675dab86fd38705b28ab,Beverages,Ready to Drink,Water-1.5l,43,0.0
+5a43675dab86fd38705b28ac,Beverages,Ready to Drink,Water-250ml,5,0.0
+5a43675dab86fd38705b28ad,Beverages,Ready to Drink,Water-350ml,204,0.0
+5a43675dab86fd38705b28ae,Beverages,Ready to Drink,Water-550ml,11,0.0
+5a43675dab86fd38705b28af,Beverages,Ready to Drink,Water-650ml,3,0.0
+5a43675dab86fd38705b28d7,Canned Food,Beans/Peas/Peanuts,Water Chestnut-650g,1,2.0
+5a43675dab86fd38705b2b18,Staples,Other Staples,Wheat-250g,1,0.0
+5a66dacafdc53f0004194090,Staples,Rice,White Rice-1.5kg,31,10.0
+5a43675dab86fd38705b28d8,Canned Food,Beans/Peas/Peanuts,White Beans-450g,1,0.0
+5a43675dab86fd38705b2a36,Dried Food,Vegetables,White Fungus-150g,1,0.0
+5a43675dab86fd38705b2a37,Dried Food,Vegetables,White Fungus-250g,4,0.0
+5a43675dab86fd38705b2a38,Dried Food,Vegetables,White Fungus-50g,1,0.0
+5a43675dab86fd38705b2b34,Staples,Rice,White Rice-1.5kg-Halal,1,10.0
+5a43675dab86fd38705b2b35,Staples,Rice,White Rice-10.5kg,25,20.0
+5a43675dab86fd38705b2b36,Staples,Rice,White Rice-10.5kg-Halal,16,20.0
+5a43675dab86fd38705b2b39,Staples,Rice,White Rice-2.5kg,17,5.5
+5a43675dab86fd38705b2b38,Staples,Rice,White Rice-2.5kg-Halal,2,5.5
+5a43675dab86fd38705b2b3a,Staples,Rice,White Rice-25.5kg,10,60.0
+5a43675dab86fd38705b2b3b,Staples,Rice,White Rice-4.5kg,7,8.0
+5a43675dab86fd38705b2b3c,Staples,Rice,White Rice-450g,3,2.5
+5a43675dab86fd38705b2b3e,Staples,Rice,White Rice-5.5kg,55,12.0
+5a43675dab86fd38705b283e,Beverages,Hot Beverages,Floral Tea-50g,1,0.0
+5a43675dab86fd38705b2ac2,Snacks,Other Snacks,Bread-50g-Halal,1,2.0
+5a43675dab86fd38705b2a7a,Snacks,Breakfast Cereals,Breakfast Cereals-1.5kg,1,8.0
+5a43675dab86fd38705b2a7b,Snacks,Breakfast Cereals,Breakfast Cereals-1.5kg-Halal,1,8.0
+5a43675dab86fd38705b2a7c,Snacks,Breakfast Cereals,Breakfast Cereals-150g-Halal,25,3.0
+5a43675dab86fd38705b2a7f,Snacks,Breakfast Cereals,Breakfast Cereals-250g,4,3.0
+5a43675dab86fd38705b2a7d,Snacks,Breakfast Cereals,Breakfast Cereals-250g-Halal,48,3.0
+5a43675dab86fd38705b2a81,Snacks,Breakfast Cereals,Breakfast Cereals-350g,16,3.0
+5a43675dab86fd38705b2a80,Snacks,Breakfast Cereals,Breakfast Cereals-350g-Halal,4,3.0
+5a43675dab86fd38705b2a82,Snacks,Breakfast Cereals,Breakfast Cereals-450g,2,4.0
+5a43675dab86fd38705b2a84,Snacks,Breakfast Cereals,Breakfast Cereals-50g,3,2.0
+5a43675dab86fd38705b2a83,Snacks,Breakfast Cereals,Breakfast Cereals-50g-Halal,30,2.0
+5a43675dab86fd38705b2a86,Snacks,Breakfast Cereals,Breakfast Cereals-550g,1,5.0
+5a43675dab86fd38705b2a85,Snacks,Breakfast Cereals,Breakfast Cereals-550g-Halal,1,5.0
+5a43675dab86fd38705b2a88,Snacks,Breakfast Cereals,Breakfast Cereals-750g,2,2.0
+5a43675dab86fd38705b2a87,Snacks,Breakfast Cereals,Breakfast Cereals-750g-Halal,2,2.0
+5a43675dab86fd38705b2a89,Snacks,Breakfast Cereals,Breakfast Cereals-850g-Halal,1,8.0
+5a43675dab86fd38705b28be,Canned Food,Beans/Peas/Peanuts,Broad Beans-350g,1,2.0
+5a43675dab86fd38705b2b21,Staples,Rice,Brown Rice-1.5kg,3,0.0
+5a43675dab86fd38705b2b22,Staples,Rice,Brown Rice-2.5kg,20,0.0
+5a43675dab86fd38705b2b23,Staples,Rice,Brown Rice-2.5kg-Halal,1,0.0
+5a43675dab86fd38705b2b24,Staples,Rice,Brown Rice-5.5kg-Halal,2,0.0
+5a43675dab86fd38705b2b25,Staples,Rice,Brown Rice-750g-Halal,1,0.0
+5a43675dab86fd38705b2823,Beverages,Hot Beverages,Brown Rice Drink-450g-Halal,1,0.0
+5a43675dab86fd38705b2824,Beverages,Hot Beverages,Brown Rice Drink-50g-Halal,5,0.0
+5a43675dab86fd38705b29ed,Condiments,Sugar,Brown Sugar-250g,2,0.0
+5a43675dab86fd38705b2a51,Preserved Food,Vegetables,Cabbage-350g,1,0.0
+5a43675dab86fd38705b2a8d,Snacks,Cakes,Cakes-150g,4,2.0
+5a43675dab86fd38705b2a8e,Snacks,Cakes,Cakes-150g-Halal,1,2.0
+5a43675dab86fd38705b2a8f,Snacks,Cakes,Cakes-250g,1,5.0
+5a43675dab86fd38705b2a90,Snacks,Cakes,Cakes-350g-Halal,1,3.0
+5a43675dab86fd38705b2a92,Snacks,Cakes,Cakes-450g,1,3.0
+5a43675dab86fd38705b2a91,Snacks,Cakes,Cakes-450g-Halal,2,3.0
+5a43675dab86fd38705b2a94,Snacks,Cakes,Cakes-50g,17,1.0
+5a43675dab86fd38705b2a93,Snacks,Cakes,Cakes-50g-Halal,2,1.0
+5a43675dab86fd38705b2a95,Snacks,Cakes,Cakes-550g-Halal,4,4.0
+5a5cbba18efdf5000460d844,Snacks,Cakes,Cakes-950g-Halal,10,3.0
+5a43675dab86fd38705b28bf,Canned Food,Beans/Peas/Peanuts,Canellini Beans-450g,2,0.0
+5a43675dab86fd38705b2ad6,Staples,Instant Meals,Cereal-150g-Halal,1,0.0
+5a43675dab86fd38705b2ad7,Staples,Instant Meals,Cereal-250g-Halal,3,0.0
+5a43675dab86fd38705b2ad8,Staples,Instant Meals,Cereal-550g-Halal,2,0.0
+5a43675dab86fd38705b2918,Canned Food,Meat,Chaosansi-150g,7,0.0
+5a43675dab86fd38705b2a16,Dried Food,Fruits,Chestnut-150g,1,0.0
+5a43675dab86fd38705b2a28,Dried Food,Other Dried Food,Chia Seeds-450g,1,0.0
+5a43675dab86fd38705b2919,Canned Food,Meat,Chicken-150g,1,0.0
+5a43675dab86fd38705b291a,Canned Food,Meat,Chicken-250g-Halal,31,0.0
+5a43675dab86fd38705b291b,Canned Food,Meat,Chicken-350g-Halal,13,2.0
+5a43675dab86fd38705b291c,Canned Food,Meat,Chicken-450g,3,0.0
+5a43675dab86fd38705b2a42,Others,Supplements,Chicken Essence-1.5kg-Halal,1,0.0
+5a43675dab86fd38705b2a3a,Others,Health Supplements,Chicken Essence-150g,1,6.0
+5a43675dab86fd38705b2a3c,Others,Supplement,Chicken Essence-450g-Halal,1,0.0
+5a43675dab86fd38705b2877,Beverages,Ready to Drink,Chicken Essence-50g-Halal,1,6.0
+5a43675dab86fd38705b29cb,Condiments,Seasoning,Chicken Gravy-150g,1,0.0
+5a43675dab86fd38705b2932,Canned Food,Soup,Chicken Soup-300g-Halal,3,0.0
+5a43675dab86fd38705b29cc,Condiments,Seasoning,Chicken Soup-850g,1,0.0
+5a43675dab86fd38705b2a08,Dried Food,Beans/Peas/Peanuts,Chick Peas-1.5kg-Halal,2,0.0
+5a43675dab86fd38705b28c0,Canned Food,Beans/Peas/Peanuts,Chick Peas-350g,1,1.5
+5a43675dab86fd38705b28c2,Canned Food,Beans/Peas/Peanuts,Chick Peas-450g,4,0.0
+5a43675dab86fd38705b28c1,Canned Food,Beans/Peas/Peanuts,Chick Peas-450g-Halal,2,0.0
+5a43675dab86fd38705b2976,Condiments,Herbs & Spices,Chilli Powder-50g,1,0.0
+5a65eb769be1f700048e69be,Condiments,Herbs & Spices,Chilli Powder-50g-Halal,12,0.0
+5a43675dab86fd38705b29a4,Condiments,Sauces & Dressing,Chilli Sauce-150g,1,3.5
+5a43675dab86fd38705b284d,Beverages,Hot Beverages,Instant Cereal/Oats-450g,1,5.0
+5a43675dab86fd38705b2b3d,Staples,Rice,White Rice-5.5kg-Halal,76,12.0
+5a43675dab86fd38705b2b3f,Staples,Rice,White Rice-550g,12,2.5
+5a43675dab86fd38705b2b40,Staples,Rice,White Rice-950g,3,6.5
+5a43675dab86fd38705b2a8c,Snacks,Breakfast Cereals,Whole Grain-550g-Halal,2,2.0
+5a43675dab86fd38705b29c9,Condiments,Sauces & Dressing,XO Sauce-250g-Halal,1,10.0
+5a43675dab86fd38705b2a97,Snacks,Chips,Chips-150g-Halal,11,2.0
+5a43675dab86fd38705b2a75,Snacks,Biscuit/Crackers,Chips-2.5kg-Halal,3,0.0
+5a43675dab86fd38705b2a9a,Snacks,Chips,Chips-250g,2,3.5
+5a43675dab86fd38705b2a99,Snacks,Chips,Chips-250g-Halal,1,3.5
+5a43675dab86fd38705b2a9b,Snacks,Chips,Chips-350g-Halal,5,3.0
+5a43675dab86fd38705b2a9d,Snacks,Chips,Chips-50g,13,2.0
+5a43675dab86fd38705b2a9c,Snacks,Chips,Chips-50g-Halal,20,2.0
+5a43675dab86fd38705b2878,Beverages,Ready to Drink,Chocolate Drink-250ml,2,1.0
+5a43675dab86fd38705b2825,Beverages,Hot Beverages,Chocolate Drink Powder-150g,1,2.0
+5a43675dab86fd38705b2826,Beverages,Hot Beverages,Chocolate Drink Powder-250g,3,2.5
+5a43675dab86fd38705b2827,Beverages,Hot Beverages,Chocolate Drink Powder-50g,3,1.0
+5a43675dab86fd38705b2828,Beverages,Hot Beverages,Chocolate Drink Powder-50g-Halal,4,1.0
+5a43675dab86fd38705b2829,Beverages,Hot Beverages,Chocolate Drink Powder-550g-Halal,39,4.5
+5a43675dab86fd38705b282a,Beverages,Hot Beverages,Chocolate Drink Powder-650g-Halal,1,7.0
+5a43675dab86fd38705b2a9e,Snacks,Chocolates,Chocolates-150g,22,4.0
+5a43675dab86fd38705b2a9f,Snacks,Chocolates,Chocolates-150g-Halal,19,4.0
+5a43675dab86fd38705b2aa1,Snacks,Chocolates,Chocolates-250g,10,2.0
+5a43675dab86fd38705b2aa0,Snacks,Chocolates,Chocolates-250g-Halal,4,2.0
+5a43675dab86fd38705b2aa3,Snacks,Chocolates,Chocolates-350g,5,5.0
+5a43675dab86fd38705b2aa2,Snacks,Chocolates,Chocolates-350g-Halal,2,5.0
+5a43675dab86fd38705b2aa4,Snacks,Chocolates,Chocolates-450g,3,4.0
+5a43675dab86fd38705b2aa7,Snacks,Chocolates,Chocolates-50g,60,3.0
+5a43675dab86fd38705b2aa6,Snacks,Chocolates,Chocolates-50g-Halal,5,3.0
+5a43675dab86fd38705b29a9,Condiments,Sauces & Dressing,Chutney Sauce-250g-Halal,1,0.0
+5a43675dab86fd38705b2879,Beverages,Ready to Drink,Chysanthemum Tea-250ml-Halal,1,0.0
+5a43675dab86fd38705b2933,Canned Food,Soup,Clams-350g,1,6.0
+5a43675dab86fd38705b28e1,Canned Food,Fish/Seafood,Clams-450g,1,7.0
+5a43675dab86fd38705b28e2,Canned Food,Fish/Seafood,Clams-450g-Halal,1,7.0
+5a43675dab86fd38705b2969,Condiments,Dairy,Coconut Cream-950ml-Halal,1,0.0
+5a43675dab86fd38705b296a,Condiments,Dairy,Coconut Cream Powder-50g-Halal,1,0.0
+5a43675dab86fd38705b287a,Beverages,Ready to Drink,Coconut Juice-550g,2,0.0
+5a43675dab86fd38705b296b,Condiments,Dairy,Coconut Milk-150g,1,0.0
+5a43675dab86fd38705b296c,Condiments,Dairy,Coconut Milk-250g-Halal,7,0.0
+5a43675dab86fd38705b2987,Condiments,Oil & Fats,Coconut Oil-550ml,1,5.0
+5a43675dab86fd38705b287b,Beverages,Ready to Drink,Coconut Water-350ml,1,1.0
+5a43675dab86fd38705b282b,Beverages,Hot Beverages,Coffee Powder-1.5kg-Halal,4,8.0
+5a43675dab86fd38705b282c,Beverages,Hot Beverages,Coffee Powder-250g-Halal,11,10.0
+5a43675dab86fd38705b282d,Beverages,Hot Beverages,Coffee Powder-350g,2,5.0
+5a43675dab86fd38705b282e,Beverages,Hot Beverages,Coffee Powder-350g-Halal,1,5.0
+5a43675dab86fd38705b2830,Beverages,Hot Beverages,Coffee Powder-450g,18,5.0
+5a43675dab86fd38705b2831,Beverages,Hot Beverages,Coffee Powder-450g-Halal,17,5.0
+5a43675dab86fd38705b2832,Beverages,Hot Beverages,Coffee Powder-50g,80,1.0
+5a43675dab86fd38705b2833,Beverages,Hot Beverages,Coffee Powder-50g-Halal,80,1.0
+5a43675dab86fd38705b2835,Beverages,Hot Beverages,Coffee Powder-550g,1,5.0
+5a43675dab86fd38705b2836,Beverages,Hot Beverages,Coffee Powder-550g-Halal,5,5.0
+5a43675dab86fd38705b2838,Beverages,Hot Beverages,Coffee Powder-650g,28,0.0
+5a43675dab86fd38705b2837,Beverages,Hot Beverages,Coffee Powder-650g-Halal,8,0.0
+5a43675dab86fd38705b2839,Beverages,Hot Beverages,Coffee Powder-750g-Halal,3,5.0
+5a43675dab86fd38705b283c,Beverages,Hot Beverages,Coffee Powder-850g,1,5.0
+5a43675dab86fd38705b283b,Beverages,Hot Beverages,Coffee Powder-850g-Halal,4,5.0
+5a43675dab86fd38705b296d,Condiments,Dairy,Condensed Milk-150g,1,1.5
+5a43675dab86fd38705b296e,Condiments,Dairy,Condensed Milk-350g,4,3.0
+5a43675dab86fd38705b28da,Canned Food,Dairy,Condensed Milk-450g,1,2.5
+5a43675dab86fd38705b296f,Condiments,Dairy,Condensed Milk-450g-Halal,22,2.5
+5a43675dab86fd38705b2ac3,Snacks,Other Snacks,Cookies-150g,1,0.0
+5a43675dab86fd38705b2989,Condiments,Oil & Fats,Cooking Oil-1.5l,4,0.0
+5a43675dab86fd38705b2988,Condiments,Oil & Fats,Cooking Oil-1.5l-Halal,15,0.0
+5a43675dab86fd38705b298a,Condiments,Oil & Fats,Cooking Oil-18.5l-Halal,3,0.0
+5a43675dab86fd38705b298b,Condiments,Oil & Fats,Cooking Oil-2.5l-Halal,39,10.0
+5a43675dab86fd38705b298c,Condiments,Oil & Fats,Cooking Oil-3.5l-Halal,1,15.0
+5a43675dab86fd38705b298d,Condiments,Oil & Fats,Cooking Oil-450ml,2,5.0
+5a43675dab86fd38705b2804,Baking Needs,Flour,Flour-1.5kg,1,0.0
+5a43675dab86fd38705b2805,Baking Needs,Flour,Flour-950g-Halal,2,3.0
+5a43675dab86fd38705b28e7,Canned Food,Fish/Seafood,Foie-50g,2,0.0
+5a43675dab86fd38705b292d,Canned Food,Other Canned Food,Fried Gluten-150g,1,7.0
+5a43675dab86fd38705b28fd,Canned Food,Fruits,Fruit Cocktail/Mixed Fruits-150g-Halal,6,1.0
+5a43675dab86fd38705b28fe,Canned Food,Fruits,Fruit Cocktail/Mixed Fruits-250g-Halal,6,3.0
+5a43675dab86fd38705b28ff,Canned Food,Fruits,Fruit Cocktail/Mixed Fruits-450g-Halal,7,2.0
+5a43675dab86fd38705b2900,Canned Food,Fruits,Fruit Cocktail/Mixed Fruits-550g-Halal,20,3.0
+5a43675dab86fd38705b2902,Canned Food,Fruits,Fruit Cocktail/Mixed Fruits-850g,1,2.0
+5a43675dab86fd38705b2901,Canned Food,Fruits,Fruit Cocktail/Mixed Fruits-850g-Halal,2,2.0
+5a43675dab86fd38705b29e2,Condiments,Spreads,Fruit Jam-450g-Halal,12,0.0
+5a43675dab86fd38705b2880,Beverages,Ready to Drink,Fruit Juice-1.5l,5,2.0
+5a43675dab86fd38705b2882,Beverages,Ready to Drink,Fruit Juice-250ml,30,2.0
+5a43675dab86fd38705b2881,Beverages,Ready to Drink,Fruit Juice-250ml-Halal,29,2.0
+5a43675dab86fd38705b2883,Beverages,Ready to Drink,Fruit Juice-350ml-Halal,2,2.0
+5a43675dab86fd38705b2884,Beverages,Ready to Drink,Fruit Juice-450ml,1,3.0
+5a43675dab86fd38705b2885,Beverages,Ready to Drink,Fruit Juice-750ml,2,3.0
+5a43675dab86fd38705b2887,Beverages,Ready to Drink,Fruit Juice-950ml,1,2.0
+5a43675dab86fd38705b2886,Beverages,Ready to Drink,Fruit Juice-950ml-Halal,2,2.0
+5a43675dab86fd38705b2a48,Preserved Food,Fruits,Fruits-150g-Halal,1,0.0
+5a43675dab86fd38705b28c5,Canned Food,Beans/Peas/Peanuts,Garbanzo Beans-450g,2,0.0
+5a43675dab86fd38705b297c,Condiments,Herbs & Spices,Garnish-150g,1,0.0
+5a43675dab86fd38705b297d,Condiments,Herbs & Spices,Ginger Powder-50g,1,0.0
+5a43675dab86fd38705b28c8,Canned Food,Beans/Peas/Peanuts,Gingko Nuts-350g,1,1.5
+5a43675dab86fd38705b28c7,Canned Food,Beans/Peas/Peanuts,Gingko Nuts-350g-Halal,2,1.5
+5a43675dab86fd38705b28c9,Canned Food,Beans/Peas/Peanuts,Gingko Nuts-450g,1,2.0
+5a43675dab86fd38705b29cf,Condiments,Seasoning,Gourmet Powder-350g-Halal,1,0.0
+5a43675dab86fd38705b2a0c,Dried Food,Beans/Peas/Peanuts,Grain-250g,1,0.0
+5a43675dab86fd38705b2a01,Dried Food,Beans,Grains-850g-Halal,1,0.0
+5a43675dab86fd38705b2a0d,Dried Food,Beans/Peas/Peanuts,Green Beans-350g-Halal,1,1.0
+5a43675dab86fd38705b294a,Canned Food,Vegetables,Green Beans-450g,3,3.0
+5a43675dab86fd38705b28ca,Canned Food,Beans/Peas/Peanuts,Green Peas-150g-Halal,1,1.5
+5a43675dab86fd38705b28cb,Canned Food,Beans/Peas/Peanuts,Green Peas-250g-Halal,2,1.0
+5a43675dab86fd38705b28cc,Canned Food,Beans/Peas/Peanuts,Green Peas-350g,1,2.0
+5a43675dab86fd38705b28cd,Canned Food,Beans/Peas/Peanuts,Green Peas-350g-Halal,2,2.0
+5a43675dab86fd38705b28cf,Canned Food,Beans/Peas/Peanuts,Green Peas-450g,1,3.0
+5a43675dab86fd38705b28ce,Canned Food,Beans/Peas/Peanuts,Green Peas-450g-Halal,1,3.0
+5a43675dab86fd38705b2888,Beverages,Ready to Drink,Green Tea-250ml-Halal,2,0.0
+5a43675dab86fd38705b283f,Beverages,Hot Beverages,Green Tea Powder-250g,1,0.0
+5a43675dab86fd38705b2a0e,Dried Food,Beans/Peas/Peanuts,Ground Nuts-150g-Halal,1,0.0
+5a43675dab86fd38705b29ad,Condiments,Sauces & Dressing,Hae Bee Hiam-150g-Halal,1,0.0
+5a43675dab86fd38705b291e,Canned Food,Meat,Haggis-350g,1,0.0
+5a43675dab86fd38705b2889,Beverages,Ready to Drink,Herbal Drink-1.5l-Halal,2,1.9
+5a43675dab86fd38705b2840,Beverages,Hot Beverages,Herbal Drink-250g,1,2.0
+5a43675dab86fd38705b2841,Beverages,Hot Beverages,Herbal Drink-350g,1,10.0
+5a43675dab86fd38705b288a,Beverages,Ready to Drink,Herbal Drink-50ml-Halal,2,1.0
+5a43675dab86fd38705b29fb,Condiments,Syrups,Honey-150g,1,0.0
+5a43675dab86fd38705b29fc,Condiments,Syrups,Honey-250g,1,2.0
+5a43675dab86fd38705b29fd,Condiments,Syrups,Honey-450g-Halal,2,0.0
+5a43675dab86fd38705b29fe,Condiments,Syrups,Honey-50g,3,0.0
+5a43675dab86fd38705b2842,Beverages,Hot Beverages,Honey Lime Lemon-950g,1,0.0
+5a43675dab86fd38705b2843,Beverages,Hot Beverages,Horlicks-250g-Halal,1,5.0
+5a43675dab86fd38705b2844,Beverages,Hot Beverages,Horlicks-450g-Halal,5,4.0
+5a43675dab86fd38705b2845,Beverages,Hot Beverages,Horlicks-550g,1,0.0
+5a43675dab86fd38705b2ac4,Snacks,Other Snacks,Ikan Satay-150g-Halal,1,0.0
+5a43675dab86fd38705b2846,Beverages,Hot Beverages,Instant Cereal/Oats-1.5kg-Halal,8,8.0
+5a43675dab86fd38705b2847,Beverages,Hot Beverages,Instant Cereal/Oats-150g-Halal,6,4.0
+5a43675dab86fd38705b2849,Beverages,Hot Beverages,Instant Cereal/Oats-250g,5,4.0
+5a43675dab86fd38705b2848,Beverages,Hot Beverages,Instant Cereal/Oats-250g-Halal,6,4.0
+5a43675dab86fd38705b284a,Beverages,Hot Beverages,Instant Cereal/Oats-350g,2,1.0
+5a43675dab86fd38705b284b,Beverages,Hot Beverages,Instant Cereal/Oats-350g-Halal,1,1.0
+5a43675dab86fd38705b294d,Canned Food,Vegetables,Lettuce-150g,1,0.0
+5a43675dab86fd38705b294c,Canned Food,Vegetables,Lettuce-150g-Halal,2,0.0
+5a43675dab86fd38705b294e,Canned Food,Vegetables,Lettuce-250g-Halal,9,2.0
+5a43675dab86fd38705b29d0,Condiments,Seasoning,Light Soy Sauce-150g-Halal,1,3.0
+5a43675dab86fd38705b29d1,Condiments,Seasoning,Light Soy Sauce-2.5kg-Halal,1,0.0
+5a43675dab86fd38705b29d2,Condiments,Seasoning,Light Soy Sauce-350g-Halal,1,1.4
+5a43675dab86fd38705b29d4,Condiments,Seasoning,Light Soy Sauce-550g,1,3.0
+5a43675dab86fd38705b29d3,Condiments,Seasoning,Light Soy Sauce-550g-Halal,6,3.0
+5a43675dab86fd38705b29d6,Condiments,Seasoning,Light Soy Sauce-650g,1,0.0
+5a43675dab86fd38705b29d5,Condiments,Seasoning,Light Soy Sauce-650g-Halal,10,0.0
+5a43675dab86fd38705b29d7,Condiments,Seasoning,Light Soy Sauce-950g,1,0.0
+5a43675dab86fd38705b2903,Canned Food,Fruits,Longan-250g-Halal,1,4.0
+5a43675dab86fd38705b2904,Canned Food,Fruits,Longan-550g-Halal,4,4.0
+5a43675dab86fd38705b2905,Canned Food,Fruits,Longan-650g-Halal,2,2.5
+5a43675dab86fd38705b2906,Canned Food,Fruits,Loquats-550g,1,3.5
+5a43675dab86fd38705b291f,Canned Food,Meat,Luncheon Meat-150g,6,0.0
+5a43675dab86fd38705b2920,Canned Food,Meat,Luncheon Meat-350g,15,4.0
+5a43675dab86fd38705b2922,Canned Food,Meat,Luncheon Meat-450g,6,3.0
+5a43675dab86fd38705b2907,Canned Food,Fruits,Lychee-2.5kg-Halal,2,0.0
+5a43675dab86fd38705b2908,Canned Food,Fruits,Lychee-250g-Halal,6,0.0
+5a43675dab86fd38705b290a,Canned Food,Fruits,Lychee-550g,1,4.0
+5a43675dab86fd38705b2909,Canned Food,Fruits,Lychee-550g-Halal,8,4.0
+5a43675dab86fd38705b29b0,Condiments,Sauces & Dressing,Mabo Sauce-150g,1,2.0
+5a43675dab86fd38705b2b19,Staples,Pasta,Macaroni-150g-Halal,2,0.0
+5a43675dab86fd38705b28e8,Canned Food,Fish/Seafood,Mackerel-150g-Halal,1,2.0
+5a43675dab86fd38705b28e9,Canned Food,Fish/Seafood,Mackerel-350g-Halal,1,2.0
+5a43675dab86fd38705b28ea,Canned Food,Fish/Seafood,Mackerel-450g-Halal,4,0.0
+5a43675dab86fd38705b29ff,Condiments,Syrups,Maple Syrup-350g-Halal,1,1.75
+5a43675dab86fd38705b2a00,Condiments,Syrups,Maple Syrup-550g,1,0.0
+5a43675dab86fd38705b29ea,Condiments,Spreads,Margarine-250g,1,3.0
+5a43675dab86fd38705b2ab1,Snacks,Marshmallows,Marshmallows-150g,1,2.0
+5a43675dab86fd38705b2ab2,Snacks,Marshmallows,Marshmallows-350g,1,2.0
+5a43675dab86fd38705b2ab3,Snacks,Marshmallows,Marshmallows-50g,18,0.3
+5a43675dab86fd38705b29b1,Condiments,Sauces & Dressing,Mayonnaise-250g-Halal,1,2.6
+5a43675dab86fd38705b2923,Canned Food,Meat,Meat Loaf-350g-Halal,1,0.0
+5a43675dab86fd38705b2b08,Staples,Noodles,Mee Hoon Kway-450g,1,0.0
+5a43675dab86fd38705b2b09,Staples,Noodles,Mee Sua-550g,1,0.0
+5a43675dab86fd38705b288b,Beverages,Ready to Drink,Melon Milk-250ml-Halal,1,0.0
+5a5d9202a77c490004af0c58,Canned Food,Dairy,Milk-250ml-Halal,2,0.0
+5a43675dab86fd38705b288c,Beverages,Ready to Drink,Milk-250ml-Halal,2,0.0
+5a43675dab86fd38705b28dd,Canned Food,Dairy,Milk-350g-Halal,1,2.0
+5a43675dab86fd38705b288d,Beverages,Ready to Drink,Milk-950ml,2,0.0
+5a43675dab86fd38705b288e,Beverages,Ready to Drink,Milk-950ml-Halal,64,0.0
+5a43675dab86fd38705b288f,Beverages,Ready to Drink,Milo-150ml-Halal,3,0.0
+5a43675dab86fd38705b2890,Beverages,Ready to Drink,Milo-4.5l-Halal,1,16.8
+5a43675dab86fd38705b2891,Beverages,Ready to Drink,Milo-50ml-Halal,21,0.0
+5a43675dab86fd38705b2857,Beverages,Hot Beverages,Milo Powder-1.5kg-Halal,1,5.0
+5a43675dab86fd38705b2858,Beverages,Hot Beverages,Milo Powder-150g-Halal,29,2.0
+5a43675dab86fd38705b2859,Beverages,Hot Beverages,Milo Powder-250g-Halal,14,0.0
+5a43675dab86fd38705b285a,Beverages,Hot Beverages,Milo Powder-26.5kg-Halal,12,0.0
+5a43675dab86fd38705b285b,Beverages,Hot Beverages,Milo Powder-450g,2,3.0
+5a43675dab86fd38705b285c,Beverages,Hot Beverages,Milo Powder-450g-Halal,37,3.0
+5a43675dab86fd38705b285d,Beverages,Hot Beverages,Milo Powder-50g-Halal,13,1.0
+5a43675dab86fd38705b285f,Beverages,Hot Beverages,Milo Powder-550g,1,5.0
+5a43675dab86fd38705b285e,Beverages,Hot Beverages,Milo Powder-550g-Halal,19,5.0
+5a43675dab86fd38705b2860,Beverages,Hot Beverages,Milo Powder-650g-Halal,4,5.0
+5a43675dab86fd38705b2861,Beverages,Hot Beverages,Milo Powder-950g-Halal,10,8.5
+5a43675dab86fd38705b2b26,Staples,Rice,Mixed Grains-1.5kg-Halal,1,0.0
+5a43675dab86fd38705b2ae5,Staples,Instant Meals,Mixed Oats-450g-Halal,1,0.0
+5a43675dab86fd38705b2b27,Staples,Rice,Mixed Rice-2.5kg,1,10.0
+5a43675dab86fd38705b2b28,Staples,Rice,Mixed Rice-350g-Halal,6,1.0
+5a43675dab86fd38705b2b29,Staples,Rice,Mixed Rice-50g-Halal,1,5.0

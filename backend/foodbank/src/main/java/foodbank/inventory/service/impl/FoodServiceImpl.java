@@ -118,6 +118,15 @@ public class FoodServiceImpl implements FoodService {
 		donorRepository.save(dbDonor);
 	}
 	
+    @Override
+	public void resetFoodQuantity() {
+	    for(FoodItem foodItem : foodRepository.findAll()) {
+	        foodItem.setQuantity(0);
+	        foodRepository.save(foodItem);
+	        InventorySerializer.updateQuantity(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription(), 0);
+	    }
+	}
+	
 	// Code marked for deletion upon testing
 	/*
 	@Override

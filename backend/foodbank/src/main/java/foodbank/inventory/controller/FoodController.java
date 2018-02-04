@@ -172,6 +172,18 @@ public class FoodController {
 		return responseDTO;		
 	}
 	
+    @PostMapping("/reset-all")
+    public ResponseDTO resetFoodQuantity() {
+	    ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.RESET_SUCCESS);
+	    try {
+	        foodService.resetFoodQuantity();
+	    } catch (Exception e) {
+	        responseDTO.setStatus(ResponseDTO.Status.FAIL);
+	        responseDTO.setMessage(e.getMessage());
+	    }
+	    return responseDTO;
+	}
+	
 	/*
 	@GetMapping("/display-all")
 	public List<FoodItem> getAllCategories() {

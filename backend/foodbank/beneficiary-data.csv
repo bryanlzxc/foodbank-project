@@ -1,0 +1,5 @@
+Beneficiary Id,User Id,Number of Beneficiaries,Address,Postal Code,Score,Contact Person,Contact Number,Member Type,Transport
+5a5a1031a6ac7b076b9a7fdb,5a5a1030a6ac7b076b9a7fda,1337,99 Mars Blk 11,        123456,92.0,FBAdmin,87654321,Welfare,true
+5a5a104aa6ac7b076b9a7fdd,5a5a104aa6ac7b076b9a7fdc,1337,99 Mars Blk 11,                    123456,100.0,FBAdmin,87654321,Welfare,true
+5a5a2971a6ac7b2b67fdca3b,5a5a2971a6ac7b2b67fdca3a,1337,99 Mars Blk 11,                 123456,95.0,FBAdmin,87654321,Welfare,true
+5a5ad1f6b773d1213b286eb4,5a5ad1f6b773d1213b286eb3,1337,99 Mars Blk 11,               123456,2.0,FBAdmin,87654321,Welfare,false
