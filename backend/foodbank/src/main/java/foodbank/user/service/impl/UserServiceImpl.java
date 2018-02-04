@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changePassword(PasswordDTO passwordDetails) {
+	public Boolean changePassword(PasswordDTO passwordDetails) {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsername(passwordDetails.getUsername());
 		if(dbUser == null) {
@@ -89,7 +89,10 @@ public class UserServiceImpl implements UserService {
 		}
 		if(BCrypt.checkpw(passwordDetails.getOldPassword(), dbUser.getPassword())) {
 			dbUser.setPassword(BCrypt.hashpw(passwordDetails.getNewPassword(), BCrypt.gensalt()));
+			userRepository.save(dbUser);
+			return true;
 		}
+		return false;
 	}
 
 }

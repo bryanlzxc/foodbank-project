@@ -20,6 +20,7 @@ import foodbank.user.dto.UserDTO;
 import foodbank.user.service.UserService;
 import foodbank.user.entity.User;
 import foodbank.util.MessageConstants;
+import foodbank.util.MessageConstants.ErrorMessages;
 
 /*
  * Created by: Lau Peng Liang, Bryan
@@ -102,12 +103,17 @@ public class UserController {
 	
 	@PostMapping("/change-password")
 	public ResponseDTO changePassword(@RequestBody PasswordDTO passwordDetails) {
-		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PASSWORD_CHANGE_SUCCESS);
+		Boolean result = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, result, MessageConstants.PASSWORD_CHANGE_SUCCESS);
 		try {
-			userService.changePassword(passwordDetails);
+			result = userService.changePassword(passwordDetails);
 		} catch (Exception e) {
 			responseDTO.setMessage(e.getMessage());
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+		}
+		if(result == false) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(ErrorMessages.PASSWORD_NOT_UPDATED);
 		}
 		return responseDTO;
 	}

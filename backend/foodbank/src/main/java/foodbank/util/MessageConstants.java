@@ -76,6 +76,7 @@ public final class MessageConstants {
 		public static final String BENEFICIARY_GET_FAIL = "GET call for BENEFICIARY failed";
 		public static final String DONOR_GET_FAIL = "GET call for DONOR failed";
 		public static final String REQUEST_GET_FAIL = "GET call for REQUEST failed";
+		public static final String PASSWORD_NOT_UPDATED = "Password was not changed.";
 		
 	}
 	

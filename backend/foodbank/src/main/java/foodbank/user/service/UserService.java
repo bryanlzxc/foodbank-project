@@ -20,6 +20,6 @@ public interface UserService {
 	
 	void deleteUser(final String username);
 	
-	void changePassword(final PasswordDTO passwordDetails);
+	Boolean changePassword(final PasswordDTO passwordDetails);
 
 }
