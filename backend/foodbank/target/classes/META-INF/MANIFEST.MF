@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: foodbank
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: admin
+Built-By: user1
 Implementation-Vendor-Id: foodbank
-Build-Jdk: 1.8.0_151
+Build-Jdk: 1.8.0_131
 Created-By: Maven Integration for Eclipse
 Implementation-Vendor: Pivotal Software, Inc.
 Main-Class: foodbank.MainApp

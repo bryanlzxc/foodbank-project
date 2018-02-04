@@ -146,7 +146,7 @@ public class PackingServiceImpl implements PackingService {
 			FoodItem foodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 			foodItem.setQuantity(foodItem.getQuantity() + previouslyPackedAmount - (int)details.get("packedQuantity"));
 			foodRepository.save(foodItem);
-			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+			// InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
 			modifyBeneficiaryScore(new BeneficiaryDeductScoreDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (Integer)details.get("packedQuantity")));
 		} 
 		packingRepository.save(dbPackingList);

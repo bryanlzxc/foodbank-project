@@ -70,7 +70,6 @@ public class FoodServiceImpl implements FoodService {
 			dbFoodItem.setValue(foodItem.getValue());
 			foodRepository.save(dbFoodItem);
 			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
-			InventorySerializer.updateValue(category, classification, description, foodItem.getValue());
 		} else {
 			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
 		}
@@ -123,7 +122,6 @@ public class FoodServiceImpl implements FoodService {
 	    for(FoodItem foodItem : foodRepository.findAll()) {
 	        foodItem.setQuantity(0);
 	        foodRepository.save(foodItem);
-	        InventorySerializer.updateQuantity(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription(), 0);
 	    }
 	}
 	

@@ -68,11 +68,7 @@ public class DonorServiceImpl implements DonorService {
 		}
 		List<NonperishableDonation> dbNonperishableDonationList = dbDonor.getNonperishableDonations();
 		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription());
-		System.out.println("Original DB food item quantity = " + dbFoodItem.getQuantity());
-		System.out.println("Serializer food item quantity = " + InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(foodItem.getCategory() + foodItem.getClassification() + foodItem.getDescription())).getQuantity());
 		dbFoodItem.setQuantity(dbFoodItem.getQuantity() + foodItem.getQuantity());
-		System.out.println("After update, DB food item quantity = " + foodItem.getQuantity());
-		System.out.println("After update, Serializer food item quantity = " + InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(foodItem.getCategory() + foodItem.getClassification() + foodItem.getDescription())).getQuantity());
 		String donationDate = DateParser.getCurrentDate(new Date());
 		NonperishableDonation newNonperishableDonation = new NonperishableDonation(new DonatedFoodItem(foodItem.getCategory(), foodItem.getClassification(), foodItem.getDescription(), 
 				foodItem.getQuantity()), donationDate);
