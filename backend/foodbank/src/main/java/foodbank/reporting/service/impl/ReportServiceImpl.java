@@ -317,7 +317,7 @@ public class ReportServiceImpl implements ReportService {
 		double combinedTotalValue = invoiceData.getCombinedTotalValue();
 		for(int i = 0; i < invoiceLineItems.size(); i++) {
 			InvoiceLineItem invoiceLineItem = invoiceLineItems.get(i);
-			itemDetailTable.addCell(createInvoiceDetailTextCell(String.valueOf(i)+1, false));
+			itemDetailTable.addCell(createInvoiceDetailTextCell(String.valueOf(i+1), false));
 			itemDetailTable.addCell(createInvoiceDetailTextCell(invoiceLineItem.getItemNo(), false));
 			itemDetailTable.addCell(createInvoiceDetailTextCell(invoiceLineItem.getCategory(), false));
 			itemDetailTable.addCell(createInvoiceDetailTextCell(invoiceLineItem.getClassification(), false));
