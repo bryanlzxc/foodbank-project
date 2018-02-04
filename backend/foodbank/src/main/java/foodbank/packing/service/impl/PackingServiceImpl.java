@@ -182,7 +182,7 @@ public class PackingServiceImpl implements PackingService {
 		if(dbFoodItem != null) {
 			dbFoodItem.setQuantity(dbFoodItem.getQuantity() - foodItem.getQuantity());		//this is the deduction from db
 			foodRepository.save(dbFoodItem);
-			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
+			// InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
 		} else {
 			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
 		}
