@@ -14,6 +14,8 @@ public interface PackingService {
 	
 	PackingList findByBeneficiary(final String beneficiary);
 	
+	PackingList findById(final String id);
+	
 	void generatePackingList();	
 	
 	void updatePackedQuantities(final PackingListDTO packingListDTO);

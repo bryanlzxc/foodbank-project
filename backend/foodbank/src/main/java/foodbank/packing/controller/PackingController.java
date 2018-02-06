@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.packing.dto.LivePackingDTO;
 import foodbank.packing.dto.PackingListDTO;
+import foodbank.packing.entity.PackedFoodItem;
 import foodbank.packing.entity.PackingList;
 import foodbank.packing.service.PackingService;
 import foodbank.reporting.service.ReportService;
@@ -42,6 +47,25 @@ public class PackingController {
 		}
 		responseDTO.setResult(result);
 		return responseDTO;
+	}
+	
+	@MessageMapping("/receiver/{listId}")
+	@SendTo("/topic/{listId}")
+	public PackingList getReactiveBeneficiaryPackingList(LivePackingDTO livePackingDTO, @DestinationVariable String listId) {
+		PackingList result = packingService.findById(listId);
+		String category = livePackingDTO.getCategory();
+		String classification = livePackingDTO.getClassification();
+		String description = livePackingDTO.getDescription();
+		Integer packedQuantity = livePackingDTO.getPackedQuantity();
+		Boolean checkboxStatus = livePackingDTO.getCheckboxStatus();
+		List<PackedFoodItem> packedFoodItems = result.getPackedItems();
+		for(PackedFoodItem item : packedFoodItems) {
+			if(item.getCategory().equals(category) && item.getClassification().equals(classification) && item.getDescription().equals(description)) {
+				item.setPackedStatus(checkboxStatus);
+				item.setQuantity(packedQuantity);
+			}
+		}
+		return result;
 	}
 	
 	@GetMapping("/display-by")

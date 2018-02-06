@@ -7,7 +7,7 @@
   <parent>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-parent</artifactId>
-  	<version>1.5.8.RELEASE</version>
+  	<version>1.5.10.RELEASE</version>
   </parent>
   <dependencies>
   	<dependency>
@@ -36,6 +36,14 @@
 			</exclusion>
 		</exclusions>
   	</dependency>
+  	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-messaging</artifactId>
+	</dependency>
+	<dependency>
+         <groupId>org.webjars</groupId>
+         <artifactId>webjars-locator</artifactId>
+     </dependency>
   	<dependency>
 	    <groupId>com.sun.mail</groupId>
 	    <artifactId>javax.mail</artifactId>
@@ -74,6 +82,10 @@
   		<groupId>org.apache.commons</groupId>
   		<artifactId>commons-lang3</artifactId>
   		<version>3.7</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-websocket</artifactId>
   	</dependency>
   </dependencies>
   <build>
