@@ -5,7 +5,6 @@ import foodbank.inventory.entity.FoodItem;
 public class PackedFoodItem extends FoodItem {
 	
 	private Integer allocatedQuantity = 0;
-	private Boolean packedStatus = false;
 	
 	public PackedFoodItem() {}
 
@@ -20,14 +19,6 @@ public class PackedFoodItem extends FoodItem {
 
 	public void setAllocatedQuantity(Integer allocatedQuantity) {
 		this.allocatedQuantity = allocatedQuantity;
-	}
-	
-	public Boolean getPackedStatus() {
-		return packedStatus;
-	}
-
-	public void setPackedStatus(Boolean packedStatus) {
-		this.packedStatus = packedStatus;
 	}
 	
 	@Override

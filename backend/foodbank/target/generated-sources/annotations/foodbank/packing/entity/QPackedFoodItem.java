@@ -35,8 +35,6 @@ public class QPackedFoodItem extends EntityPathBase<PackedFoodItem> {
     //inherited
     public final StringPath id = _super.id;
 
-    public final BooleanPath packedStatus = createBoolean("packedStatus");
-
     //inherited
     public final NumberPath<Integer> quantity = _super.quantity;
 

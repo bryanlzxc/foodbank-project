@@ -51,12 +51,6 @@ public class PackingServiceImpl implements PackingService {
 	}
 	
 	@Override
-	public PackingList findById(String id) {
-		// TODO Auto-generated method stub
-		return packingRepository.findOne(id);
-	}
-	
-	@Override
 	public PackingList findByBeneficiary(String beneficiary) {
 		// TODO Auto-generated method stub
 		List<PackingList> packingLists = packingRepository.findAll();
