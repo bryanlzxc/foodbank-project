@@ -10,6 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PackingListDTO {
 
 	@NotNull
+	@JsonProperty("id")
+	private String id;
+
+	@NotNull
 	@JsonProperty("beneficiary")
 	private String beneficiary;
 	
@@ -17,9 +21,19 @@ public class PackingListDTO {
 	@JsonProperty("packedItems")
 	private List<Map<String, Object>> packedItems;
 	
+	public PackingListDTO() {}
+	
 	public PackingListDTO(@JsonProperty("beneficiary") String beneficiary, @JsonProperty("packedItems") List<Map<String, Object>> packedItems) {
 		this.beneficiary = beneficiary;
 		this.packedItems = packedItems;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getBeneficiary() {

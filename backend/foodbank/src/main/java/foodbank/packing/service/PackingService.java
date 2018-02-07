@@ -12,6 +12,8 @@ public interface PackingService {
 	
 	List<PackingList> retrieveAllPackingLists();
 	
+	PackingList findById(final String id);
+	
 	PackingList findByBeneficiary(final String beneficiary);
 	
 	void generatePackingList();	

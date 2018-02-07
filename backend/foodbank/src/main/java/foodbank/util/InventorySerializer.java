@@ -39,9 +39,6 @@ public class InventorySerializer {
 	}
 	
 	public static Integer retrieveQuantityOfItem(String category, String classification, String description) {
-		System.out.println("Key = " + category + classification + description);
-		System.out.println("Object = " + InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)));
-		System.out.println("Quantity = " + InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getQuantity());
 		return InventorySerializer.foodItemMap.get(InventorySerializer.serials.get(category+classification+description)).getQuantity();
 	}
 	
