@@ -1,41 +1,22 @@
 package foodbank.packing.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.websocket.EncodeException;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.PathParam;
-import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.server.standard.SpringConfigurator;
 
 import foodbank.packing.dto.PackingListDTO;
-import foodbank.packing.dto.PackingListDecoder;
-import foodbank.packing.dto.PackingListEncoder;
 import foodbank.packing.dto.PackingUpdateDTO;
 import foodbank.packing.entity.PackedFoodItem;
 import foodbank.packing.entity.PackingList;
 import foodbank.packing.service.PackingService;
-import foodbank.testing.Greeting;
-import foodbank.testing.HelloMessage;
 
 /*
 @ApplicationScoped
