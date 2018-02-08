@@ -58,7 +58,7 @@ public class AllocationServiceImpl implements AllocationService {
 		List<Allocation> allocations = allocationRepository.findAll();
 		List<AllocatedFoodItems> foodItemsAllocated = new ArrayList<AllocatedFoodItems>();
 		for(Allocation allocation : allocations) {
-			if(allocation.getBeneficiary().getUser().getName().equals(beneficiary)) {
+			if(allocation.getBeneficiary().getUser().getUsername().equals(beneficiary)) {
 				foodItemsAllocated.addAll(allocation.getAllocatedItems());
 			}
 		}
