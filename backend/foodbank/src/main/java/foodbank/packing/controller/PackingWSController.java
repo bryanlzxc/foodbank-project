@@ -18,14 +18,6 @@ import foodbank.packing.entity.PackedFoodItem;
 import foodbank.packing.entity.PackingList;
 import foodbank.packing.service.PackingService;
 
-/*
-@ApplicationScoped
-@Component
-@ServerEndpoint(value = "/websocket", 
-	encoders = {PackingListEncoder.class}, 
-	decoders = {PackingListDecoder.class}, configurator = SpringConfigurator.class)
-*/
-
 @Controller
 public class PackingWSController {
 	
@@ -59,6 +51,7 @@ public class PackingWSController {
         	return activeList;
         }
 		int itemIndex = packingUpdate.getItemIndex();
+		if(itemIndex == -1) { return activeList; }
 		int packedQuantity = packingUpdate.getPackedQuantity();
 		boolean itemPackingStatus = packingUpdate.getItemPackingStatus();
 		List<Map<String, Object>> packedItemsList = activeList.getPackedItems();
@@ -69,54 +62,4 @@ public class PackingWSController {
 		return activeList;
     }
 	
-	/*
-	@MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return new Greeting("Hello, " + message.getName() + "!");
-    }
-    */
-	/*
-	public PackingListDTO testing(PackingListDTO packingList) {
-		return packingList;
-	}
-	*/
-	/*
-	private static final List<PackingListDTO> packingLists = Collections.synchronizedList(new LinkedList<PackingListDTO>());
-	// private static final Map<String, LinkedList<PackingList>> packingLists = Collections.synchronizedMap(new HashMap<String, LinkedList<PackingList>>());
-			//Collections.synchronizedList(new LinkedList<PackingList>());
-	private static final Set<Session> activeSessions = Collections.synchronizedSet(new HashSet<Session>());
-	
-	@OnMessage
-	public void onMessage(Session session, PackingListDTO packingList) {
-		// List<PackingList> synchronizedLists = packingLists.get(packingList.getId());
-		packingLists.add(packingList);
-		for(Session activeSession : activeSessions) {
-			try {
-				activeSession.getBasicRemote().sendObject(packingList);
-			} catch (IOException | EncodeException e) {
-				activeSessions.remove(activeSession);
-			}
-		}
-	}
-	
-	@OnOpen
-	public void onOpen(Session session) throws IOException, EncodeException {
-		System.out.println("Session connected!");
-		activeSessions.add(session);
-		for(PackingListDTO packingList : packingLists) {
-			if(packingList.getId().equals(listId)) {
-				session.getBasicRemote().sendObject(packingList);
-			}
-			
-		}
-	}
-	
-	@OnClose
-	public void onClose(Session session) {
-		activeSessions.remove(session);
-	}
-	*/
-
 }

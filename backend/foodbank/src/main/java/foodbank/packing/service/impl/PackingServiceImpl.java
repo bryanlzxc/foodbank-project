@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import foodbank.packing.entity.PackingList;
 import foodbank.packing.repository.PackingRepository;
 import foodbank.packing.service.PackingService;
 import foodbank.util.InventorySerializer;
+import foodbank.util.LockFactory;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.InvalidBeneficiaryException;
 import foodbank.util.exceptions.InvalidFoodException;
@@ -103,25 +105,31 @@ public class PackingServiceImpl implements PackingService {
 				break;
 			}
 		}
-		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
-		String beneficiary = packingListDTO.getBeneficiary();
-		List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
-		HashMap<String, PackedFoodItem> packedItemsMap = new HashMap<String, PackedFoodItem>();
-		beneficiaryPackedItems.forEach(item -> packedItemsMap.put(item.getCategory() + item.getClassification() + item.getDescription(), item));
-		List<Map<String, Object>> beneficiaryPackedItemsUpdates = packingListDTO.getPackedItems();
-		for(Map<String, Object> map : beneficiaryPackedItemsUpdates) {
-			String category = (String)map.get("category");
-			String classification = (String)map.get("classification");
-			String description = (String)map.get("description");
-			Integer packedQuantity = (Integer)map.get("packedQuantity");
-			packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
-			FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, 0, null);
-			amendFoodItemQuantity(foodItemDTO);
-			BeneficiaryDeductScoreDTO beneficiaryDeductScoreDTO = new BeneficiaryDeductScoreDTO(beneficiary, -packedQuantity);
-			modifyBeneficiaryScore(beneficiaryDeductScoreDTO);
+		if(dbPackingList == null || dbPackingList.getPackingStatus()) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
+		String id = packingListDTO.getId();
+		ReadWriteLock lock = LockFactory.getWriteLock(id);
+		if(lock.writeLock().tryLock()) {
+			String beneficiary = packingListDTO.getBeneficiary();
+			List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
+			HashMap<String, PackedFoodItem> packedItemsMap = new HashMap<String, PackedFoodItem>();
+			beneficiaryPackedItems.forEach(item -> packedItemsMap.put(item.getCategory() + item.getClassification() + item.getDescription(), item));
+			List<Map<String, Object>> beneficiaryPackedItemsUpdates = packingListDTO.getPackedItems();
+			for(Map<String, Object> map : beneficiaryPackedItemsUpdates) {
+				String category = (String)map.get("category");
+				String classification = (String)map.get("classification");
+				String description = (String)map.get("description");
+				Integer packedQuantity = (Integer)map.get("packedQuantity");
+				packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
+				FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, 0, null);
+				amendFoodItemQuantity(foodItemDTO);
+				BeneficiaryDeductScoreDTO beneficiaryDeductScoreDTO = new BeneficiaryDeductScoreDTO(beneficiary, -packedQuantity);
+				modifyBeneficiaryScore(beneficiaryDeductScoreDTO);
+			}
+			dbPackingList.setPackingStatus(true);
+			packingRepository.save(dbPackingList);
+		} else {
+			throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR);
 		}
-		dbPackingList.setPackingStatus(true);
-		packingRepository.save(dbPackingList);
 	}
 	
 	@Override
