@@ -1,39 +1,25 @@
 package foodbank.admin.service;
 
+import java.text.ParseException;
+
 import foodbank.admin.dto.AdminSettingsDTO;
-import foodbank.admin.entity.AdminSettings;
-import foodbank.admin.entity.AdminSettings.WindowStatus;
-import foodbank.admin.entity.WindowData;
+import foodbank.admin.dto.WindowDataDTO;
 import foodbank.user.dto.UserDTO;
 
 public interface AdminService {
 	
-	AdminSettings getAdminSettings();
+	WindowDataDTO retrieveWindowData();
 	
-	WindowStatus getWindowStatus();
+	Boolean getWindowStatus();
 	
-	String getWindowStartDate();
-	
-	String getWindowEndDate();
-	
-	Double getDecayRate();
-	
-	Double getMultiplierRate();
-	
-	void updateWindowOpeningDate(final AdminSettingsDTO settings);
-	
-	void updateWindowClosingDate(final AdminSettingsDTO settings);
-	
-	WindowStatus updateWindowStatus(final AdminSettingsDTO settings);
-	
-	void updateDecayRate(final AdminSettingsDTO settings);
-	
-	void updateMultiplierRate(final AdminSettingsDTO settings);
-	
-	void updateAdminSettings(final AdminSettingsDTO settings);
-	
-	WindowData retrieveWindowData();
+	void modifyDecayRate(final AdminSettingsDTO adminSettings);
 
+	void modifyMultiplierRate(final AdminSettingsDTO adminSettings);
+	
+	void modifyClosingDate(final AdminSettingsDTO adminSettings) throws ParseException;
+	
+	String toggleWindow(final AdminSettingsDTO adminSettings) throws ParseException;
+	
 	void insertPastRequests();
 	
 	void generateEmails() throws Exception;
@@ -41,5 +27,7 @@ public interface AdminService {
 	void generateDailyPassword();
 	
 	void resetPassword(final UserDTO user) throws Exception;
-
+	
+	void clearWindowData();
+	
 }

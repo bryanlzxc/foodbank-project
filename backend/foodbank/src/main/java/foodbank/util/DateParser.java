@@ -1,10 +1,8 @@
 package foodbank.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import foodbank.util.MessageConstants.ErrorMessages;
-import foodbank.util.exceptions.SettingsUpdateException;
 
 /*
  * Created by: Ng Shirong
@@ -37,29 +35,30 @@ public class DateParser {
 	/* 
 	 * Created by: Lau Peng Liang, Bryan
 	 */
+	/*
 	public static String getCurrentDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		return format.format(date);
 	}
 	
-	public static Date convertToDate(String date) {
+	public static Date convertToDate(String date) throws Exception {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Date dateObject = null;
 		try { 
 			dateObject = format.parse(date);
 		} catch (Exception e) {
-			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+			throw new Exception();
 		}
 		return dateObject;
 	}
 	
-	public static Date convertToDBDate(String date) {
+	public static Date convertToDBDate(String date) throws Exception {
 		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
 		Date dateObject = null;
 		try {
 			dateObject = format.parse(date);
 		} catch (Exception e) {
-			throw new SettingsUpdateException(ErrorMessages.DATE_PARSE_ERROR);
+			throw new Exception();
 		}
 		return dateObject;
 	}
@@ -68,10 +67,25 @@ public class DateParser {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		return format.format(date);
 	}
+	*/
 	
 	public static String displayMonthYearOnly(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
 		return format.format(date);
+	}
+	
+	public static Date convertStringToTime(String time) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		Date dateObject = null;
+		dateObject = format.parse(time);
+		return dateObject;
+	}
+	
+	public static Date convertStringToDate(String date) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		Date dateObject = null;
+		dateObject = format.parse(date);
+		return dateObject;
 	}
 	
 }

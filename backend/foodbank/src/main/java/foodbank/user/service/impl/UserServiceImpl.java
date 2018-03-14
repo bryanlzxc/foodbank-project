@@ -6,84 +6,85 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import foodbank.beneficiary.repository.BeneficiaryRepository;
-import foodbank.user.dto.PasswordDTO;
+import foodbank.login.dto.PasswordDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
 import foodbank.user.service.UserService;
+import foodbank.util.EntityManager;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.UserException;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private BeneficiaryRepository beneficiaryRepository;
-	
-	@Override
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
-	
-	@Override
+
 	public List<User> getAllUsersByType(String usertype) {
+		// TODO Auto-generated method stub
 		return userRepository.findUsersByUsertype(usertype);
 	}
-	
-	@Override
-	public void insertUser(UserDTO user) {
-		User dbUser = userRepository.findByUsername(user.getUsername());
-		if(dbUser != null) {
-			throw new UserException(ErrorMessages.USER_ALREADY_EXISTS);
-		}
-		dbUser = user.transformToUser();
-		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
-		userRepository.insert(dbUser);
-	}
-	
-	@Override
-	public void updateUser(UserDTO user) {
-		// TODO Auto-generated method stub
-		User dbUser = userRepository.findByUsername(user.getUsername());
-		if(dbUser == null) {
-			throw new UserException(ErrorMessages.NO_SUCH_USER);
-		}
-		User updatedUser = user.transformToUser();
-		updatedUser.setId(dbUser.getId());
-		userRepository.save(updatedUser);
-	}
-	
-	@Override
-	public void deleteUser(String username) {
-		User dbUser = userRepository.findByUsername(username);
-		if(dbUser == null) {
-			throw new UserException(ErrorMessages.NO_SUCH_USER);
-		}
-		if(dbUser.getUsertype().equalsIgnoreCase("beneficiary")) {
-			beneficiaryRepository.delete(beneficiaryRepository.findByUsername(username));
-		}
-		userRepository.delete(dbUser);
-	}
 
-	@Override
 	public User getUserDetails(String username) {
 		// TODO Auto-generated method stub
-		User dbUser = userRepository.findByUsername(username);
+		User dbUser = userRepository.findByUsernameIgnoreCase(username);
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}
 		return dbUser;
 	}
 
-	@Override
+	public void insertUser(UserDTO user) {
+		// TODO Auto-generated method stub
+		User dbUser = userRepository.findByUsernameIgnoreCase(user.getUsername());
+		if(dbUser != null) {
+			throw new UserException(ErrorMessages.USER_ALREADY_EXISTS);
+		}
+		dbUser = EntityManager.transformUserDTO(user);
+		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
+		userRepository.save(dbUser);
+	}
+
+	public void updateUser(UserDTO user) {
+		// TODO Auto-generated method stub
+		User dbUser = userRepository.findByUsernameIgnoreCase(user.getUsername());
+		if(dbUser == null) {
+			throw new UserException(ErrorMessages.NO_SUCH_USER);
+		}
+		User newUserDetails = EntityManager.transformUserDTO(user);
+		String newName = newUserDetails.getName();
+		String newEmail = newUserDetails.getEmail();
+		String newUsertype = newUserDetails.getUsertype();
+		if(newName != null && !newName.isEmpty()) {
+			dbUser.setName(newName);
+		}
+		if(newEmail != null && !newEmail.isEmpty()) {
+			dbUser.setEmail(newEmail);
+		}
+		if(newUsertype != null && !newUsertype.isEmpty()) {
+			dbUser.setUsertype(newUsertype.toLowerCase());
+		}
+		userRepository.save(dbUser);
+	}
+
+	public void deleteUser(String username) {
+		// TODO Auto-generated method stub
+		User dbUser = userRepository.findByUsernameIgnoreCase(username);
+		if(dbUser == null) {
+			throw new UserException(ErrorMessages.NO_SUCH_USER);
+		}
+		userRepository.delete(dbUser);
+	}
+
 	public Boolean changePassword(PasswordDTO passwordDetails) {
 		// TODO Auto-generated method stub
-		User dbUser = userRepository.findByUsername(passwordDetails.getUsername());
+		User dbUser = userRepository.findByUsernameIgnoreCase(passwordDetails.getUsername());
 		if(dbUser == null) {
 			throw new UserException(ErrorMessages.NO_SUCH_USER);
 		}

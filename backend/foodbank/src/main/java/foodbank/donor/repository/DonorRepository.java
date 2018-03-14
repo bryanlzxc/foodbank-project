@@ -1,15 +1,13 @@
 package foodbank.donor.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import foodbank.donor.entity.Donor;
 
-@Repository
-public interface DonorRepository extends MongoRepository<Donor, String> {
-	
+public interface DonorRepository extends JpaRepository<Donor, Long> {
+
 	Donor findByName(String name);
 	
-	Donor findById(String id);
-
+	Donor findById(Long id);
+	
 }

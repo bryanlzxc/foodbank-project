@@ -10,12 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import foodbank.login.dto.LoginDTO;
 import foodbank.login.dto.LoginResponseDTO;
 import foodbank.login.service.LoginService;
-import foodbank.response.dto.ResponseDTO;
+import foodbank.security.JwtGenerator;
 import foodbank.util.MessageConstants;
-
-/*
- * Created by: Lau Peng Liang, Bryan
- */
+import foodbank.util.ResponseDTO;
 
 @RestController
 @CrossOrigin
@@ -25,11 +22,15 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	private JwtGenerator jwtGenerator;
+	
 	@PostMapping
 	public LoginResponseDTO authenticateUser(@RequestBody LoginDTO login) {
 		LoginResponseDTO loginResponseDTO = new LoginResponseDTO(LoginResponseDTO.Status.SUCCESS, MessageConstants.LOGIN_SUCCESS, null);
 		try {
 			loginService.authenticate(login);
+			loginResponseDTO.setResult(jwtGenerator.generateToken(login));
 			loginResponseDTO.setUsertype(LoginResponseDTO.Usertype.valueOf(login.getUsertype().toUpperCase()));
 		} catch (Exception e) {
 			loginResponseDTO.setStatus(LoginResponseDTO.Status.FAIL);
@@ -49,28 +50,5 @@ public class LoginController {
 		}
 		return responseDTO;
 	}
-	
-	/*
-	UserRepository userRepository;
-	
-	public LoginController(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-	
-	@PostMapping(produces = "application/json; charset=UTF-8")
-	// Uncomment the CrossOrigins annotation to allow frontend app to authenticate itself into backend
-	//@CrossOrigin(origins = "http://localhost:4200")
-	@ResponseBody
-	public LoginOutcome authenticateUser(@RequestBody User user) {
-		User storedUserDetails = this.userRepository.findByUsername(user.getUsername());
-		if(storedUserDetails != null) {
-			if(storedUserDetails.getPassword().equals(user.getPassword())) {
-				return new LoginOutcome(true, storedUserDetails.getUsertype());
-			}
-		}
-		return new LoginOutcome(false, null);
-	}
-	
-	*/
 	
 }

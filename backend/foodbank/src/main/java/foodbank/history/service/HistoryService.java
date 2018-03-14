@@ -1,14 +1,14 @@
 package foodbank.history.service;
 
 import java.util.List;
-import java.util.Map;
 
+import foodbank.history.dto.PastRequestsByBeneficiaryDTO;
 import foodbank.history.dto.RequestHistoryDTO;
 
 public interface HistoryService {
 	
-	List<RequestHistoryDTO> retrieveAllPastRequest();
+	List<RequestHistoryDTO> retrieveAllPastRequests();
 	
-	List<Map<String, Object>> retrieveAllPastRequestsByBeneficiary(final String beneficiary);
-	
+	List<PastRequestsByBeneficiaryDTO> retrieveAllPastRequestsByBeneficiary(final String beneficiary);
+
 }

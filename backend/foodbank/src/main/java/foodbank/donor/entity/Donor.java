@@ -3,72 +3,59 @@ package foodbank.donor.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
-@Document(collection = "Donors")
+@Entity
 public class Donor {
-	
+
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "donor_seq_gen")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "donor_seq_gen", sequenceName = "donor_sequence")
+	private Long id;
 	
 	private String name;
-	private String address;
-	private List<NonperishableDonation> nonperishableDonations = new ArrayList<NonperishableDonation>();
-	private List<PerishableDonation> perishableDonations = new ArrayList<PerishableDonation>();
 	
-	public Donor() {}
+	@OneToMany(mappedBy = "donor", 
+			cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY)
+	private List<DonatedNPFoodItem> nonperishableDonations = new ArrayList<DonatedNPFoodItem>();
+	//private List<PerishableDonation> perishableDonations = new ArrayList<PerishableDonation>();
+	
+	protected Donor() {}
 	
 	public Donor(String name) {
 		this.name = name;
-		this.address = "Placeholder Text, Singapore XXXXXX";
 	}
-	
-	public Donor(String name, String address, List<NonperishableDonation> nonperishableDonations, List<PerishableDonation> perishableDonations) {
-		this.name = name;
-		this.address = address;
-		this.nonperishableDonations = nonperishableDonations;
-		this.perishableDonations = perishableDonations;
-	}
-	
-	public String getId() {
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public List<NonperishableDonation> getNonperishableDonations() {
+	public List<DonatedNPFoodItem> getNonperishableDonations() {
 		return nonperishableDonations;
 	}
 
-	public void setNonperishableDonations(List<NonperishableDonation> nonperishableDonations) {
+	public void setNonperishableDonations(List<DonatedNPFoodItem> nonperishableDonations) {
 		this.nonperishableDonations = nonperishableDonations;
-	}
-
-	public List<PerishableDonation> getPerishableDonations() {
-		return perishableDonations;
-	}
-
-	public void setPerishableDonations(List<PerishableDonation> perishableDonations) {
-		this.perishableDonations = perishableDonations;
 	}
 	
 }

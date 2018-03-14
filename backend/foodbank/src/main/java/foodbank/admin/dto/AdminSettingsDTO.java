@@ -1,54 +1,50 @@
 package foodbank.admin.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AdminSettingsDTO {
 	
-	@JsonProperty("starting-date")
-	private String startingDate;
+	@NotNull
+	@JsonProperty("windowStartDate")
+	private String startDate;
 	
-	@JsonProperty("closing-date")
-	private String closingDate;
+	@NotNull
+	@JsonProperty("windowEndDate")
+	private String endDate;
 	
-	@JsonProperty("toggle")
-	private Boolean windowToggle;
-	
-	@JsonProperty("decay")
-	private Double decayRate;
-	
-	@JsonProperty("multiplier")
+	@NotNull
+	@JsonProperty("multiplierRate")
 	private Double multiplierRate;
 	
-	public String getStartingDate() {
-		return startingDate;
-	}
+	@NotNull
+	@JsonProperty("decayRate")
+	private Double decayRate;
+
+	protected AdminSettingsDTO() {}
 	
-	public void setStartingDate(String startingDate) {
-		this.startingDate = startingDate;
-	}
-	
-	public String getClosingDate() {
-		return closingDate;
-	}
-
-	public void setClosingDate(String closingDate) {
-		this.closingDate = closingDate;
-	}
-
-	public Boolean getWindowToggle() {
-		return windowToggle;
-	}
-
-	public void setWindowToggle(Boolean windowToggle) {
-		this.windowToggle = windowToggle;
-	}
-
-	public Double getDecayRate() {
-		return decayRate;
-	}
-
-	public void setDecayRate(Double decayRate) {
+	public AdminSettingsDTO(String startDate, String endDate, Double multiplierRate, Double decayRate) {
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.multiplierRate = multiplierRate;
 		this.decayRate = decayRate;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public Double getMultiplierRate() {
@@ -57,6 +53,14 @@ public class AdminSettingsDTO {
 
 	public void setMultiplierRate(Double multiplierRate) {
 		this.multiplierRate = multiplierRate;
+	}
+
+	public Double getDecayRate() {
+		return decayRate;
+	}
+
+	public void setDecayRate(Double decayRate) {
+		this.decayRate = decayRate;
 	}
 
 }

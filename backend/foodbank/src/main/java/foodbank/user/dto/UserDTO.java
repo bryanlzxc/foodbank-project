@@ -4,8 +4,6 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import foodbank.user.entity.User;
-
 public class UserDTO {
 	
 	@NotNull
@@ -35,10 +33,6 @@ public class UserDTO {
 		this.usertype = usertype;
 		this.name = name;
 		this.email = email;
-	}
-	
-	public User transformToUser() {
-		return new User(username, password, usertype, name, email);
 	}
 	
 	public String getUsername() {

@@ -14,7 +14,7 @@ public class InvoiceDTO {
 	@JsonProperty("beneficiaryName")
 	private String beneficiaryName;
 
-	public InvoiceDTO() {}
+	protected InvoiceDTO() {}
 	
 	public InvoiceDTO(String invoiceNumber, String beneficiaryName) {
 		this.invoiceNumber = invoiceNumber;

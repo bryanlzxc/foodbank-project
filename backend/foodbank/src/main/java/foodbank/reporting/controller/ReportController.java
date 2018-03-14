@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,19 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 import foodbank.reporting.dto.InvoiceDTO;
 import foodbank.reporting.entity.InvoiceData;
 import foodbank.reporting.service.ReportService;
-import foodbank.response.dto.ResponseDTO;
-import foodbank.util.FileManager;
+import foodbank.util.AmazonManager;
 import foodbank.util.MessageConstants;
+import foodbank.util.ResponseDTO;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/reports")
+@RequestMapping("/rest/reports")
 public class ReportController {
 	
 	@Autowired
 	private ReportService reportService;
 	
 	@GetMapping("/display-all")
+	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO getAllReports() {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.INVOICE_RETRIEVE_SUCCESS);
 		try {
@@ -42,6 +44,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("/display")
+	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO retrieveInvoiceData(@RequestParam(value="invoiceNumber", required = true) String invoiceNumber) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.INVOICE_DATA_RETRIEVE_SUCCESS);
 		try {
@@ -55,10 +58,11 @@ public class ReportController {
 	}
 	
 	@GetMapping("/retrieve-invoice")
+	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO retrievePdf(@RequestParam(value="invoiceNumber", required = true) String invoiceNumber) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.INVOICE_DOWNLOAD_LINK_GENERATE_SUCCESS);
 		try {
-			URL downloadUrl = FileManager.retrieveInvoiceURL(invoiceNumber);
+			URL downloadUrl = AmazonManager.retrieveInvoiceURL(invoiceNumber);
 			responseDTO.setResult(downloadUrl);
 		} catch (Exception e) {
 			responseDTO.setMessage(e.getMessage());
@@ -68,6 +72,7 @@ public class ReportController {
 	}
 	
 	@PostMapping("/generate-invoice")
+	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO generateInvoice(@RequestBody Map<String, String> invoiceData) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.INVOICE_GENERATE_SUCCESS);
 		try {
@@ -79,5 +84,5 @@ public class ReportController {
 		}
 		return responseDTO;
 	}
-	
+
 }

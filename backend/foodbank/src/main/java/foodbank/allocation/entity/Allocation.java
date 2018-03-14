@@ -2,67 +2,83 @@ package foodbank.allocation.entity;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import foodbank.beneficiary.entity.Beneficiary;
-import foodbank.inventory.entity.FoodItem;
+import foodbank.history.entity.PastRequest;
 
-/*
- * Created by Lim Jian Quan, Jaren
- */
-@Document(collection = "Allocation")
+@Entity
+@Table(name = "allocation")
 public class Allocation {
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alloc_seq_gen")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "alloc_seq_gen", sequenceName = "allocation_sequence")
+	private Long id;
 	
-	@DBRef
+	@OneToOne(cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			orphanRemoval = true,
+			optional = true, targetEntity = Beneficiary.class)
+	@JoinColumn(name = "beneficiary_user_id")
 	private Beneficiary beneficiary;
 	
-	private List<AllocatedFoodItems> allocatedItems;
+	@OneToMany(mappedBy = "allocation", 
+			cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY)
+			//orphanRemoval = true)
+	private List<AllocatedFoodItem> allocatedItems;
 	
-	private Boolean approvalStatus = false;
+	private Boolean approvalStatus;
 	
-	public Allocation() {}
-	
-	public Allocation(String id, Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems,
-			Boolean approvalStatus) {
-		this(beneficiary, allocatedItems);
-		this.id = id;
-		this.approvalStatus = approvalStatus;
-	}
-	
-	public Allocation(Beneficiary beneficiary, List<AllocatedFoodItems> allocatedItems) {
+	protected Allocation() {}
+
+	public Allocation(Beneficiary beneficiary, List<AllocatedFoodItem> allocatedItems, Boolean approvalStatus) {
 		this.beneficiary = beneficiary;
 		this.allocatedItems = allocatedItems;
+		this.approvalStatus = approvalStatus;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	
-	public void setId(String id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
 	public Beneficiary getBeneficiary() {
 		return beneficiary;
 	}
-	
+
 	public void setBeneficiary(Beneficiary beneficiary) {
 		this.beneficiary = beneficiary;
 	}
 	
-	public List<AllocatedFoodItems> getAllocatedItems() {
+	public List<AllocatedFoodItem> getAllocatedItems() {
 		return allocatedItems;
 	}
-	
-	public void setAllocatedItems(List<AllocatedFoodItems> allocatedItems) {
+
+	public void setAllocatedItems(List<AllocatedFoodItem> allocatedItems) {
 		this.allocatedItems = allocatedItems;
 	}
-	
+
 	public Boolean getApprovalStatus() {
 		return approvalStatus;
 	}
@@ -70,54 +86,5 @@ public class Allocation {
 	public void setApprovalStatus(Boolean approvalStatus) {
 		this.approvalStatus = approvalStatus;
 	}
-
-	@Override
-	public String toString() {
-		String allocatedItemString = "";
-		for(AllocatedFoodItems allocatedItem : allocatedItems) {
-			allocatedItemString += "{" + allocatedItem.getCategory() + "+" 
-				+ allocatedItem.getClassification() + "+" 
-				+ allocatedItem.getDescription() + "+"
-				+ allocatedItem.getAllocatedQuantity() + "+"
-				+ allocatedItem.getRequestedQuantity() + "}";
-		}
-		return id + "," 
-				+ "[" + allocatedItemString + "]" + ","
-				+ beneficiary.getId() + ","
-				+ approvalStatus;
-	}
 	
-	/*
-	// BV : Description+Qty
-	private HashMap<String, ArrayList<FoodItem>> details;
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public HashMap<String, ArrayList<FoodItem>> getDetails() {
-		return details;
-	}
-	
-	public void setDetails(HashMap<String, ArrayList<FoodItem>> details) {
-		this.details = details;
-	}
-	
-	//public Set<Beneficiary> getAllBeneficiary() {
-	//	return details.keySet();
-	//}
-	
-	public Allocation() {
-		// empty constructor required for put & post mappings
-	}
-	
-	public Allocation(HashMap<String, ArrayList<FoodItem>> details) {
-		this.details = details;
-	}
-	*/
-
 }

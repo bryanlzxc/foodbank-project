@@ -1,29 +1,26 @@
 package foodbank.packing.service;
 
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.context.request.WebRequest;
 
 import foodbank.packing.dto.PackingListDTO;
 import foodbank.packing.entity.PackingList;
 
 public interface PackingService {
 	
-	List<PackingList> retrieveAllPackingLists();
+	List<PackingListDTO> retrieveAllPackingLists();
 	
-	PackingList findById(final String id);
+	PackingListDTO findById(final String id);
 	
-	PackingList findByBeneficiary(final String beneficiary);
+	PackingListDTO findByBeneficiary(final String beneficiary);
 	
-	void generatePackingList();	
+	PackingList findDbListByBeneficiary(final String beneficiary);
 	
-	void updatePackedQuantities(final PackingListDTO packingListDTO);
+	void generatePackingList();
 	
-	void updateBeneficiaryPackingList(final Map<String, Object> details);
-	
-	void updatePackingStatus(final String beneficiary);
+	void updatePackedQuantities(final PackingListDTO packingList);
 	
 	Boolean reviewAllPackingStatus();
 	
+	void generateDbInvoices(final PackingList packingList);
+			
 }

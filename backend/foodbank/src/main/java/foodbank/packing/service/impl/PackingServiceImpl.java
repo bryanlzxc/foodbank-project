@@ -3,33 +3,30 @@ package foodbank.packing.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.WebRequest;
 
-import foodbank.allocation.entity.AllocatedFoodItems;
+import foodbank.allocation.entity.AllocatedFoodItem;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
-import foodbank.beneficiary.dto.BeneficiaryDeductScoreDTO;
-import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
-import foodbank.inventory.dto.FoodItemDTO;
 import foodbank.inventory.entity.FoodItem;
 import foodbank.inventory.repository.FoodRepository;
+import foodbank.packing.dto.PackedItemDTO;
 import foodbank.packing.dto.PackingListDTO;
 import foodbank.packing.entity.PackedFoodItem;
 import foodbank.packing.entity.PackingList;
 import foodbank.packing.repository.PackingRepository;
 import foodbank.packing.service.PackingService;
-import foodbank.util.InventorySerializer;
+import foodbank.reporting.entity.Invoice;
+import foodbank.reporting.repository.InvoiceRepository;
+import foodbank.util.EntityManager;
+import foodbank.util.EntityManager.DTOKey;
 import foodbank.util.LockFactory;
 import foodbank.util.MessageConstants.ErrorMessages;
-import foodbank.util.exceptions.InvalidBeneficiaryException;
-import foodbank.util.exceptions.InvalidFoodException;
 import foodbank.util.exceptions.PackingUpdateException;
 
 @Service
@@ -47,28 +44,32 @@ public class PackingServiceImpl implements PackingService {
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
 	
-	@Override
-	public List<PackingList> retrieveAllPackingLists() {
-		return packingRepository.findAll();
-	}
+	@Autowired
+	private InvoiceRepository invoiceRepository;
 	
 	@Override
-	public PackingList findById(String id) {
-		// TODO Auto-generated method stub
-		return packingRepository.findOne(id);
-	}
-	
-	@Override
-	public PackingList findByBeneficiary(String beneficiary) {
+	public List<PackingListDTO> retrieveAllPackingLists() {
 		// TODO Auto-generated method stub
 		List<PackingList> packingLists = packingRepository.findAll();
-		PackingList dbPackingList = null;
+		List<PackingListDTO> results = new ArrayList<PackingListDTO>();
 		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUser().getUsername().equals(beneficiary)) {
-				dbPackingList = packingList;
-			}
+			results.add((PackingListDTO)EntityManager.convertToDTO(DTOKey.PackingListDTO, packingList));
 		}
-		return dbPackingList;
+		return results;
+	}
+
+	@Override
+	public PackingListDTO findById(String id) {
+		// TODO Auto-generated method stub
+		PackingList packingList = packingRepository.findById(Long.valueOf(id));
+		return (PackingListDTO)EntityManager.convertToDTO(DTOKey.PackingListDTO, packingList);
+	}
+
+	@Override
+	public PackingListDTO findByBeneficiary(String beneficiary) {
+		// TODO Auto-generated method stub
+		PackingList packingList = packingRepository.findByBeneficiaryUserUsername(beneficiary);
+		return (PackingListDTO)EntityManager.convertToDTO(DTOKey.PackingListDTO, packingList);
 	}
 
 	@Override
@@ -77,144 +78,73 @@ public class PackingServiceImpl implements PackingService {
 		List<Allocation> allocations = allocationRepository.findAll();
 		List<PackingList> packingLists = new ArrayList<PackingList>();
 		for(Allocation allocation : allocations) {
-			List<AllocatedFoodItems> foodItems = allocation.getAllocatedItems();
+			List<AllocatedFoodItem> allocatedItems = allocation.getAllocatedItems();
 			List<PackedFoodItem> packedItems = new ArrayList<PackedFoodItem>();
-			for(AllocatedFoodItems foodItem: foodItems) {
-				if(foodItem.getAllocatedQuantity() > 0) {	//packing list only contains food items which allocated qty are more than 0
-					packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
-							foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0));
+			for(AllocatedFoodItem allocatedItem : allocatedItems) {
+				Integer allocatedQuantity = allocatedItem.getAllocatedQuantity();
+				if(allocatedQuantity > 0) {
+					packedItems.add(new PackedFoodItem(allocatedItem.getFoodItem(), allocatedQuantity));
 				}
 			}
-//			foodItems.forEach(foodItem -> packedItems.add(new PackedFoodItem(foodItem.getCategory(), foodItem.getClassification(), 
-//					foodItem.getDescription(), foodItem.getAllocatedQuantity(), 0)));
 			if(!packedItems.isEmpty()) {
-				packingLists.add(new PackingList(allocation.getBeneficiary(), packedItems));
+				PackingList packingList = new PackingList(allocation.getBeneficiary(), packedItems);
+				for(PackedFoodItem packedItem : packedItems) {
+					packedItem.setPackingList(packingList);
+				}
+				packingLists.add(packingList);
 			}
 		}
-		packingRepository.insert(packingLists);
+		packingRepository.save(packingLists);
 	}
 
 	@Override
-	public void updatePackedQuantities(PackingListDTO packingListDTO) {
+	public void updatePackedQuantities(PackingListDTO packingList) {
 		// TODO Auto-generated method stub
-		List<PackingList> packingLists = packingRepository.findAll();
-		PackingList dbPackingList = null;
-		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUser().getUsername().equals(packingListDTO.getBeneficiary())) {
-				dbPackingList = packingList;
-				break;
-			}
+		PackingList dbPackingList = packingRepository.findByBeneficiaryUserUsername(packingList.getBeneficiary().getUsername());
+		if(dbPackingList == null || dbPackingList.getPackingStatus()) {
+			throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR);
 		}
-		if(dbPackingList == null || dbPackingList.getPackingStatus()) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
-		String id = packingListDTO.getId();
-		ReadWriteLock lock = LockFactory.getWriteLock(id);
+		Long id = packingList.getId();
+		ReadWriteLock lock = LockFactory.getWriteLock(String.valueOf(id));
 		if(lock.writeLock().tryLock()) {
-			String beneficiary = packingListDTO.getBeneficiary();
 			List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
 			HashMap<String, PackedFoodItem> packedItemsMap = new HashMap<String, PackedFoodItem>();
-			beneficiaryPackedItems.forEach(item -> packedItemsMap.put(item.getCategory() + item.getClassification() + item.getDescription(), item));
-			List<Map<String, Object>> beneficiaryPackedItemsUpdates = packingListDTO.getPackedItems();
-			for(Map<String, Object> map : beneficiaryPackedItemsUpdates) {
-				String category = (String)map.get("category");
-				String classification = (String)map.get("classification");
-				String description = (String)map.get("description");
-				Integer packedQuantity = (Integer)map.get("packedQuantity");
-				packedItemsMap.get(category + classification + description).setQuantity(packedQuantity);		//need to check if we are saving this to the correct map
-				FoodItemDTO foodItemDTO = new FoodItemDTO(category, classification, description, packedQuantity, 0, null);
-				amendFoodItemQuantity(foodItemDTO);
-				BeneficiaryDeductScoreDTO beneficiaryDeductScoreDTO = new BeneficiaryDeductScoreDTO(beneficiary, -packedQuantity);
-				modifyBeneficiaryScore(beneficiaryDeductScoreDTO);
+			beneficiaryPackedItems.forEach(item -> {
+				FoodItem dbFoodItem = item.getPackedFoodItem();
+				String category = dbFoodItem.getCategory();
+				String classification = dbFoodItem.getClassification();
+				String description = dbFoodItem.getDescription();
+				String key = category + "," + classification + "," + description;
+				packedItemsMap.put(key, item);
+			});
+			List<PackedItemDTO> beneficiaryPackedItemsUpdates = packingList.getPackedItems();
+			for(PackedItemDTO packedItemDTO : beneficiaryPackedItemsUpdates) {
+				String category = packedItemDTO.getCategory();
+				String classification = packedItemDTO.getClassification();
+				String description = packedItemDTO.getDescription();
+				PackedFoodItem packedFoodItem = packedItemsMap.get(category + "," + classification + "," + description);
+				FoodItem dbFoodItem = packedFoodItem.getPackedFoodItem();
+				// Modifying the inventory remaining in the database
+				dbFoodItem.setQuantity(dbFoodItem.getQuantity() - packedItemDTO.getPackedQuantity());
+				foodRepository.save(dbFoodItem);
+				// Modifying the beneficiary score
+				modifyBeneficiaryScore(dbPackingList.getBeneficiary(), Double.valueOf(dbFoodItem.getQuantity() * dbFoodItem.getValue()));
+				dbPackingList.setPackingStatus(Boolean.TRUE);
+				packingRepository.save(dbPackingList);
 			}
-			dbPackingList.setPackingStatus(true);
-			packingRepository.save(dbPackingList);
 		} else {
 			throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR);
 		}
 	}
 	
-	@Override
-	public void updateBeneficiaryPackingList(Map<String, Object> details) {
-		List<PackingList> packingLists = packingRepository.findAll();
-		PackingList dbPackingList = null;
-		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUsername().equals(String.valueOf(details.get("beneficiary")))) {
-				dbPackingList = packingList;
-				break;
-			}
+	private void modifyBeneficiaryScore(Beneficiary beneficiary, Double value) {
+		Double currentScore = beneficiary.getScore();
+		Double newScore = currentScore - value;
+		if(newScore < 0) {
+			newScore = Double.valueOf(0);
 		}
-		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
-		List<PackedFoodItem> beneficiaryPackedItems = dbPackingList.getPackedItems();
-		int previouslyPackedAmount = 0;
-		String category = String.valueOf(details.get("category"));
-		String classification = String.valueOf(details.get("classification"));
-		String description = String.valueOf(details.get("description"));
-		for(PackedFoodItem packedItem : beneficiaryPackedItems) {
-			if(packedItem.getCategory().equals(category) && packedItem.getClassification().equals(classification)
-					&& packedItem.getDescription().equals(description)) {
-				previouslyPackedAmount = packedItem.getQuantity();
-				packedItem.setQuantity((int)details.get("packedQuantity"));
-				break;
-			}
-		}
-		if(previouslyPackedAmount - (int)details.get("packedQuantity") != 0) {
-			FoodItem foodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
-			foodItem.setQuantity(foodItem.getQuantity() + previouslyPackedAmount - (int)details.get("packedQuantity"));
-			foodRepository.save(foodItem);
-			InventorySerializer.updateQuantity(category, classification, description, foodItem.getQuantity());
-			modifyBeneficiaryScore(new BeneficiaryDeductScoreDTO(String.valueOf(details.get("beneficiary")), previouslyPackedAmount - (Integer)details.get("packedQuantity")));
-		} 
-		packingRepository.save(dbPackingList);
-	}
-
-	@Override
-	public void updatePackingStatus(String beneficiary) {
-		// TODO Auto-generated method stub
-		List<PackingList> packingLists = packingRepository.findAll();
-		PackingList dbPackingList = null;
-		for(PackingList packingList : packingLists) {
-			if(packingList.getBeneficiary().getUsername().equals(beneficiary)) {
-				dbPackingList = packingList;
-				break;
-			}
-		}
-		if(dbPackingList == null) { throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR); }
-		if(dbPackingList.getPackingStatus() == false) {
-			dbPackingList.setPackingStatus(true);
-		} else {
-			dbPackingList.setPackingStatus(false);
-		}
-		packingRepository.save(dbPackingList);
-	}
-		
-	//This method is for internal call to deduct food item quantity when fb volunteer pressed packed
-	private void amendFoodItemQuantity(FoodItemDTO foodItem) {
-		// This method increments/decrements the existing DB object's quantity
-		String category = foodItem.getCategory();
-		String classification = foodItem.getClassification();
-		String description = foodItem.getDescription();
-		FoodItem dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
-		if(dbFoodItem != null) {
-			dbFoodItem.setQuantity(dbFoodItem.getQuantity() - foodItem.getQuantity());		//this is the deduction from db
-			foodRepository.save(dbFoodItem);
-			InventorySerializer.updateQuantity(category, classification, description, dbFoodItem.getQuantity());
-		} else {
-			throw new InvalidFoodException(ErrorMessages.NO_SUCH_ITEM);
-		}
-	}
-	
-	//This method is for internal call to deduct beneficiary score once fb volunteer pressed packed
-	private void modifyBeneficiaryScore(BeneficiaryDeductScoreDTO beneficiaryUpdate) {
-		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryUpdate.getBeneficiary());
-		if(dbBeneficiary == null) { throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY); }
-		double inventoryQuantityPacked = beneficiaryUpdate.getQuantity();
-		double scoreToDeduct = inventoryQuantityPacked;			//currently the score which is deducted from beneficiary is the quantity of packed items
-		double newScore = dbBeneficiary.getScore() + scoreToDeduct;
-		if(newScore < 0) {		//score will never be less than 0;
-			newScore = 0;
-		}
-		dbBeneficiary.setScore(newScore);
-		beneficiaryRepository.save(dbBeneficiary);
+		beneficiary.setScore(newScore);
+		beneficiaryRepository.save(beneficiary);
 	}
 
 	@Override
@@ -228,5 +158,33 @@ public class PackingServiceImpl implements PackingService {
 		}
 		return true;
 	}
-	
+
+	@Override
+	public void generateDbInvoices(PackingList packingList) {
+		// TODO Auto-generated method stub
+		Beneficiary beneficiary = packingList.getBeneficiary();
+		// Our understanding of the requirements are that the billing organization and receiving organization are the same
+		Invoice invoice = new Invoice(beneficiary.getId(), beneficiary.getId(), packingList.getId());
+		invoiceRepository.save(invoice);
+		// This is to clear up the previous entry so that the beneficiary can be assigned a new list in the next window
+		// We can either do this now, or do this in a separate manager that checks for these associations when window opens
+		beneficiary.setPackingList(null);
+		beneficiaryRepository.save(beneficiary);
+	}
+
+	@Override
+	public PackingList findDbListByBeneficiary(String beneficiary) {
+		// TODO Auto-generated method stub
+		return packingRepository.findByBeneficiaryUserUsername(beneficiary);
+	}
+
+	/*
+	@Override
+	public void testing() {
+		// TODO Auto-generated method stub
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUserUsername("dan");
+		dbBeneficiary.setPackingList(null);
+	}
+	*/
+
 }

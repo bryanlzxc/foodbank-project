@@ -1,28 +1,40 @@
 package foodbank.beneficiary.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import foodbank.allocation.entity.Allocation;
+import foodbank.history.entity.RequestHistory;
+import foodbank.packing.entity.PackingList;
+import foodbank.request.entity.Request;
 import foodbank.user.entity.User;
 
+@Entity
+@Table(name = "beneficiary")
 /*
- * Done by Ng Shirong
- */
-
-@Document(collection = "Beneficiary")
-public class Beneficiary implements Comparable<Beneficiary> {
+@DiscriminatorValue(value = "beneficiary")
+@PrimaryKeyJoinColumn(name = "user_id")
+*/
+@JsonSerialize
+public class Beneficiary {
 	
 	@Id
-	private String id;
+	@GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
+	private Long id;
 	
-	@DBRef
-	private User user;
-	
-	private String username;
-	private int numBeneficiary; 
+	private int numBeneficiary;
 	private String address;
 	private double score;
 	private String contactPerson;
@@ -30,18 +42,77 @@ public class Beneficiary implements Comparable<Beneficiary> {
 	private String memberType;
 	private boolean hasTransport;
 	
-	public Beneficiary() {}
+	@OneToOne
+	//@JoinColumn(name = "id", nullable = false)
+	@MapsId
+	@JsonIgnore
+	private User user;
 	
-	public Beneficiary(String id, User user, int numBeneficiary, String address, double score,
-			String contactPerson, String contactNumber, String memberType, Boolean hasTransport) {
-		this(user, numBeneficiary, address, score, contactPerson, contactNumber, memberType, hasTransport);
+	@OneToOne(mappedBy = "beneficiary")
+	@JsonIgnore
+	private Allocation allocation;
+	
+	@OneToMany(mappedBy = "beneficiary")
+	private List<RequestHistory> requestHistories;
+	
+	@OneToOne(mappedBy = "beneficiary")
+	private PackingList packingList;
+	
+	/*
+	@OneToMany(mappedBy = "billingOrganization")
+	private List<Invoice> billingList;
+	*/
+	/*
+	@OneToMany(mappedBy = "receivingOrganization")
+	private List<Invoice> receivingList;
+	*/
+	
+	public PackingList getPackingList() {
+		return packingList;
+	}
+
+	public void setPackingList(PackingList packingList) {
+		this.packingList = packingList;
+	}
+
+	public Allocation getAllocation() {
+		return allocation;
+	}
+
+	public void setAllocation(Allocation allocation) {
+		this.allocation = allocation;
+	}
+
+	@OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	private List<Request> requests;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public Beneficiary(User user, int numBeneficiary, String address, double score,
-			String contactPerson, String contactNumber, String memberType, Boolean hasTransport) {
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
 		this.user = user;
-		this.username = user.getUsername();
+	}
+
+	protected Beneficiary() {}
+
+	/*
+	public Beneficiary(String username, String password, String usertype,
+			String name, String email, int numBeneficiary, String address, 
+			double score, String contactPerson, String contactNumber,
+			String memberType, boolean hasTransport) {
+		if(this.user == null) {
+			this.user = new User(username, password, usertype, name, email);
+		}
 		this.numBeneficiary = numBeneficiary;
 		this.address = address;
 		this.score = score;
@@ -50,47 +121,23 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		this.memberType = memberType;
 		this.hasTransport = hasTransport;
 	}
+	*/
 	
-	public String getId() {
-		return id;
-	}
-	
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getContactPerson() {
-		return contactPerson;
-	}
-
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
-	public boolean isHasTransport() {
-		return hasTransport;
-	}
-
-	public void setHasTransport(boolean hasTransport) {
-		this.hasTransport = hasTransport;
-	}
-
 	public int getNumBeneficiary() {
 		return numBeneficiary;
 	}
 	
+	public Beneficiary(int numBeneficiary, String address, double score, String contactPerson, String contactNumber,
+			String memberType, boolean hasTransport) {
+		this.numBeneficiary = numBeneficiary;
+		this.address = address;
+		this.score = score;
+		this.contactPerson = contactPerson;
+		this.contactNumber = contactNumber;
+		this.memberType = memberType;
+		this.hasTransport = hasTransport;
+	}
+
 	public void setNumBeneficiary(int numBeneficiary) {
 		this.numBeneficiary = numBeneficiary;
 	}
@@ -111,40 +158,44 @@ public class Beneficiary implements Comparable<Beneficiary> {
 		this.score = score;
 	}
 	
+	public String getContactPerson() {
+		return contactPerson;
+	}
+	
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+	
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	
 	public String getMemberType() {
 		return memberType;
 	}
-
+	
 	public void setMemberType(String memberType) {
 		this.memberType = memberType;
 	}
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	@Override
-	// Natural sort according to descending order of score
-	// A higher score denotes a higher priority to receive FoodItem allocation
-	public int compareTo(Beneficiary o) {
-		return Double.compare(o.score, this.score);
+	public boolean getTransportationStatus() {
+		return hasTransport;
 	}
 	
-	@Override
-	public String toString() {
-		return id + "," 
-				+ user.getId() + ","
-				+ numBeneficiary + ","
-				+ address + ","
-				+ score + ","
-				+ contactPerson + ","
-				+ contactNumber + ","
-				+ memberType + ","
-				+ hasTransport;
+	public void setTransportationStatus(boolean hasTransport) {
+		this.hasTransport = hasTransport;
 	}
-	
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
+	}
+
 }

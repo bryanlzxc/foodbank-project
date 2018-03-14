@@ -1,17 +1,11 @@
 package foodbank.beneficiary.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import foodbank.beneficiary.entity.Beneficiary;
 
-/*
- * Done by Shirong
- */
-
-public interface BeneficiaryRepository extends MongoRepository<Beneficiary, String>{
-	
-	Beneficiary findById(String id);
-	
-	Beneficiary findByUsername(String beneficiary);
-	
+public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Long> {
+		
+	Beneficiary findByUserUsername(String username);
+		
 }

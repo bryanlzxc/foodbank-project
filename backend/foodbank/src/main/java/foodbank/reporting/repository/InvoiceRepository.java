@@ -1,11 +1,13 @@
 package foodbank.reporting.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import foodbank.reporting.entity.Invoice;
 
-public interface InvoiceRepository extends MongoRepository<Invoice, String> {
+public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 	
-	Invoice findById(String id);
+	Invoice findById(Long id);
+	
+	Invoice findByInvoiceLabel(String invoiceId);
 
 }

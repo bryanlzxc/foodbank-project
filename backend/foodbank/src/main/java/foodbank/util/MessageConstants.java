@@ -77,6 +77,8 @@ public final class MessageConstants {
 		public static final String DONOR_GET_FAIL = "GET call for DONOR failed";
 		public static final String REQUEST_GET_FAIL = "GET call for REQUEST failed";
 		public static final String PASSWORD_NOT_UPDATED = "Password was not changed.";
+		public static final String INCORRECT_TOKEN = "Incorrect JWT token";
+		public static final String MISSING_TOKEN = "JWT token cannot be found";
 		
 	}
 	

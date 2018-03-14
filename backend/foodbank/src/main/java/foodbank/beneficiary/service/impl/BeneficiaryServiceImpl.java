@@ -1,127 +1,114 @@
 package foodbank.beneficiary.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import foodbank.beneficiary.dto.BeneficiaryAccountDTO;
 import foodbank.beneficiary.dto.BeneficiaryDTO;
-import foodbank.beneficiary.dto.BeneficiaryUpdateDTO;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.beneficiary.service.BeneficiaryService;
 import foodbank.user.entity.User;
-import foodbank.user.repository.UserRepository;
+import foodbank.util.EntityManager;
+import foodbank.util.EntityManager.DTOKey;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.InvalidBeneficiaryException;
-import foodbank.util.exceptions.UserException;
 
 @Service
 public class BeneficiaryServiceImpl implements BeneficiaryService {
-	
+
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
 	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Override
-	public List<Beneficiary> getAllBeneficiaries() {
+	public List<BeneficiaryDTO> getAllBeneficiaries() {
 		// TODO Auto-generated method stub
-		return beneficiaryRepository.findAll();
+		List<Beneficiary> dbBeneficiaries = beneficiaryRepository.findAll();
+		List<BeneficiaryDTO> beneficiaryDTOs = new ArrayList<BeneficiaryDTO>();
+		for(Beneficiary dbBeneficiary : dbBeneficiaries) {
+			beneficiaryDTOs.add((BeneficiaryDTO)EntityManager.convertToDTO(DTOKey.BeneficiaryDTO, dbBeneficiary));
+		}
+		return beneficiaryDTOs;
 	}
 
-	@Override
-	public Double getBeneficiaryScore(String beneficiary) {
+	public BeneficiaryDTO getBeneficiaryDetails(String beneficiary) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary);
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUserUsername(beneficiary);
 		if(dbBeneficiary == null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
-		return dbBeneficiary.getScore();
+		return (BeneficiaryDTO)EntityManager.convertToDTO(DTOKey.BeneficiaryDTO, dbBeneficiary);
 	}
 
-	@Override
-	public Beneficiary getBeneficiaryDetails(String beneficiary) {
-		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary);
-		if(dbBeneficiary == null) {
-			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
-		}
-		return dbBeneficiary;
-	}
-
-	@Override
-	public void modifyBeneficiaryScore(BeneficiaryUpdateDTO beneficiaryUpdate) {
-		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryUpdate.getBeneficiary());
-		if(dbBeneficiary == null) {
-			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
-		}
-		dbBeneficiary.setScore(beneficiaryUpdate.getScore());
-		beneficiaryRepository.save(dbBeneficiary);
-	}
-
-	@Override
 	public void createBeneficiary(BeneficiaryDTO beneficiary) {
 		// TODO Auto-generated method stub
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getUsername());
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUserUsername(beneficiary.getUsername());
 		if(dbBeneficiary != null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.BENEFICIARY_ALREADY_EXISTS);
 		}
-		User dbUser = userRepository.findByUsername(beneficiary.getUsername());
-		if(dbUser != null) {
-			throw new UserException(ErrorMessages.USER_ALREADY_EXISTS);
-		}
-		User newUser = new User(beneficiary.getUsername(), BCrypt.hashpw(beneficiary.getPassword(), BCrypt.gensalt()), beneficiary.getUsertype(), beneficiary.getName(), beneficiary.getEmail());
-		userRepository.insert(newUser);
-		beneficiaryRepository.insert(new Beneficiary(newUser, beneficiary.getNumBeneficiary(), beneficiary.getAddress(),
-				beneficiary.getScore(), beneficiary.getContactPerson(), beneficiary.getContactNumber(), beneficiary.getMemberType(), beneficiary.getHasTransport()));
+		dbBeneficiary = EntityManager.transformBeneficiaryDTO(beneficiary);
+		User dbUser = dbBeneficiary.getUser();
+		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
+		beneficiaryRepository.save(dbBeneficiary);
 	}
-	
-	@Override
+
 	public void updateBeneficiary(BeneficiaryDTO beneficiary) {
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiary.getUsername());
-		User dbUser = userRepository.findByUsername(beneficiary.getUsername());
+		// TODO Auto-generated method stub
+		Beneficiary dbBeneficiary = beneficiaryRepository.findByUserUsername(beneficiary.getUsername());
 		if(dbBeneficiary == null) {
 			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
 		}
-		
-
-		dbUser.setName(beneficiary.getName());
-		dbUser.setEmail(beneficiary.getEmail());
-		userRepository.save(dbUser);
-		
-		dbBeneficiary.setNumBeneficiary(beneficiary.getNumBeneficiary());
-		dbBeneficiary.setAddress(beneficiary.getAddress());
-		dbBeneficiary.setContactPerson(beneficiary.getContactPerson());
-		dbBeneficiary.setContactNumber(beneficiary.getContactNumber());
-		dbBeneficiary.setMemberType(beneficiary.getMemberType());
-		dbBeneficiary.setHasTransport(beneficiary.getHasTransport());
+		beneficiary.setScore(dbBeneficiary.getScore());
+		Beneficiary newBeneficiaryDetails = EntityManager.transformBeneficiaryDTO(beneficiary);
+		User newUserDetails = newBeneficiaryDetails.getUser();
+		Map<String, Object> parametersToUpdate = new HashMap<String, Object>();
+		parametersToUpdate.put("name", newUserDetails.getName());
+		parametersToUpdate.put("email", newUserDetails.getEmail());
+		parametersToUpdate.put("numBeneficiaries", newBeneficiaryDetails.getNumBeneficiary());
+		parametersToUpdate.put("address", newBeneficiaryDetails.getAddress());
+		parametersToUpdate.put("contactPerson", newBeneficiaryDetails.getContactPerson());
+		parametersToUpdate.put("contactNumber", newBeneficiaryDetails.getContactNumber());
+		parametersToUpdate.put("memberType", newBeneficiaryDetails.getMemberType());
+		parametersToUpdate.put("transportationStatus", newBeneficiaryDetails.getTransportationStatus());
+		for(Entry<String, Object> entry : parametersToUpdate.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if(key.equals("numBeneficiaries") && EntityManager.checkForUpdateIntent(value)) {
+				dbBeneficiary.setNumBeneficiary((Integer)value);
+			} else if (key.equals("transportationStatus") && EntityManager.checkForUpdateIntent(value)) {
+				dbBeneficiary.setTransportationStatus((Boolean)value);
+			} else {
+				String stringValue = String.valueOf(value);
+				if(!stringValue.isEmpty()) {
+					switch(key) {
+						case("name"):
+							dbBeneficiary.getUser().setName(stringValue);
+							break;
+						case("email"):
+							dbBeneficiary.getUser().setEmail(stringValue);
+							break;
+						case("address"):
+							dbBeneficiary.setAddress(stringValue);
+							break;
+						case("contactPerson"):
+							dbBeneficiary.setContactPerson(stringValue);
+							break;
+						case("contactNumber"):
+							dbBeneficiary.setContactNumber(stringValue);
+							break;
+						case("memberType"):
+							dbBeneficiary.setMemberType(stringValue);
+							break;
+					}
+				}
+			}
+		}
 		beneficiaryRepository.save(dbBeneficiary);
 	}
 	
-	@Override
-	public void updateBeneficiaryAccount(BeneficiaryAccountDTO beneficiaryAccount) {
-		Beneficiary dbBeneficiary = beneficiaryRepository.findByUsername(beneficiaryAccount.getUsername());
-		User dbUser = userRepository.findByUsername(beneficiaryAccount.getUsername());
-		if (dbUser == null) {
-			throw new InvalidBeneficiaryException(ErrorMessages.NO_SUCH_BENEFICIARY);
-		}
-
-		dbUser.setName(beneficiaryAccount.getName());
-		dbUser.setEmail(beneficiaryAccount.getEmail());
-		userRepository.save(dbUser);
-		
-		dbBeneficiary.setNumBeneficiary(beneficiaryAccount.getNumBeneficiary());
-		dbBeneficiary.setAddress(beneficiaryAccount.getAddress());
-		dbBeneficiary.setContactPerson(beneficiaryAccount.getContactPerson());
-		dbBeneficiary.setContactNumber(beneficiaryAccount.getContactNumber());
-		dbBeneficiary.setMemberType(beneficiaryAccount.getMemberType());
-		dbBeneficiary.setHasTransport(beneficiaryAccount.getHasTransport());
-		beneficiaryRepository.save(dbBeneficiary);
-	}
-
 }

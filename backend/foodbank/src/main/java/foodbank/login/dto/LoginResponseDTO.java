@@ -21,6 +21,9 @@ public class LoginResponseDTO {
 	@JsonProperty("message")
 	private String message;
 	
+	@JsonProperty("result")
+	private String result;
+	
 	@JsonProperty("usertype")
 	private Usertype usertype;
 	
@@ -54,6 +57,13 @@ public class LoginResponseDTO {
 	public void setUsertype(Usertype usertype) {
 		this.usertype = usertype;
 	}
-	
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}	
 
 }

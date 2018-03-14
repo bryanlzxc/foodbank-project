@@ -2,23 +2,21 @@ package foodbank.reporting.entity;
 
 import java.text.DecimalFormat;
 import java.util.Date;
-import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import foodbank.beneficiary.entity.Beneficiary;
-import foodbank.packing.entity.PackedFoodItem;
 import foodbank.util.DateParser;
 
-/*
- * Remarks: This object should only be created ONCE when the PackingList has been fully packed and represents a Delivery Invoice
- * 			This object is not meant to be passed to client, use the InvoiceData instead!
- */
-@Document(collection = "Invoices")
+@Entity
 public class Invoice {
-	
+
 	// These values are hard-coded because they should not be changed unless the address have been changed
 	public static final String COMPANY_NAME = "The Food Bank Singapore Ltd";
 	public static final String ADDRESS_LINE_1 = "39 KEPPEL ROAD #01-02/04";
@@ -28,107 +26,128 @@ public class Invoice {
 	public static final String CO_REG_NO = "Co Reg No: 201200654E";
 	
 	private static final String INVOICE_IDENTIFIER = "FBDO";
+	
 	private final String dateMonth = DateParser.displayMonthYearOnly(new Date());
-	private final String generationDate = DateParser.displayDayMonthYearOnly(new Date());
-	private static int invoiceNumber;
+	
+	@Temporal(TemporalType.DATE)
+	private Date generationDate;
+	
+	private static Integer invoiceNumber = Integer.valueOf(1);
 	private static final DecimalFormat decimalFormat = new DecimalFormat("0000");
 	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "invoice_seq_gen")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "invoice_seq_gen", sequenceName = "invoice_sequence")
+	private Long id;
 	
-	private String deliveryDate = "";
-	private String deliveryTime = "";
+	private String invoiceLabel;
+	
+	@Temporal(TemporalType.DATE)
+	private Date deliveryDate;
+	
+	@Temporal(TemporalType.TIME)
+	private Date deliveryTime;
+	
 	private String issuedBy = "";
 	private String comments = "";
 	
-	private boolean deliveryStatus;
-	private boolean generationStatus;
+	private Boolean deliveryStatus;
+	private Boolean generationStatus;
 	
-	@DBRef
+	@Column(name = "billing_org_id")
+	private Long billingOrganizationId;
+	
+	@Column(name = "receiving_org_id")
+	private Long receivingOrganizationId;
+	
+	@Column(name = "packing_list_id")
+	private Long packingListId;
+	
+	/*
+	@ManyToOne(cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			optional = true, targetEntity = Beneficiary.class)
+	@JoinColumn(name = "beneficiary_user_id")
 	private Beneficiary billingOrganization;
 	
-	@DBRef
+	@OneToOne(cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY) //mappedBy = "invoice")
+	@JoinColumn(name = "packing_list_id")
+	private PackingList packingList;
+	
+	@ManyToOne(cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			optional = true, targetEntity = Beneficiary.class)
+	@JoinColumn(name = "beneficiary_user_id")
 	private Beneficiary receivingOrganization;
 	
-	/*
-	private String organizationToBill;
-	private String organizationToBillAddress;
-	private String organizationToBillContactPerson;
-	private String organizationToBillContactNumber;
-	
-	private String organizationForDelivery;
-	private String organizationForDeliveryAddress;
-	private String organizationForDeliveryContactPerson;
-	private String organizationForDeliveryContactNumber;
-	*/
-	
 	private List<PackedFoodItem> packedItems;
-
-	public Invoice() {}
+	*/
 	
-	public Invoice(Beneficiary billingOrganization, Beneficiary receivingOrganization, List<PackedFoodItem> packedItems) {
-		invoiceNumber+=1;
-		this.id = INVOICE_IDENTIFIER + "-" + dateMonth + "-" + decimalFormat.format(invoiceNumber);
-		this.billingOrganization = billingOrganization;
-		this.receivingOrganization = receivingOrganization;
-		this.packedItems = packedItems;
-		/*
-		this.organizationToBill = billingOrganization.getUser().getName();
-		this.organizationToBillAddress = billingOrganization.getAddress();
-		this.organizationToBillContactPerson = billingOrganization.getContactPerson();
-		this.organizationToBillContactNumber = billingOrganization.getContactNumber();
-		this.organizationForDelivery = receivingOrganization.getUser().getName();
-		this.organizationForDelivery = receivingOrganization.getAddress();
-		this.organizationForDelivery = receivingOrganization.getContactPerson();
-		this.organizationForDeliveryContactNumber = receivingOrganization.getContactNumber();
-		*/
+	protected Invoice() {}
+	
+	public Invoice(Long billingOrganizationId, Long receivingOrganizationId, Long packingListId) {
+		this.invoiceLabel = INVOICE_IDENTIFIER + "-" + dateMonth + "-"
+				+ decimalFormat.format(invoiceNumber);
+		this.billingOrganizationId = billingOrganizationId;
+		this.receivingOrganizationId = receivingOrganizationId;
+		this.packingListId = packingListId;
 	}
 	
 	/*
-	public Invoice(String organizationToBill, String organizationToBillAddress,
-			String organizationToBillContactPerson, String organizationToBillContactNumber,
-			String organizationForDelivery, String organizationForDeliveryAddress,
-			String organizationForDeliveryContactPerson, String organizationForDeliveryContactNumber,
-			List<PackedFoodItem> packedItems) {
-		invoiceNumber+=1;
-		this.id = INVOICE_IDENTIFIER + "-" + dateMonth + "-" + decimalFormat.format(invoiceNumber);
-		this.organizationToBill = organizationToBill;
-		this.organizationToBillAddress = organizationToBillAddress;
-		this.organizationToBillContactPerson = organizationToBillContactPerson;
-		this.organizationToBillContactNumber = organizationToBillContactNumber;
-		this.organizationForDelivery = organizationForDelivery;
-		this.organizationForDeliveryAddress = organizationForDeliveryAddress;
-		this.organizationForDeliveryContactPerson = organizationForDeliveryContactPerson;
-		this.organizationForDeliveryContactNumber = organizationForDeliveryContactNumber;
-		this.packedItems = packedItems;
+	public Invoice(Beneficiary billingOrganization, PackingList packingList) {
+		this.invoiceLabel = INVOICE_IDENTIFIER + "-" + dateMonth + "-"
+				+ decimalFormat.format(invoiceNumber);
+		this.billingOrganization = billingOrganization;
+		this.packingList = packingList;
 	}
 	*/
 
-	public String getId() {
+	public Date getGenerationDate() {
+		return generationDate;
+	}
+
+	public void setGenerationDate(Date generationDate) {
+		this.generationDate = generationDate;
+	}
+
+	public static Integer getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public static void setInvoiceNumber(Integer invoiceNumber) {
+		Invoice.invoiceNumber = invoiceNumber;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getGenerationDate() {
-		return generationDate;
+	public String getInvoiceLabel() {
+		return invoiceLabel;
 	}
-	
-	public String getDeliveryDate() {
+
+	public void setInvoiceLabel(String invoiceLabel) {
+		this.invoiceLabel = invoiceLabel;
+	}
+
+	public Date getDeliveryDate() {
 		return deliveryDate;
 	}
 
-	public void setDeliveryDate(String deliveryDate) {
+	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 
-	public String getDeliveryTime() {
+	public Date getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public void setDeliveryTime(String deliveryTime) {
+	public void setDeliveryTime(Date deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
 
@@ -147,115 +166,49 @@ public class Invoice {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	
-	public boolean getDeliveryStatus() {
+
+	public Boolean getDeliveryStatus() {
 		return deliveryStatus;
 	}
 
-	public void setDeliveryStatus(boolean deliveryStatus) {
+	public void setDeliveryStatus(Boolean deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
-	
-	public boolean getGenerationStatus() {
+
+	public Boolean getGenerationStatus() {
 		return generationStatus;
 	}
 
-	public void setGenerationStatus(boolean generationStatus) {
+	public void setGenerationStatus(Boolean generationStatus) {
 		this.generationStatus = generationStatus;
 	}
-	
-	/*
-	public String getOrganizationToBill() {
-		return organizationToBill;
+
+	public Long getBillingOrganizationId() {
+		return billingOrganizationId;
 	}
 
-	public void setOrganizationToBill(String organizationToBill) {
-		this.organizationToBill = organizationToBill;
+	public void setBillingOrganizationId(Long billingOrganizationId) {
+		this.billingOrganizationId = billingOrganizationId;
 	}
 
-	public String getOrganizationToBillAddress() {
-		return organizationToBillAddress;
+	public Long getReceivingOrganizationId() {
+		return receivingOrganizationId;
 	}
 
-	public void setOrganizationToBillAddress(String organizationToBillAddress) {
-		this.organizationToBillAddress = organizationToBillAddress;
+	public void setReceivingOrganizationId(Long receivingOrganizationId) {
+		this.receivingOrganizationId = receivingOrganizationId;
 	}
 
-	public String getOrganizationToBillContactPerson() {
-		return organizationToBillContactPerson;
+	public Long getPackingListId() {
+		return packingListId;
 	}
 
-	public void setOrganizationToBillContactPerson(String organizationToBillContactPerson) {
-		this.organizationToBillContactPerson = organizationToBillContactPerson;
+	public void setPackingListId(Long packingListId) {
+		this.packingListId = packingListId;
 	}
-
-	public String getOrganizationToBillContactNumber() {
-		return organizationToBillContactNumber;
-	}
-
-	public void setOrganizationToBillContactNumber(String organizationToBillContactNumber) {
-		this.organizationToBillContactNumber = organizationToBillContactNumber;
-	}
-
-	public String getOrganizationForDelivery() {
-		return organizationForDelivery;
-	}
-
-	public void setOrganizationForDelivery(String organizationForDelivery) {
-		this.organizationForDelivery = organizationForDelivery;
-	}
-
-	public String getOrganizationForDeliveryAddress() {
-		return organizationForDeliveryAddress;
-	}
-
-	public void setOrganizationForDeliveryAddress(String organizationForDeliveryAddress) {
-		this.organizationForDeliveryAddress = organizationForDeliveryAddress;
-	}
-
-	public String getOrganizationForDeliveryContactPerson() {
-		return organizationForDeliveryContactPerson;
-	}
-
-	public void setOrganizationForDeliveryContactPerson(String organizationForDeliveryContactPerson) {
-		this.organizationForDeliveryContactPerson = organizationForDeliveryContactPerson;
-	}
-
-	public String getOrganizationForDeliveryContactNumber() {
-		return organizationForDeliveryContactNumber;
-	}
-
-	public void setOrganizationForDeliveryContactNumber(String organizationForDeliveryContactNumber) {
-		this.organizationForDeliveryContactNumber = organizationForDeliveryContactNumber;
-	}
-	*/
 
 	public String getDateMonth() {
 		return dateMonth;
-	}
-
-	public Beneficiary getBillingOrganization() {
-		return billingOrganization;
-	}
-
-	public void setBillingOrganization(Beneficiary billingOrganization) {
-		this.billingOrganization = billingOrganization;
-	}
-
-	public Beneficiary getReceivingOrganization() {
-		return receivingOrganization;
-	}
-
-	public void setReceivingOrganization(Beneficiary receivingOrganization) {
-		this.receivingOrganization = receivingOrganization;
-	}
-	
-	public List<PackedFoodItem> getPackedItems() {
-		return packedItems;
-	}
-
-	public void setPackedItems(List<PackedFoodItem> packedItems) {
-		this.packedItems = packedItems;
 	}
 	
 }

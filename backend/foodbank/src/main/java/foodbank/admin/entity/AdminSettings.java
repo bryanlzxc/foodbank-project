@@ -2,93 +2,94 @@ package foodbank.admin.entity;
 
 import java.util.Date;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import foodbank.util.DateParser;
-import foodbank.util.MessageConstants.ErrorMessages;
-
-@Document(collection = "Admin")
+@Entity
 public class AdminSettings {
-
+	
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "settings_gen")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "settings_gen", sequenceName = "settings_sequence")
+	private Long id;
 	
-	public enum WindowStatus {
-		ACTIVE, INACTIVE
-	}
+	private Boolean windowStatus;
 	
-	private WindowStatus windowStatus;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date windowStartDateTime;
-	private Date windowEndDateTime;	
-	private double decayRate;
-	private double multiplierRate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date windowsEndDateTime;
+	
+	private Double decayRate;
+	private Double multiplierRate;
 	private String dailyPassword;
+	
+	protected AdminSettings() {}
 
-	public String getId() {
+	public AdminSettings(Boolean windowStatus, Date windowStartDateTime, Date windowsEndDateTime, Double decayRate,
+			Double multiplierRate, String dailyPassword) {
+		this.windowStatus = windowStatus;
+		this.windowStartDateTime = windowStartDateTime;
+		this.windowsEndDateTime = windowsEndDateTime;
+		this.decayRate = decayRate;
+		this.multiplierRate = multiplierRate;
+		this.dailyPassword = dailyPassword;
+	}
+
+	public Long getId() {
 		return id;
 	}
-	
-	public void setId(String id) {
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public WindowStatus getWindowStatus() {
+	public Boolean getWindowStatus() {
 		return windowStatus;
 	}
 
-	public void setWindowStatus(WindowStatus windowStatus) {
+	public void setWindowStatus(Boolean windowStatus) {
 		this.windowStatus = windowStatus;
 	}
-	
-	public String getWindowStartDateTime() {
-		String date = null;
-		try {
-			date = DateParser.getCurrentDate(windowStartDateTime);
-		} catch (NullPointerException e) {
-			date = ErrorMessages.INACTIVE_WINDOW;
-		} catch (Exception e) {
-			date = e.getMessage();
-		}
-		return date;
+
+	public Date getWindowStartDateTime() {
+		return windowStartDateTime;
 	}
-	
+
 	public void setWindowStartDateTime(Date windowStartDateTime) {
 		this.windowStartDateTime = windowStartDateTime;
 	}
 
-	public String getWindowEndDateTime() {
-		String date = null;
-		try {
-			date = DateParser.getCurrentDate(windowEndDateTime);
-		} catch (NullPointerException e) {
-			date = ErrorMessages.INACTIVE_WINDOW;
-		} catch (Exception e) {
-			date = e.getMessage();
-		}
-		return date;
+	public Date getWindowsEndDateTime() {
+		return windowsEndDateTime;
 	}
 
-	public void setWindowEndDateTime(Date windowEndDateTime) {
-		this.windowEndDateTime = windowEndDateTime;
+	public void setWindowsEndDateTime(Date windowsEndDateTime) {
+		this.windowsEndDateTime = windowsEndDateTime;
 	}
 
-	public double getDecayRate() {
+	public Double getDecayRate() {
 		return decayRate;
 	}
 
-	public void setDecayRate(double decayRate) {
+	public void setDecayRate(Double decayRate) {
 		this.decayRate = decayRate;
 	}
 
-	public double getMultiplierRate() {
+	public Double getMultiplierRate() {
 		return multiplierRate;
 	}
 
-	public void setMultiplierRate(double multiplierRate) {
+	public void setMultiplierRate(Double multiplierRate) {
 		this.multiplierRate = multiplierRate;
 	}
-	
+
 	public String getDailyPassword() {
 		return dailyPassword;
 	}
@@ -96,30 +97,5 @@ public class AdminSettings {
 	public void setDailyPassword(String dailyPassword) {
 		this.dailyPassword = dailyPassword;
 	}
-	
-	@Override
-	public String toString() {
-		return id + "," 
-				+ windowStatus + ","
-				+ windowStartDateTime + ","
-				+ windowEndDateTime + ","
-				+ decayRate + ","
-				+ multiplierRate;
-	}
-	
-	public AdminSettings(String id, String windowStatus, Date windowStartDateTime, Date windowEndDateTime, double decayRate, double multiplierRate) {
-		this.id = id;
-		if (windowStatus.equals("ACTIVE")) { 
-			setWindowStatus(WindowStatus.ACTIVE);
-		} else {
-			setWindowStatus(WindowStatus.INACTIVE);
-		}
-		this.windowStartDateTime = windowStartDateTime;
-		this.windowEndDateTime = windowEndDateTime;	
-		this.decayRate = decayRate;
-		this.multiplierRate = multiplierRate;
-	}
-	
-	public AdminSettings() {}
 	
 }

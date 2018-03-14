@@ -2,7 +2,7 @@ package foodbank.user.service;
 
 import java.util.List;
 
-import foodbank.user.dto.PasswordDTO;
+import foodbank.login.dto.PasswordDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 

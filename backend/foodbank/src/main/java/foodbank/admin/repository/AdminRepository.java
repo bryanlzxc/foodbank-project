@@ -1,13 +1,11 @@
 package foodbank.admin.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import foodbank.admin.entity.AdminSettings;
 
-@Repository
-public interface AdminRepository extends MongoRepository<AdminSettings, String> {
+public interface AdminRepository extends JpaRepository<AdminSettings, Long>{
 
-	
+	AdminSettings findById(Long id);
 	
 }

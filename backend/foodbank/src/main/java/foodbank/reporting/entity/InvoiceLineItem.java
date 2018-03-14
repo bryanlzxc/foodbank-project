@@ -1,28 +1,26 @@
 package foodbank.reporting.entity;
 
-import foodbank.util.InventorySerializer;
-
 public class InvoiceLineItem {
 	
 	private String itemNo;
 	private String category;
 	private String classification;
 	private String description;
-	private int quantity;
-	private double value;
-	private double totalValue;
+	private Integer quantity;
+	private Double value;
+	private Double totalValue;
 	
-	public InvoiceLineItem() {}
+	protected InvoiceLineItem() {}
 	
-	public InvoiceLineItem(String category, String classification, String description, int quantity) {
-		super();
-		this.itemNo = InventorySerializer.retrieveItemId(category, classification, description);
+	public InvoiceLineItem(String itemNo, String category, String classification, String description,
+			Integer quantity, Double value) {
+		this.itemNo = itemNo;
 		this.category = category;
 		this.classification = classification;
 		this.description = description;
 		this.quantity = quantity;
-		this.value = InventorySerializer.retrieveValueOfItem(category, classification, description);
-		this.totalValue = value * quantity;
+		this.value = value;
+		this.totalValue = quantity * value;
 	}
 
 	public String getItemNo() {
@@ -36,49 +34,49 @@ public class InvoiceLineItem {
 	public String getCategory() {
 		return category;
 	}
-	
+
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
+
 	public String getClassification() {
 		return classification;
 	}
-	
+
 	public void setClassification(String classification) {
 		this.classification = classification;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public int getQuantity() {
+
+	public Integer getQuantity() {
 		return quantity;
 	}
-	
-	public void setQuantity(int quantity) {
+
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
-	public double getValue() {
+
+	public Double getValue() {
 		return value;
 	}
-	
-	public void setValue(double value) {
+
+	public void setValue(Double value) {
 		this.value = value;
 	}
-	
-	public double getTotalValue() {
+
+	public Double getTotalValue() {
 		return totalValue;
 	}
-	
-	public void setTotalValue(double totalValue) {
+
+	public void setTotalValue(Double totalValue) {
 		this.totalValue = totalValue;
 	}
-	
+
 }

@@ -1,20 +1,19 @@
 package foodbank.history.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.history.dto.PastRequestsByBeneficiaryDTO;
 import foodbank.history.dto.RequestHistoryDTO;
 import foodbank.history.service.HistoryService;
-import foodbank.response.dto.ResponseDTO;
 import foodbank.util.MessageConstants;
+import foodbank.util.ResponseDTO;
 
 @RestController
 @CrossOrigin
@@ -29,7 +28,7 @@ public class HistoryController {
 		List<RequestHistoryDTO> requestHistories = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, requestHistories, MessageConstants.REQUEST_HISTORY_RETRIEVE_SUCCESS);
 		try {
-			requestHistories = historyService.retrieveAllPastRequest();
+			requestHistories = historyService.retrieveAllPastRequests();
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
@@ -40,7 +39,7 @@ public class HistoryController {
 	
 	@GetMapping("/requests/display")
 	public ResponseDTO retrieveAllPastRequestsByBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
-		Object response = null;
+		List<PastRequestsByBeneficiaryDTO> response = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, response, MessageConstants.REQUEST_HISTORY_RETRIEVE_SUCCESS);
 		try {
 			response = historyService.retrieveAllPastRequestsByBeneficiary(beneficiary);

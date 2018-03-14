@@ -1,75 +1,56 @@
 package foodbank.history.entity;
 
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import foodbank.beneficiary.entity.Beneficiary;
-import foodbank.util.DateParser;
 
-@Document(collection = "PastRequests")
+@Entity
+@Table(name = "request_history")
 public class RequestHistory {
-	
+
 	@Id
-	private String id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "req_hist_log_seq_gen")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "req_hist_log_seq_gen", sequenceName = "request_history_log_sequence")
+	private Long id;
 	
-	@DBRef
+	@ManyToOne(cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			optional = true, targetEntity = Beneficiary.class)
+	@JoinColumn(name = "beneficiary_user_id")
 	private Beneficiary beneficiary;
 	
-	private String username;
-	private Date requestCreationDate;
-	private String category;
-	private String classification;
-	private String description;
-	private Integer requestedQuantity;
-	private Integer allocatedQuantity;
+	@OneToMany(mappedBy = "requestHistory",
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			orphanRemoval = true)
+	private List<PastRequest> pastRequests;
 	
-	public RequestHistory() {}
-	
-	public RequestHistory(String id, Beneficiary beneficiary, Date requestCreationDate, 
-			String category, String classification, String description,
-			Integer requestedQuantity, Integer allocatedQuantity) {
-		this(beneficiary, requestCreationDate, category, classification, description, requestedQuantity, allocatedQuantity);
-		this.id = id;
-	}
-	
-	public RequestHistory(Beneficiary beneficiary, Date requestCreationDate, 
-			String category, String classification, String description,
-			Integer requestedQuantity, Integer allocatedQuantity) {
+	public RequestHistory(Beneficiary beneficiary, List<PastRequest> pastRequests) {
 		this.beneficiary = beneficiary;
-		this.username = beneficiary.getUser().getUsername();
-		this.requestCreationDate = requestCreationDate;
-		this.category = category;
-		this.classification = classification;
-		this.description = description;
-		this.requestedQuantity = requestedQuantity;
-		this.allocatedQuantity = allocatedQuantity;
+		this.pastRequests = pastRequests;
 	}
+	
+	protected RequestHistory() {}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public Date getRequestCreationDate() {
-		return requestCreationDate;
-	}
-
-	public void setRequestCreationDate(Date requestCreationDate) {
-		this.requestCreationDate = requestCreationDate;
 	}
 
 	public Beneficiary getBeneficiary() {
@@ -80,55 +61,22 @@ public class RequestHistory {
 		this.beneficiary = beneficiary;
 	}
 
-	public String getCategory() {
-		return category;
+	public List<PastRequest> getPastRequests() {
+		return pastRequests;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setPastRequests(List<PastRequest> pastRequests) {
+		this.pastRequests = pastRequests;
+	}
+	
+	/*
+	public Date getRequestCreationDate() {
+		return requestCreationDate;
 	}
 
-	public String getClassification() {
-		return classification;
+	public void setRequestCreationDate(Date requestCreationDate) {
+		this.requestCreationDate = requestCreationDate;
 	}
-
-	public void setClassification(String classification) {
-		this.classification = classification;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Integer getRequestedQuantity() {
-		return requestedQuantity;
-	}
-
-	public void setRequestedQuantity(Integer requestedQuantity) {
-		this.requestedQuantity = requestedQuantity;
-	}
-
-	public Integer getAllocatedQuantity() {
-		return allocatedQuantity;
-	}
-
-	public void setAllocatedQuantity(Integer allocatedQuantity) {
-		this.allocatedQuantity = allocatedQuantity;
-	}
-
-	@Override
-	public String toString() {
-		return id + ","
-				+ beneficiary.getId() + ","
-				+ DateParser.displayDayMonthYearOnly(requestCreationDate) + ","
-				+ category + ","
-				+ classification + ","
-				+ description + ","
-				+ requestedQuantity + ","
-				+ allocatedQuantity;
-	}
+	*/
+	
 }

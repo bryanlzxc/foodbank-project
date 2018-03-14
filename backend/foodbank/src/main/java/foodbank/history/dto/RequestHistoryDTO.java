@@ -1,97 +1,45 @@
 package foodbank.history.dto;
 
 import java.util.Date;
+import java.util.List;
 
-import foodbank.request.dto.RequestDTO;
-import foodbank.util.DateParser;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import foodbank.beneficiary.dto.BeneficiaryDTO;
 
 public class RequestHistoryDTO {
 	
-	private String beneficiary;
-	private String category;
-	private String classification;
-	private String description;
-	private Integer requestedQuantity;
-	private Integer allocatedQuantity;
-	private Date requestCreationDate;
+	@NotNull
+	@JsonProperty("beneficiary")
+	private BeneficiaryDTO beneficiary;
+	
+	@NotNull
+	@JsonProperty("pastRequests")
+	private List<PastRequestDTO> pastRequests;
 
-	public RequestHistoryDTO(String beneficiary, String category, String classification, String description,
-			Integer requestedQuantity, Integer allocatedQuantity, Date requestCreationDate) {
-		// TODO Auto-generated constructor stub
+	protected RequestHistoryDTO() {}
+	
+	public RequestHistoryDTO(BeneficiaryDTO beneficiary, List<PastRequestDTO> pastRequests) {
 		this.beneficiary = beneficiary;
-		this.category = category;
-		this.classification = classification;
-		this.description = description;
-		this.requestedQuantity = requestedQuantity;
-		this.allocatedQuantity = allocatedQuantity;
-		this.requestCreationDate = requestCreationDate;
+		this.pastRequests = pastRequests;
 	}
 
-	public String getBeneficiary() {
+	public BeneficiaryDTO getBeneficiary() {
 		return beneficiary;
 	}
 
-	public void setBeneficiary(String beneficiary) {
+	public void setBeneficiary(BeneficiaryDTO beneficiary) {
 		this.beneficiary = beneficiary;
 	}
 
-	public String getCategory() {
-		return category;
+	public List<PastRequestDTO> getPastRequests() {
+		return pastRequests;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getClassification() {
-		return classification;
-	}
-
-	public void setClassification(String classification) {
-		this.classification = classification;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Integer getRequestedQuantity() {
-		return requestedQuantity;
-	}
-
-	public void setRequestedQuantity(Integer requestedQuantity) {
-		this.requestedQuantity = requestedQuantity;
-	}
-
-	public Integer getAllocatedQuantity() {
-		return allocatedQuantity;
-	}
-
-	public void setAllocatedQuantity(Integer allocatedQuantity) {
-		this.allocatedQuantity = allocatedQuantity;
-	}
-
-	public String getRequestCreationDate() {
-		return DateParser.displayDayMonthYearOnly(requestCreationDate);
-	}
-
-	public void setRequestCreationDate(Date requestCreationDate) {
-		this.requestCreationDate = requestCreationDate;
+	public void setPastRequests(List<PastRequestDTO> pastRequests) {
+		this.pastRequests = pastRequests;
 	}
 	
-	@Override
-	public String toString() {
-		return beneficiary + ","
-				+ category + ","
-				+ classification + ","
-				+ description + ","
-				+ requestedQuantity + ","
-				+ allocatedQuantity + ","
-				+ requestCreationDate;
-	}
-
 }

@@ -3,7 +3,10 @@ package foodbank.reporting.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.inventory.entity.FoodItem;
 import foodbank.packing.entity.PackedFoodItem;
+import foodbank.packing.entity.PackingList;
 
 public class InvoiceData {
 	
@@ -32,26 +35,27 @@ public class InvoiceData {
 	
 	private double combinedTotalValue = 0;
 	
-	public InvoiceData() {}
+	protected InvoiceData() {}
 	
-	public InvoiceData(Invoice invoice) {
-		this.invoiceNumber = invoice.getId();
-		this.packedDate = invoice.getGenerationDate();
-		this.deliveryDate = invoice.getDeliveryDate();
-		this.deliveryTime = invoice.getDeliveryTime();
+	public InvoiceData(Invoice invoice, Beneficiary billingOrganization, 
+			Beneficiary receivingOrganization, PackingList packingList) {
+		this.invoiceNumber = String.valueOf(invoice.getId());
+		this.packedDate = invoice.getGenerationDate().toString();
+		this.deliveryDate = invoice.getDeliveryDate().toString();
+		this.deliveryTime = invoice.getDeliveryTime().toString();
 		this.issuedBy = invoice.getIssuedBy();
 		this.comments = invoice.getComments();
 		this.deliveryRequired = invoice.getDeliveryStatus();
 		this.reportGenerated = invoice.getGenerationStatus();
-		this.organizationToBill = invoice.getBillingOrganization().getUser().getName();
-		this.organizationToBillAddress = invoice.getBillingOrganization().getAddress();
-		this.organizationToBillContactPerson = invoice.getBillingOrganization().getContactPerson();
-		this.organizationToBillContactNumber = invoice.getBillingOrganization().getContactNumber();
-		this.receivingOrganization = invoice.getReceivingOrganization().getUser().getName();
-		this.receivingOrganizationAddress = invoice.getReceivingOrganization().getAddress();
-		this.receivingOrganizationContactPerson = invoice.getReceivingOrganization().getContactPerson();
-		this.receivingOrganizationContactNumber = invoice.getReceivingOrganization().getContactNumber();
-		this.invoiceLineItem =  generateInvoiceLineItemData(invoice.getPackedItems());
+		this.organizationToBill = billingOrganization.getUser().getName();
+		this.organizationToBillAddress = billingOrganization.getAddress();
+		this.organizationToBillContactPerson = billingOrganization.getContactPerson();
+		this.organizationToBillContactNumber = billingOrganization.getContactNumber();
+		this.receivingOrganization = receivingOrganization.getUser().getName();
+		this.receivingOrganizationAddress = receivingOrganization.getAddress();
+		this.receivingOrganizationContactPerson = receivingOrganization.getContactPerson();
+		this.receivingOrganizationContactNumber = receivingOrganization.getContactNumber();
+		this.invoiceLineItem =  generateInvoiceLineItemData(packingList.getPackedItems());
 		calculateInvoiceTotalValue(invoiceLineItem);
 	}
 
@@ -185,7 +189,16 @@ public class InvoiceData {
 	
 	private List<InvoiceLineItem> generateInvoiceLineItemData(List<PackedFoodItem> packedItems) {
 		List<InvoiceLineItem> lineItems = new ArrayList<InvoiceLineItem>();
-		packedItems.forEach(item -> lineItems.add(new InvoiceLineItem(item.getCategory(), item.getClassification(), item.getDescription(), item.getQuantity())));
+		packedItems.forEach(item -> {
+			FoodItem dbFoodItem = item.getPackedFoodItem();
+			Long id = dbFoodItem.getId();
+			String category = dbFoodItem.getCategory();
+			String classification = dbFoodItem.getClassification();
+			String description = dbFoodItem.getDescription();
+			Integer packedQuantity = item.getPackedQuantity();
+			Double value = dbFoodItem.getValue();
+			lineItems.add(new InvoiceLineItem(String.valueOf(id), category, classification, description, packedQuantity, value));
+		});
 		return lineItems;
 	}
 

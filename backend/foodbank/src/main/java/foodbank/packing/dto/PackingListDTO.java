@@ -7,49 +7,65 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import foodbank.beneficiary.dto.BeneficiaryDTO;
+
 public class PackingListDTO {
 
 	@NotNull
 	@JsonProperty("id")
-	private String id;
+	private Long id;
 
 	@NotNull
 	@JsonProperty("beneficiary")
-	private String beneficiary;
+	private BeneficiaryDTO beneficiary;
 	
 	@NotNull
 	@JsonProperty("packedItems")
-	private List<Map<String, Object>> packedItems;
+	private List<PackedItemDTO> packedItems;
 	
-	public PackingListDTO() {}
+	@NotNull
+	@JsonProperty("packingStatus")
+	private Boolean packingStatus;
 	
-	public PackingListDTO(@JsonProperty("beneficiary") String beneficiary, @JsonProperty("packedItems") List<Map<String, Object>> packedItems) {
+	protected PackingListDTO() {}
+
+	public PackingListDTO(Long id, BeneficiaryDTO beneficiary, List<PackedItemDTO> packedItems, Boolean packingStatus) {
+		this.id = id;
 		this.beneficiary = beneficiary;
 		this.packedItems = packedItems;
+		this.packingStatus = packingStatus;
 	}
-	
-	public String getId() {
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getBeneficiary() {
+	public BeneficiaryDTO getBeneficiary() {
 		return beneficiary;
 	}
 
-	public void setBeneficiary(String beneficiary) {
+	public void setBeneficiary(BeneficiaryDTO beneficiary) {
 		this.beneficiary = beneficiary;
 	}
 
-	public List<Map<String, Object>> getPackedItems() {
+	public List<PackedItemDTO> getPackedItems() {
 		return packedItems;
 	}
 
-	public void setPackedItems(List<Map<String, Object>> packedItems) {
+	public void setPackedItems(List<PackedItemDTO> packedItems) {
 		this.packedItems = packedItems;
 	}
 
+	public Boolean getPackingStatus() {
+		return packingStatus;
+	}
+
+	public void setPackingStatus(Boolean packingStatus) {
+		this.packingStatus = packingStatus;
+	}
+	
 }

@@ -2,7 +2,9 @@ package foodbank.beneficiary.dto;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 public class BeneficiaryDTO {
 	
@@ -12,7 +14,6 @@ public class BeneficiaryDTO {
 	private String username;
 	
 	@NotNull
-	@JsonProperty("password")
 	private String password;
 	
 	private final String usertype = "beneficiary";
@@ -54,6 +55,22 @@ public class BeneficiaryDTO {
 	@JsonProperty("hasTransport")
 	private Boolean hasTransport;
 	
+	protected BeneficiaryDTO() {}
+
+	public BeneficiaryDTO(String username, String name, String email, Integer numBeneficiary, String address,
+			Double score, String contactPerson, String contactNumber, String memberType, Boolean hasTransport) {
+		this.username = username;
+		this.name = name;
+		this.email = email;
+		this.numBeneficiary = numBeneficiary;
+		this.address = address;
+		this.score = score;
+		this.contactPerson = contactPerson;
+		this.contactNumber = contactNumber;
+		this.memberType = memberType;
+		this.hasTransport = hasTransport;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -62,10 +79,12 @@ public class BeneficiaryDTO {
 		this.username = username;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
-
+	
+	@JsonProperty("password")
 	public void setPassword(String password) {
 		this.password = password;
 	}

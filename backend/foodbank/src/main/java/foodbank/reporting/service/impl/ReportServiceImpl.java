@@ -3,6 +3,7 @@ package foodbank.reporting.service.impl;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,14 +29,18 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
+import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.packing.entity.PackingList;
+import foodbank.packing.repository.PackingRepository;
 import foodbank.reporting.dto.InvoiceDTO;
 import foodbank.reporting.entity.Invoice;
 import foodbank.reporting.entity.InvoiceData;
 import foodbank.reporting.entity.InvoiceLineItem;
 import foodbank.reporting.repository.InvoiceRepository;
 import foodbank.reporting.service.ReportService;
-import foodbank.util.FileManager;
+import foodbank.util.DateParser;
+import foodbank.util.AmazonManager;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -43,26 +48,36 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 	
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
+	
+	@Autowired
+	private PackingRepository packingRepository;
+	
 	@Override
 	public List<InvoiceDTO> retrieveAllInvoices() {
 		// TODO Auto-generated method stub
 		List<Invoice> dbInvoices = invoiceRepository.findAll();
 		List<InvoiceDTO> invoices = new ArrayList<InvoiceDTO>();
 		for(Invoice invoice : dbInvoices) {
-			invoices.add(new InvoiceDTO(invoice.getId(), invoice.getBillingOrganization().getUser().getName()));
+			Beneficiary beneficiary = beneficiaryRepository.findOne(invoice.getBillingOrganizationId());
+			invoices.add(new InvoiceDTO(invoice.getInvoiceLabel(), beneficiary.getUser().getName()));
 		}
 		return invoices;
 	}
-	
+
 	@Override
 	public InvoiceData retrieveInvoiceData(String invoiceId) {
 		// TODO Auto-generated method stub
-		Invoice invoice = invoiceRepository.findById(invoiceId);
-		return new InvoiceData(invoice);
+		Invoice invoice = invoiceRepository.findByInvoiceLabel(invoiceId);
+		Beneficiary billingOrganization = beneficiaryRepository.findOne(invoice.getBillingOrganizationId());
+		Beneficiary receivingOrganization = beneficiaryRepository.findOne(invoice.getReceivingOrganizationId());
+		PackingList packingList = packingRepository.findById(invoice.getPackingListId());
+		return new InvoiceData(invoice, billingOrganization, receivingOrganization, packingList);
 	}
-	
+
 	@Override
-	public void updateInvoiceData(Map<String, String> details) {
+	public void updateInvoiceData(Map<String, String> details) throws ParseException {
 		// TODO Auto-generated method stub
 		String invoiceId = details.get("invoiceNumber");
 		String deliveryDate = details.get("deliveryDate");
@@ -70,30 +85,26 @@ public class ReportServiceImpl implements ReportService {
 		String issuedBy = details.get("issuedBy");
 		String comments = details.get("comments");
 		boolean deliveryRequired = Boolean.valueOf(details.get("deliveryRequired"));
-		Invoice dbInvoice = invoiceRepository.findById(invoiceId);
+		Invoice dbInvoice = invoiceRepository.findById(Long.valueOf(invoiceId));
 		if(dbInvoice != null) {
-			dbInvoice.setDeliveryDate(deliveryDate);
-			dbInvoice.setDeliveryTime(deliveryTime);
+			dbInvoice.setDeliveryDate(DateParser.convertStringToDate(deliveryDate));
+			dbInvoice.setDeliveryTime(DateParser.convertStringToTime(deliveryTime));
 			dbInvoice.setIssuedBy(issuedBy);
 			dbInvoice.setComments(comments);
 			dbInvoice.setDeliveryStatus(deliveryRequired);
 		}
 		invoiceRepository.save(dbInvoice);
 	}
-	
-	@Override
-	public void generateDbInvoice(PackingList packingList) {
-		// TODO Auto-generated method stub
-		Invoice invoice = new Invoice(packingList.getBeneficiary(), packingList.getBeneficiary(), packingList.getPackedItems());
-		invoiceRepository.save(invoice);
-	}
 
 	@Override
 	public void generateInvoicePDF(String invoiceId) {
 		// TODO Auto-generated method stub
 		Document document = new Document(PageSize.A4);
-		Invoice invoice = invoiceRepository.findById(invoiceId);
-		InvoiceData invoiceData = new InvoiceData(invoice);
+		Invoice invoice = invoiceRepository.findByInvoiceLabel(invoiceId);
+		Beneficiary billingOrganization = beneficiaryRepository.findOne(invoice.getBillingOrganizationId());
+		Beneficiary receivingOrganization = beneficiaryRepository.findOne(invoice.getReceivingOrganizationId());
+		PackingList packingList = packingRepository.findById(invoice.getPackingListId());
+		InvoiceData invoiceData = new InvoiceData(invoice, billingOrganization, receivingOrganization, packingList);
 		String pdfName = invoiceData.getInvoiceId() + ".pdf";
 		try {
 			PdfWriter.getInstance(document, new FileOutputStream(pdfName));
@@ -125,7 +136,7 @@ public class ReportServiceImpl implements ReportService {
 			e.printStackTrace();
 		} finally {
 			document.close();
-			FileManager.generatePDFPageCounts(pdfName);
+			AmazonManager.generatePDFPageCounts(pdfName);
 			invoice.setGenerationStatus(true);
 			invoiceRepository.save(invoice);
 		}
