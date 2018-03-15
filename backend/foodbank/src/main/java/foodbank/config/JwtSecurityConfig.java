@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,13 +50,21 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf()
 			.disable()
+			.cors()
+			.and()
+			.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+			.authorizeRequests()
+				.antMatchers("login").permitAll()
+			.and()
 			// Any requests that have /rest/ will be authenticated
-			.authorizeRequests().antMatchers("/**/rest/**").authenticated()
+			.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**/rest/**").permitAll()
+				.antMatchers("/**/rest/**").authenticated()
 			.and()
 			.exceptionHandling().authenticationEntryPoint(entryPoint)
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+		//http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.headers().cacheControl();
 	}
 	

@@ -25,7 +25,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
 	public Authentication attemptAuthentication(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
 			throws AuthenticationException, IOException, ServletException {
 		// TODO Auto-generated method stub
-		String header = httpServletRequest.getHeader("Authorization");
+		String header = httpServletRequest.getHeader("authorization");
 		if(header == null) { //|| !header.startsWith("Token ")) {
 			throw new InvalidTokenException(ErrorMessages.MISSING_TOKEN);
 		}
