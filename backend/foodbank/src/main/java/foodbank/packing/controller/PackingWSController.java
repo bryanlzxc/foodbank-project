@@ -19,7 +19,7 @@ import foodbank.packing.service.PackingService;
 
 @Controller
 @CrossOrigin
-public class PackingWsController {
+public class PackingWSController {
 
 	@Autowired
 	private PackingService packingService;
