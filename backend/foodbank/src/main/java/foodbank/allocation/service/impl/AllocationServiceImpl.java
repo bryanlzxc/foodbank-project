@@ -21,6 +21,7 @@ import foodbank.allocation.service.AllocationService;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.inventory.repository.FoodRepository;
 import foodbank.request.entity.Request;
 import foodbank.request.repository.RequestRepository;
 import foodbank.util.EntityManager;
@@ -39,6 +40,9 @@ public class AllocationServiceImpl implements AllocationService {
 	
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
+	
+	@Autowired
+	private FoodRepository foodRepository;
 	
 	@Override
 	public List<AllocationResponseDTO> retrieveAllAllocations() {
@@ -101,6 +105,8 @@ public class AllocationServiceImpl implements AllocationService {
 		// The key for this map will be the username of the beneficiaries
 		// The value for this map will be allocation object of each beneficiary
 		Map<String, Allocation> allocationMap = new HashMap<String, Allocation>();
+		List<FoodItem> foodItemsAllocated = new ArrayList<>();		//this list will the store food items which have been been allocated out, only food items which have 0 allocation are given as 2nd option to similar items
+		List<Request> zeroAllocatedRequests = new ArrayList<>();		//this will store all requests which have zero allocation
 		for(Map.Entry<String, List<Request>> entry : requestsByFoodItems.entrySet()) {
 			// If the value of the entry is non-null, we know that this item has been requested by some beneficiaries
 			List<Request> requestsForFoodItem = entry.getValue();
@@ -108,6 +114,7 @@ public class AllocationServiceImpl implements AllocationService {
 			if(request != null) {
 				FoodItem dbFoodItem = request.getFoodItem();
 				Integer inventoryQuantity = dbFoodItem.getQuantity();
+				foodItemsAllocated.add(dbFoodItem);
 				Integer numberOfBeneficiariesAllocated = requestsForFoodItem.size();
 				Double totalScore = Double.valueOf(0);
 				numberOfBeneficiariesAllocated = evaluateOptimalBeneficiaryAllocationCount(numberOfBeneficiariesAllocated, inventoryQuantity);
@@ -165,15 +172,19 @@ public class AllocationServiceImpl implements AllocationService {
 					if(requestedQuantity > allocatedQuantity) {
 						// Unfulfilled requests mapping
 						unfulfilledRequests.put(beneficiaryUsername, allocationByAlgorithm);
+						if(allocatedQuantity == 0) {
+							zeroAllocatedRequests.add(request);
+						}
 					}
 				}
-				allocateLeftovers(unfulfilledRequests, allocationMap, inventoryQuantity);
+				allocationMap = allocateLeftovers(unfulfilledRequests, allocationMap, inventoryQuantity);
 			}
 		}
+		allocationMap = allocateSimilarFoodItems(allocationMap, foodItemsAllocated, zeroAllocatedRequests);
 		return allocationMap;
 	}
 	
-	private void allocateLeftovers(LinkedHashMap<String, AllocatedFoodItem> unfulfilledRequests, Map<String, Allocation> allocationMap, Integer inventoryQuantity) {
+	private Map<String, Allocation> allocateLeftovers(LinkedHashMap<String, AllocatedFoodItem> unfulfilledRequests, Map<String, Allocation> allocationMap, Integer inventoryQuantity) {
 		if(!unfulfilledRequests.keySet().isEmpty()) {
 			while(inventoryQuantity > 0) {
 				if(unfulfilledRequests.keySet().isEmpty()) {
@@ -214,6 +225,7 @@ public class AllocationServiceImpl implements AllocationService {
 				}
 			}
 		}
+		return allocationMap;
 	}
 	
 	private Integer evaluateOptimalBeneficiaryAllocationCount(Integer numberOfBeneficiariesAllocated, Integer inventoryQuantity) {
@@ -260,6 +272,105 @@ public class AllocationServiceImpl implements AllocationService {
 		allocationRepository.save(dbAllocation);
 	}
 
+	private Map<String, Allocation> allocateSimilarFoodItems(Map<String, Allocation> allocationMap, List<FoodItem> foodItemsAllocated, List<Request> zeroAllocatedRequests) {
+		List<FoodItem> allFoodItems = foodRepository.findAll();
+		Iterator<Request> zeroAllocatedRequestIterator = zeroAllocatedRequests.iterator();
+		
+		for(FoodItem dbFoodItem : allFoodItems) {
+			if(!foodItemsAllocated.contains(dbFoodItem) && dbFoodItem.getQuantity() > 0) {
+				//this block is entered only if the current dbFoodItem has not been allocated before at all (not found in foodItemsAllocated)
+				String dbFoodItemCategory = dbFoodItem.getCategory();
+				String dbFoodItemClassification = dbFoodItem.getClassification();
+				String [] dbFoodItemDescription = dbFoodItem.getDescription().split("-");
+				int dbFoodItemQuantity = dbFoodItem.getQuantity();
+				
+				while(zeroAllocatedRequestIterator.hasNext()) {
+					Request unfulfilledRequest = zeroAllocatedRequestIterator.next();
+
+					if(dbFoodItemQuantity == 0) {
+						break;
+					}
+					FoodItem requestFoodItem = unfulfilledRequest.getFoodItem();
+					String requestCategory = requestFoodItem.getCategory();
+					String requestClassification = requestFoodItem.getClassification();
+					String [] requestDescription = requestFoodItem.getDescription().split("-");
+					int unfulfilledRequestQuantity = unfulfilledRequest.getRequestedQuantity();
+					int allocatedQuantity = 0;
+					String beneficiaryUsername = unfulfilledRequest.getBeneficiary().getUser().getUsername();
+					
+					if(requestCategory.equals(dbFoodItemCategory) && requestClassification.equals(dbFoodItemClassification)) {
+						if(requestDescription.length == dbFoodItemDescription.length) {	//this is to check if halal food item is halal or not, because halal will have length of 2, non-halal will have length of 1
+							if(requestDescription[0].equals(dbFoodItemDescription[0])) {
+								//this block will be entered if the food item name is similar, just different weight
+								double dbFoodItemWeight = normalizeWeight(dbFoodItemDescription);
+								double requestFoodItemWeight = normalizeWeight(requestDescription);
+								
+								double requestTotalWeight = requestFoodItemWeight * unfulfilledRequestQuantity;
+								double dbTotalWeight = dbFoodItemWeight *  dbFoodItemQuantity;
+								
+								if(dbTotalWeight >= requestTotalWeight) {
+									//db's food item total weight is more of same to the request total weight
+									//Example:
+									//db food item = 250g * 10 = 2500g
+									//requested food item = 100g * 11 = 1100
+									allocatedQuantity = (int)(requestTotalWeight / dbFoodItemWeight);
+									//allocatedQuantity = 1100 / 250 = 4
+									dbFoodItemQuantity = dbFoodItemQuantity - allocatedQuantity;
+									
+									//add to allocationMap
+									Allocation allocation = allocationMap.get(beneficiaryUsername);
+									AllocatedFoodItem allocatedBySimilarity = new AllocatedFoodItem(dbFoodItem, 0, allocatedQuantity);	//0 represents the requested quantity which is 0
+									allocatedBySimilarity.setAllocation(allocation);
+									allocation.getAllocatedItems().add(allocatedBySimilarity);
+									allocationMap.replace(beneficiaryUsername, allocation);
+									
+									zeroAllocatedRequestIterator.remove();
+									
+									if(dbTotalWeight == requestTotalWeight) {
+										break;
+									}
+									
+								} else {
+									//db's food item total weight is more of same to the request total weight
+									//Example:
+									//db food item = 250g * 6 = 1500g
+									//requested food item = 100g * 32 = 3200g
+									allocatedQuantity = dbFoodItemQuantity;
+									dbFoodItemQuantity = 0;
+									
+									//add to allocationMap
+									Allocation allocation = allocationMap.get(beneficiaryUsername);
+									AllocatedFoodItem allocatedBySimilarity = new AllocatedFoodItem(dbFoodItem, 0, allocatedQuantity);	//0 represents the requested quantity which is 0
+									allocatedBySimilarity.setAllocation(allocation);
+									allocation.getAllocatedItems().add(allocatedBySimilarity);
+									allocationMap.replace(beneficiaryUsername, allocation);
+									
+									zeroAllocatedRequestIterator.remove();
+									break;
+								}
+							}
+						}
+					}
+					
+				}
+			}
+		}
+		return allocationMap;
+	}
+	
+	private double normalizeWeight(String [] description) {
+		String weightInString = description[1];
+		Double weight = Double.valueOf(0);
+		if(weightInString.contains("kg") || weightInString.contains("l")) {
+			weightInString.replace("kg", "").replace("l", "");
+			weight = Double.parseDouble(weightInString) * 1000;
+		} else {
+			weightInString.replace("g", "").replace("ml", "");
+			weight = Double.parseDouble(weightInString);
+		}
+		return weight;
+	}
+	
 	@Override
 	public void approveAllocations() {
 		// TODO Auto-generated method stub
