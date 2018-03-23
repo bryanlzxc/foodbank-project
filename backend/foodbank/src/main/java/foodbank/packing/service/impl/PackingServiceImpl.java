@@ -8,6 +8,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.admin.entity.AdminSettings;
+import foodbank.admin.repository.AdminRepository;
 import foodbank.allocation.entity.AllocatedFoodItem;
 import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocationRepository;
@@ -47,10 +49,13 @@ public class PackingServiceImpl implements PackingService {
 	@Autowired
 	private InvoiceRepository invoiceRepository;
 	
+	@Autowired
+	private AdminRepository adminRepository;
+	
 	@Override
 	public List<PackingListDTO> retrieveAllPackingLists() {
 		// TODO Auto-generated method stub
-		List<PackingList> packingLists = packingRepository.findAll();
+		List<PackingList> packingLists = packingRepository.findByPackingStatusFalse();
 		List<PackingListDTO> results = new ArrayList<PackingListDTO>();
 		for(PackingList packingList : packingLists) {
 			results.add((PackingListDTO)EntityManager.convertToDTO(DTOKey.PackingListDTO, packingList));
@@ -100,7 +105,7 @@ public class PackingServiceImpl implements PackingService {
 	@Override
 	public void updatePackedQuantities(PackingListDTO packingList) {
 		// TODO Auto-generated method stub
-		PackingList dbPackingList = packingRepository.findByBeneficiaryUserUsername(packingList.getBeneficiary().getUsername());
+		PackingList dbPackingList = packingRepository.findById(packingList.getId());
 		if(dbPackingList == null || dbPackingList.getPackingStatus()) {
 			throw new PackingUpdateException(ErrorMessages.PACKING_UPDATE_ERROR);
 		}
@@ -126,6 +131,7 @@ public class PackingServiceImpl implements PackingService {
 				FoodItem dbFoodItem = packedFoodItem.getPackedFoodItem();
 				// Modifying the inventory remaining in the database
 				dbFoodItem.setQuantity(dbFoodItem.getQuantity() - packedItemDTO.getPackedQuantity());
+				packedFoodItem.setPackedQuantity(packedItemDTO.getPackedQuantity());
 				foodRepository.save(dbFoodItem);
 				// Modifying the beneficiary score
 				modifyBeneficiaryScore(dbPackingList.getBeneficiary(), Double.valueOf(dbFoodItem.getQuantity() * dbFoodItem.getValue()));
@@ -168,14 +174,32 @@ public class PackingServiceImpl implements PackingService {
 		invoiceRepository.save(invoice);
 		// This is to clear up the previous entry so that the beneficiary can be assigned a new list in the next window
 		// We can either do this now, or do this in a separate manager that checks for these associations when window opens
-		beneficiary.setPackingList(null);
-		beneficiaryRepository.save(beneficiary);
+		//beneficiary.setPackingList(null);
+		//beneficiaryRepository.save(beneficiary);
 	}
 
 	@Override
 	public PackingList findDbListByBeneficiary(String beneficiary) {
 		// TODO Auto-generated method stub
 		return packingRepository.findByBeneficiaryUserUsername(beneficiary);
+	}
+
+	@Override
+	public PackingList findDbListById(Long id) {
+		// TODO Auto-generated method stub
+		return packingRepository.findById(id);
+	}
+
+	@Override
+	public List<PackingListDTO> retrieveAllPackingListsInWindow() {
+		// TODO Auto-generated method stub
+		AdminSettings adminSettings = adminRepository.findById(1L);
+		List<PackingList> packingLists = packingRepository.findByCreationDateBetween(adminSettings.getLastStartDate(), adminSettings.getLastEndDate());
+		List<PackingListDTO> results = new ArrayList<PackingListDTO>();
+		for(PackingList packingList : packingLists) {
+			results.add((PackingListDTO)EntityManager.convertToDTO(DTOKey.PackingListDTO, packingList));
+		}
+		return results;
 	}
 
 	/*

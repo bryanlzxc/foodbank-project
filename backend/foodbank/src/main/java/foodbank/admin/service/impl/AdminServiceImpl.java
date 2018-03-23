@@ -26,6 +26,7 @@ import foodbank.admin.repository.AdminRepository;
 import foodbank.admin.service.AdminService;
 import foodbank.allocation.entity.AllocatedFoodItem;
 import foodbank.allocation.entity.Allocation;
+import foodbank.allocation.repository.AllocatedFoodItemRepository;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.history.entity.PastRequest;
@@ -68,6 +69,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private AllocatedFoodItemRepository allocatedFoodItemRepository;
+	
 	@Override
 	public WindowDataDTO retrieveWindowData() {
 		// TODO Auto-generated method stub
@@ -99,7 +103,7 @@ public class AdminServiceImpl implements AdminService {
 		Double decayRate = adminSettings.getDecayRate();
 		AdminSettings currentSettings = adminRepository.findById(idKey);
 		currentSettings.setDecayRate(decayRate);
-		adminRepository.save(currentSettings);
+		adminRepository.saveAndFlush(currentSettings);
 	}
 
 	@Override
@@ -108,7 +112,7 @@ public class AdminServiceImpl implements AdminService {
 		Double multiplierRate = adminSettings.getMultiplierRate();
 		AdminSettings currentSettings = adminRepository.findById(idKey);
 		currentSettings.setMultiplierRate(multiplierRate);
-		adminRepository.save(currentSettings);
+		adminRepository.saveAndFlush(currentSettings);
 	}
 
 	@Override
@@ -119,14 +123,18 @@ public class AdminServiceImpl implements AdminService {
 		String endDateString = adminSettings.getEndDate();
 		if(endDateString == null || endDateString.isEmpty()) {
 			// Code block to close the window
+			currentSettings.setLastStartDate(currentSettings.getWindowStartDateTime());
+			currentSettings.setLastEndDate(currentSettings.getWindowsEndDateTime());
 			currentSettings.setWindowStartDateTime(null);
 			currentSettings.setWindowsEndDateTime(null);
+			currentSettings.setWindowStatus(Boolean.FALSE);
 			returnString = MessageConstants.WINDOW_CLOSE_SUCCESS;
 		} else {
 			// Code block to open the window
 			currentSettings.setWindowStartDateTime(new Date());
 			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
 			currentSettings.setWindowsEndDateTime(format.parse(endDateString));
+			currentSettings.setWindowStatus(Boolean.TRUE);
 		}
 		adminRepository.save(currentSettings);
 		return returnString;
@@ -186,8 +194,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	@Transactional
 	public void clearWindowData() {
+		/*
+		List<Request> requests = requestRepository.findAll();
+		for(Request request : requests) {
+			request.setFoodItem(null);
+		}
+		requestRepository.save(requests);
+		*/
 		requestRepository.deleteAll();
-		allocationRepository.deleteAll();
+		allocatedFoodItemRepository.deleteAllInBatch();
+		allocationRepository.deleteAllInBatch();
+		//System.out.println("requests deleted");
+		//allocationRepository.deleteAll();
 	}
 
 	@Override
@@ -206,7 +224,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		AdminSettings adminSettings = adminRepository.findById(idKey);
 		int length = 8;
-		boolean useLetters = true;
+		boolean useLetters = false;
 		boolean useNumbers = true;
 		String dailyPassword = RandomStringUtils.random(length, useLetters, useNumbers);
 		adminSettings.setDailyPassword(dailyPassword);
@@ -229,18 +247,18 @@ public class AdminServiceImpl implements AdminService {
 		boolean useLetters = true;
 		boolean useNumbers = true;
 		String newPassword = RandomStringUtils.random(length, useLetters, useNumbers);
-		System.out.println("The new password is : " + newPassword);
+		// System.out.println("The new password is : " + newPassword);
 		new AutomatedEmailer(dbUser.getEmail(), EmailMessages.RESET_PASSWORD_SUBJECT, EmailMessages.RESET_PASSWORD_MESSAGE1 + newPassword + EmailMessages.RESET_PASSWORD_MESSAGE2);
 		dbUser.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
 		userRepository.save(dbUser);
 	}
-	
 
 	@PostConstruct
 	private void initAdmin() {
 		User dbUser = userRepository.findByUsernameIgnoreCase("admin");
 		if(dbUser == null) {
 			dbUser = new User("admin", BCrypt.hashpw("password1", BCrypt.gensalt()), "admin", "admin", "bryan.lau.2015@sis.smu.edu.sg");
+			dbUser.setRole(roleRepository.findOne(Role.ADMIN_USER));
 			userRepository.save(dbUser);
 		}
 	}

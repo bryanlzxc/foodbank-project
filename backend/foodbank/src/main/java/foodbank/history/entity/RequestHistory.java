@@ -26,7 +26,7 @@ public class RequestHistory {
 	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "req_hist_log_seq_gen", sequenceName = "request_history_log_sequence")
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL,
+	@ManyToOne(//cascade = CascadeType.ALL,
 			fetch = FetchType.LAZY,
 			optional = true, targetEntity = Beneficiary.class)
 	@JoinColumn(name = "beneficiary_user_id")

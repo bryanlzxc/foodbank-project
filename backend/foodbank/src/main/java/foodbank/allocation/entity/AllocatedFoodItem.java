@@ -23,7 +23,7 @@ public class AllocatedFoodItem {
 	@ManyToOne(cascade = CascadeType.ALL, 
 			fetch = FetchType.LAZY, 
 			optional = true, targetEntity = FoodItem.class)
-	@JoinColumn(name = "inventory_id", nullable = false)
+	@JoinColumn(name = "inventory_id", nullable = true)
 	private FoodItem allocatedFoodItem;
 	
 	private Integer requestedQuantity;

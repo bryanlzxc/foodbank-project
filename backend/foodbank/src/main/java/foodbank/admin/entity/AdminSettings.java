@@ -2,6 +2,7 @@ package foodbank.admin.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 public class AdminSettings {
@@ -18,17 +21,25 @@ public class AdminSettings {
 	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "settings_gen", sequenceName = "settings_sequence")
 	private Long id;
 	
+	@Column(name = "window_status")
+	@Type(type = "boolean")
 	private Boolean windowStatus;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date windowStartDateTime;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date windowsEndDateTime;
 	
 	private Double decayRate;
 	private Double multiplierRate;
 	private String dailyPassword;
+	
+	@Temporal(TemporalType.DATE)
+	private Date lastStartDate;
+	
+	@Temporal(TemporalType.DATE)
+	private Date lastEndDate;
 	
 	protected AdminSettings() {}
 
@@ -96,6 +107,22 @@ public class AdminSettings {
 
 	public void setDailyPassword(String dailyPassword) {
 		this.dailyPassword = dailyPassword;
+	}
+
+	public Date getLastStartDate() {
+		return lastStartDate;
+	}
+
+	public void setLastStartDate(Date lastStartDate) {
+		this.lastStartDate = lastStartDate;
+	}
+
+	public Date getLastEndDate() {
+		return lastEndDate;
+	}
+
+	public void setLastEndDate(Date lastEndDate) {
+		this.lastEndDate = lastEndDate;
 	}
 	
 }

@@ -52,11 +52,14 @@ public final class MessageConstants {
 	public static final String INVENTORY_RESET_SUCCESS = "Inventory successfully reset to 0.";
 	public static final String ALL_PACKING_STATUS_RETRIEVE_SUCCESS = "All packing list statuses successfully retrieved.";
 	public static final String PASSWORD_CHANGE_SUCCESS = "Password successfully changed.";
+	public static final String DONOR_NP_RETRIEVE_SUCCESS = "Nonperishable Donations by Donor successfully retrieved.";
+	public static final String FORGOT_PASSWORD_REQUEST = "The e-mail containing the link to reset your email has been sent to your e-mail address.";
 	
 	public static class ErrorMessages {
 		
 		public static final String USER_ALREADY_EXISTS = "This user already exists.";
 		public static final String NO_SUCH_USER = "This user does not exist.";
+		public static final String NO_SUCH_USER_EMAIL = "There is no registered user for this email address.";
 		public static final String INVALID_CREDENTIALS = "Invalid login credentials.";
 		public static final String DUPLICATE_ITEM = "This item already exists.";
 		public static final String NO_SUCH_ITEM = "The specified food item cannot be found.";
@@ -77,8 +80,10 @@ public final class MessageConstants {
 		public static final String DONOR_GET_FAIL = "GET call for DONOR failed";
 		public static final String REQUEST_GET_FAIL = "GET call for REQUEST failed";
 		public static final String PASSWORD_NOT_UPDATED = "Password was not changed.";
-		public static final String INCORRECT_TOKEN = "Incorrect JWT token";
-		public static final String MISSING_TOKEN = "JWT token cannot be found";
+		public static final String INCORRECT_TOKEN = "Incorrect JWT token.";
+		public static final String MISSING_TOKEN = "JWT token cannot be found.";
+		public static final String INCORRECT_RESET_TOKEN = "Invalid reset password request token.";
+		public static final String EXPIRED_TOKEN = "The token has expired.";
 		
 	}
 	
@@ -91,6 +96,10 @@ public final class MessageConstants {
 		public static final String RESET_PASSWORD_MESSAGE1 = "We have recently received a request to reset your password. Your new password is: ";
 		public static final String RESET_PASSWORD_MESSAGE2 = "\n\nPlease log-in with the generated password and proceed to change your password for security purposes."
 				+ "\n\n*** This is an automatically generated e-mail, please do not reply ***";
+		public static final String FORGOT_PASSWORD_SUBJECT = "[PASSWORD RECOVERY] Food Bank Singapore - Password Recovery";
+		public static final String FORGOT_PASSWORD_STARTER = "Dear ";
+		public static final String FORGOT_PASSWORD_MESSAGE = " , \n\n\nWe have received a message to reset your Food Bank Account password. Simply click on the following "
+				+ "URL to reset your password:\n\n";
 		
 	}
 	

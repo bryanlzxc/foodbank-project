@@ -36,17 +36,17 @@ public class Request {
 	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "req_seq_gen", sequenceName = "request_sequence")
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.ALL, 
+	@ManyToOne(//cascade = CascadeType.ALL, 
 			fetch = FetchType.LAZY, 
 			optional = true, targetEntity = Beneficiary.class)
 	@JoinColumn(name = "beneficiary_user_id", unique = false)
 	@JsonIgnore
 	private Beneficiary beneficiary;
 	
-	@ManyToOne(cascade = CascadeType.ALL,
+	@ManyToOne(//cascade = CascadeType.ALL,
 			fetch = FetchType.EAGER,
-			optional = true, targetEntity = FoodItem.class)
-	@JoinColumn(name = "inventory_id", unique = false)
+			optional = false, targetEntity = FoodItem.class)
+	@JoinColumn(name = "inventory_id", unique = false, nullable = true)
 	private FoodItem foodItem;
 	
 	@CreatedDate

@@ -59,6 +59,20 @@ public class PackingController {
 		return responseDTO;
 	}
 	
+	@GetMapping("/display/in-window")
+	public ResponseDTO getAllPackingListsInWindow() {
+		List<PackingListDTO> results = null;
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, results, MessageConstants.PACKING_LIST_RETRIEVE_SUCCESS);
+		try {
+			results = packingService.retrieveAllPackingListsInWindow();
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		responseDTO.setResult(results);
+		return responseDTO;
+	}
+	
 	@PostMapping("/generate-list")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO generatePackingList() {
@@ -77,7 +91,7 @@ public class PackingController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PACKING_LIST_UPDATE_SUCCESS);
 		try {
 			packingService.updatePackedQuantities(packingList);
-			PackingList dbPackingList = packingService.findDbListByBeneficiary(packingList.getBeneficiary().getUsername());
+			PackingList dbPackingList = packingService.findDbListById(packingList.getId());
 			packingService.generateDbInvoices(dbPackingList);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);

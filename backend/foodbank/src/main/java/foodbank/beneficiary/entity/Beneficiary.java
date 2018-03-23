@@ -3,13 +3,17 @@ package foodbank.beneficiary.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,10 +32,12 @@ import foodbank.user.entity.User;
 @PrimaryKeyJoinColumn(name = "user_id")
 */
 @JsonSerialize
+//@PrimaryKeyJoinColumn(name = "user_id")
 public class Beneficiary {
 	
 	@Id
-	@GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
+	//@GeneratedValue//(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
+	//@Column(name = "user_id")
 	private Long id;
 	
 	private int numBeneficiary;
@@ -42,21 +48,24 @@ public class Beneficiary {
 	private String memberType;
 	private boolean hasTransport;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, 
+			fetch = FetchType.LAZY,  
+			orphanRemoval = true, targetEntity = User.class)
 	//@JoinColumn(name = "id", nullable = false)
 	@MapsId
 	@JsonIgnore
+	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToOne(mappedBy = "beneficiary")
+	@OneToOne(mappedBy = "beneficiary", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Allocation allocation;
 	
-	@OneToMany(mappedBy = "beneficiary")
+	@OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<RequestHistory> requestHistories;
 	
-	@OneToOne(mappedBy = "beneficiary")
-	private PackingList packingList;
+	@OneToMany(mappedBy = "beneficiary", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<PackingList> packingList;
 	
 	/*
 	@OneToMany(mappedBy = "billingOrganization")
@@ -67,11 +76,11 @@ public class Beneficiary {
 	private List<Invoice> receivingList;
 	*/
 	
-	public PackingList getPackingList() {
+	public List<PackingList> getPackingList() {
 		return packingList;
 	}
 
-	public void setPackingList(PackingList packingList) {
+	public void setPackingList(List<PackingList> packingList) {
 		this.packingList = packingList;
 	}
 

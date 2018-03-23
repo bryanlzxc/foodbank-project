@@ -106,6 +106,19 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	@PostMapping("/update/closing-date")
+	@PreAuthorize("hasAuthority('ADMIN_USER')")
+	public ResponseDTO updateClosingDate(@RequestBody AdminSettingsDTO adminSettings) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.MULTIPLIER_RATE_UPDATE_SUCCESS);
+		try {
+			adminService.modifyClosingDate(adminSettings);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
 	@PostMapping("/reset-password")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO resetPassword(@RequestBody UserDTO user) {

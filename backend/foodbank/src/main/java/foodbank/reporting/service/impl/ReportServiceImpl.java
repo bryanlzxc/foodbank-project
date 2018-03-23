@@ -85,7 +85,7 @@ public class ReportServiceImpl implements ReportService {
 		String issuedBy = details.get("issuedBy");
 		String comments = details.get("comments");
 		boolean deliveryRequired = Boolean.valueOf(details.get("deliveryRequired"));
-		Invoice dbInvoice = invoiceRepository.findById(Long.valueOf(invoiceId));
+		Invoice dbInvoice = invoiceRepository.findByInvoiceLabel(invoiceId);
 		if(dbInvoice != null) {
 			dbInvoice.setDeliveryDate(DateParser.convertStringToDate(deliveryDate));
 			dbInvoice.setDeliveryTime(DateParser.convertStringToTime(deliveryTime));
@@ -105,7 +105,7 @@ public class ReportServiceImpl implements ReportService {
 		Beneficiary receivingOrganization = beneficiaryRepository.findOne(invoice.getReceivingOrganizationId());
 		PackingList packingList = packingRepository.findById(invoice.getPackingListId());
 		InvoiceData invoiceData = new InvoiceData(invoice, billingOrganization, receivingOrganization, packingList);
-		String pdfName = invoiceData.getInvoiceId() + ".pdf";
+		String pdfName = invoiceData.getInvoiceLabel() + ".pdf";
 		try {
 			PdfWriter.getInstance(document, new FileOutputStream(pdfName));
 			document.open();
@@ -247,7 +247,7 @@ public class ReportServiceImpl implements ReportService {
 		innerTable.setWidthPercentage(100);
 		innerTable.setWidths(new int[] {2, 3});
 		innerTable.addCell(createInvoiceDetailTextCell("Invoice No.", true));
-		innerTable.addCell(createInvoiceDetailTextCell(invoiceData.getInvoiceId(), false));
+		innerTable.addCell(createInvoiceDetailTextCell(invoiceData.getInvoiceLabel(), false));
 		innerTable.addCell(createInvoiceDetailTextCell("Invoice Date", true));
 		innerTable.addCell(createInvoiceDetailTextCell(invoiceData.getPackedDate(), false));
 		innerTable.addCell(createInvoiceDetailTextCell("Purchase Order No.", true));

@@ -30,16 +30,16 @@ import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.security.model.Role;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "user")
-@DiscriminatorValue(value = "user")
+//@DiscriminatorValue(value = "user")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "user_cache")
 public class User  {
 		
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE) //, generator = "user_seq_gen")
-	//@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "user_seq_gen", sequenceName = "user_sequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "user_seq_gen", sequenceName = "user_sequence")
 	@Column(name = "id", nullable = false)
 	private Long id;
 	

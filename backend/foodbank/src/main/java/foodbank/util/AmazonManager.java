@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -25,6 +26,7 @@ import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
+@Component
 public class AmazonManager implements CommandLineRunner {
 
 	private static AmazonS3 client;

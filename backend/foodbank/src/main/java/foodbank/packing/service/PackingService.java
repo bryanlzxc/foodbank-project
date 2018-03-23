@@ -15,6 +15,8 @@ public interface PackingService {
 	
 	PackingList findDbListByBeneficiary(final String beneficiary);
 	
+	PackingList findDbListById(final Long id);
+	
 	void generatePackingList();
 	
 	void updatePackedQuantities(final PackingListDTO packingList);
@@ -22,5 +24,7 @@ public interface PackingService {
 	Boolean reviewAllPackingStatus();
 	
 	void generateDbInvoices(final PackingList packingList);
+	
+	List<PackingListDTO> retrieveAllPackingListsInWindow();
 			
 }

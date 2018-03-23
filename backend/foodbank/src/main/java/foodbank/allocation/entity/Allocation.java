@@ -32,7 +32,7 @@ public class Allocation {
 	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "alloc_seq_gen", sequenceName = "allocation_sequence")
 	private Long id;
 	
-	@OneToOne(cascade = CascadeType.ALL,
+	@OneToOne(//cascade = CascadeType.ALL,
 			fetch = FetchType.LAZY,
 			orphanRemoval = true,
 			optional = true, targetEntity = Beneficiary.class)
@@ -41,7 +41,7 @@ public class Allocation {
 	
 	@OneToMany(mappedBy = "allocation", 
 			cascade = CascadeType.ALL, 
-			fetch = FetchType.LAZY)
+			fetch = FetchType.LAZY, orphanRemoval = true)
 			//orphanRemoval = true)
 	private List<AllocatedFoodItem> allocatedItems;
 	

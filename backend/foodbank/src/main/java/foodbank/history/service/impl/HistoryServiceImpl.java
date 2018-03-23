@@ -57,6 +57,7 @@ public class HistoryServiceImpl implements HistoryService {
 			List<PastRequest> pastRequestsOnDate = pastRequestsByDate.get(requestDate);
 			if(pastRequestsOnDate == null) {
 				pastRequestsOnDate = new ArrayList<PastRequest>();
+				pastRequestsByDate.put(requestDate, pastRequestsOnDate);
 			}
 			pastRequestsOnDate.add(pastRequest);
 			pastRequestsByDate.replace(requestDate, pastRequestsOnDate);
@@ -72,7 +73,7 @@ public class HistoryServiceImpl implements HistoryService {
 				String description = foodItem.getDescription();
 				Integer requestedQuantity = pastRequest.getRequestedQuantity();
 				Integer allocatedQuantity = pastRequest.getAllocatedQuantity();
-				pastRequestDTOList.add(new PastRequestDTO(category, classification, description, requestedQuantity, allocatedQuantity, null));
+				pastRequestDTOList.add(new PastRequestDTO(category, classification, description, requestedQuantity, allocatedQuantity, pastRequest.getRequestCreationDate()));
 			}
 			PastRequestsByBeneficiaryDTO individualResultEntry = new PastRequestsByBeneficiaryDTO(key, pastRequestDTOList);
 			results.add(individualResultEntry);

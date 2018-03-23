@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import foodbank.login.dto.PasswordDTO;
+import foodbank.security.model.Role;
+import foodbank.security.model.repository.RoleRepository;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 import foodbank.user.repository.UserRepository;
@@ -20,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
@@ -48,6 +53,7 @@ public class UserServiceImpl implements UserService {
 		}
 		dbUser = EntityManager.transformUserDTO(user);
 		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
+		dbUser.setRole(roleRepository.findOne(Role.ADMIN_USER));
 		userRepository.save(dbUser);
 	}
 

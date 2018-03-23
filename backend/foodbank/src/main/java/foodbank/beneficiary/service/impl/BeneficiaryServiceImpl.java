@@ -14,6 +14,8 @@ import foodbank.beneficiary.dto.BeneficiaryDTO;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.beneficiary.service.BeneficiaryService;
+import foodbank.security.model.Role;
+import foodbank.security.model.repository.RoleRepository;
 import foodbank.user.entity.User;
 import foodbank.util.EntityManager;
 import foodbank.util.EntityManager.DTOKey;
@@ -25,6 +27,9 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 	
 	public List<BeneficiaryDTO> getAllBeneficiaries() {
 		// TODO Auto-generated method stub
@@ -54,6 +59,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 		dbBeneficiary = EntityManager.transformBeneficiaryDTO(beneficiary);
 		User dbUser = dbBeneficiary.getUser();
 		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
+		dbUser.setRole(roleRepository.findOne(Role.BENEFICIARY));
 		beneficiaryRepository.save(dbBeneficiary);
 	}
 

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.login.dto.LoginDTO;
 import foodbank.login.dto.LoginResponseDTO;
+import foodbank.login.entity.ResetToken;
 import foodbank.login.service.LoginService;
 import foodbank.security.JwtGenerator;
+import foodbank.user.dto.UserDTO;
 import foodbank.util.MessageConstants;
 import foodbank.util.ResponseDTO;
 
@@ -44,6 +46,30 @@ public class LoginController {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.LOGIN_SUCCESS);
 		try {
 			loginService.authenticateVolunteers(dailyPassword);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/forgot-password")
+	public ResponseDTO forgotPassword(@RequestBody UserDTO user) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.FORGOT_PASSWORD_REQUEST);
+		try {
+			loginService.resetPassword(user);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
+		}
+		return responseDTO;
+	}
+	
+	@PostMapping("/reset-password")
+	public ResponseDTO changeForgottenPassword(@RequestBody ResetToken token) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.PASSWORD_CHANGE_SUCCESS);
+		try {
+			loginService.changeForgottenPassword(token);
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());

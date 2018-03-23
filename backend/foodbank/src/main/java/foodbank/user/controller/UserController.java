@@ -63,7 +63,6 @@ public class UserController {
 	}
 	
 	@GetMapping("/display-user")
-	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO getUserDetails(@RequestParam(value = "username", required = true) String username) {
 		User result = null;
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.USER_RETRIEVE_SUCCESS);

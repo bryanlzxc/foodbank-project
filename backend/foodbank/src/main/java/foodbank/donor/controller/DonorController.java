@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import foodbank.donor.dto.DonationDTO;
 import foodbank.donor.dto.DonorDTO;
 import foodbank.donor.entity.Donor;
 import foodbank.donor.service.DonorService;
@@ -43,7 +44,7 @@ public class DonorController {
 	}
 	
 	@GetMapping("/display-donors")
-	public ResponseDTO getDonorNames(){
+	public ResponseDTO getDonorNames() {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_GET_SUCCESS);
 		try {
 			List<String> results = donorService.getDonorNames();
@@ -51,6 +52,19 @@ public class DonorController {
 		} catch (Exception e) {
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(ErrorMessages.DONOR_GET_FAIL);
+		}
+		return responseDTO;
+	}
+	
+	@GetMapping("/retrieve-np-donations")
+	public ResponseDTO retrieveNonperishableDonationsByDonor(@RequestParam(value = "donor", required = true) String donor) {
+		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.DONOR_NP_RETRIEVE_SUCCESS);
+		try {
+			DonationDTO result = donorService.retrieveNonperishableDonations(donor);
+			responseDTO.setResult(result);
+		} catch (Exception e) {
+			responseDTO.setStatus(ResponseDTO.Status.FAIL);
+			responseDTO.setMessage(e.getMessage());
 		}
 		return responseDTO;
 	}

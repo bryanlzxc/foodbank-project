@@ -14,4 +14,6 @@ public interface FoodRepository extends JpaRepository<FoodItem, Long> {
 	
 	FoodItem findByCategoryAndClassificationAndDescription(String category, String classification, String description);
 	
+	List<FoodItem> findByValueEquals(Double value);
+	
 }

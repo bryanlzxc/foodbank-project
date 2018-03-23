@@ -12,6 +12,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.scheduling.annotation.Scheduled;
+
 import foodbank.util.DateParser;
 
 @Entity
@@ -51,8 +53,8 @@ public class Invoice {
 	private String issuedBy = "";
 	private String comments = "";
 	
-	private Boolean deliveryStatus;
-	private Boolean generationStatus;
+	private Boolean deliveryStatus = Boolean.FALSE;
+	private Boolean generationStatus = Boolean.FALSE;
 	
 	@Column(name = "billing_org_id")
 	private Long billingOrganizationId;
@@ -92,6 +94,12 @@ public class Invoice {
 		this.billingOrganizationId = billingOrganizationId;
 		this.receivingOrganizationId = receivingOrganizationId;
 		this.packingListId = packingListId;
+		invoiceNumber++;
+	}
+	
+	@Scheduled(cron = "0 0 0 L * ? *")
+	private void resetInvoiceNumber() {
+		invoiceNumber = 1;
 	}
 	
 	/*

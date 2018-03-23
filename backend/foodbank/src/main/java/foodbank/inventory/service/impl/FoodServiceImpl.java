@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import foodbank.donor.entity.DonatedNPFoodItem;
@@ -30,6 +31,9 @@ public class FoodServiceImpl implements FoodService {
 	
 	@Autowired
 	private DonorRepository donorRepository;
+	
+	@Autowired
+	private SimpMessagingTemplate template;
 	
 	@Override
 	public List<FoodItem> retrieveAllFoodItems() {
@@ -92,14 +96,16 @@ public class FoodServiceImpl implements FoodService {
 		String barcode = foodItem.getBarcode();
 		Integer quantity = foodItem.getQuantity();
 		if(barcode != null && !barcode.isEmpty()) {
-			dbFoodItem = barcodeRepository.findByBarcode(barcode);
-			if(dbFoodItem != null) {
+			Barcode dbBarcode = barcodeRepository.findByBarcode(barcode);
+			if(dbBarcode != null) {
+				dbFoodItem = dbBarcode.getScannedItem();
 				dbFoodItem.setQuantity(dbFoodItem.getQuantity() + quantity);
 				foodRepository.save(dbFoodItem);
 			} else {
 				dbFoodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
 				if(dbFoodItem == null) {
 					dbFoodItem = new FoodItem(category, classification, description, Integer.valueOf(0), Double.valueOf(0));
+					this.template.convertAndSend("/client/notifications", Boolean.TRUE);
 				}
 				dbFoodItem.setQuantity(dbFoodItem.getQuantity() + quantity);
 				Barcode newBarcode = new Barcode(barcode, dbFoodItem);
@@ -115,6 +121,9 @@ public class FoodServiceImpl implements FoodService {
 		}
 		if(foodItem.getDonorName() != null && !foodItem.getDonorName().isEmpty()) {
 			Donor dbDonor = donorRepository.findByName(foodItem.getDonorName());
+			if(dbDonor == null) {
+				dbDonor = new Donor(foodItem.getDonorName());
+			}
 			List<DonatedNPFoodItem> npDonations = dbDonor.getNonperishableDonations();
 			Boolean foundPreviouslyDonatedItem = Boolean.FALSE;
 			for(DonatedNPFoodItem donation : npDonations) {
@@ -151,7 +160,7 @@ public class FoodServiceImpl implements FoodService {
 	@Override
 	public BarcodeResponseDTO readBarcode(String barcode) {
 		// TODO Auto-generated method stub
-		FoodItem dbFoodItem = barcodeRepository.findByBarcode(barcode);
+		FoodItem dbFoodItem = barcodeRepository.findByBarcode(barcode).getScannedItem();
 		if(dbFoodItem != null) {
 			String category = dbFoodItem.getCategory();
 			String classification = dbFoodItem.getClassification();

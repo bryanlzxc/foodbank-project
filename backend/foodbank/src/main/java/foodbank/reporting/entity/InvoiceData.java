@@ -11,6 +11,7 @@ import foodbank.packing.entity.PackingList;
 public class InvoiceData {
 	
 	private String invoiceNumber;
+	private String invoiceLabel;
 	private String packedDate;
 	
 	private String deliveryDate;
@@ -40,9 +41,10 @@ public class InvoiceData {
 	public InvoiceData(Invoice invoice, Beneficiary billingOrganization, 
 			Beneficiary receivingOrganization, PackingList packingList) {
 		this.invoiceNumber = String.valueOf(invoice.getId());
-		this.packedDate = invoice.getGenerationDate().toString();
-		this.deliveryDate = invoice.getDeliveryDate().toString();
-		this.deliveryTime = invoice.getDeliveryTime().toString();
+		this.invoiceLabel = invoice.getInvoiceLabel();
+		this.packedDate = invoice.getGenerationDate() == null ? "" : invoice.getGenerationDate().toString();
+		this.deliveryDate = invoice.getDeliveryDate() == null ? "" : invoice.getDeliveryDate().toString();
+		this.deliveryTime = invoice.getDeliveryTime() == null ? "" : invoice.getDeliveryTime().toString();
 		this.issuedBy = invoice.getIssuedBy();
 		this.comments = invoice.getComments();
 		this.deliveryRequired = invoice.getDeliveryStatus();
@@ -57,6 +59,14 @@ public class InvoiceData {
 		this.receivingOrganizationContactNumber = receivingOrganization.getContactNumber();
 		this.invoiceLineItem =  generateInvoiceLineItemData(packingList.getPackedItems());
 		calculateInvoiceTotalValue(invoiceLineItem);
+	}
+
+	public String getInvoiceLabel() {
+		return invoiceLabel;
+	}
+
+	public void setInvoiceLabel(String invoiceLabel) {
+		this.invoiceLabel = invoiceLabel;
 	}
 
 	public boolean isDeliveryRequired() {

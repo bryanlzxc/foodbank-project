@@ -43,7 +43,6 @@ public class AllocationController {
 	}
 	
 	@GetMapping("/display-allocations")
-	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO retrieveFoodItemsAllocatedToBeneficiary(@RequestParam(value = "beneficiary", required = true) String beneficiary) {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ALLOCATION_GET_SUCCESS);
 		try {

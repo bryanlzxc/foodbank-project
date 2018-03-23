@@ -5,20 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.packing.dto.PackedItemDTO;
 import foodbank.packing.dto.PackingListDTO;
 import foodbank.packing.dto.PackingUpdateDTO;
 import foodbank.packing.service.PackingService;
 
-@Controller
+@RestController
 @CrossOrigin
+@Transactional
 public class PackingWsController {
 
 	@Autowired

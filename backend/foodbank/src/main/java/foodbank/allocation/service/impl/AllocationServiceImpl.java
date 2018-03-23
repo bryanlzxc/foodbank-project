@@ -234,7 +234,7 @@ public class AllocationServiceImpl implements AllocationService {
 	@Override
 	public void updateAllocation(AllocationUpdateDTO allocation) {
 		// TODO Auto-generated method stub
-		Allocation dbAllocation = allocationRepository.findById(allocation.getId());
+		Allocation dbAllocation = allocationRepository.findByBeneficiaryUserUsername(allocation.getBeneficiary());// Id(allocation.getId());
 		if(dbAllocation == null) {
 			throw new InvalidAllocationException(ErrorMessages.INVALID_ALLOCATION);
 		}

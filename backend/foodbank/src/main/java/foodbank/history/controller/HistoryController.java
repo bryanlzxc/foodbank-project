@@ -17,7 +17,7 @@ import foodbank.util.ResponseDTO;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/history")
+@RequestMapping("/rest/history")
 public class HistoryController {
 
 	@Autowired

@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import foodbank.inventory.entity.Barcode;
 import foodbank.inventory.entity.FoodItem;
 
-public interface BarcodeRepository extends JpaRepository<Barcode, Long> {
+public interface BarcodeRepository extends JpaRepository<Barcode, String> {
 
-	FoodItem findByBarcode(String barcode);
+	Barcode findByBarcode(String barcode);
 	
 }
