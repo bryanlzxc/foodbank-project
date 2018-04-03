@@ -74,6 +74,16 @@ public class DateParser {
 		return format.format(date);
 	}
 	
+	public static String formatDateToString(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		return format.format(date);
+	}
+	
+	public static String formatTimeToString(Date date) {
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		return format.format(date);
+	}
+	
 	public static Date convertStringToTime(String time) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 		Date dateObject = null;

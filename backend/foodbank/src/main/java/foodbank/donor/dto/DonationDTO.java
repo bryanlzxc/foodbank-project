@@ -10,4 +10,12 @@ public class DonationDTO {
 
 	private List<AnnualDonationDTO> yearlyDonations;
 
+	public List<AnnualDonationDTO> getYearlyDonations() {
+		return yearlyDonations;
+	}
+
+	public void setYearlyDonations(List<AnnualDonationDTO> yearlyDonations) {
+		this.yearlyDonations = yearlyDonations;
+	}
+
 }

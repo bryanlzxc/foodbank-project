@@ -13,4 +13,20 @@ public class AnnualDonationDTO {
 	
 	private List<MonthlyDonationDTO> monthlyDonations;
 
+	public String getYearString() {
+		return yearString;
+	}
+
+	public void setYearString(String yearString) {
+		this.yearString = yearString;
+	}
+
+	public List<MonthlyDonationDTO> getMonthlyDonations() {
+		return monthlyDonations;
+	}
+
+	public void setMonthlyDonations(List<MonthlyDonationDTO> monthlyDonations) {
+		this.monthlyDonations = monthlyDonations;
+	}
+
 }

@@ -74,6 +74,7 @@ public class AdminController {
 			}
 			responseDTO.setMessage(message);
 		} catch (Exception e) {
+			e.printStackTrace();
 			responseDTO.setStatus(ResponseDTO.Status.FAIL);
 			responseDTO.setMessage(e.getMessage());
 		}

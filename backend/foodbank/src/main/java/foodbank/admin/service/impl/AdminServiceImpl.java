@@ -121,7 +121,7 @@ public class AdminServiceImpl implements AdminService {
 		AdminSettings currentSettings = adminRepository.findById(idKey);
 		String returnString = MessageConstants.WINDOW_OPEN_SUCCESS;
 		String endDateString = adminSettings.getEndDate();
-		if(endDateString == null || endDateString.isEmpty()) {
+		if(endDateString == null) {
 			// Code block to close the window
 			currentSettings.setLastStartDate(currentSettings.getWindowStartDateTime());
 			currentSettings.setLastEndDate(currentSettings.getWindowsEndDateTime());

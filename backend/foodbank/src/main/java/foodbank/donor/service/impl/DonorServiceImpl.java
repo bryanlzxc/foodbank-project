@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,25 +84,25 @@ public class DonorServiceImpl implements DonorService {
 			String description = dbFoodItem.getDescription();
 			Integer donatedQuantity = npDonation.getDonatedQuantity();
 			Double value = dbFoodItem.getValue();
-			Date donationDate = npDonation.getDonationDate();
-			LocalDate localDate = donationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			Date donationDate = (java.sql.Date)npDonation.getDonationDate();
+			LocalDate localDate = donationDate.toLocalDate();
+					//donationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			Integer year = localDate.getYear();
 			Integer month = localDate.getMonthValue();
 			Map<Integer, List<DonationDetailsDTO>> monthlyDonationMap = yearlyDonationsMap.get(year);
 			if(monthlyDonationMap == null) {
 				monthlyDonationMap = new HashMap<Integer, List<DonationDetailsDTO>>();
 				for(int i = 1; i <= 12; i++) {
-					monthlyDonationMap.put(1, new ArrayList<DonationDetailsDTO>());
+					monthlyDonationMap.put(i, new ArrayList<DonationDetailsDTO>());
 				}
 				yearlyDonationsMap.put(year, monthlyDonationMap);
-			} else {
-				List<DonationDetailsDTO> monthlyDonations = monthlyDonationMap.get(month);
-				if(monthlyDonations == null) {
-					List<DonationDetailsDTO> newList = new ArrayList<DonationDetailsDTO>();
-					monthlyDonationMap.put(month, newList);
-				}
-				monthlyDonations.add(new DonationDetailsDTO(category, classification, description, donatedQuantity, value, donatedQuantity * value));
 			}
+			List<DonationDetailsDTO> monthlyDonations = monthlyDonationMap.get(month);
+			if(monthlyDonations == null) {
+				List<DonationDetailsDTO> newList = new ArrayList<DonationDetailsDTO>();
+				monthlyDonationMap.put(month, newList);
+			}
+			monthlyDonations.add(new DonationDetailsDTO(category, classification, description, donatedQuantity, value, donatedQuantity * value));
 		}
 		List<AnnualDonationDTO> annualDonationDTOList = new ArrayList<AnnualDonationDTO>();
 		for(Map.Entry<Integer, Map<Integer, List<DonationDetailsDTO>>> entry : yearlyDonationsMap.entrySet()) {
@@ -112,7 +112,7 @@ public class DonorServiceImpl implements DonorService {
 			for(Map.Entry<Integer, List<DonationDetailsDTO>> mapEntry : monthlyDonationByYearMap.entrySet()) {
 				Integer monthKey = mapEntry.getKey();
 				List<DonationDetailsDTO> monthlyDonations = mapEntry.getValue();
-				monthlyDonationDTOList.add(new MonthlyDonationDTO(Month.valueOf(String.valueOf(monthKey)).toString(), monthlyDonations));
+				monthlyDonationDTOList.add(new MonthlyDonationDTO(Month.of(monthKey).toString(), monthlyDonations));
 			}
 			annualDonationDTOList.add(new AnnualDonationDTO(String.valueOf(yearKey), monthlyDonationDTOList));
 		}
