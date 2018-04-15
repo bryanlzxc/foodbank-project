@@ -97,7 +97,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public void generateInvoicePDF(String invoiceId) {
+	public void generateInvoicePDF(String invoiceId) throws ParseException {
 		// TODO Auto-generated method stub
 		Document document = new Document(PageSize.A4);
 		Invoice invoice = invoiceRepository.findByInvoiceLabel(invoiceId);
@@ -255,7 +255,7 @@ public class ReportServiceImpl implements ReportService {
 		invoiceDetailTable.addCell(new PdfPCell(innerTable));
 	}
 	
-	private void populateDeliveryInfo(Document document, InvoiceData invoiceData) throws DocumentException, IOException {
+	private void populateDeliveryInfo(Document document, InvoiceData invoiceData) throws DocumentException, IOException, ParseException {
 		PdfPTable deliveryInfoTable = new PdfPTable(4);
 		deliveryInfoTable.setWidthPercentage(100);
 		deliveryInfoTable.setWidths(new int[] {1, 1, 1, 1});
@@ -263,6 +263,7 @@ public class ReportServiceImpl implements ReportService {
 		deliveryInfoTable.addCell(createInvoiceDetailTextCell("Delivery Time", true));
 		deliveryInfoTable.addCell(createInvoiceDetailTextCell("Issued By", true));
 		deliveryInfoTable.addCell(createInvoiceDetailTextCell("Comments", true));
+		// Testing parser
 		deliveryInfoTable.addCell(createInvoiceDetailTextCell(invoiceData.getDeliveryDate(), false));
 		deliveryInfoTable.addCell(createInvoiceDetailTextCell(invoiceData.getDeliveryTime(), false));
 		deliveryInfoTable.addCell(createInvoiceDetailTextCell(invoiceData.getIssuedBy(), false));

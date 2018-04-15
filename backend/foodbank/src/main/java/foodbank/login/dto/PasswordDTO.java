@@ -18,6 +18,14 @@ public class PasswordDTO {
 	@JsonProperty
 	private String newPassword;
 
+	protected PasswordDTO() {}
+	
+	public PasswordDTO(String username, String oldPassword, String newPassword) {
+		this.username = username;
+		this.oldPassword = oldPassword;
+		this.newPassword = newPassword;
+	}
+
 	public String getUsername() {
 		return username;
 	}

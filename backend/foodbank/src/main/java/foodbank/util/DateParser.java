@@ -4,86 +4,51 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/*
- * Created by: Ng Shirong
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ *
  */
-
 public class DateParser {
 	
-	/*
-	 * This code is not functional as of 31/10/2017
+	/**
+	 * Formatting of a Date object to only display yyyy-MM format
+	 * Mainly used for formatting the date for invoice generation
+	 * @param date
+	 * @return A String that will be displayed in the following format (e.g. 2017-11)
 	 */
-	/*
-	public static Date parseDateTime(String dateString) {
-        if (dateString == null) return null;
-        DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
-        if (dateString.contains("T")) dateString = dateString.replace('T', ' ');
-        if (dateString.contains("Z")) dateString = dateString.replace("Z", "+0000");
-        else
-            dateString = dateString.substring(0, dateString.lastIndexOf(':')) + dateString.substring(dateString.lastIndexOf(':')+1);
-        try {
-            System.out.println("Before exception thrown ************ ");
-        	return fmt.parse(dateString);
-        }
-        catch (ParseException e) {
-            System.out.println("Parse Exception");
-            return null;
-        }
-    }
-    */
-	
-	/* 
-	 * Created by: Lau Peng Liang, Bryan
-	 */
-	/*
-	public static String getCurrentDate(Date date) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		return format.format(date);
-	}
-	
-	public static Date convertToDate(String date) throws Exception {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		Date dateObject = null;
-		try { 
-			dateObject = format.parse(date);
-		} catch (Exception e) {
-			throw new Exception();
-		}
-		return dateObject;
-	}
-	
-	public static Date convertToDBDate(String date) throws Exception {
-		SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-		Date dateObject = null;
-		try {
-			dateObject = format.parse(date);
-		} catch (Exception e) {
-			throw new Exception();
-		}
-		return dateObject;
-	}
-	
-	public static String displayDayMonthYearOnly(Date date) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		return format.format(date);
-	}
-	*/
-	
 	public static String displayMonthYearOnly(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
 		return format.format(date);
 	}
 	
+	/**
+	 * Formatting a Date object into a String that will display the dd-MM-yyyy format
+	 * @param date
+	 * @return A String that will be displayed in the following format (e.g. 03-11-2017)
+	 */
 	public static String formatDateToString(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		return format.format(date);
 	}
 	
+	/**
+	 * Formatting a Date object into a String that will display the HH:mm format
+	 * @param date
+	 * @return A String that will be displayed in the following format (e.g. 23:00)
+	 */
 	public static String formatTimeToString(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 		return format.format(date);
 	}
 	
+	/**
+	 * Converting a String into a Date object
+	 * @param time
+	 * @return A Date object that has been formatted to only show the hour & minutes
+	 * @throws ParseException
+	 */
 	public static Date convertStringToTime(String time) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 		Date dateObject = null;
@@ -91,6 +56,12 @@ public class DateParser {
 		return dateObject;
 	}
 	
+	/**
+	 * Converting a String into a Date object
+	 * @param date
+	 * @return A Date object that has been formatted to only show the day, month and year
+	 * @throws ParseException
+	 */
 	public static Date convertStringToDate(String date) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Date dateObject = null;

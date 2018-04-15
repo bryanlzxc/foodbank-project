@@ -1,0 +1,12 @@
+{
+    "status":"SUCCESS",
+    "message":null,
+    "result":{
+        "id": "admin",
+        "username": "admin",
+        "password": "12345",
+        "usertype": "admin",
+        "name": "Jessie",
+        "email": "foodbank@email.com"
+    }
+}

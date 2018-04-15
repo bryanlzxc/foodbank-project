@@ -44,8 +44,8 @@ public class InvoiceData {
 		this.invoiceNumber = String.valueOf(invoice.getId());
 		this.invoiceLabel = invoice.getInvoiceLabel();
 		this.packedDate = invoice.getGenerationDate() == null ? "" : invoice.getGenerationDate().toString();
-		this.deliveryDate = invoice.getDeliveryDate() == null ? "" : invoice.getDeliveryDate().toString();
-		this.deliveryTime = invoice.getDeliveryTime() == null ? "" : invoice.getDeliveryTime().toString();
+		this.deliveryDate = invoice.getDeliveryDate() == null ? "" : DateParser.formatDateToString(invoice.getDeliveryDate());
+		this.deliveryTime = invoice.getDeliveryTime() == null ? "" : DateParser.formatTimeToString(invoice.getDeliveryTime());
 		this.issuedBy = invoice.getIssuedBy();
 		this.comments = invoice.getComments();
 		this.deliveryRequired = invoice.getDeliveryStatus();

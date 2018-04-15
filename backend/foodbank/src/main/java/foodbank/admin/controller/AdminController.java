@@ -21,17 +21,33 @@ import foodbank.util.MessageConstants;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.ResponseDTO;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ *
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/rest/admin-settings")
 public class AdminController {
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private AdminService adminService;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private AllocationService allocationService;
 	
+	/**
+	 * REST API exposed to retrieve the admin settings
+	 * @return ResponseDTO with the result being that of the existing admin settings that are stored in the database
+	 */
 	@GetMapping("/display-all")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO getAdminSettings() {
@@ -46,6 +62,10 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to retrieve the existing window status
+	 * @return ResponseDTO with the result being that of the current window status, TRUE if window is open, FALSE otherwise
+	 */
 	@GetMapping("/display/window-status")
 	public ResponseDTO getWindowStatus() {
 		ResponseDTO responseDTO = new ResponseDTO(ResponseDTO.Status.SUCCESS, null, MessageConstants.ADMIN_GET_SUCCESS);
@@ -59,6 +79,12 @@ public class AdminController {
 		return responseDTO;
 	}
 
+	/**
+	 * REST API exposed allowing ADMIN_USERS to update the existing window status of the admin settings that are stored in the database
+	 * The method will also invoke the automated emailer, clearing of requests made in the current window, and resets the current window data to a new state
+	 * @param adminSettings
+	 * @return ResponseDTO with the respective message detail on whether the window was successfully opened/closed
+	 */
 	@PostMapping("/update/window-status")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO toggleWindowStatus(@RequestBody AdminSettingsDTO adminSettings) {
@@ -67,7 +93,9 @@ public class AdminController {
 			String message = adminService.toggleWindow(adminSettings);
 			if(message.equals(MessageConstants.WINDOW_CLOSE_SUCCESS)) {
 				allocationService.generateAllocationList();
+				adminService.generateClosingEmails();
 			} else if (message.equals(MessageConstants.WINDOW_OPEN_SUCCESS)) {
+				adminService.updateScores();
 				adminService.generateEmails();
 				adminService.insertPastRequests();
 				adminService.clearWindowData();
@@ -81,6 +109,11 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to allow ADMIN_USERS to update the existing decay rate of the admin settings that are stored in the database, and used for the updating of beneficiary score
+	 * @param adminSettings
+	 * @return ResponseDTO with the message detailing the operation's success/failure
+	 */
 	@PostMapping("/update/decay-rate")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO updateDecayRate(@RequestBody AdminSettingsDTO adminSettings) {
@@ -94,6 +127,11 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to allow ADMIN_USERS to update the existing multiplier rate of the admin settings that are stored in the database, and used for the updating of beneficiary score
+	 * @param adminSettings
+	 * @return ResponseDTO with the message detailing the operation's success/failure
+	 */
 	@PostMapping("/update/multiplier-rate")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO updateMultiplierRate(@RequestBody AdminSettingsDTO adminSettings) {
@@ -107,6 +145,11 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to allow ADMIN_USERS to update the existing window's closing date
+	 * @param adminSettings
+	 * @return ResponseDTO with the message detailing the operation's success/failure
+	 */
 	@PostMapping("/update/closing-date")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO updateClosingDate(@RequestBody AdminSettingsDTO adminSettings) {
@@ -120,6 +163,11 @@ public class AdminController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to provide ADMIN_USERS with the function to assist users in resetting their password
+	 * @param user
+	 * @return ResponseDTO with the message detailing the operation's success/failure
+	 */
 	@PostMapping("/reset-password")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO resetPassword(@RequestBody UserDTO user) {

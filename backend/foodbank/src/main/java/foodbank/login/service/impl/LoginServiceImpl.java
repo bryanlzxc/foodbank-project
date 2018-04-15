@@ -41,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private ServletContext servletContext;
 	
-	private static final String HOST_ADDRESS = "http://foodbank-client.s3-website-ap-southeast-1.amazonaws.com";
+	private static final String HOST_ADDRESS = "xxxxxxxxxxxxxxxxxx";
 	
 	@Override
 	public void authenticate(LoginDTO loginDetails) {
@@ -76,7 +76,7 @@ public class LoginServiceImpl implements LoginService {
 		calendar.add(Calendar.MINUTE, 30);
 		UUID uuid = UUID.randomUUID();
 		// servletContext.getContextPath() + 
-		URL url = new URL("http://foodbank-client.s3-website-ap-southeast-1.amazonaws.com/reset-password/" + uuid.toString());
+		URL url = new URL("http://" + HOST_ADDRESS + "/reset-password/" + uuid.toString());
 		ResetToken resetRequest = new ResetToken(dbUser.getUsername(), uuid.toString(), calendar.getTime());
 		resetRepository.save(resetRequest);
 		new AutomatedEmailer(user.getEmail(), EmailMessages.RESET_PASSWORD_SUBJECT, EmailMessages.FORGOT_PASSWORD_STARTER 

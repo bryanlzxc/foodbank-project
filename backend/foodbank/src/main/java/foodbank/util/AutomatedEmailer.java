@@ -10,16 +10,56 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ * 
+ */
 public class AutomatedEmailer {
 
-	final String senderEmailID = "foodbank.inventory@gmail.com";
-	final String senderPassword = "bunanas123";
-	final String emailSMTPserver = "smtp.gmail.com";
-	final String emailServerPort = "465";
+	/**
+	 * Default email address of the organization that will always be used
+	 */
+	final String senderEmailID = "xxxxxxxxxxx";
+	
+	/**
+	 * Password for the email address required for authentication
+	 */
+	final String senderPassword = "xxxxxxxxxx";
+	
+	/**
+	 * Specification of the Email SMTP server
+	 */
+	final String emailSMTPserver = "xxxxxxxxxx";
+	
+	/**
+	 * The email server port 
+	 */
+	final String emailServerPort = "xxxxxxxx";
+	
+	/**
+	 * Email address of the recipient that will be populated on email sending
+	 */
 	String receiverEmailID = null;
+	
+	/**
+	 * The subject of the email that will be modified before sending
+	 */
 	String emailSubject = "Test Mail";
+	
+	/**
+	 * The content body of the email that will be modified before sending
+	 */
 	String emailBody = "Test Body";
 	
+	/**
+	 * Constructor that updates the required parameters of the email before sending
+	 * @param receiverEmailID
+	 * @param emailSubject
+	 * @param emailBody
+	 * @throws Exception
+	 */
 	public AutomatedEmailer(String receiverEmailID, String emailSubject, String emailBody) throws Exception {
 		this.receiverEmailID = receiverEmailID;
 		this.emailSubject = emailSubject;
@@ -45,7 +85,12 @@ public class AutomatedEmailer {
 		Transport.send(msg);
 	}
 	
-	// Inner class to ensure sender's email is authenticated
+	/**
+	 * 
+	 * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+	 * @version 1.0
+	 * Inner class to ensure sender's email is authenticated
+	 */
 	class SMTPAuthenticator extends javax.mail.Authenticator {
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication(senderEmailID, senderPassword);

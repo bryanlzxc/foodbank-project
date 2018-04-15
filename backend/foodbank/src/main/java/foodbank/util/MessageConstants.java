@@ -1,5 +1,12 @@
 package foodbank.util;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ * This class and it's inner classes exists for the sole purpose of having more defined success/failure messages
+ * 
+ */
 public final class MessageConstants {
 
 	public static final String USER_ADD_SUCCESS = "User successfully added.";
@@ -100,6 +107,9 @@ public final class MessageConstants {
 		public static final String FORGOT_PASSWORD_STARTER = "Dear ";
 		public static final String FORGOT_PASSWORD_MESSAGE = " , \n\n\nWe have received a message to reset your Food Bank Account password. Simply click on the following "
 				+ "URL to reset your password:\n\n";
+		public static final String WINDOW_CLOSING_SUBJECT = "[NOTICE] Food Bank Singapore - Window Closed";
+		public static final String WINDOW_CLOSING_MESSAGE = "This e-mail serves to notify you that the request window is now closed. We will inform you again when your"
+				+ " requests have been successfully allocated.\n\n*** This is an automatically generated e-mail, please do not reply ***";
 		
 	}
 	

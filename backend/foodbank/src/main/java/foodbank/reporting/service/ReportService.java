@@ -15,6 +15,6 @@ public interface ReportService {
 	
 	void updateInvoiceData(final Map<String, String> details) throws ParseException;
 	
-	void generateInvoicePDF(final String invoiceId);
+	void generateInvoicePDF(final String invoiceId) throws ParseException;
 
 }

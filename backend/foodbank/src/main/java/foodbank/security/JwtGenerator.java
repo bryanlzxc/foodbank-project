@@ -31,7 +31,7 @@ public class JwtGenerator {
 	
 	public String generateToken(LoginDTO login) {
 		Claims claims = Jwts.claims()
-				.setExpiration(Date.from(ZonedDateTime.now().plusMinutes(Long.valueOf(30)).toInstant()))
+				.setExpiration(Date.from(ZonedDateTime.now().plusMinutes(Long.valueOf(120)).toInstant()))
 				.setSubject(login.getUsername());
 		//claims.put("userId", String.valueOf(1L));
 		claims.put("role", login.getUsertype());

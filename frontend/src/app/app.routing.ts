@@ -1,18 +1,16 @@
-import { Routes }                   from '@angular/router';
-import { BaseLayoutComponent }      from './components/common/layouts/base-layout/base-layout.component';
-import { AuthLayoutComponent }      from './components/common/layouts/auth-layout/auth-layout.component';
-import { AuthGuard }                from './guards/auth.guard';
-import { AdminGuard }               from './guards/admin.guard';
-import { BeneficiaryGuard }         from './guards/beneficiary.guard';
-import { VolunteerGuard }           from './guards/volunteer.guard';
-
-let session = JSON.parse(localStorage.getItem('fb-session'));
-const userType = session ? session.usertype : 'sessions';
+import { Routes } from '@angular/router';
+import { BaseLayoutComponent } from './components/layouts/base-layout/base-layout.component';
+import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layout.component';
+import { ResetPasswordComponent } from '@views/sessions/reset-password/reset-password.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { BeneficiaryGuard } from './guards/beneficiary.guard';
+import { VolunteerGuard } from './guards/volunteer.guard';
 
 export const rootRouterConfig: Routes = [
     {
         path: '',
-        redirectTo: userType,
+        redirectTo: '/sessions/login',
         pathMatch: 'full'
     },
     {
@@ -32,20 +30,24 @@ export const rootRouterConfig: Routes = [
         children: [
             {
                 path: 'admin',
-                canActivate: [ AdminGuard ],
+                canLoad: [ AdminGuard ],
                 loadChildren: './views/admin/admin.module#AdminModule'
             },
             {
                 path: 'volunteer',
-                canActivate: [ VolunteerGuard ],
+                canLoad: [ VolunteerGuard ],
                 loadChildren: './views/volunteer/volunteer.module#VolunteerModule'
             },
             {
                 path: 'beneficiary',
-                canActivate: [ BeneficiaryGuard ],
+                canLoad: [ BeneficiaryGuard ],
                 loadChildren: './views/beneficiary/beneficiary.module#BeneficiaryModule'
             }
         ]
+    },
+    {
+        path: 'reset-password/:token',
+        component: ResetPasswordComponent
     },
     {
         path: '**',

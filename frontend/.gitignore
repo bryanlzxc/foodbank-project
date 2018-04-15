@@ -7,6 +7,7 @@
 
 # dependencies
 /node_modules
+/src/assets/mock/auth-success.json
 
 # IDEs and editors
 /.idea
@@ -40,3 +41,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/src/assets/mock/auth-success.json

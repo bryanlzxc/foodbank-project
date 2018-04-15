@@ -22,12 +22,29 @@ import foodbank.packing.entity.PackingList;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ * 
+ */
 public class EntityManager {
 	
+	/**
+	 * 
+	 * Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+	 * @version 1.0
+	 * 
+	 */
 	public enum DTOKey {
 		BeneficiaryDTO, UserDTO, AllocationResponseDTO, PackingListDTO, RequestHistoryDTO
 	}
 	
+	/**
+	 * Data transformation from a DTO to an Entity class
+	 * @param userDTO
+	 * @return A User object with the parameters as specified within the DTO
+	 */
 	public static User transformUserDTO(UserDTO userDTO) {
 		String username = userDTO.getUsername().toLowerCase();
 		String password = userDTO.getPassword();
@@ -37,6 +54,11 @@ public class EntityManager {
 		return new User(username, password, usertype, name, email);
 	}
 	
+	/**
+	 * Data transformation from a DTO to an Entity class
+	 * @param beneficiaryDTO
+	 * @return A Beneficiary object with the parameters as specified within the DTO
+	 */
 	public static Beneficiary transformBeneficiaryDTO(BeneficiaryDTO beneficiaryDTO) {
 		String username = beneficiaryDTO.getUsername().toLowerCase();
 		String password = beneficiaryDTO.getPassword();
@@ -57,6 +79,12 @@ public class EntityManager {
 		return newBeneficiary;
 	}
 	
+	/**
+	 * Converting an Object into the respective DTOs based on the input key
+	 * @param dtoKey
+	 * @param object
+	 * @return A entity that has to be class-casted depending on the input DTO key that manages the transformation
+	 */
 	public static Object convertToDTO(DTOKey dtoKey, Object object) {
 		Object result = null;
 		if(dtoKey == DTOKey.BeneficiaryDTO) {
@@ -96,6 +124,11 @@ public class EntityManager {
 		return result;
 	}
 	
+	/**
+	 * Data transformation from an Entity into a DTO
+	 * @param allocatedItems
+	 * @return A List of AllocatedFoodItemDTO
+	 */
 	public static List<AllocatedFoodItemDTO> convertAllocatedFoodItemListToDTOList(List<AllocatedFoodItem> allocatedItems) {
 		List<AllocatedFoodItemDTO> result = new ArrayList<AllocatedFoodItemDTO>();
 		for(AllocatedFoodItem allocatedItem : allocatedItems) {
@@ -111,6 +144,11 @@ public class EntityManager {
 		return result;
 	}
 	
+	/**
+	 * Data transformation from an Entity into a DTO
+	 * @param packedItems
+	 * @return A List of PackedItemDTO
+	 */
 	public static List<PackedItemDTO> convertPackedItemListToDTOList(List<PackedFoodItem> packedItems) {
 		List<PackedItemDTO> results = new ArrayList<PackedItemDTO>();
 		for(PackedFoodItem packedItem : packedItems) {
@@ -126,6 +164,11 @@ public class EntityManager {
 		return results;
 	}
 	
+	/**
+	 * Data transformation from an Entity into a DTO
+	 * @param pastRequests
+	 * @return A List of PastRequestDTO
+	 */
 	public static List<PastRequestDTO> convertPastRequestListToDTOList(List<PastRequest> pastRequests) {
 		List<PastRequestDTO> results = new ArrayList<PastRequestDTO>();
 		for(PastRequest pastRequest : pastRequests) {
@@ -141,6 +184,11 @@ public class EntityManager {
 		return results;
 	}
 	
+	/**
+	 * Helper method that evaluates if there is an intent to update specific fields within the conversion process
+	 * @param object
+	 * @return Boolean value: True if the intent exists, False otherwise
+	 */
 	public static Boolean checkForUpdateIntent(Object object) {
 		return object == null ? Boolean.FALSE : Boolean.TRUE;
 	}

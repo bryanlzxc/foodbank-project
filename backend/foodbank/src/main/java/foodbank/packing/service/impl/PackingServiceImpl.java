@@ -145,9 +145,10 @@ public class PackingServiceImpl implements PackingService {
 	
 	private void modifyBeneficiaryScore(Beneficiary beneficiary, Double value) {
 		Double currentScore = beneficiary.getScore();
-		Double newScore = currentScore - value;
-		if(newScore < 0) {
-			newScore = Double.valueOf(0);
+		AdminSettings adminSettings = adminRepository.findById(1L);
+		Double newScore = currentScore - adminSettings.getDecayRate() * value;
+		if(newScore <= 0) {
+			newScore = Double.valueOf(1);
 		}
 		beneficiary.setScore(newScore);
 		beneficiaryRepository.save(beneficiary);

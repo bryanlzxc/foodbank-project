@@ -10,6 +10,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import foodbank.admin.entity.AdminSettings;
+import foodbank.admin.repository.AdminRepository;
 import foodbank.beneficiary.dto.BeneficiaryDTO;
 import foodbank.beneficiary.entity.Beneficiary;
 import foodbank.beneficiary.repository.BeneficiaryRepository;
@@ -27,6 +29,9 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 
 	@Autowired
 	private BeneficiaryRepository beneficiaryRepository;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
@@ -57,6 +62,8 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 			throw new InvalidBeneficiaryException(ErrorMessages.BENEFICIARY_ALREADY_EXISTS);
 		}
 		dbBeneficiary = EntityManager.transformBeneficiaryDTO(beneficiary);
+		AdminSettings adminSettings = adminRepository.findById(1L);
+		dbBeneficiary.setScore(dbBeneficiary.getNumBeneficiary() * adminSettings.getMultiplierRate());
 		User dbUser = dbBeneficiary.getUser();
 		dbUser.setPassword(BCrypt.hashpw(dbUser.getPassword(), BCrypt.gensalt()));
 		dbUser.setRole(roleRepository.findOne(Role.BENEFICIARY));

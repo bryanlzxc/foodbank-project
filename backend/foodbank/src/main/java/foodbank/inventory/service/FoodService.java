@@ -23,5 +23,5 @@ public interface FoodService {
 	void resetInventoryQuantity();
 	
 	BarcodeResponseDTO readBarcode(final String barcode);
-
+	
 }

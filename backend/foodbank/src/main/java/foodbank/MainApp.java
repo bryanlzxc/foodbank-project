@@ -1,9 +1,5 @@
 package foodbank;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,8 +8,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import foodbank.inventory.entity.FoodItem;
-
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ *
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableJpaAuditing
@@ -24,12 +24,6 @@ public class MainApp {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MainApp.class, args);
-		/*
-		Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-		SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-		sessionFactory.openSession();
-		*/
 	}
 
 }

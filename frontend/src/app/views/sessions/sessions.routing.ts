@@ -5,8 +5,7 @@ import { PageNotFoundComponent }            from './page-not-found/page-not-foun
 export const SessionsRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
+        redirectTo: '/sessions/login',
     },
     {
         path: 'login',

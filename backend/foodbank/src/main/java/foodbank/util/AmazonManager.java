@@ -26,24 +26,43 @@ import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ * 
+ */
 @Component
 public class AmazonManager implements CommandLineRunner {
 
+	/**
+	 * Connection Manager for Amazon S3 Web Services
+	 */
 	private static AmazonS3 client;
 	
-	private static final String REPORT_BUCKET = "foodbank-production-reports";
+	/**
+	 * Specification of the Report Bucket that will always be used
+	 */
+	private static final String REPORT_BUCKET = "xxxxxxxx";
 	
+	/**
+	 * Method that will always run upon application startup
+	 */
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		// The credentials should not be stored on production
-		AWSCredentials credentials = new BasicAWSCredentials("AKIAJTE7X7RCY7DWSJJQ", "GWj6GgrCOhm0uVdC4aM+bA7UZCEsT289hMrHmwDm");
+		AWSCredentials credentials = new BasicAWSCredentials("xxxxxxxx", "xxxxxxx");
 		client = AmazonS3ClientBuilder.standard()
 					.withCredentials(new AWSStaticCredentialsProvider(credentials))
 					.withRegion(Regions.AP_SOUTHEAST_1)
 					.build();
 	}
 	
+	/**
+	 * Generating the page footers for the PDF file as specified by the filename
+	 * @param filename
+	 */
 	public static void generatePDFPageCounts(String filename) {
 		client.putObject(REPORT_BUCKET, filename, new File(filename));
 		S3Object pdf = client.getObject(REPORT_BUCKET, filename);
@@ -65,6 +84,11 @@ public class AmazonManager implements CommandLineRunner {
 		}
 	}
 	
+	/**
+	 * Generating the Invoice URL for the invoice number that has been specified
+	 * @param invoiceNumber
+	 * @return URL that will be forwarded to the client for browsing of the PDF report
+	 */
 	public static URL retrieveInvoiceURL(String invoiceNumber) {
 		return client.generatePresignedUrl(new GeneratePresignedUrlRequest(REPORT_BUCKET, invoiceNumber + ".pdf"));
 	}

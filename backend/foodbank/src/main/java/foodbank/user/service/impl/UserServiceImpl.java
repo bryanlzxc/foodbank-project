@@ -17,25 +17,46 @@ import foodbank.util.EntityManager;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.UserException;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ * 
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private UserRepository userRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	/**
+	 * Retrieve all the users within the repository
+	 */
 	public List<User> getAllUsers() {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
 
+	/**
+	 * Retrieve all users that have the specified usertype
+	 */
 	public List<User> getAllUsersByType(String usertype) {
 		// TODO Auto-generated method stub
 		return userRepository.findUsersByUsertype(usertype);
 	}
 
+	/**
+	 * Retrieve the user details for the user that has the specified username
+	 */
 	public User getUserDetails(String username) {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsernameIgnoreCase(username);
@@ -45,6 +66,9 @@ public class UserServiceImpl implements UserService {
 		return dbUser;
 	}
 
+	/**
+	 * Create a user with the details as specified within the DTO
+	 */
 	public void insertUser(UserDTO user) {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsernameIgnoreCase(user.getUsername());
@@ -57,6 +81,9 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(dbUser);
 	}
 
+	/**
+	 * Update a user with the details as specified within the DTO
+	 */
 	public void updateUser(UserDTO user) {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsernameIgnoreCase(user.getUsername());
@@ -79,6 +106,9 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(dbUser);
 	}
 
+	/**
+	 * Delete the user with the specified username
+	 */
 	public void deleteUser(String username) {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsernameIgnoreCase(username);
@@ -88,6 +118,9 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(dbUser);
 	}
 
+	/**
+	 * Change the password for the user with the details as specified within the DTO
+	 */
 	public Boolean changePassword(PasswordDTO passwordDetails) {
 		// TODO Auto-generated method stub
 		User dbUser = userRepository.findByUsernameIgnoreCase(passwordDetails.getUsername());

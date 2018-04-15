@@ -1,7 +1,14 @@
 package foodbank.inventory.service.impl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -151,7 +158,7 @@ public class FoodServiceImpl implements FoodService {
 	public void resetInventoryQuantity() {
 		// TODO Auto-generated method stub
 		List<FoodItem> dbFoodItems = foodRepository.findAll();
-		for(FoodItem dbFoodItem : dbFoodItems) {
+		for(FoodItem dbFoodItem : dbFoodItems) {	
 			dbFoodItem.setQuantity(0);
 		}
 		foodRepository.save(dbFoodItems);
@@ -169,5 +176,5 @@ public class FoodServiceImpl implements FoodService {
 		}
 		return null;
 	}
-
+	
 }

@@ -29,6 +29,7 @@ import foodbank.allocation.entity.Allocation;
 import foodbank.allocation.repository.AllocatedFoodItemRepository;
 import foodbank.allocation.repository.AllocationRepository;
 import foodbank.beneficiary.entity.Beneficiary;
+import foodbank.beneficiary.repository.BeneficiaryRepository;
 import foodbank.history.entity.PastRequest;
 import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
@@ -46,32 +47,72 @@ import foodbank.util.MessageConstants.EmailMessages;
 import foodbank.util.MessageConstants.ErrorMessages;
 import foodbank.util.exceptions.UserException;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ *
+ */
 @Service
 public class AdminServiceImpl implements AdminService {
 
+	/**
+	 * Declaration of the idKey that will remain constant
+	 * There should only be one record of the admin settings in the database
+	 */
 	private static final Long idKey = Long.valueOf(1);
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private AdminRepository adminRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private RequestRepository requestRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private AllocationRepository allocationRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private HistoryRepository historyRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private UserRepository userRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private AllocatedFoodItemRepository allocatedFoodItemRepository;
 	
+	/**
+	 * Dependency injection
+	 */
+	@Autowired
+	private BeneficiaryRepository beneficiaryRepository;
+	
+	/**
+	 * Retrieves the DTO that contains all details pertaining to the existing window
+	 */
 	@Override
 	public WindowDataDTO retrieveWindowData() {
 		// TODO Auto-generated method stub
@@ -97,6 +138,9 @@ public class AdminServiceImpl implements AdminService {
 		return results;
 	}
 
+	/**
+	 * Update the decay rate modifier that will be used in the adjustment of beneficiary score at the end of every window
+	 */
 	@Override
 	public void modifyDecayRate(AdminSettingsDTO adminSettings) {
 		// TODO Auto-generated method stub
@@ -105,7 +149,10 @@ public class AdminServiceImpl implements AdminService {
 		currentSettings.setDecayRate(decayRate);
 		adminRepository.saveAndFlush(currentSettings);
 	}
-
+	
+	/**
+	 * Update the multiplier rate modifier that will be used in the adjustment of beneficiary score at the end of every window
+	 */
 	@Override
 	public void modifyMultiplierRate(AdminSettingsDTO adminSettings) {
 		// TODO Auto-generated method stub
@@ -115,6 +162,10 @@ public class AdminServiceImpl implements AdminService {
 		adminRepository.saveAndFlush(currentSettings);
 	}
 
+	/**
+	 * Toggle the existing request window status
+	 * Open the window if it's currently closed and vice-versa
+	 */
 	@Override
 	public String toggleWindow(AdminSettingsDTO adminSettings) throws ParseException {
 		// TODO Auto-generated method stub
@@ -139,7 +190,10 @@ public class AdminServiceImpl implements AdminService {
 		adminRepository.save(currentSettings);
 		return returnString;
 	}
-
+	
+	/**
+	 * Update the closing date of the current request window
+	 */
 	@Override
 	public void modifyClosingDate(AdminSettingsDTO adminSettings) throws ParseException {
 		// TODO Auto-generated method stub
@@ -149,7 +203,11 @@ public class AdminServiceImpl implements AdminService {
 		currentSettings.setWindowsEndDateTime(format.parse(endDateString));
 		adminRepository.save(currentSettings);
 	}
-
+	
+	/**
+	 * Retrieve information about the current window status
+	 * Response will be TRUE if window is currently active, FALSE otherwise
+	 */
 	@Override
 	public Boolean getWindowStatus() {
 		// TODO Auto-generated method stub
@@ -157,6 +215,9 @@ public class AdminServiceImpl implements AdminService {
 		return currentSettings.getWindowStatus();
 	}
 
+	/**
+	 * Conversion of requests that have been made in the current window into that to be inserted into the history repository
+	 */
 	@Override
 	public void insertPastRequests() {
 		// TODO Auto-generated method stub
@@ -191,6 +252,11 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 	
+	/**
+	 * Clear all data that belongs to the current window and reverts it to a blank slate
+	 * Removes all request data from the request repository
+	 * Removes all allocation data from the allocation repository
+	 */
 	@Override
 	@Transactional
 	public void clearWindowData() {
@@ -202,12 +268,18 @@ public class AdminServiceImpl implements AdminService {
 		requestRepository.save(requests);
 		*/
 		requestRepository.deleteAll();
+		System.out.println("requests deleted");
 		allocatedFoodItemRepository.deleteAllInBatch();
+		System.out.println("allocated food item deleted");
 		allocationRepository.deleteAllInBatch();
+		System.out.println("allocations deleted");
 		//System.out.println("requests deleted");
 		//allocationRepository.deleteAll();
 	}
 
+	/**
+	 * Automated e-mailer that notifies all beneficiaries of the request window opening/closing
+	 */
 	@Override
 	public void generateEmails() throws Exception {
 		// TODO Auto-generated method stub
@@ -218,6 +290,10 @@ public class AdminServiceImpl implements AdminService {
 		}
 	}
 
+	/**
+	 * Scheduled task that runs on a daily basis and upon system startup
+	 * Assigns a password to the volunteer account
+	 */
 	@Override
 	@Scheduled(fixedRate = 86400000, initialDelay = 10000)
 	public void generateDailyPassword() {
@@ -235,7 +311,12 @@ public class AdminServiceImpl implements AdminService {
 		userRepository.save(dbUser);
 		adminRepository.save(adminSettings);
 	}
-
+	
+	/**
+	 * Generates a new random password for a user
+	 * Automated e-mailer will be generated that informs user of the new password
+	 * This function should only be used by the ADMIN_USERS in the Account Management module
+	 */
 	@Override
 	public void resetPassword(UserDTO user) throws Exception {
 		// TODO Auto-generated method stub
@@ -253,13 +334,64 @@ public class AdminServiceImpl implements AdminService {
 		userRepository.save(dbUser);
 	}
 
+	/**
+	 * System startup configuration that creates a root admin account
+	 */
 	@PostConstruct
 	private void initAdmin() {
+		initRoles();
 		User dbUser = userRepository.findByUsernameIgnoreCase("admin");
 		if(dbUser == null) {
 			dbUser = new User("admin", BCrypt.hashpw("password1", BCrypt.gensalt()), "admin", "admin", "bryan.lau.2015@sis.smu.edu.sg");
 			dbUser.setRole(roleRepository.findOne(Role.ADMIN_USER));
 			userRepository.save(dbUser);
+		}
+	}
+	
+	/**
+	 * System startup configuration that initializes all roles and their respective descriptions
+	 */
+	private void initRoles() {
+		Role adminRole = roleRepository.findOne(Role.ADMIN_USER);
+		if(adminRole == null) {
+			adminRole = new Role(Role.ADMIN_USER);
+			roleRepository.save(adminRole);
+		}
+		Role volunteerRole = roleRepository.findOne(Role.VOLUNTEER);
+		if(volunteerRole == null) {
+			volunteerRole = new Role(Role.VOLUNTEER);
+			roleRepository.save(volunteerRole);
+		}
+		Role beneficiaryRole = roleRepository.findOne(Role.BENEFICIARY);
+		if(beneficiaryRole == null) {
+			beneficiaryRole = new Role(Role.BENEFICIARY);
+			roleRepository.save(beneficiaryRole);
+		}
+	}
+
+	/**
+	 * Method that runs at the start of every window that provides a flat increment based on organization size and a multiplication effect on the beneficiary scores
+	 */
+	@Override
+	public void updateScores() {
+		// TODO Auto-generated method stub
+		List<Beneficiary> beneficiaries = beneficiaryRepository.findAll();
+		AdminSettings adminSettings = adminRepository.findById(1L);
+		for(Beneficiary beneficiary : beneficiaries) {
+			Double currentScore = beneficiary.getScore();
+			Double newScore = (currentScore + beneficiary.getNumBeneficiary()) * (1+adminSettings.getMultiplierRate()/100);
+			beneficiary.setScore(newScore);
+			beneficiaryRepository.save(beneficiary);
+		}
+	}
+
+	@Override
+	public void generateClosingEmails() throws Exception {
+		// TODO Auto-generated method stub
+		List<User> beneficiaries = userRepository.findUsersByUsertype("beneficiary");
+		for(User beneficiary : beneficiaries) {
+			String emailAddress = beneficiary.getEmail();
+			new AutomatedEmailer(emailAddress, EmailMessages.WINDOW_CLOSING_SUBJECT, EmailMessages.WINDOW_CLOSING_MESSAGE);
 		}
 	}
 

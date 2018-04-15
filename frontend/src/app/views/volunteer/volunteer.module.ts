@@ -1,48 +1,50 @@
-import { NgModule }                         from '@angular/core';
-import { CommonModule }                     from '@angular/common';
-import { FormsModule, ReactiveFormsModule }                      from '@angular/forms';
-import { RouterModule }                     from '@angular/router';
-import { VolunteerRoutes }                  from './volunteer.routing';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import {
-    MatCardModule,
-    MatGridListModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatSelectModule,
-    MatProgressBarModule
-}                                           from '@angular/material';
-import { VolunteerDashboardComponent }      from './dashboard/dashboard.component';
-import { VolunteerInventoryComponent }      from './inventory/inventory.component';
-import { VolunteerPackingListComponent }    from './packing-list/packing-list.component';
-import { SearchPipe }                       from './search.pipe';
-import { VolunteerService }                 from './../../services/volunteer.services';
-import { NgxDatatableModule }               from '@swimlane/ngx-datatable';
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatTooltipModule
+} from '@angular/material';
+
+import { AppCommonModule } from '@components/app-common.module';
+import { VolunteerService } from '@services/volunteer.service';
+import { PipeModule } from '@pipes/pipes.module';
+
+import { VolunteerRoutes } from './volunteer.routing';
+
+import { StockTakingComponent } from './stock-taking/stock-taking.component';
+import { VolunteerHomeComponent } from './home/home.component';
+import { VolunteerPackingListComponent } from './packing-list/packing-list.component';
+import { VolunteerPackingSelectComponent } from './packing-list/select/select.component';
+import { VolunteerPackingPackComponent } from './packing-list/pack/pack.component';
+import { VolunteerPackingConfirmComponent } from './packing-list/confirm/confirm.component';
 
 @NgModule({
     imports: [
-        MatCardModule,
-        MatGridListModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatSelectModule,
+        AppCommonModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        NgxDatatableModule,
-        MatProgressBarModule,
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        PipeModule,
         RouterModule.forChild(VolunteerRoutes)
     ],
     declarations: [
-        VolunteerDashboardComponent,
-        VolunteerInventoryComponent,
+        StockTakingComponent,
+        VolunteerHomeComponent,
         VolunteerPackingListComponent,
-        SearchPipe,
+        VolunteerPackingSelectComponent,
+        VolunteerPackingPackComponent,
+        VolunteerPackingConfirmComponent
     ],
     providers: [
         VolunteerService
-    ],
-    exports: [
-
     ]
 })
 

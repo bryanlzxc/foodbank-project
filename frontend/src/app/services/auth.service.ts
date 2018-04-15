@@ -1,27 +1,41 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
-import services from './../../config/services';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { HttpService } from '@services/http.service';
+import { ForgotPasswordModal } from '@components/forgot-password-modal/forgot-password-modal.component';
+import services from '@config/services';
 
-interface LoginResponse {
-    status: string;
-    userType: string;
-    token: string;
-}
+/*
+
+    THIS SERVICE CONTAINS ALL THE REST API NEEDED FOR AUTHENTICATION FUNCTIONS
+
+*/
 
 @Injectable()
 export class AuthService {
 
-    public authToken;
+    constructor(private http: HttpService, private dialog: MatDialog) {}
 
-    constructor(private http: HttpClient) {
-
+    /* OPEN FORGOT PASSWORD DIALOG */
+    public openForgotPasswordDialog () {
+        let dialogRef: MatDialogRef<ForgotPasswordModal> = this.dialog.open(ForgotPasswordModal, {
+            disableClose: true
+        });
+        return dialogRef.afterClosed();
     }
 
-    public login (username: string, password: string) {
-        return this.http.get<LoginResponse>(services['auth-success']);
-        //JSON.stringify({ username: username, password: password })
+    /* AUTHENTICATE LOGIN */
+    public login (params: any) {
+        return this.http.post(services['auth'], params);
+    }
+
+    /* FORGOT PASSWORD REQUEST */
+    public forgotPassword (params: any) {
+        return this.http.post(services['forgot-password'], params);
+    }
+
+    /* RESET PASSWORD REQUEST */
+    public resetPassword (params: any) {
+        return this.http.post(services['reset-password'], params);
     }
 
 }

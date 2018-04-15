@@ -12,26 +12,37 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import foodbank.login.dto.PasswordDTO;
 import foodbank.user.dto.UserDTO;
 import foodbank.user.entity.User;
-import foodbank.user.repository.UserRepository;
 import foodbank.user.service.UserService;
 import foodbank.util.MessageConstants;
 import foodbank.util.ResponseDTO;
 import foodbank.util.MessageConstants.ErrorMessages;
 
+/**
+ * 
+ * @author Bryan Lau <bryan.lau.2015@sis.smu.edu.sg>
+ * @version 1.0
+ * 
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/rest/users")
 public class UserController {
 	
+	/**
+	 * Dependency injection
+	 */
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * REST API exposed to retrieve all users from server
+	 * @return ResponseDTO with the result being a List of Users retrieved from the repository
+	 */
 	@GetMapping("/display-all")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO getAllUsers() {
@@ -47,6 +58,11 @@ public class UserController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to retrieve all users with the specified usertype
+	 * @param usertype
+	 * @return ResponseDTO with the result being a List of Users with the specified usertype
+	 */
 	@GetMapping("/display-all-by")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO getAllUsersByType(@RequestParam(value = "usertype", required = true) String usertype) {
@@ -62,6 +78,11 @@ public class UserController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed to retrieve the user details of the user with the specified username
+	 * @param username
+	 * @return ResponseDTO with the result being the User with the specified username
+	 */
 	@GetMapping("/display-user")
 	public ResponseDTO getUserDetails(@RequestParam(value = "username", required = true) String username) {
 		User result = null;
@@ -76,6 +97,11 @@ public class UserController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed for ADMIN_USERS to create a new user
+	 * @param user
+	 * @return ResponseDTO with the status specifying if the operation was successful
+	 */
 	@PutMapping("/insert-user")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO insertUser(@RequestBody UserDTO user) {
@@ -89,6 +115,11 @@ public class UserController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed for ADMIN_USERS to update users
+	 * @param user
+	 * @return ResponseDTO with the status specifying if the operation was successful
+	 */
 	@PostMapping("/update-user")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO updateUser(@RequestBody UserDTO user) {
@@ -102,6 +133,11 @@ public class UserController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed for all authenticated users to change their password
+	 * @param passwordDetails
+	 * @return ResponseDTO with the result indicating whether the password change was successful
+	 */
 	@PostMapping("/change-password")
 	public ResponseDTO changePassword(@RequestBody PasswordDTO passwordDetails) {
 		Boolean result = null;
@@ -119,6 +155,11 @@ public class UserController {
 		return responseDTO;
 	}
 	
+	/**
+	 * REST API exposed for ADMIN_USERS to delete the user with the specified username
+	 * @param username
+	 * @return ResponseDTO with the result specifying if the operation was successful
+	 */
 	@DeleteMapping("/delete-user")
 	@PreAuthorize("hasAuthority('ADMIN_USER')")
 	public ResponseDTO deleteUser(@RequestParam(value = "username", required = true) String username) {

@@ -20,6 +20,10 @@ import foodbank.history.entity.RequestHistory;
 import foodbank.history.repository.HistoryRepository;
 import foodbank.history.service.HistoryService;
 import foodbank.inventory.entity.FoodItem;
+import foodbank.inventory.repository.FoodRepository;
+import foodbank.request.entity.Request;
+import foodbank.request.repository.RequestRepository;
+import foodbank.user.repository.UserRepository;
 import foodbank.util.EntityManager;
 import foodbank.util.EntityManager.DTOKey;
 import foodbank.util.MessageConstants.ErrorMessages;
@@ -30,6 +34,15 @@ public class HistoryServiceImpl implements HistoryService {
 
 	@Autowired
 	private HistoryRepository historyRepository;
+	
+	@Autowired
+	private FoodRepository foodRepository;
+	
+	@Autowired
+	private RequestRepository requestRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public List<RequestHistoryDTO> retrieveAllPastRequests() {
@@ -81,6 +94,38 @@ public class HistoryServiceImpl implements HistoryService {
 		results.sort(Comparator.comparing(PastRequestsByBeneficiaryDTO::getRequestCreationDate));
 		Collections.reverse(results);
 		return results;
+	}
+
+	@Override
+	public void requestSimilarItems(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		String beneficiary = String.valueOf(map.get("beneficiary"));
+		List<PastRequestsByBeneficiaryDTO> pastRequestsList = retrieveAllPastRequestsByBeneficiary(beneficiary);
+		PastRequestsByBeneficiaryDTO pastRequest = pastRequestsList.get((int)map.get("index"));
+		List<PastRequestDTO> pastRequestObjects = pastRequest.getPastRequests();
+		for(PastRequestDTO requestDTO : pastRequestObjects) {
+			List<Request> currentRequests = requestRepository.findByBeneficiaryUserUsername(beneficiary);
+			boolean doesCurrentRequestExist = false;
+			String category = requestDTO.getCategory();
+			String classification = requestDTO.getClassification();
+			String description = requestDTO.getDescription();
+			for(Request request : currentRequests) {
+				FoodItem requestFoodItem = request.getFoodItem();
+				String requestCategory = requestFoodItem.getCategory();
+				String requestClassification = requestFoodItem.getClassification();
+				String requestDescription = requestFoodItem.getDescription();
+				if(category.equals(requestCategory) && classification.equals(requestClassification) && description.equals(requestDescription)) {
+					doesCurrentRequestExist = true;
+				}
+			}
+			if(!doesCurrentRequestExist) {
+				FoodItem foodItem = foodRepository.findByCategoryAndClassificationAndDescription(category, classification, description);
+				Integer requestedQuantity = requestDTO.getRequestedQuantity() > foodItem.getQuantity() ? foodItem.getQuantity() : requestDTO.getRequestedQuantity();
+				if(requestedQuantity > 0) {
+					requestRepository.save(new Request(userRepository.findByUsernameIgnoreCase(beneficiary).getBeneficiary(), foodItem, requestedQuantity));
+				}
+			}
+		}
 	}
 
 }

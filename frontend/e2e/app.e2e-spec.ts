@@ -1,14 +1,14 @@
-import { FrontendPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('frontend App', () => {
-  let page: FrontendPage;
+describe('bunanas-deployment-client App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new FrontendPage();
+    page = new AppPage();
   });
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });
